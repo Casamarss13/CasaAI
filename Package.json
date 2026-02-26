@@ -1,0 +1,10 @@
+{
+  "name": "omniclip-ai",
+  "version": "1.0.0",
+  "scripts": { "start": "next dev" },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "@google/generative-ai": "latest"
+  }
+}
