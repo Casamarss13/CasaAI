@@ -1,174 +1,54 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CasaClip AI | Professional Neural Video Suite</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { background: #030303; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
-        .gradient-blue { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
-        .viral-score { background: conic-gradient(#10b981 var(--p), #1f2937 0); }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
-        .float { animation: float 4s ease-in-out infinite; }
-    </style>
-</head>
-<body class="overflow-x-hidden">
+<div class="flex justify-center items-center space-x-4 mb-10">
+    <span id="labelEngage" class="text-xs font-bold text-blue-400">ENGAGÉ (-5€)</span>
+    <button onclick="toggleBilling()" id="toggleBtn" class="w-12 h-6 bg-blue-600 rounded-full relative transition-all">
+        <div id="dot" class="w-4 h-4 bg-white rounded-full absolute left-1 top-1 transition-all"></div>
+    </button>
+    <span id="labelLibre" class="text-xs font-bold text-gray-500">SANS ENGAGEMENT</span>
+</div>
 
-    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto sticky top-0 z-50 glass rounded-b-3xl">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 gradient-blue rounded-xl flex items-center justify-center font-black shadow-[0_0_20px_rgba(59,130,246,0.5)]">C</div>
-            <span class="text-xl font-extrabold tracking-tight">CASACLIP <span class="text-blue-500">PRO</span></span>
-        </div>
-        <div class="flex items-center gap-6">
-            <select id="langSelector" onchange="changeLanguage()" class="bg-transparent text-[10px] font-bold uppercase tracking-widest outline-none border-b border-gray-800 cursor-pointer">
-                <option value="fr">Français 🇫🇷</option>
-                <option value="en">English 🇺🇸</option>
-                <option value="es">Español 🇪🇸</option>
-                <option value="ar">العربية 🇸🇦</option>
-            </select>
-            <button class="bg-white text-black px-5 py-2 rounded-full text-xs font-bold hover:scale-105 transition">Dashboard</button>
-        </div>
-    </nav>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="p-6 rounded-3xl border border-gray-800 bg-white/5 backdrop-blur-md">
+        <h3 class="text-gray-400 font-bold text-xs uppercase">Essentiel</h3>
+        <div class="text-3xl font-black mt-2"><span class="price-val" data-engage="19.99" data-libre="24.99">19,99</span>€<span class="text-xs text-gray-500">/mo</span></div>
+        <p class="text-[10px] text-gray-500 mt-2">Montage YouTube & Fichiers illimité.</p>
+        <button class="w-full mt-6 bg-white/10 hover:bg-blue-600 py-3 rounded-xl font-bold text-xs transition-all">CHOISIR</button>
+    </div>
 
-    <main class="max-w-7xl mx-auto px-6 pt-12">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            
-            <div class="lg:col-span-5 space-y-6">
-                <h1 class="text-5xl font-black leading-[1.1]" id="mainTitle">L'IA qui <span class="text-blue-500">automatise</span> votre viralité.</h1>
-                <p class="text-gray-500 text-sm leading-relaxed" id="mainDesc">Utilisez la technologie Neural-Cut pour transformer n'importe quelle vidéo longue en 3 clips haute-performance avec sous-titres et B-roll auto.</p>
+    <div class="p-6 rounded-3xl border-2 border-blue-600 bg-blue-600/5 backdrop-blur-md relative">
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-[8px] px-3 py-1 rounded-full font-bold">RECOMMANDÉ</span>
+        <h3 class="text-blue-400 font-bold text-xs uppercase">Créateur</h3>
+        <div class="text-3xl font-black mt-2"><span class="price-val" data-engage="24.99" data-libre="29.99">24,99</span>€<span class="text-xs text-gray-500">/mo</span></div>
+        <p class="text-[10px] text-gray-500 mt-2">Tout l'Essentiel + 1 Script IA / mois.</p>
+        <button class="w-full mt-6 bg-blue-600 py-3 rounded-xl font-bold text-xs transition-all">CHOISIR</button>
+    </div>
 
-                <div class="glass p-8 rounded-[32px] space-y-6 border-t border-white/10">
-                    <div>
-                        <div class="flex justify-between mb-2"><label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Source Vidéo</label><span class="text-[10px] text-green-500 font-bold">● Serveur OK</span></div>
-                        <input id="videoUrl" type="text" placeholder="YouTube, Twitch, Vimeo..." class="w-full bg-black/50 border border-gray-800 p-4 rounded-2xl outline-none focus:border-blue-500 transition-all">
-                    </div>
+    <div class="p-6 rounded-3xl border border-purple-900 bg-purple-900/10 backdrop-blur-md">
+        <h3 class="text-purple-400 font-bold text-xs uppercase">Expert</h3>
+        <div class="text-3xl font-black mt-2"><span class="price-val" data-engage="44.99" data-libre="49.99">44,99</span>€<span class="text-xs text-gray-500">/mo</span></div>
+        <p class="text-[10px] text-gray-500 mt-2">Tout le Créateur + 10 Scripts IA / mois.</p>
+        <button class="w-full mt-6 bg-purple-600 py-3 rounded-xl font-bold text-xs transition-all">CHOISIR</button>
+    </div>
+</div>
 
-                    <div>
-                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Instructions Personnalisées</label>
-                        <textarea id="customBrief" rows="3" placeholder="Expliquez ici vos envies (ex: 'Focus sur l'humour', 'Style Alex Hormozi'...)" class="w-full bg-black/50 border border-gray-800 p-4 rounded-2xl outline-none focus:border-purple-500 text-sm transition-all resize-none"></textarea>
-                    </div>
+<script>
+let isEngaged = true;
+function toggleBilling() {
+    isEngaged = !isEngaged;
+    const dot = document.getElementById('dot');
+    const prices = document.querySelectorAll('.price-val');
+    
+    if(!isEngaged) {
+        dot.style.left = '28px';
+        document.getElementById('labelEngage').classList.replace('text-blue-400', 'text-gray-500');
+        document.getElementById('labelLibre').classList.replace('text-gray-500', 'text-blue-400');
+    } else {
+        dot.style.left = '4px';
+        document.getElementById('labelLibre').classList.replace('text-blue-400', 'text-gray-500');
+        document.getElementById('labelEngage').classList.replace('text-gray-500', 'text-blue-400');
+    }
 
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="bg-gray-900/50 p-3 rounded-xl border border-gray-800">
-                            <span class="text-[9px] block mb-1 text-gray-500 uppercase font-bold">Format</span>
-                            <select class="bg-transparent text-xs font-bold w-full outline-none"><option>9:16 (TikTok)</option><option>1:1 (Insta)</option></select>
-                        </div>
-                        <div class="bg-gray-900/50 p-3 rounded-xl border border-gray-800">
-                            <span class="text-[9px] block mb-1 text-gray-500 uppercase font-bold">Qualité</span>
-                            <select class="bg-transparent text-xs font-bold w-full outline-none"><option>4K Ultra HD</option><option>1080p Pro</option></select>
-                        </div>
-                    </div>
-
-                    <button onclick="startAIEngine()" id="runBtn" class="w-full gradient-blue py-5 rounded-2xl font-black text-lg shadow-[0_10px_30px_rgba(37,99,235,0.3)] hover:scale-[1.02] transition-all">
-                        LANCER L'ÉDITION NEURONALE
-                    </button>
-
-                    <div id="loader" class="hidden space-y-4">
-                        <div class="flex justify-between text-[10px] font-mono text-blue-400"><span id="loadText">Initialisation...</span><span id="loadPct">0%</span></div>
-                        <div class="w-full bg-gray-900 h-1.5 rounded-full overflow-hidden"><div id="bar" class="bg-blue-500 h-full w-0 transition-all duration-300"></div></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-7">
-                <div id="previewArea" class="glass rounded-[40px] p-8 min-h-[600px] flex flex-col items-center justify-center border-t border-white/5 relative">
-                    
-                    <div id="placeholder" class="text-center space-y-4">
-                        <div class="w-20 h-20 bg-gray-900 rounded-full mx-auto flex items-center justify-center float">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /></svg>
-                        </div>
-                        <p class="text-gray-500 font-bold text-sm tracking-tight" id="waitMsg">En attente de votre configuration...</p>
-                    </div>
-
-                    <div id="workspace" class="hidden w-full space-y-8 animate-fadeIn">
-                        <div class="flex justify-between items-end mb-4">
-                            <div><h2 class="text-2xl font-black" id="resTitle">Clip #01 - Haute Viralité</h2><p class="text-gray-500 text-xs">Analyse sémantique terminée.</p></div>
-                            <div class="flex flex-col items-center">
-                                <div class="text-[10px] font-bold text-green-500 mb-1">SCORE VIRAL</div>
-                                <div class="text-2xl font-black">98<span class="text-sm text-gray-500">%</span></div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div class="w-full max-w-[280px] aspect-[9/16] bg-black rounded-[3rem] border-[8px] border-gray-900 shadow-2xl relative overflow-hidden mx-auto">
-                                <div class="absolute inset-0 bg-cover bg-center opacity-60" style="background-image:url('https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=500&q=80')"></div>
-                                <div id="subtitles" class="absolute bottom-24 w-full text-center px-4 text-3xl font-black italic text-yellow-400 drop-shadow-lg uppercase tracking-tighter"></div>
-                                <div class="absolute top-10 left-6 bg-blue-600 px-2 py-1 rounded text-[8px] font-bold">VOIX-OFF IA ACTIVE</div>
-                            </div>
-
-                            <div class="flex flex-col justify-center space-y-4">
-                                <div onclick="selectPlan(19.99)" id="planA" class="p-6 glass rounded-3xl border-2 border-blue-600 cursor-pointer hover:bg-blue-600/5 transition">
-                                    <div class="flex justify-between items-center mb-2"><span class="text-[10px] font-bold text-blue-400">PLAN PIONNIER (ENGAGÉ)</span><span class="bg-blue-600 px-2 py-0.5 rounded text-[8px] font-bold">BEST</span></div>
-                                    <div class="text-4xl font-black italic">19,99€<span class="text-sm font-normal text-gray-500">/mo</span></div>
-                                    <p class="text-[10px] text-gray-500 mt-2">Bloqué à vie pour les 100 premiers.</p>
-                                </div>
-                                <div onclick="selectPlan(24.99)" id="planB" class="p-6 glass rounded-3xl border border-gray-800 cursor-pointer hover:bg-white/5 transition">
-                                    <span class="text-[10px] font-bold text-gray-500">SANS ENGAGEMENT</span>
-                                    <div class="text-3xl font-black text-gray-300">24,99€<span class="text-sm font-normal text-gray-500">/mo</span></div>
-                                    <p class="text-[10px] text-gray-500 mt-2">Flexibilité totale, arrêt immédiat.</p>
-                                </div>
-                                <button onclick="checkout()" class="w-full bg-white text-black py-5 rounded-2xl font-black text-lg hover:bg-blue-500 hover:text-white transition-all shadow-xl">DÉBLOQUER LES 3 CLIPS HD</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <script>
-        let price = 19.99;
-        const subData = ["L'IA DÉTECTE", "VOS MEILLEURS", "MOMENTS", "ET LES REND", "VIRAUX !"];
-
-        function startAIEngine() {
-            if(!document.getElementById('videoUrl').value) return alert("URL requise");
-            document.getElementById('runBtn').classList.add('hidden');
-            document.getElementById('loader').classList.remove('hidden');
-            
-            const steps = ["Analyse du Briefing...", "Scanning Video...", "Neural Cutting...", "Finalisation..."];
-            let i = 0;
-            const itv = setInterval(() => {
-                let p = (i + 1) * 25;
-                document.getElementById('bar').style.width = p + "%";
-                document.getElementById('loadPct').innerText = p + "%";
-                document.getElementById('loadText').innerText = steps[i];
-                i++;
-                if(i >= steps.length) {
-                    clearInterval(itv);
-                    setTimeout(showWorkspace, 500);
-                }
-            }, 1000);
-        }
-
-        function showWorkspace() {
-            document.getElementById('placeholder').classList.add('hidden');
-            document.getElementById('workspace').classList.remove('hidden');
-            let s = 0;
-            setInterval(() => {
-                document.getElementById('subtitles').innerText = subData[s];
-                s = (s + 1) % subData.length;
-            }, 600);
-        }
-
-        function selectPlan(p) {
-            price = p;
-            document.getElementById('planA').style.borderColor = p === 19.99 ? '#3b82f6' : '#1f2937';
-            document.getElementById('planB').style.borderColor = p === 24.99 ? '#3b82f6' : '#1f2937';
-        }
-
-        function checkout() { window.location.href = "https://www.paypal.me/CasaclipAI/" + price; }
-
-        function changeLanguage() {
-            const l = document.getElementById('langSelector').value;
-            // Dictionnaire de traduction simplifié pour l'exemple
-            if(l === 'en') {
-                document.getElementById('mainTitle').innerHTML = "AI that <span class='text-blue-500'>automates</span> your virality.";
-                document.getElementById('runBtn').innerText = "START NEURAL ENGINE";
-            }
-        }
-    </script>
-</body>
-</html>
+    prices.forEach(p => {
+        p.innerText = isEngaged ? p.getAttribute('data-engage') : p.getAttribute('data-libre');
+    });
+}
+</script>
