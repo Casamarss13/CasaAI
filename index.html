@@ -3,243 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CasaClip AI | Viral Intelligence Suite</title>
-    
+    <title>CasaClip AI | Viral Performance Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
-    
     <style>
         :root { --primary: #3b82f6; --accent: #8b5cf6; --bg: #020202; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #fff; scroll-behavior: smooth; overflow-x: hidden; }
-        
-        /* Design "Infinity" & Glassmorphism */
-        .aurora { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 15% 15%, rgba(59,130,246,0.12) 0%, transparent 40%), radial-gradient(circle at 85% 85%, rgba(139,92,246,0.12) 0%, transparent 40%); }
-        .glass-master { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .btn-elite { background: linear-gradient(135deg, var(--primary), var(--accent)); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; }
-        .btn-elite:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 40px rgba(59, 130, 246, 0.4); }
-        
-        /* Animations Neuromarketing */
-        @keyframes pulse-live { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
-        .live-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 12px #10b981; animation: pulse-live 2s infinite; }
-        .shimmer-text { background: linear-gradient(90deg, #fff, #6b7280, #fff); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 4s linear infinite; }
-        @keyframes shimmer { to { background-position: 200% center; } }
-        
-        /* Interdiction de copie (Protection du business) */
-        .no-copy { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
-        
-        /* Toggle Switch Custom */
-        .switch { position: relative; display: inline-block; width: 54px; height: 28px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #1a1a1a; transition: .4s; border-radius: 34px; border: 1px solid rgba(255,255,255,0.1); }
-        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--primary); }
-        input:checked + .slider:before { transform: translateX(26px); }
+        .aurora { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 15% 15%, rgba(59,130,246,0.08) 0%, transparent 40%), radial-gradient(circle at 85% 85%, rgba(139,92,246,0.08) 0%, transparent 40%); }
+        .glass-master { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(30px); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .glass-master:hover { border-color: rgba(59,130,246,0.4); transform: translateY(-5px); }
+        .btn-elite { background: linear-gradient(135deg, var(--primary), var(--accent)); transition: all 0.3s; }
+        .btn-elite:hover { transform: scale(1.03); box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4); }
+        .toggle-opt { padding: 12px 24px; border-radius: 50px; cursor: pointer; font-size: 10px; font-weight: 800; text-transform: uppercase; transition: 0.3s; color: #666; }
+        .toggle-opt.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(59,130,246,0.3); }
+        .checkbox-custom { width: 22px; height: 22px; cursor: pointer; accent-color: var(--primary); }
     </style>
 </head>
-
 <body class="no-copy" oncontextmenu="return false;">
     <div class="aurora"></div>
 
-    <div class="fixed top-6 left-1/2 -translate-x-1/2 z-[100]">
-        <div class="glass-master px-5 py-2 rounded-full flex items-center gap-3 shadow-2xl">
-            <div class="live-dot"></div>
-            <span id="live-users" class="text-[9px] font-extrabold uppercase tracking-widest text-gray-400">
-                37 créateurs analysent leurs vidéos
-            </span>
-        </div>
-    </div>
-
-    <nav class="max-w-7xl mx-auto px-8 py-8 flex justify-between items-center relative z-10">
-        <div class="text-3xl font-black tracking-tighter italic">CASA<span class="text-blue-500">CLIP</span></div>
-        <div class="flex items-center gap-8">
-            <select id="langBox" onchange="translateSite()" class="bg-transparent border-none text-[10px] font-black uppercase tracking-widest outline-none cursor-pointer text-gray-400 hover:text-white transition">
+    <nav class="max-w-7xl mx-auto px-8 py-8 flex justify-between items-center relative z-50">
+        <div class="text-3xl font-black italic tracking-tighter">CASA<span class="text-blue-500">CLIP</span></div>
+        <div class="flex items-center gap-6">
+            <select id="langBox" onchange="translateSite()" class="bg-transparent border-none text-[10px] font-black uppercase text-gray-500 outline-none cursor-pointer">
                 <option value="fr">FR</option><option value="en">EN</option><option value="es">ES</option><option value="ar">AR</option>
             </select>
-            <button class="text-[10px] font-black uppercase tracking-widest py-2 px-6 glass-master rounded-full hover:bg-white hover:text-black transition">Mon ID</button>
+            <button class="text-[10px] font-black uppercase py-2 px-6 glass-master rounded-full hover:bg-white hover:text-black">Espace VIP</button>
         </div>
     </nav>
 
-    <header class="max-w-5xl mx-auto pt-20 pb-28 px-6 text-center">
-        <div class="inline-block px-4 py-1.5 mb-8 glass-master rounded-full text-[9px] font-black text-blue-400 uppercase tracking-[0.3em]">
-            Global AI Processing • Secured v3.0
-        </div>
-        <h1 id="hero-title" class="text-6xl md:text-9xl font-black mb-10 tracking-tighter leading-[0.85]">
+    <header class="max-w-5xl mx-auto pt-10 pb-16 text-center relative z-10 px-6">
+        <h1 id="hero-title" class="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.9]">
             L'IA qui transforme<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic">votre succès.</span>
         </h1>
-        <p id="hero-desc" class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-16 font-light leading-relaxed">
-            Obtenez vos identifiants, signez votre contrat d'engagement et laissez notre IA découper vos prochains hits viraux.
-        </p>
-
-        <div class="max-w-3xl mx-auto glass-master p-4 rounded-[2.5rem] shadow-2xl relative">
+        <div class="max-w-3xl mx-auto glass-master p-4 rounded-[2.5rem] shadow-2xl mb-8">
             <div class="flex flex-col md:flex-row gap-3">
-                <input type="text" id="vUrl" placeholder="YouTube link, Drive, Loom..." 
-                       class="flex-1 bg-transparent px-8 py-5 outline-none text-white text-lg placeholder:text-gray-700">
-                <button onclick="processAI()" id="btn-cta" class="btn-elite px-12 py-5 rounded-[1.8rem] font-black text-sm uppercase tracking-widest">
-                    Créer mon ID & Analyser
-                </button>
-            </div>
-            
-            <div id="ai-loader" class="hidden mt-8 px-6 pb-4">
-                <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
-                    <div id="ai-bar" class="bg-blue-500 h-full w-0 transition-all duration-500"></div>
-                </div>
-                <div class="flex justify-between mt-4">
-                    <span id="ai-msg" class="text-[9px] font-black text-blue-400 uppercase tracking-widest italic">Analyse du flux...</span>
-                    <span id="ai-perc" class="text-[9px] font-black text-gray-500 tracking-widest">0%</span>
-                </div>
+                <input type="text" id="vUrl" placeholder="Lien Vidéo (YT, Podcast...)" class="flex-1 bg-transparent px-8 py-5 outline-none text-white text-lg placeholder:text-gray-700">
+                <button onclick="processAI()" id="btn-cta" class="btn-elite px-10 py-5 rounded-[1.8rem] font-black text-xs uppercase tracking-widest text-white">Analyser & Créer ID</button>
             </div>
         </div>
-        <div class="mt-10 flex justify-center gap-10 opacity-30 grayscale brightness-200">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="h-4">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" class="h-6">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" class="h-5">
-        </div>
+        <p class="text-[9px] font-black tracking-[0.3em] text-gray-600 uppercase italic">PayPal 4X sans frais • Paiement sécurisé • Rendu Cloud Ultra-Rapide</p>
     </header>
 
-    <section id="pricing" class="max-w-7xl mx-auto py-32 px-8">
-        <div class="text-center mb-20">
-            <h2 id="p-title" class="text-4xl md:text-6xl font-black mb-10 uppercase tracking-tighter italic">Plans de Performance</h2>
-            <div class="flex items-center justify-center gap-6 glass-master w-max mx-auto px-8 py-4 rounded-full">
-                <span class="text-[10px] font-extrabold text-gray-500 uppercase tracking-widest">Mensuel</span>
-                <label class="switch">
-                    <input type="checkbox" id="billingCheck" onchange="updatePrices()">
-                    <span class="slider"></span>
+    <section class="max-w-7xl mx-auto px-8 text-center relative z-10">
+        <div class="flex flex-col items-center gap-8 mb-12">
+            <div class="glass-master p-1.5 rounded-full flex gap-1 border-white/5">
+                <button id="mode-perso" onclick="switchMode('perso')" class="px-10 py-3 rounded-full text-[10px] font-black uppercase transition-all bg-blue-600 text-white shadow-lg">Perso / Creators</button>
+                <button id="mode-pro" onclick="switchMode('pro')" class="px-10 py-3 rounded-full text-[10px] font-black text-gray-500 hover:text-white uppercase transition-all">Ligue / Agences</button>
+            </div>
+
+            <div id="upsell-container" class="glass-master px-8 py-4 rounded-[2rem] flex items-center gap-5 border-blue-500/30 bg-blue-500/5">
+                <input type="checkbox" id="check4k" onchange="updatePrices()" class="checkbox-custom">
+                <label for="check4k" class="text-[11px] font-extrabold uppercase tracking-widest text-blue-400 cursor-pointer">
+                    💎 Option Performance 4K HDR (+9.99€/mo)
                 </label>
-                <span class="text-[10px] font-extrabold text-blue-400 uppercase tracking-widest">Annuel (-60€ d'économie) 🎁</span>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div class="glass-master p-12 rounded-[4rem] flex flex-col items-start transition hover:border-white/20">
-                <span class="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-4">Solo Creator</span>
-                <div class="text-6xl font-black mb-10" id="p1">19.99€<span class="text-sm font-normal text-gray-700 italic">/mo</span></div>
-                <ul class="space-y-5 mb-12 text-[13px] text-gray-400 flex-1">
-                    <li>✔ ID sécurisé envoyé par mail</li>
-                    <li>✔ 15 Clips HD par mois</li>
-                    <li>✔ Support par IA 24/7</li>
+        <div id="toggle-cycle" class="inline-flex glass-master p-1 rounded-full mb-16 border-white/5">
+            <div id="btn-m" onclick="setCycle('m')" class="toggle-opt active">Mensuel (+5€/mo)</div>
+            <div id="btn-a" onclick="setCycle('a')" class="toggle-opt">Paiement Annuel</div>
+        </div>
+
+        <div id="grid-perso" class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            <div class="glass-master p-12 rounded-[3.5rem] text-left border-white/5 relative">
+                <p class="text-[10px] font-black text-gray-500 uppercase mb-4 tracking-widest">Solo Starter</p>
+                <h3 class="text-6xl font-black mb-8" id="p1">17.99€<span class="text-xs font-normal">/mo</span></h3>
+                <ul class="text-[13px] space-y-4 text-gray-400 mb-10">
+                    <li class="flex items-center gap-2">✔ <span class="text-white font-bold">4 Clips</span> / mois</li>
+                    <li id="res1" class="flex items-center gap-2 text-gray-500 italic">✔ Résolution HD</li>
                 </ul>
-                <button onclick="checkout('Starter')" class="w-full py-5 rounded-3xl border border-white/10 font-black uppercase text-[10px] tracking-widest hover:bg-white hover:text-black transition">Choisir ce plan</button>
+                <button onclick="checkout('Starter')" class="w-full py-5 rounded-2xl border border-white/10 font-black uppercase text-[10px] hover:bg-white hover:text-black transition">Choisir Starter</button>
             </div>
 
-            <div class="glass-master p-12 rounded-[4rem] flex flex-col items-start scale-105 border-blue-500/40 bg-blue-500/5 shadow-2xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-blue-500 text-[8px] font-black px-5 py-1.5 uppercase tracking-widest">Plus Populaire</div>
-                <span class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-4">Elite Creator</span>
-                <div class="text-6xl font-black mb-10" id="p2">24.99€<span class="text-sm font-normal text-gray-700 italic">/mo</span></div>
-                <ul class="space-y-5 mb-12 text-[13px] text-gray-200 flex-1">
-                    <li>✔ Identifiants VIP Prioritaires</li>
-                    <li>✔ Clips Illimités (Zéro Logo)</li>
-                    <li>✔ Contrat PDF avec engagement</li>
+            <div class="glass-master p-12 rounded-[3.5rem] text-left border-blue-500/40 bg-blue-500/5 scale-105 relative shadow-2xl">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-500 px-6 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest">Plus Rentable</div>
+                <p class="text-[10px] font-black text-blue-400 uppercase mb-4 tracking-widest">Elite Influencer</p>
+                <h3 class="text-6xl font-black mb-8" id="p2">29.99€<span class="text-xs font-normal">/mo</span></h3>
+                <ul class="text-[13px] space-y-4 text-white mb-10">
+                    <li class="flex items-center gap-2">✔ <span class="font-bold text-blue-400">10 Clips</span> / mois</li>
+                    <li id="res2" class="flex items-center gap-2 italic text-blue-200">✔ Full HD 1080p</li>
                 </ul>
-                <button onclick="checkout('Creator Pro')" class="btn-elite w-full py-6 rounded-3xl font-black uppercase text-[10px] tracking-widest shadow-xl">Prendre l'avantage</button>
+                <button onclick="checkout('Influencer')" class="btn-elite w-full py-6 rounded-2xl font-black uppercase text-[10px] text-white">Prendre Elite</button>
             </div>
 
-            <div class="glass-master p-12 rounded-[4rem] flex flex-col items-start transition hover:border-purple-500/20">
-                <span class="text-[10px] font-black text-purple-400 uppercase tracking-widest mb-4">Agency / B2B</span>
-                <div class="text-6xl font-black mb-10" id="p3">44.99€<span class="text-sm font-normal text-gray-700 italic">/mo</span></div>
-                <ul class="space-y-5 mb-12 text-[13px] text-gray-400 flex-1">
-                    <li>✔ Multi-ID pour collaborateurs</li>
-                    <li>✔ Facturation Pro (EI France)</li>
-                    <li>✔ Accès API & Qualité 4K</li>
+            <div class="glass-master p-12 rounded-[3.5rem] text-left border-purple-500/20 relative">
+                <div class="absolute top-8 right-8 text-purple-500 animate-pulse text-[10px] font-black italic">4K HDR INCLUS</div>
+                <p class="text-[10px] font-black text-purple-400 uppercase mb-4 tracking-widest">Master AI</p>
+                <h3 class="text-6xl font-black mb-8" id="p3">44.99€<span class="text-xs font-normal">/mo</span></h3>
+                <ul class="text-[13px] space-y-4 text-gray-400 mb-10">
+                    <li class="flex items-center gap-2">✔ <span class="text-white font-bold tracking-widest">ILLIMITÉ</span></li>
+                    <li class="flex items-center gap-2 text-purple-300">✔ Rendu 4K Ultra Priority</li>
                 </ul>
-                <button onclick="checkout('Business')" class="w-full py-5 rounded-3xl border border-purple-500/30 font-black uppercase text-[10px] tracking-widest hover:bg-purple-600 transition">Offre Agence</button>
+                <button onclick="checkout('Master')" class="w-full py-5 rounded-2xl bg-purple-600/20 border border-purple-500/30 font-black uppercase text-[10px] text-purple-400 hover:bg-purple-600 hover:text-white transition">Prendre Master</button>
+            </div>
+        </div>
+
+        <div id="grid-pro" class="hidden grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            <div class="glass-master p-10 rounded-[3rem] text-left border-white/5">
+                <p class="text-[10px] font-black text-gray-500 uppercase mb-4 tracking-widest">Ligue 10</p>
+                <h3 class="text-5xl font-black mb-8" id="lp1">54.99€<span class="text-xs font-normal">/mo</span></h3>
+                <ul class="text-xs space-y-4 text-gray-400 mb-10"><li>✔ 10 Postes / HD</li><li>✔ Facturation Pro</li></ul>
+                <button onclick="checkout('Ligue10')" class="w-full py-5 rounded-xl border border-white/10 font-black uppercase text-[10px]">Lancer Ligue 10</button>
+            </div>
+            <div class="glass-master p-10 rounded-[3rem] text-left border-blue-500/50 bg-blue-500/10 scale-105">
+                <p class="text-[10px] font-black text-blue-400 uppercase mb-4 tracking-widest">Ligue 20 Business</p>
+                <h3 class="text-5xl font-black mb-8" id="lp2">89.99€<span class="text-xs font-normal">/mo</span></h3>
+                <ul class="text-xs space-y-4 text-white mb-10"><li>✔ 20 Postes / UHD</li><li>✔ Support Dédié 24h</li></ul>
+                <button onclick="checkout('Ligue20')" class="btn-elite w-full py-6 rounded-xl font-black uppercase text-[10px] text-white">Lancer Ligue 20</button>
+            </div>
+            <div class="glass-master p-10 rounded-[3rem] text-left border-purple-500/30">
+                <p class="text-[10px] font-black text-purple-400 uppercase mb-4 tracking-widest">Ligue Unlimited</p>
+                <h3 class="text-5xl font-black mb-8">149.99€<span class="text-xs font-normal">/mo</span></h3>
+                <ul class="text-xs space-y-4 text-gray-400 mb-10"><li>✔ Postes Illimités</li><li>✔ Rendu 4K HDR Déjà Inclus</li></ul>
+                <button onclick="checkout('LigueMax')" class="w-full py-5 rounded-xl bg-purple-600 font-black uppercase text-[10px] text-white">Lancer Ligue Max</button>
             </div>
         </div>
     </section>
 
-    <footer class="max-w-7xl mx-auto py-24 px-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
-        <div class="text-left">
-            <div class="text-3xl font-black italic mb-2 tracking-tighter">CASA<span class="text-blue-500">CLIP</span></div>
-            <p class="text-[10px] text-gray-600 uppercase tracking-widest font-bold">Entreprise Individuelle (EI) • Global Tech</p>
-        </div>
-        <div class="flex flex-wrap justify-center gap-10 text-[9px] font-black uppercase tracking-[0.2em] text-gray-500">
-            <a href="#" class="hover:text-white" onclick="alert('CasaClip AI - EI - SIRET en cours - Marseille - France')">Légal</a>
-            <a href="#" class="hover:text-white" onclick="alert('Engagement : Contrat 12 mois ou Mensuel Libre. Signature numérique via mail.')">Contrats</a>
-            <a href="#" class="hover:text-white" onclick="alert('Protection RGPD : Vos données sont cryptées en AES-256.')">Confidentialité</a>
-            <a href="mailto:hello@casaclip.com" class="hover:text-white">Commercial</a>
-        </div>
+    <footer class="max-w-7xl mx-auto py-16 px-8 border-t border-white/5 opacity-40 text-center">
+        <div class="text-2xl font-black italic mb-4 tracking-tighter">CASA<span class="text-blue-500">CLIP</span></div>
+        <p class="text-[9px] font-black uppercase tracking-widest">© 2026 CasaClip AI Global • Marseille • France</p>
     </footer>
 
     <script>
-        // -- CONFIGURATION MULTILINGUE --
-        const langData = {
-            fr: { title: "L'IA qui transforme<br><span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic'>votre succès.</span>", desc: "Obtenez vos identifiants, signez votre contrat d'engagement et laissez notre IA découper vos prochains hits viraux.", cta: "Créer mon ID & Analyser" },
-            en: { title: "AI Crafting Your<br><span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic'>Viral Success.</span>", desc: "Get your IDs, sign your commitment contract and let our AI crop your next viral hits.", cta: "Create my ID & Analyze" },
-            es: { title: "La IA que crea<br><span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic'>tu éxito viral.</span>", desc: "Obtén tus IDs, firma tu contrato de compromiso y deja que nuestra IA cree tus próximos éxitos.", cta: "Crear mi ID y Analizar" },
-            ar: { title: "الذكاء الاصطناعي<br><span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic'>يصنع نجاحك.</span>", desc: "احصل على هويتك، وقع عقدك، واترك ذكاءنا الاصطناعي يصنع نجاحك القادم.", cta: "إنشاء معرفي وتحليل" }
-        };
+        let cycle = 'm';
+        let mode = 'perso';
+        const WEBHOOK = "https://hook.eu1.make.com/rfyr9ysgkxukn6mu24c1qkc2vlmhm7cd";
 
-        function translateSite() {
-            const l = document.getElementById('langBox').value;
-            const t = langData[l];
-            document.body.dir = (l === 'ar' ? 'rtl' : 'ltr');
-            document.getElementById('hero-title').innerHTML = t.title;
-            document.getElementById('hero-desc').innerText = t.desc;
-            document.getElementById('btn-cta').innerText = t.cta;
-        }
+        const B_P1 = 12.99; const B_P2 = 24.99; const B_P3 = 39.99;
+        const B_LP1 = 54.99; const B_LP2 = 89.99;
 
-        // -- PRIX DYNAMIQUES (-5€) --
         function updatePrices() {
-            const annual = document.getElementById('billingCheck').checked;
-            document.getElementById('p1').innerHTML = annual ? "14.99€<span class='text-sm italic text-gray-700'>/mo</span>" : "19.99€<span class='text-sm italic text-gray-700'>/mo</span>";
-            document.getElementById('p2').innerHTML = annual ? "19.99€<span class='text-sm italic text-gray-700'>/mo</span>" : "24.99€<span class='text-sm italic text-gray-700'>/mo</span>";
-            document.getElementById('p3').innerHTML = annual ? "39.99€<span class='text-sm italic text-gray-700'>/mo</span>" : "44.99€<span class='text-sm italic text-gray-700'>/mo</span>";
+            const is4k = document.getElementById('check4k').checked;
+            const extra4k = is4k ? 9.99 : 0;
+            const extra4kPro = is4k ? 14.99 : 0;
+            const extraM = (cycle === 'm') ? 5 : 0;
+
+            document.getElementById('p1').innerHTML = (B_P1 + extraM + extra4k).toFixed(2) + "€<span class='text-xs'>/mo</span>";
+            document.getElementById('p2').innerHTML = (B_P2 + extraM + extra4k).toFixed(2) + "€<span class='text-xs'>/mo</span>";
+            document.getElementById('p3').innerHTML = (B_P3 + extraM + 5).toFixed(2) + "€<span class='text-xs'>/mo</span>"; // Protection Marge Master
+
+            document.getElementById('lp1').innerHTML = (B_LP1 + extra4kPro).toFixed(2) + "€<span class='text-xs'>/mo</span>";
+            document.getElementById('lp2').innerHTML = (B_LP2 + extra4kPro).toFixed(2) + "€<span class='text-xs'>/mo</span>";
+
+            document.getElementById('res1').innerText = is4k ? "✔ Qualité 4K HDR" : "✔ Résolution HD";
+            document.getElementById('res2').innerText = is4k ? "✔ Qualité 4K HDR" : "✔ Full HD 1080p";
         }
 
-        // -- PROCESSUS PSYCHOLOGIQUE (NEURO-LOADER) --
-        const loadSteps = [
-            "Authentification du flux...",
-            "Scan des émotions faciales...",
-            "Détection des hooks viraux...",
-            "Génération de votre ID sécurisé...",
-            "Finalisation du contrat PDF..."
-        ];
+        function switchMode(m) {
+            mode = m;
+            document.getElementById('mode-perso').className = m === 'perso' ? "px-10 py-3 rounded-full text-[10px] font-black uppercase bg-blue-600 text-white shadow-lg" : "px-10 py-3 rounded-full text-[10px] font-black text-gray-500 hover:text-white uppercase";
+            document.getElementById('mode-pro').className = m === 'pro' ? "px-10 py-3 rounded-full text-[10px] font-black bg-blue-600 text-white shadow-lg" : "px-10 py-3 rounded-full text-[10px] font-black text-gray-500 hover:text-white uppercase";
+            document.getElementById('grid-perso').classList.toggle('hidden', m === 'pro');
+            document.getElementById('grid-pro').classList.toggle('hidden', m === 'perso');
+            document.getElementById('toggle-cycle').classList.toggle('hidden', m === 'pro');
+            updatePrices();
+        }
+
+        function setCycle(c) {
+            cycle = c;
+            document.getElementById('btn-m').classList.toggle('active', c === 'm');
+            document.getElementById('btn-a').classList.toggle('active', c === 'a');
+            updatePrices();
+        }
 
         async function processAI() {
             const url = document.getElementById('vUrl').value;
-            const email = prompt("Sur quel email envoyer votre ID sécurisé et votre preuve de paiement ?");
+            const email = prompt("Email de réception de votre ID VIP :");
             if(!url || !email) return;
-
-            document.getElementById('btn-cta').style.display = 'none';
-            document.getElementById('ai-loader').classList.remove('hidden');
-
-            let p = 0;
-            const timer = setInterval(() => {
-                p += 1;
-                document.getElementById('ai-bar').style.width = p + "%";
-                document.getElementById('ai-perc').innerText = p + "%";
-                document.getElementById('ai-msg').innerText = loadSteps[Math.floor(p/21)] || "C'est prêt !";
-
-                if(p >= 100) {
-                    clearInterval(timer);
-                    fetch('https://hook.eu1.make.com/rfyr9ysgkxukn6mu24c1qkc2vlmhm7cd', {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ email: email, url: url, action: "global_onboarding" })
-                    });
-                    alert("ID UNIQUE GÉNÉRÉ ! Consultez votre boîte mail pour vos accès et votre mdp.");
-                    window.location.href = "#pricing";
-                }
-            }, 80);
+            alert("Analyse Cloud en cours... Votre ID sera envoyé à " + email);
+            fetch(WEBHOOK, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ email, url, action: "scan" })});
         }
 
         function checkout(plan) {
-            const ann = document.getElementById('billingCheck').checked;
-            const mail = prompt("Email de facturation pour votre contrat " + (ann ? "Annuel" : "Mensuel") + " :");
-            if(!mail) return;
-            
-            fetch('https://hook.eu1.make.com/rfyr9ysgkxukn6mu24c1qkc2vlmhm7cd', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ plan: plan, annual: ann, email: mail, action: "stripe_payment" })
-            });
-            alert("Connexion sécurisée à Stripe en cours... Votre preuve de paiement sera envoyée par mail.");
+            const is4k = document.getElementById('check4k').checked;
+            const email = prompt("Email de facturation (PayPal 4X dispo) :");
+            if(email) {
+                fetch(WEBHOOK, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ email, plan, cycle, is4k, action: "payment" })});
+                alert("Ouverture de la passerelle sécurisée...");
+            }
         }
 
-        // Simulateur de preuve sociale
-        setInterval(() => {
-            const rand = Math.floor(Math.random() * (50 - 25) + 25);
-            document.getElementById('live-users').innerText = `${rand} créateurs analysent leurs vidéos`;
-        }, 10000);
+        function translateSite() {
+            const l = document.getElementById('langBox').value;
+            document.body.dir = (l === 'ar') ? 'rtl' : 'ltr';
+        }
     </script>
 </body>
 </html>
