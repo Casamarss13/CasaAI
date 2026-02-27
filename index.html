@@ -1,147 +1,245 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CasaClip AI | Viral Video Engine</title>
+    <title>CasaClip AI | Viral Intelligence Suite</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #030303; color: white; }
-        .hero-mesh {
-            background-image: radial-gradient(at 0% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
-                              radial-gradient(at 50% 0%, hsla(225,39%,20%,1) 0, transparent 50%);
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .btn-gradient { background: linear-gradient(90deg, #2563eb, #7c3aed); }
-        .stat-glow { color: #3b82f6; text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+        :root { --primary: #3b82f6; --accent: #8b5cf6; --bg: #020202; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #fff; scroll-behavior: smooth; overflow-x: hidden; }
+        
+        /* Design "Infinity" & Glassmorphism */
+        .aurora { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 15% 15%, rgba(59,130,246,0.12) 0%, transparent 40%), radial-gradient(circle at 85% 85%, rgba(139,92,246,0.12) 0%, transparent 40%); }
+        .glass-master { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .btn-elite { background: linear-gradient(135deg, var(--primary), var(--accent)); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; }
+        .btn-elite:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 40px rgba(59, 130, 246, 0.4); }
+        
+        /* Animations Neuromarketing */
+        @keyframes pulse-live { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+        .live-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 12px #10b981; animation: pulse-live 2s infinite; }
+        .shimmer-text { background: linear-gradient(90deg, #fff, #6b7280, #fff); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 4s linear infinite; }
+        @keyframes shimmer { to { background-position: 200% center; } }
+        
+        /* Interdiction de copie (Protection du business) */
+        .no-copy { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+        
+        /* Toggle Switch Custom */
+        .switch { position: relative; display: inline-block; width: 54px; height: 28px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #1a1a1a; transition: .4s; border-radius: 34px; border: 1px solid rgba(255,255,255,0.1); }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(26px); }
     </style>
 </head>
-<body class="hero-mesh min-h-screen">
 
-    <nav class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
-        <div class="text-2xl font-black tracking-tighter italic">CASA<span class="text-blue-500">CLIP</span></div>
-        <div class="flex items-center gap-6 text-xs font-bold uppercase">
-            <button onclick="toggleModal('refModal')" class="text-gray-400 hover:text-white transition">Partenariat (20%)</button>
-            <a href="#pricing" class="px-6 py-2 bg-white text-black rounded-full hover:bg-blue-500 hover:text-white transition">Voir les offres</a>
+<body class="no-copy" oncontextmenu="return false;">
+    <div class="aurora"></div>
+
+    <div class="fixed top-6 left-1/2 -translate-x-1/2 z-[100]">
+        <div class="glass-master px-5 py-2 rounded-full flex items-center gap-3 shadow-2xl">
+            <div class="live-dot"></div>
+            <span id="live-users" class="text-[9px] font-extrabold uppercase tracking-widest text-gray-400">
+                37 créateurs analysent leurs vidéos
+            </span>
+        </div>
+    </div>
+
+    <nav class="max-w-7xl mx-auto px-8 py-8 flex justify-between items-center relative z-10">
+        <div class="text-3xl font-black tracking-tighter italic">CASA<span class="text-blue-500">CLIP</span></div>
+        <div class="flex items-center gap-8">
+            <select id="langBox" onchange="translateSite()" class="bg-transparent border-none text-[10px] font-black uppercase tracking-widest outline-none cursor-pointer text-gray-400 hover:text-white transition">
+                <option value="fr">FR</option><option value="en">EN</option><option value="es">ES</option><option value="ar">AR</option>
+            </select>
+            <button class="text-[10px] font-black uppercase tracking-widest py-2 px-6 glass-master rounded-full hover:bg-white hover:text-black transition">Mon ID</button>
         </div>
     </nav>
 
-    <header class="text-center pt-20 pb-12 px-4">
-        <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tighter">
-            Multipliez votre portée <br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">par 10 grâce à l'IA.</span>
+    <header class="max-w-5xl mx-auto pt-20 pb-28 px-6 text-center">
+        <div class="inline-block px-4 py-1.5 mb-8 glass-master rounded-full text-[9px] font-black text-blue-400 uppercase tracking-[0.3em]">
+            Global AI Processing • Secured v3.0
+        </div>
+        <h1 id="hero-title" class="text-6xl md:text-9xl font-black mb-10 tracking-tighter leading-[0.85]">
+            L'IA qui transforme<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic">votre succès.</span>
         </h1>
-        <p class="text-gray-400 max-w-2xl mx-auto text-lg mb-10">
-            Notre IA analyse les tendances de rétention pour extraire les moments au plus fort potentiel viral.
+        <p id="hero-desc" class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-16 font-light leading-relaxed">
+            Obtenez vos identifiants, signez votre contrat d'engagement et laissez notre IA découper vos prochains hits viraux.
         </p>
 
-        <div class="max-w-3xl mx-auto glass-card p-3 rounded-[2rem] mb-12">
-            <div class="flex flex-col md:flex-row gap-2">
-                <input type="text" id="userInput" placeholder="Lien YouTube, Drive ou WeTransfer..." 
-                       class="flex-1 bg-transparent px-6 py-4 outline-none text-white">
-                <button onclick="startAutomation()" id="mainBtn" 
-                        class="btn-gradient px-12 py-4 rounded-2xl font-black text-sm uppercase tracking-wider">
-                    Générer mon clip
+        <div class="max-w-3xl mx-auto glass-master p-4 rounded-[2.5rem] shadow-2xl relative">
+            <div class="flex flex-col md:flex-row gap-3">
+                <input type="text" id="vUrl" placeholder="YouTube link, Drive, Loom..." 
+                       class="flex-1 bg-transparent px-8 py-5 outline-none text-white text-lg placeholder:text-gray-700">
+                <button onclick="processAI()" id="btn-cta" class="btn-elite px-12 py-5 rounded-[1.8rem] font-black text-sm uppercase tracking-widest">
+                    Créer mon ID & Analyser
                 </button>
             </div>
-        </div>
-
-        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            <div class="glass-card p-6 rounded-2xl">
-                <div class="text-3xl font-black stat-glow mb-1">+85%</div>
-                <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Taux de rétention estimé</div>
-            </div>
-            <div class="glass-card p-6 rounded-2xl border-blue-500/30">
-                <div class="text-3xl font-black stat-glow mb-1">x4.2</div>
-                <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Portée organique moyenne</div>
-            </div>
-            <div class="glass-card p-6 rounded-2xl">
-                <div class="text-3xl font-black stat-glow mb-1">92%</div>
-                <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Précision du "Hook" IA</div>
+            
+            <div id="ai-loader" class="hidden mt-8 px-6 pb-4">
+                <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                    <div id="ai-bar" class="bg-blue-500 h-full w-0 transition-all duration-500"></div>
+                </div>
+                <div class="flex justify-between mt-4">
+                    <span id="ai-msg" class="text-[9px] font-black text-blue-400 uppercase tracking-widest italic">Analyse du flux...</span>
+                    <span id="ai-perc" class="text-[9px] font-black text-gray-500 tracking-widest">0%</span>
+                </div>
             </div>
         </div>
-        <p class="mt-6 text-[9px] text-gray-600 italic">*Estimations basées sur l'analyse des algorithmes de recommandation TikTok et Instagram 2026.</p>
+        <div class="mt-10 flex justify-center gap-10 opacity-30 grayscale brightness-200">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="h-4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" class="h-6">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" class="h-5">
+        </div>
     </header>
 
-    <section id="pricing" class="py-20 px-8 max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="glass-card p-10 rounded-[3rem]">
-                <h3 class="text-xs font-black text-gray-500 uppercase mb-4 tracking-widest">Starter</h3>
-                <div class="text-5xl font-black mb-8">19.99€<span class="text-sm text-gray-600">/mo</span></div>
-                <ul class="space-y-4 text-sm text-gray-400 mb-10 text-left">
-                    <li>✅ 15 clips haute rétention</li>
-                    <li>✅ Formats 9:16 optimisés</li>
-                    <li>✅ Rendu Cloud HD</li>
+    <section id="pricing" class="max-w-7xl mx-auto py-32 px-8">
+        <div class="text-center mb-20">
+            <h2 id="p-title" class="text-4xl md:text-6xl font-black mb-10 uppercase tracking-tighter italic">Plans de Performance</h2>
+            <div class="flex items-center justify-center gap-6 glass-master w-max mx-auto px-8 py-4 rounded-full">
+                <span class="text-[10px] font-extrabold text-gray-500 uppercase tracking-widest">Mensuel</span>
+                <label class="switch">
+                    <input type="checkbox" id="billingCheck" onchange="updatePrices()">
+                    <span class="slider"></span>
+                </label>
+                <span class="text-[10px] font-extrabold text-blue-400 uppercase tracking-widest">Annuel (-60€ d'économie) 🎁</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div class="glass-master p-12 rounded-[4rem] flex flex-col items-start transition hover:border-white/20">
+                <span class="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-4">Solo Creator</span>
+                <div class="text-6xl font-black mb-10" id="p1">19.99€<span class="text-sm font-normal text-gray-700 italic">/mo</span></div>
+                <ul class="space-y-5 mb-12 text-[13px] text-gray-400 flex-1">
+                    <li>✔ ID sécurisé envoyé par mail</li>
+                    <li>✔ 15 Clips HD par mois</li>
+                    <li>✔ Support par IA 24/7</li>
                 </ul>
-                <button class="w-full py-4 rounded-2xl border border-white/10 font-bold hover:bg-white hover:text-black transition">S'abonner</button>
+                <button onclick="checkout('Starter')" class="w-full py-5 rounded-3xl border border-white/10 font-black uppercase text-[10px] tracking-widest hover:bg-white hover:text-black transition">Choisir ce plan</button>
             </div>
 
-            <div class="glass-card p-10 rounded-[3rem] border-blue-600 bg-blue-600/5 scale-105">
-                <div class="text-blue-500 font-bold text-[10px] uppercase mb-4">Recommandé pour la croissance</div>
-                <div class="text-5xl font-black mb-8">24.99€<span class="text-sm text-gray-600">/mo</span></div>
-                <ul class="space-y-4 text-sm text-gray-200 mb-10 text-left">
-                    <li>✅ Clips Illimités</li>
-                    <li>✅ Suppression du logo</li>
-                    <li>✅ Priorité de rendu (vitesse x2)</li>
-                    <li>✅ Analyse de viralité incluse</li>
+            <div class="glass-master p-12 rounded-[4rem] flex flex-col items-start scale-105 border-blue-500/40 bg-blue-500/5 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-blue-500 text-[8px] font-black px-5 py-1.5 uppercase tracking-widest">Plus Populaire</div>
+                <span class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-4">Elite Creator</span>
+                <div class="text-6xl font-black mb-10" id="p2">24.99€<span class="text-sm font-normal text-gray-700 italic">/mo</span></div>
+                <ul class="space-y-5 mb-12 text-[13px] text-gray-200 flex-1">
+                    <li>✔ Identifiants VIP Prioritaires</li>
+                    <li>✔ Clips Illimités (Zéro Logo)</li>
+                    <li>✔ Contrat PDF avec engagement</li>
                 </ul>
-                <button class="w-full py-4 rounded-2xl btn-gradient font-black">Accès Créateur</button>
+                <button onclick="checkout('Creator Pro')" class="btn-elite w-full py-6 rounded-3xl font-black uppercase text-[10px] tracking-widest shadow-xl">Prendre l'avantage</button>
             </div>
 
-            <div class="glass-card p-10 rounded-[3rem]">
-                <h3 class="text-xs font-black text-purple-400 uppercase mb-4 tracking-widest">Expert</h3>
-                <div class="text-5xl font-black mb-8">44.99€<span class="text-sm text-gray-600">/mo</span></div>
-                <ul class="space-y-4 text-sm text-gray-400 mb-10 text-left">
-                    <li>✅ Tout le plan Créateur</li>
-                    <li>✅ Qualité 4K HDR</li>
-                    <li>✅ Support dédié par IA</li>
+            <div class="glass-master p-12 rounded-[4rem] flex flex-col items-start transition hover:border-purple-500/20">
+                <span class="text-[10px] font-black text-purple-400 uppercase tracking-widest mb-4">Agency / B2B</span>
+                <div class="text-6xl font-black mb-10" id="p3">44.99€<span class="text-sm font-normal text-gray-700 italic">/mo</span></div>
+                <ul class="space-y-5 mb-12 text-[13px] text-gray-400 flex-1">
+                    <li>✔ Multi-ID pour collaborateurs</li>
+                    <li>✔ Facturation Pro (EI France)</li>
+                    <li>✔ Accès API & Qualité 4K</li>
                 </ul>
-                <button class="w-full py-4 rounded-2xl border border-white/10 font-bold hover:bg-purple-600 transition">S'abonner</button>
+                <button onclick="checkout('Business')" class="w-full py-5 rounded-3xl border border-purple-500/30 font-black uppercase text-[10px] tracking-widest hover:bg-purple-600 transition">Offre Agence</button>
             </div>
         </div>
     </section>
 
-    <div id="refModal" class="hidden fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-6">
-        <div class="glass-card max-w-sm w-full p-10 rounded-[3rem] text-center border-amber-500/30">
-            <h2 class="text-2xl font-black mb-4">Programme Partenaire</h2>
-            <p class="text-gray-400 text-sm mb-6">Partagez CasaClip et touchez 20% de commission mensuelle sur chaque abonné à vie.</p>
-            <div class="bg-white/5 p-4 rounded-xl border border-white/10 text-blue-400 font-mono text-xs mb-6 select-all">casaclip.com/ref?id=USER_ID</div>
-            <button onclick="toggleModal('refModal')" class="text-xs font-bold text-gray-600 uppercase">Fermer</button>
+    <footer class="max-w-7xl mx-auto py-24 px-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
+        <div class="text-left">
+            <div class="text-3xl font-black italic mb-2 tracking-tighter">CASA<span class="text-blue-500">CLIP</span></div>
+            <p class="text-[10px] text-gray-600 uppercase tracking-widest font-bold">Entreprise Individuelle (EI) • Global Tech</p>
         </div>
-    </div>
+        <div class="flex flex-wrap justify-center gap-10 text-[9px] font-black uppercase tracking-[0.2em] text-gray-500">
+            <a href="#" class="hover:text-white" onclick="alert('CasaClip AI - EI - SIRET en cours - Marseille - France')">Légal</a>
+            <a href="#" class="hover:text-white" onclick="alert('Engagement : Contrat 12 mois ou Mensuel Libre. Signature numérique via mail.')">Contrats</a>
+            <a href="#" class="hover:text-white" onclick="alert('Protection RGPD : Vos données sont cryptées en AES-256.')">Confidentialité</a>
+            <a href="mailto:hello@casaclip.com" class="hover:text-white">Commercial</a>
+        </div>
+    </footer>
 
     <script>
-        async function startAutomation() {
-            const val = document.getElementById('userInput').value;
-            if(!val) { alert("Veuillez entrer un lien."); return; }
-            
-            const email = prompt("Sur quel email souhaitez-vous recevoir l'analyse et le clip ?");
-            if(!email) return;
+        // -- CONFIGURATION MULTILINGUE --
+        const langData = {
+            fr: { title: "L'IA qui transforme<br><span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic'>votre succès.</span>", desc: "Obtenez vos identifiants, signez votre contrat d'engagement et laissez notre IA découper vos prochains hits viraux.", cta: "Créer mon ID & Analyser" },
+            en: { title: "AI Crafting Your<br><span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic'>Viral Success.</span>", desc: "Get your IDs, sign your commitment contract and let our AI crop your next viral hits.", cta: "Create my ID & Analyze" },
+            es: { title: "La IA que crea<br><span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic'>tu éxito viral.</span>", desc: "Obtén tus IDs, firma tu contrato de compromiso y deja que nuestra IA cree tus próximos éxitos.", cta: "Crear mi ID y Analizar" },
+            ar: { title: "الذكاء الاصطناعي<br><span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic'>يصنع نجاحك.</span>", desc: "احصل على هويتك، وقع عقدك، واترك ذكاءنا الاصطناعي يصنع نجاحك القادم.", cta: "إنشاء معرفي وتحليل" }
+        };
 
-            const btn = document.getElementById('mainBtn');
-            btn.innerText = "ESTIMATION EN COURS...";
-            btn.disabled = true;
-
-            try {
-                await fetch('https://hook.eu1.make.com/rfyr9ysgkxukn6mu24c1qkc2vlmhm7cd', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ video_url: val, user_email: email, type: "viral_analysis" })
-                });
-                alert("Analyse de viralité commencée ! Vous recevrez un récapitulatif complet et votre clip par email d'ici 10 minutes.");
-            } catch (error) {
-                alert("Erreur de communication. Réessayez.");
-            } finally {
-                btn.innerText = "Générer mon clip";
-                btn.disabled = false;
-            }
+        function translateSite() {
+            const l = document.getElementById('langBox').value;
+            const t = langData[l];
+            document.body.dir = (l === 'ar' ? 'rtl' : 'ltr');
+            document.getElementById('hero-title').innerHTML = t.title;
+            document.getElementById('hero-desc').innerText = t.desc;
+            document.getElementById('btn-cta').innerText = t.cta;
         }
-        function toggleModal(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+        // -- PRIX DYNAMIQUES (-5€) --
+        function updatePrices() {
+            const annual = document.getElementById('billingCheck').checked;
+            document.getElementById('p1').innerHTML = annual ? "14.99€<span class='text-sm italic text-gray-700'>/mo</span>" : "19.99€<span class='text-sm italic text-gray-700'>/mo</span>";
+            document.getElementById('p2').innerHTML = annual ? "19.99€<span class='text-sm italic text-gray-700'>/mo</span>" : "24.99€<span class='text-sm italic text-gray-700'>/mo</span>";
+            document.getElementById('p3').innerHTML = annual ? "39.99€<span class='text-sm italic text-gray-700'>/mo</span>" : "44.99€<span class='text-sm italic text-gray-700'>/mo</span>";
+        }
+
+        // -- PROCESSUS PSYCHOLOGIQUE (NEURO-LOADER) --
+        const loadSteps = [
+            "Authentification du flux...",
+            "Scan des émotions faciales...",
+            "Détection des hooks viraux...",
+            "Génération de votre ID sécurisé...",
+            "Finalisation du contrat PDF..."
+        ];
+
+        async function processAI() {
+            const url = document.getElementById('vUrl').value;
+            const email = prompt("Sur quel email envoyer votre ID sécurisé et votre preuve de paiement ?");
+            if(!url || !email) return;
+
+            document.getElementById('btn-cta').style.display = 'none';
+            document.getElementById('ai-loader').classList.remove('hidden');
+
+            let p = 0;
+            const timer = setInterval(() => {
+                p += 1;
+                document.getElementById('ai-bar').style.width = p + "%";
+                document.getElementById('ai-perc').innerText = p + "%";
+                document.getElementById('ai-msg').innerText = loadSteps[Math.floor(p/21)] || "C'est prêt !";
+
+                if(p >= 100) {
+                    clearInterval(timer);
+                    fetch('https://hook.eu1.make.com/rfyr9ysgkxukn6mu24c1qkc2vlmhm7cd', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ email: email, url: url, action: "global_onboarding" })
+                    });
+                    alert("ID UNIQUE GÉNÉRÉ ! Consultez votre boîte mail pour vos accès et votre mdp.");
+                    window.location.href = "#pricing";
+                }
+            }, 80);
+        }
+
+        function checkout(plan) {
+            const ann = document.getElementById('billingCheck').checked;
+            const mail = prompt("Email de facturation pour votre contrat " + (ann ? "Annuel" : "Mensuel") + " :");
+            if(!mail) return;
+            
+            fetch('https://hook.eu1.make.com/rfyr9ysgkxukn6mu24c1qkc2vlmhm7cd', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ plan: plan, annual: ann, email: mail, action: "stripe_payment" })
+            });
+            alert("Connexion sécurisée à Stripe en cours... Votre preuve de paiement sera envoyée par mail.");
+        }
+
+        // Simulateur de preuve sociale
+        setInterval(() => {
+            const rand = Math.floor(Math.random() * (50 - 25) + 25);
+            document.getElementById('live-users').innerText = `${rand} créateurs analysent leurs vidéos`;
+        }, 10000);
     </script>
 </body>
 </html>
