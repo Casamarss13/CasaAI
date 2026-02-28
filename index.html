@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CasaClip AI | V36 Ultimate</title>
+    <title>CasaClip AI | Professional Suite V37</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #3b82f6; --accent: #8b5cf6; --bg: #010101; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #fff; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #fff; scroll-behavior: smooth; }
         .aurora { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(59,130,246,0.15) 0%, transparent 40%); }
         .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); transition: 0.3s; }
         .tab-active { background: var(--primary) !important; color: white !important; box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
@@ -16,28 +16,32 @@
         .btn-grad:hover { transform: scale(1.02); filter: brightness(1.2); }
         @keyframes scan { 0% { left: -100%; } 100% { left: 100%; } }
         .scan-line { position: absolute; top: 0; height: 100%; width: 50%; background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent); animation: scan 2s infinite; display: none; }
+        details summary::-webkit-details-marker { display: none; }
     </style>
 </head>
 <body class="select-none">
     <div class="aurora"></div>
 
-    <nav class="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
-        <div class="text-2xl font-black italic tracking-tighter">CASA<span class="text-blue-500">CLIP</span></div>
-        <select id="langBox" onchange="updateUI()" class="glass-card rounded-xl px-4 py-2 text-[10px] font-black uppercase text-white outline-none">
-            <option value="fr">🇫🇷 FR - EUR</option>
-            <option value="en">🇺🇸 EN - USD</option>
-            <option value="es">🇪🇸 ES - EUR</option>
-            <option value="ar">🇸🇦 AR - SAR</option>
-        </select>
+    <nav class="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center relative z-50">
+        <div class="text-2xl font-black italic tracking-tighter uppercase">CASA<span class="text-blue-500">CLIP</span></div>
+        <div class="flex items-center gap-6">
+            <select id="langBox" onchange="updateUI()" class="glass-card rounded-xl px-4 py-2 text-[10px] font-black uppercase text-white outline-none cursor-pointer">
+                <option value="fr">🇫🇷 FR</option>
+                <option value="en">🇺🇸 EN</option>
+                <option value="es">🇪🇸 ES</option>
+                <option value="ar">🇸🇦 AR</option>
+            </select>
+            <button onclick="window.location.href='#contact'" class="hidden md:block text-[10px] font-black uppercase tracking-widest bg-white/5 px-5 py-2 rounded-lg border border-white/10 hover:bg-white/10 transition">Contact SAV AI</button>
+        </div>
     </nav>
 
     <header class="max-w-5xl mx-auto pt-12 pb-20 text-center px-6">
         <h1 id="t-hero" class="text-6xl md:text-8xl font-black mb-10 tracking-tighter leading-none">Transformez vos vidéos<br><span class="text-blue-500 italic">en or viral.</span></h1>
         
-        <div class="max-w-4xl mx-auto glass-card p-3 rounded-[2.5rem] relative overflow-hidden">
+        <div class="max-w-4xl mx-auto glass-card p-3 rounded-[2.5rem] relative overflow-hidden shadow-2xl">
             <div id="scanLine" class="scan-line"></div>
             <div class="flex flex-col md:flex-row gap-3 relative z-10">
-                <input type="text" id="vUrl" placeholder="Collez un lien (YT, TikTok...)" class="flex-1 bg-white/5 px-6 py-5 outline-none text-white font-medium rounded-3xl border border-white/5 focus:border-blue-500/50">
+                <input type="text" id="vUrl" placeholder="Collez un lien (YouTube, TikTok...)" class="flex-1 bg-white/5 px-6 py-5 outline-none text-white font-medium rounded-3xl border border-white/5 focus:border-blue-500/50">
                 
                 <label class="cursor-pointer bg-white/5 hover:bg-white/10 px-6 py-5 rounded-3xl border border-white/10 flex items-center justify-center gap-2 transition">
                     <input type="file" class="hidden" onchange="alert('Fichier prêt !')">
@@ -51,87 +55,130 @@
         <p class="mt-6 text-[10px] font-bold text-gray-500 uppercase tracking-widest" id="t-limit">1 ESSAI GRATUIT PAR ADRESSE IP • AUCUNE CARTE</p>
     </header>
 
-    <section class="max-w-7xl mx-auto px-6 pb-32">
-        
+    <section class="max-w-7xl mx-auto px-6 pb-20">
         <div class="flex justify-center mb-16">
-            <div class="glass-card p-1.5 rounded-2xl inline-flex gap-1 border-white/10">
-                <button id="tab-perso-engaged" onclick="setTab('perso-engaged')" class="px-8 py-4 rounded-xl text-[10px] font-black uppercase transition-all tab-active">Perso Engagé (1 an)</button>
-                <button id="tab-perso-free" onclick="setTab('perso-free')" class="px-8 py-4 rounded-xl text-[10px] font-black text-gray-400 uppercase transition-all">Perso Sans Engagement (+5€)</button>
-                <button id="tab-pro" onclick="setTab('pro')" class="px-8 py-4 rounded-xl text-[10px] font-black text-gray-400 uppercase transition-all">Agence / Pro (1 an)</button>
+            <div class="glass-card p-1.5 rounded-2xl inline-flex flex-wrap md:flex-nowrap gap-1 border-white/10">
+                <button id="tab-perso-engaged" onclick="setTab('perso-engaged')" class="px-6 md:px-8 py-4 rounded-xl text-[10px] font-black uppercase transition-all tab-active">Perso Engagé (1 an)</button>
+                <button id="tab-perso-free" onclick="setTab('perso-free')" class="px-6 md:px-8 py-4 rounded-xl text-[10px] font-black text-gray-400 uppercase transition-all">Perso Sans Engagement (+5€)</button>
+                <button id="tab-pro" onclick="setTab('pro')" class="px-6 md:px-8 py-4 rounded-xl text-[10px] font-black text-gray-400 uppercase transition-all">Agence / Pro (1 an)</button>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div class="glass-card p-10 rounded-[3rem] flex flex-col relative overflow-hidden border-white/5">
-                <p class="text-[10px] font-black text-gray-500 uppercase mb-4 tracking-tighter" id="tag-1">Starter</p>
+            <div class="glass-card p-10 rounded-[3rem] flex flex-col border-white/5">
+                <p class="text-[10px] font-black text-gray-500 uppercase mb-4 tracking-widest">Starter</p>
                 <div class="flex items-baseline gap-1 mb-1">
                     <h3 class="text-5xl font-black" id="p1-price">14.99€</h3>
                     <span class="text-sm font-bold text-gray-500">/mo</span>
                 </div>
                 <p class="text-[9px] font-bold text-blue-400 uppercase mb-8" id="t-commit-1">Engagement 1 an</p>
-                
                 <ul class="space-y-4 text-[11px] font-bold text-gray-400 mb-10 flex-1 uppercase">
                     <li>● 5 Clips Viraux / mois</li>
                     <li>● Rendu HD Standard</li>
                 </ul>
-
                 <div class="pt-6 border-t border-white/5">
-                    <p class="text-[9px] font-black text-gray-500 uppercase mb-2">Total à payer aujourd'hui :</p>
+                    <p class="text-[9px] font-black text-gray-500 uppercase mb-2">Total dû aujourd'hui :</p>
                     <p class="text-2xl font-black" id="p1-total">179.88€</p>
                 </div>
                 <button class="btn-grad w-full py-5 rounded-2xl mt-8 font-black uppercase text-[10px]">Choisir</button>
             </div>
 
-            <div class="glass-card p-10 rounded-[3rem] flex flex-col relative border-blue-500/30 bg-blue-500/5 scale-105">
+            <div class="glass-card p-10 rounded-[3rem] flex flex-col border-blue-500/30 bg-blue-500/5 scale-105 relative">
                 <div class="absolute top-6 right-10 bg-blue-600 text-[8px] font-black px-3 py-1 rounded-full uppercase italic">Populaire</div>
-                <p class="text-[10px] font-black text-blue-400 uppercase mb-4 tracking-tighter" id="tag-2">Elite AI</p>
+                <p class="text-[10px] font-black text-blue-400 uppercase mb-4 tracking-widest">Elite AI</p>
                 <div class="flex items-baseline gap-1 mb-1">
                     <h3 class="text-5xl font-black" id="p2-price">34.99€</h3>
                     <span class="text-sm font-bold text-blue-400">/mo</span>
                 </div>
                 <p class="text-[9px] font-bold text-blue-300 uppercase mb-8" id="t-commit-2">Engagement 1 an</p>
-                
                 <ul class="space-y-4 text-[11px] font-black text-white mb-10 flex-1 uppercase">
                     <li>● 30 Clips Viraux / mois</li>
                     <li>● Full HD 1080p Natif</li>
                 </ul>
-
                 <div class="pt-6 border-t border-white/10">
-                    <p class="text-[9px] font-black text-blue-400 uppercase mb-2">Total à payer aujourd'hui :</p>
+                    <p class="text-[9px] font-black text-blue-400 uppercase mb-2">Total dû aujourd'hui :</p>
                     <p class="text-2xl font-black text-white" id="p2-total">419.88€</p>
                 </div>
                 <button class="btn-grad w-full py-5 rounded-2xl mt-8 font-black uppercase text-[10px]">Prendre Elite</button>
             </div>
 
             <div class="glass-card p-10 rounded-[3rem] flex flex-col border-purple-500/20">
-                <p class="text-[10px] font-black text-purple-400 uppercase mb-4 tracking-tighter" id="tag-3">Master AI</p>
+                <p class="text-[10px] font-black text-purple-400 uppercase mb-4 tracking-widest">Master AI</p>
                 <div class="flex items-baseline gap-1 mb-1">
                     <h3 class="text-5xl font-black" id="p3-price">64.99€</h3>
                     <span class="text-sm font-bold text-gray-500">/mo</span>
                 </div>
                 <p class="text-[9px] font-bold text-purple-400 uppercase mb-8" id="t-commit-3">Engagement 1 an</p>
-                
                 <ul class="space-y-4 text-[11px] font-bold text-gray-400 mb-10 flex-1 uppercase">
-                    <li class="text-white italic">✔ ACCÈS ILLIMITÉ</li>
+                    <li class="text-white italic">✔ Illimité*</li>
                     <li class="text-purple-300 italic">✔ 4K HDR INCLUS</li>
                 </ul>
-
+                <p class="text-[8px] text-gray-600 mb-4">*Max 60 vidéos/mois (CGV)</p>
                 <div class="pt-6 border-t border-white/5">
-                    <p class="text-[9px] font-black text-gray-500 uppercase mb-2">Total à payer aujourd'hui :</p>
+                    <p class="text-[9px] font-black text-gray-500 uppercase mb-2">Total dû aujourd'hui :</p>
                     <p class="text-2xl font-black" id="p3-total">779.88€</p>
                 </div>
-                <button class="btn-grad w-full py-5 rounded-2xl mt-8 font-black uppercase text-[10px]">Espace Master</button>
+                <button class="btn-grad w-full py-5 rounded-2xl mt-8 font-black uppercase text-[10px]">Choisir Master</button>
             </div>
         </div>
     </section>
 
+    <section class="max-w-4xl mx-auto px-6 py-20" id="faq">
+        <h2 class="text-3xl font-black text-center mb-12 uppercase tracking-tighter">Questions Fréquentes</h2>
+        <div class="space-y-4">
+            <details class="glass-card rounded-2xl p-6 cursor-pointer">
+                <summary class="font-black uppercase text-xs tracking-widest">Comment fonctionne l'essai gratuit par IP ?</summary>
+                <p class="mt-4 text-xs text-gray-400 leading-relaxed">Notre système détecte votre adresse IP unique. Vous pouvez générer un clip complet gratuitement sans carte bancaire pour tester la puissance de notre IA.</p>
+            </details>
+            <details class="glass-card rounded-2xl p-6 cursor-pointer">
+                <summary class="font-black uppercase text-xs tracking-widest">Que signifie "Illimité*" pour le plan Master ?</summary>
+                <p class="mt-4 text-xs text-gray-400 leading-relaxed">Pour garantir une vitesse de rendu optimale à tous nos utilisateurs, le plan Master est limité à 60 vidéos par mois. Au-delà, un supplément peut être appliqué ou la vitesse réduite.</p>
+            </details>
+            <details class="glass-card rounded-2xl p-6 cursor-pointer">
+                <summary class="font-black uppercase text-xs tracking-widest">Comment contacter le SAV AI ?</summary>
+                <p class="mt-4 text-xs text-gray-400 leading-relaxed">Cliquez sur le bouton "Contactez-nous" en bas de page. Notre support répond en moins de 2h aux membres Elite et Master.</p>
+            </details>
+        </div>
+    </section>
+
+    <footer class="max-w-7xl mx-auto px-8 py-20 border-t border-white/5" id="contact">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div>
+                <div class="text-xl font-black italic mb-6 uppercase">CASA<span class="text-blue-500">CLIP</span></div>
+                <p class="text-[10px] text-gray-500 font-bold uppercase leading-relaxed">Leader mondial de la création de clips viraux par Intelligence Artificielle.</p>
+            </div>
+            <div>
+                <h4 class="text-[10px] font-black uppercase mb-6 text-white tracking-widest">Juridique</h4>
+                <ul class="text-[10px] text-gray-500 space-y-4 font-bold uppercase">
+                    <li><a href="#" class="hover:text-blue-400 transition">Mentions Légales</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">CGV / CGU</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Politique de Confidentialité</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-[10px] font-black uppercase mb-6 text-white tracking-widest">Support</h4>
+                <ul class="text-[10px] text-gray-500 space-y-4 font-bold uppercase">
+                    <li><a href="#faq" class="hover:text-blue-400 transition">FAQ</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Documentation API</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-[10px] font-black uppercase mb-6 text-white tracking-widest">Assistance</h4>
+                <button class="btn-grad w-full py-4 rounded-xl font-black text-[10px] uppercase">Contactez le SAV AI</button>
+            </div>
+        </div>
+        <div class="text-center pt-12 border-t border-white/5">
+            <p class="text-[9px] text-gray-600 font-bold uppercase tracking-widest">© 2026 CasaClip AI. Tous droits réservés.</p>
+        </div>
+    </footer>
+
     <script>
         let currentTab = 'perso-engaged';
         const config = {
-            fr: { cur: "€", rate: 1, commit: "Engagement 1 an", free: "Sans Engagement (+5€)", limit: "1 ESSAI GRATUIT PAR ADRESSE IP • AUCUNE CARTE", import: "Importer" },
-            en: { cur: "$", rate: 1.1, commit: "1 Year Commitment", free: "No Commitment (+$5)", limit: "1 FREE TRIAL PER IP ADDRESS • NO CARD", import: "Import File" },
-            es: { cur: "€", rate: 1, commit: "Compromiso de 1 año", free: "Sin Compromiso (+5€)", limit: "1 PRUEBA GRATUITA POR IP • SIN TARJETA", import: "Importar" },
-            ar: { cur: "﷼", rate: 4.1, commit: "التزام لمدة سنة واحدة", free: "بدون التزام (+5 ريال)", limit: "تجربة مجانية واحدة لكل عنوان IP • بدون بطاقة", import: "استيراد ملف" }
+            fr: { cur: "€", rate: 1, commit: "Engagement 1 an", free: "Sans Engagement (+5€)", limit: "1 ESSAI GRATUIT PAR ADRESSE IP • AUCUNE CARTE", import: "Importer", due: "Total dû aujourd'hui :" },
+            en: { cur: "$", rate: 1.1, commit: "1 Year Commitment", free: "No Commitment (+$5)", limit: "1 FREE TRIAL PER IP ADDRESS • NO CARD", import: "Import File", due: "Total due today:" },
+            es: { cur: "€", rate: 1, commit: "Compromiso de 1 año", free: "Sin Compromiso (+5€)", limit: "1 PRUEBA GRATUITA POR IP • SIN TARJETA", import: "Importar", due: "Total hoy:" },
+            ar: { cur: "﷼", rate: 4.1, commit: "التزام لمدة سنة واحدة", free: "بدون التزام (+5 ريال)", limit: "تجربة مجانية واحدة لكل عنوان IP • بدون بطاقة", import: "استيراد ملف", due: "المبلغ الإجمالي اليوم:" }
         };
 
         function setTab(t) {
@@ -149,18 +196,16 @@
             const lang = document.getElementById('langBox').value;
             const c = config[lang];
             
-            // Textes statiques
             document.getElementById('t-limit').innerText = c.limit;
             document.getElementById('t-import').innerText = c.import;
             
-            // Logique de prix
-            let base = [14.99, 34.99, 64.99]; // Perso
+            let base = [14.99, 34.99, 64.99]; 
             let tax = 0;
-            let mult = 12; // Par défaut engagé
+            let mult = 12;
 
             if(currentTab === 'perso-free') {
                 tax = 5;
-                mult = 1; // On ne paie que le mois
+                mult = 1; 
                 document.querySelectorAll('[id^="t-commit-"]').forEach(e => e.innerText = c.free);
             } else if (currentTab === 'pro') {
                 base = [89.99, 189.99, 499.99];
@@ -178,14 +223,14 @@
         }
 
         function startScan() {
+            if(!document.getElementById('vUrl').value) return alert("Veuillez entrer une URL.");
             document.getElementById('scanLine').style.display = "block";
             setTimeout(() => { 
                 document.getElementById('scanLine').style.display = "none";
-                alert("Scan IP terminé. Prêt pour l'essai gratuit.");
+                alert("Scan IP : Éligible pour l'essai gratuit.");
             }, 2000);
         }
 
-        // Init au chargement
         updateUI();
     </script>
 </body>
