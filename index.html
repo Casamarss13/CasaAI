@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CasaClip AI | Ultra-Secure Pricing</title>
+    <title>CASA CLIP AI | Global Suite V35</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -12,144 +12,172 @@
         .aurora { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(59,130,246,0.15) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(139,92,246,0.1) 0%, transparent 40%); }
         .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); transition: 0.3s; }
         
-        /* Toggle Switch 4K */
+        /* Animation Scanner */
+        @keyframes scan { 0% { left: -100%; } 100% { left: 100%; } }
+        .scan-line { position: absolute; top: 0; height: 100%; width: 50%; background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent); animation: scan 2s infinite; display: none; }
+
+        /* Toggle 4K Switch */
         .toggle-4k { width: 44px; height: 22px; background: #222; border-radius: 20px; position: relative; cursor: pointer; border: 1px solid #444; }
         .toggle-4k::before { content: ''; position: absolute; width: 16px; height: 16px; background: #fff; border-radius: 50%; top: 2px; left: 3px; transition: 0.3s; }
         input:checked + .toggle-4k { background: var(--primary); }
         input:checked + .toggle-4k::before { transform: translateX(21px); }
         [dir="rtl"] input:checked + .toggle-4k::before { transform: translateX(-21px); }
-
-        .btn-main { background: linear-gradient(135deg, var(--primary), var(--accent)); transition: 0.3s; }
-        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3); }
+        
+        .btn-grad { background: linear-gradient(135deg, var(--primary), var(--accent)); transition: 0.3s; }
+        .btn-grad:hover { transform: translateY(-2px); filter: brightness(1.2); box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3); }
     </style>
 </head>
 <body class="select-none">
     <div class="aurora"></div>
 
-    <nav class="max-w-7xl mx-auto px-8 py-8 flex justify-between items-center relative z-50">
-        <div class="text-2xl font-black italic tracking-tighter">CASA<span class="text-blue-500">CLIP</span></div>
-        <div class="flex items-center gap-4">
-            <select id="langBox" onchange="changeLang(this.value)" class="glass-card rounded-xl px-4 py-2 text-[10px] font-black uppercase text-white outline-none cursor-pointer border-white/10">
-                <option value="fr">🇫🇷 FR - EUR (€)</option>
-                <option value="en">🇺🇸 EN - USD ($)</option>
-                <option value="es">🇪🇸 ES - EUR (€)</option>
-                <option value="ar">🇸🇦 AR - SAR (﷼)</option>
-            </select>
-        </div>
+    <nav class="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center relative z-50">
+        <div class="text-2xl font-black italic tracking-tighter uppercase">CASA<span class="text-blue-500">CLIP</span></div>
+        <select id="langBox" onchange="changeLang(this.value)" class="glass-card rounded-xl px-4 py-2 text-[10px] font-black uppercase text-white outline-none cursor-pointer border-white/10">
+            <option value="fr">🇫🇷 FR - EUR (€)</option>
+            <option value="en">🇺🇸 EN - USD ($)</option>
+            <option value="es">🇪🇸 ES - EUR (€)</option>
+            <option value="ar">🇸🇦 AR - SAR (﷼)</option>
+        </select>
     </nav>
 
-    <section class="max-w-7xl mx-auto px-6 py-10 text-center relative z-10">
-        <h1 id="t-hero" class="text-5xl md:text-7xl font-black mb-12 tracking-tighter">L'IA qui forge<br><span class="text-blue-500 italic">votre succès viral.</span></h1>
+    <header class="max-w-5xl mx-auto pt-12 pb-20 text-center px-6 relative z-10">
+        <h1 id="t-hero" class="text-6xl md:text-8xl font-black mb-10 tracking-tighter leading-[0.9]">Transformez vos vidéos<br><span class="text-blue-500 italic">en or viral.</span></h1>
         
-        <div class="glass-card p-1.5 rounded-full inline-flex gap-1 mb-10 border-white/5">
-            <button id="mode-perso" onclick="switchMode('perso')" class="px-8 py-3 rounded-full text-[10px] font-black uppercase bg-blue-600 text-white transition-all">PARTICULIER</button>
-            <button id="mode-pro" onclick="switchMode('pro')" class="px-8 py-3 rounded-full text-[10px] font-black text-gray-500 uppercase transition-all">AGENCE / LIGUE</button>
+        <div class="max-w-3xl mx-auto glass-card p-2 rounded-[2.5rem] border-white/10 shadow-2xl relative overflow-hidden">
+            <div id="scanLine" class="scan-line"></div>
+            <div class="flex flex-col md:flex-row gap-2 relative z-10">
+                <input type="text" id="vUrl" placeholder="Collez le lien YouTube, TikTok..." class="flex-1 bg-transparent px-8 py-5 outline-none text-white font-medium rounded-[2rem]">
+                <button onclick="startScan()" id="t-scan-btn" class="btn-grad px-10 py-5 rounded-[1.8rem] font-black text-xs uppercase tracking-widest text-white shadow-lg">Analyser l'URL</button>
+            </div>
+        </div>
+        <p class="mt-6 text-[10px] font-bold text-gray-500 uppercase tracking-widest" id="t-free-msg">1 essai gratuit par jour • sans carte bancaire</p>
+    </header>
+
+    <section class="max-w-7xl mx-auto px-6 pb-32 text-center relative z-10">
+        
+        <div class="glass-card p-1.5 rounded-full inline-flex gap-1 mb-12 border-white/5">
+            <button id="mode-perso" onclick="switchMode('perso')" class="px-10 py-3 rounded-full text-[10px] font-black uppercase bg-blue-600 text-white shadow-lg transition-all">PARTICULIER</button>
+            <button id="mode-pro" onclick="switchMode('pro')" class="px-10 py-3 rounded-full text-[10px] font-black text-gray-500 uppercase transition-all">AGENCE / LIGUE</button>
         </div>
         
         <div class="flex flex-col items-center mb-16">
             <div class="flex items-center gap-4">
-                <span id="t-m" class="text-[9px] font-black text-gray-500 uppercase">Mensuel (+5€)</span>
+                <span id="t-m-cycle" class="text-[9px] font-black text-gray-500 uppercase">Mensuel (+5€)</span>
                 <button onclick="toggleCycle()" class="w-12 h-6 bg-blue-600/20 border border-blue-500/50 rounded-full relative">
                     <div id="cycleCircle" class="w-4 h-4 bg-blue-500 rounded-full absolute top-1 left-1 transition-all"></div>
                 </button>
-                <span id="t-a" class="text-[9px] font-black text-white uppercase italic tracking-widest">ANNUEL (Économisez 25%)</span>
+                <span id="t-a-cycle" class="text-[9px] font-black text-white uppercase italic tracking-widest">ANNUEL (ÉCONOMISEZ 25%)</span>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-left">
             
-            <div class="glass-card p-10 rounded-[3rem] flex flex-col border-white/5 relative">
-                <p id="tag1" class="text-[10px] font-black text-gray-500 uppercase mb-4 tracking-widest">Starter</p>
-                <h3 class="text-5xl font-black mb-1 tracking-tighter" id="p1-m-display">14.99€</h3>
-                <p class="text-[10px] text-gray-400 mb-6 uppercase font-bold t-per">par mois</p>
-                
-                <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-5 mb-8">
-                    <p class="text-[9px] font-black text-blue-400 uppercase mb-1 t-due">Total à payer aujourd'hui :</p>
-                    <p id="p1-total-display" class="text-xl font-black text-white">179.88€</p>
+            <div class="glass-card p-10 rounded-[3.5rem] flex flex-col border-white/5 relative">
+                <p class="text-[10px] font-black text-gray-500 uppercase mb-4 tracking-widest">Starter</p>
+                <div class="flex items-baseline gap-2 mb-1">
+                    <h3 class="text-5xl font-black tracking-tighter" id="p1-m">14.99€</h3>
+                    <span class="text-xl text-gray-600 line-through font-bold hidden" id="p1-old"></span>
                 </div>
-
+                <p class="text-[10px] text-gray-400 mb-6 uppercase font-bold t-per-txt">par mois</p>
+                <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-5 mb-8">
+                    <p class="text-[9px] font-black text-blue-400 uppercase mb-1 t-due-txt">Total à payer aujourd'hui :</p>
+                    <p id="p1-total" class="text-xl font-black text-white">179.88€</p>
+                </div>
                 <ul class="space-y-4 text-[11px] font-bold text-gray-400 mb-10 flex-1 uppercase">
                     <li>● 5 Clips Viraux / mois</li>
-                    <li id="res1">● Résolution HD Standard</li>
+                    <li>● Rendu HD Standard</li>
                 </ul>
-
                 <div class="border-t border-white/5 pt-8 flex items-center justify-between mb-8">
-                    <span class="text-[9px] font-black uppercase text-blue-400 t-opt">Option 4K HDR (+9.99)</span>
+                    <span class="text-[9px] font-black uppercase text-blue-400 t-opt-txt">Option 4K HDR (+9.99)</span>
                     <label class="relative inline-block"><input type="checkbox" id="chk1" onchange="updatePrices()" class="hidden"><div class="toggle-4k"></div></label>
                 </div>
-                <button class="w-full py-5 rounded-2xl bg-white/5 border border-white/10 font-black uppercase text-[10px] t-btn hover:bg-white hover:text-black transition">Choisir</button>
+                <button class="w-full py-5 rounded-2xl bg-white/5 border border-white/10 font-black uppercase text-[10px] t-sel-btn">Choisir</button>
             </div>
 
-            <div class="glass-card p-10 rounded-[3rem] border-blue-500/40 bg-blue-500/5 scale-105 relative flex flex-col">
-                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-[8px] font-black px-6 py-2 rounded-full uppercase tracking-widest t-reco">Recommandé</div>
-                <p id="tag2" class="text-[10px] font-black text-blue-400 uppercase mb-4 tracking-widest">Elite</p>
-                <h3 class="text-5xl font-black mb-1 tracking-tighter" id="p2-m-display">34.99€</h3>
-                <p class="text-[10px] text-blue-300/60 mb-6 uppercase font-bold t-per">par mois</p>
-
-                <div class="bg-blue-500/20 border border-blue-500/30 rounded-2xl p-5 mb-8">
-                    <p class="text-[9px] font-black text-blue-400 uppercase mb-1 t-due">Total à payer aujourd'hui :</p>
-                    <p id="p2-total-display" class="text-xl font-black text-white">419.88€</p>
+            <div class="glass-card p-10 rounded-[3.5rem] border-blue-500/50 bg-blue-500/5 scale-105 relative flex flex-col">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-[8px] font-black px-6 py-2 rounded-full uppercase tracking-widest t-reco-txt">Recommandé</div>
+                <p class="text-[10px] font-black text-blue-400 uppercase mb-4 tracking-widest">Elite</p>
+                <div class="flex items-baseline gap-2 mb-1">
+                    <h3 class="text-5xl font-black tracking-tighter" id="p2-m">34.99€</h3>
+                    <span class="text-xl text-gray-600 line-through font-bold hidden" id="p2-old"></span>
                 </div>
-
+                <p class="text-[10px] text-blue-300/60 mb-6 uppercase font-bold t-per-txt">par mois</p>
+                <div class="bg-blue-500/20 border border-blue-500/30 rounded-2xl p-5 mb-8">
+                    <p class="text-[9px] font-black text-blue-400 uppercase mb-1 t-due-txt">Total à payer aujourd'hui :</p>
+                    <p id="p2-total" class="text-xl font-black text-white">419.88€</p>
+                </div>
                 <ul class="space-y-4 text-[11px] font-black text-white mb-10 flex-1 uppercase">
                     <li>● 30 Clips Viraux / mois</li>
-                    <li id="res2">● Full HD 1080p Natif</li>
+                    <li>● Full HD 1080p Natif</li>
                 </ul>
-
                 <div class="border-t border-white/10 pt-8 flex items-center justify-between mb-8">
-                    <span class="text-[10px] font-black uppercase text-blue-400 italic t-opt">Boost 4K HDR (+9.99)</span>
+                    <span class="text-[10px] font-black uppercase text-blue-400 italic t-opt-txt">Boost 4K HDR (+9.99)</span>
                     <label class="relative inline-block"><input type="checkbox" id="chk2" onchange="updatePrices()" class="hidden"><div class="toggle-4k"></div></label>
                 </div>
-                <button class="btn-main w-full py-6 rounded-2xl font-black uppercase text-[10px] text-white">Prendre Elite</button>
+                <button class="btn-grad w-full py-6 rounded-2xl font-black uppercase text-[10px] text-white">Prendre Elite</button>
             </div>
 
-            <div class="glass-card p-10 rounded-[3rem] border-purple-500/20 flex flex-col">
-                <p id="tag3" class="text-[10px] font-black text-purple-400 uppercase mb-4 tracking-widest">Master AI</p>
-                <h3 class="text-5xl font-black mb-1 tracking-tighter" id="p3-m-display">64.99€</h3>
-                <p class="text-[10px] text-gray-400 mb-6 uppercase font-bold t-per">par mois</p>
-
-                <div class="bg-purple-500/10 border border-purple-500/20 rounded-2xl p-5 mb-8">
-                    <p class="text-[9px] font-black text-purple-400 uppercase mb-1 t-due">Total à payer aujourd'hui :</p>
-                    <p id="p3-total-display" class="text-xl font-black text-white">779.88€</p>
+            <div class="glass-card p-10 rounded-[3.5rem] border-purple-500/20 flex flex-col">
+                <p class="text-[10px] font-black text-purple-400 uppercase mb-4 tracking-widest">Master AI</p>
+                <div class="flex items-baseline gap-2 mb-1">
+                    <h3 class="text-5xl font-black tracking-tighter" id="p3-m">64.99€</h3>
+                    <span class="text-xl text-gray-600 line-through font-bold hidden" id="p3-old"></span>
                 </div>
-
+                <p class="text-[10px] text-gray-400 mb-6 uppercase font-bold t-per-txt">par mois</p>
+                <div class="bg-purple-500/10 border border-purple-500/20 rounded-2xl p-5 mb-8">
+                    <p class="text-[9px] font-black text-purple-400 uppercase mb-1 t-due-txt">Total à payer aujourd'hui :</p>
+                    <p id="p3-total" class="text-xl font-black text-white">779.88€</p>
+                </div>
                 <ul class="space-y-4 text-[11px] font-bold text-gray-400 mb-10 flex-1 uppercase">
                     <li class="text-white italic">✔ Accès ILLIMITÉ*</li>
                     <li class="text-purple-300 italic">✔ 4K HDR INCLUS</li>
                 </ul>
-                <button class="w-full py-5 rounded-2xl bg-purple-600/10 border border-purple-500/30 font-black uppercase text-[10px] text-purple-400 hover:bg-purple-600 hover:text-white transition">Choisir</button>
+                <button class="w-full py-5 rounded-2xl bg-purple-600/10 border border-purple-500/30 font-black uppercase text-[10px] text-purple-400 hover:bg-purple-600 hover:text-white transition t-sel-btn">Choisir</button>
             </div>
-
         </div>
     </section>
 
     <script>
         const i18n = {
-            fr: { cur: "€", rate: 1, after: true, dir: "ltr", hero: "L'IA qui forge<br><span class='text-blue-500 italic'>votre succès viral.</span>", m: "Mensuel (+5€)", a: "ANNUEL (-25%)", due: "Total à payer aujourd'hui :", per: "par mois", reco: "Recommandé", opt: "Option 4K HDR (+9.99)", btn: "Choisir", p: "PARTICULIER", g: "AGENCE / LIGUE" },
-            en: { cur: "$", rate: 1.1, after: false, dir: "ltr", hero: "The AI Engine<br><span class='text-blue-500 italic'>Scaling your Empire.</span>", m: "Monthly (+$5)", a: "ANNUAL (-25%)", due: "Due today (Full amount):", per: "per month", reco: "Most Popular", opt: "4K HDR Upgrade (+9.99)", btn: "Select Plan", p: "INDIVIDUAL", g: "AGENCY / ENTERPRISE" },
-            es: { cur: "€", rate: 1, after: true, dir: "ltr", hero: "La IA que forja<br><span class='text-blue-500 italic'>tu éxito viral.</span>", m: "Mensual (+5€)", a: "ANUAL (-25%)", due: "Total a pagar hoy:", per: "al mes", reco: "Recomendado", opt: "Opción 4K HDR (+9.99)", btn: "Elegir", p: "PARTICULAR", g: "AGENCIA / LIGA" },
-            ar: { cur: "﷼", rate: 4.1, after: true, dir: "rtl", hero: "الذكاء الاصطناعي<br><span class='text-blue-500 italic'>يصنع نجاحك الباهر.</span>", m: "شهري (+5﷼)", a: "سنوي (توفير 25%)", per: "في الشهر", due: "المبلغ الإجمالي اليوم:", reco: "الأكثر طلباً", opt: "خيار 4K HDR (+9.99)", btn: "اختر", p: "فردي", g: "وكالة / دوري" }
+            fr: { cur: "€", rate: 1, after: true, dir: "ltr", hero: "Transformez vos vidéos<br><span class='text-blue-500 italic'>en or viral.</span>", m: "Mensuel (+5€)", a: "ANNUEL (-25%)", due: "Total à payer aujourd'hui :", per: "par mois", reco: "Recommandé", opt: "Option 4K HDR (+9.99)", p: "PARTICULIER", g: "AGENCE / LIGUE", scan: "Analyser l'URL", scanning: "Analyse en cours...", free: "1 essai gratuit par jour • sans carte", btn: "Choisir", ph: "Collez le lien YouTube, TikTok..." },
+            en: { cur: "$", rate: 1.1, after: false, dir: "ltr", hero: "Turn your content<br><span class='text-blue-500 italic'>into Viral Gold.</span>", m: "Monthly (+$5)", a: "ANNUAL (-25%)", due: "Due today (Full amount):", per: "per month", reco: "Most Popular", opt: "4K HDR Upgrade (+9.99)", p: "INDIVIDUAL", g: "AGENCY / ENTERPRISE", scan: "Analyze URL", scanning: "Analyzing...", free: "1 free daily trial • no credit card", btn: "Select", ph: "Paste YouTube, TikTok link..." },
+            es: { cur: "€", rate: 1, after: true, dir: "ltr", hero: "Transforma tus videos<br><span class='text-blue-500 italic'>en éxito viral.</span>", m: "Mensual (+5€)", a: "ANUAL (-25%)", due: "Total a pagar hoy:", per: "al mes", reco: "Recomendado", opt: "Opción 4K HDR (+9.99)", p: "PARTICULAR", g: "AGENCIA / LIGA", scan: "Analizar URL", scanning: "Analizando...", free: "1 prueba gratis al día • sin tarjeta", btn: "Elegir", ph: "Pega el enlace de YouTube, TikTok..." },
+            ar: { cur: "﷼", rate: 4.1, after: true, dir: "rtl", hero: "حول فيديوهاتك<br><span class='text-blue-500 italic'>إلى نجاح باهر.</span>", m: "شهري (+5﷼)", a: "سنوي (توفير 25%)", per: "في الشهر", due: "المبلغ الإجمالي اليوم:", reco: "الأكثر طلباً", opt: "خيار 4K HDR (+9.99)", p: "فردي", g: "وكالة / دوري", scan: "تحليل الرابط", scanning: "جاري التحليل...", free: "تجربة مجانية يومياً • بدون بطاقة", btn: "اختر", ph: "ضع رابط يوتيوب أو تيك توك..." }
         };
 
         let lang = 'fr';
-        let cycle = 'a'; // a = annuel, m = mensuel
-        let mode = 'perso'; // perso ou pro
+        let cycle = 'a'; 
+        let mode = 'perso';
 
         function changeLang(l) {
             lang = l;
             const t = i18n[l];
             document.documentElement.dir = t.dir;
             document.getElementById('t-hero').innerHTML = t.hero;
-            document.getElementById('t-m').innerText = t.m;
-            document.getElementById('t-a').innerText = t.a;
-            document.getElementById('mode-perso').innerText = t.p;
-            document.getElementById('mode-pro').innerText = t.g;
-            document.querySelectorAll('.t-due').forEach(e => e.innerText = t.due);
-            document.querySelectorAll('.t-per').forEach(e => e.innerText = t.per);
-            document.querySelectorAll('.t-opt').forEach(e => e.innerText = t.opt);
-            document.querySelectorAll('.t-btn').forEach(e => e.innerText = t.btn);
-            document.querySelector('.t-reco').innerText = t.reco;
+            document.getElementById('t-m-cycle').innerText = t.m;
+            document.getElementById('t-a-cycle').innerText = t.a;
+            document.getElementById('t-scan-btn').innerText = t.scan;
+            document.getElementById('t-free-msg').innerText = t.free;
+            document.getElementById('vUrl').placeholder = t.ph;
+            document.querySelectorAll('.t-due-txt').forEach(e => e.innerText = t.due);
+            document.querySelectorAll('.t-per-txt').forEach(e => e.innerText = t.per);
+            document.querySelectorAll('.t-opt-txt').forEach(e => e.innerText = t.opt);
+            document.querySelectorAll('.t-sel-btn').forEach(e => e.innerText = t.btn);
+            document.querySelector('.t-reco-txt').innerText = t.reco;
             updatePrices();
+        }
+
+        function startScan() {
+            const btn = document.getElementById('t-scan-btn');
+            const line = document.getElementById('scanLine');
+            if(!document.getElementById('vUrl').value) return alert("URL vide");
+            btn.innerText = i18n[lang].scanning;
+            line.style.display = "block";
+            setTimeout(() => {
+                line.style.display = "none";
+                btn.innerText = i18n[lang].scan;
+                alert("Scan OK !");
+            }, 2000);
         }
 
         function format(v) {
@@ -161,37 +189,49 @@
         function updatePrices() {
             const base = (mode === 'perso') ? [14.99, 34.99, 64.99] : [89.99, 189.99, 499.99];
             const tax = (cycle === 'm') ? 5 : 0;
-            const opt1 = document.getElementById('chk1').checked ? 9.99 : 0;
-            const opt2 = document.getElementById('chk2').checked ? 9.99 : 0;
+            const o1 = document.getElementById('chk1').checked ? 9.99 : 0;
+            const o2 = document.getElementById('chk2').checked ? 9.99 : 0;
 
-            const finalPlans = [
-                { id: "p1", val: base[0] + tax + opt1 },
-                { id: "p2", val: base[1] + tax + opt2 },
-                { id: "p3", val: base[2] + tax }
+            const plans = [
+                { id: "p1", val: base[0] + tax + o1, full: base[0] + 5 + o1 },
+                { id: "p2", val: base[1] + tax + o2, full: base[1] + 5 + o2 },
+                { id: "p3", val: base[2] + tax, full: base[2] + 5 }
             ];
 
-            finalPlans.forEach(p => {
-                document.getElementById(`${p.id}-m-display`).innerText = format(p.val);
-                // RÈGLE CRUCIALE : En annuel x12, en mensuel x1
+            plans.forEach(p => {
+                document.getElementById(`${p.id}-m`).innerText = format(p.val);
+                const oldEl = document.getElementById(`${p.id}-old`);
+                if (cycle === 'a') {
+                    oldEl.innerText = format(p.full);
+                    oldEl.classList.remove('hidden');
+                } else {
+                    oldEl.classList.add('hidden');
+                }
                 const multiplier = (cycle === 'a') ? 12 : 1;
-                document.getElementById(`${p.id}-total-display`).innerText = format(p.val * multiplier);
+                document.getElementById(`${p.id}-total`).innerText = format(p.val * multiplier);
             });
         }
 
         function toggleCycle() {
             cycle = (cycle === 'a') ? 'm' : 'a';
-            document.getElementById('cycleCircle').style.transform = (cycle === 'a') ? 'translateX(24px)' : 'translateX(0px)';
+            const circle = document.getElementById('cycleCircle');
+            const isRTL = i18n[lang].dir === 'rtl';
+            
+            if (cycle === 'a') {
+                circle.style.transform = isRTL ? 'translateX(-24px)' : 'translateX(24px)';
+            } else {
+                circle.style.transform = 'translateX(0px)';
+            }
             updatePrices();
         }
 
         function switchMode(m) {
             mode = m;
-            document.getElementById('mode-perso').className = (m==='perso') ? "px-8 py-3 rounded-full text-[10px] font-black bg-blue-600 text-white" : "px-8 py-3 rounded-full text-[10px] font-black text-gray-500";
-            document.getElementById('mode-pro').className = (m==='pro') ? "px-8 py-3 rounded-full text-[10px] font-black bg-blue-600 text-white" : "px-8 py-3 rounded-full text-[10px] font-black text-gray-500";
+            document.getElementById('mode-perso').className = (m==='perso') ? "px-10 py-3 rounded-full text-[10px] font-black bg-blue-600 text-white shadow-lg" : "px-10 py-3 rounded-full text-[10px] font-black text-gray-500";
+            document.getElementById('mode-pro').className = (m==='pro') ? "px-10 py-3 rounded-full text-[10px] font-black bg-blue-600 text-white shadow-lg" : "px-10 py-3 rounded-full text-[10px] font-black text-gray-500";
             updatePrices();
         }
 
-        // Lancement initial
         updatePrices();
     </script>
 </body>
