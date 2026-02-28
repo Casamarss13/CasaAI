@@ -1,53 +1,26 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>CasaClip AI | Viral Intelligence Suite</title>
-    <meta name="description" content="L'IA qui transforme vos vidéos brutes en clips viraux 4K.">
-    <meta property="og:title" content="CasaClip AI">
-    <meta property="og:image" content="https://casaclip.ai/preview.jpg">
-
+    <title>CasaClip AI | Global Viral Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #3b82f6; --accent: #8b5cf6; --bg: #010101; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #fff; overflow-x: hidden; scroll-behavior: smooth; }
-        
-        /* EFFET AURORA BOREALIS */
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #fff; overflow-x: hidden; }
         .aurora { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(59,130,246,0.15) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(139,92,246,0.1) 0%, transparent 40%); }
-        
-        /* GLASSMORPHISM */
-        .glass-master { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        
-        /* NOTIFICATION LIVE (Preuve Sociale) */
-        #live-notif { position: fixed; bottom: 20px; left: 20px; z-index: 100; transform: translateY(150%); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .glass-master { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); transition: 0.3s; }
+        #live-notif { position: fixed; bottom: 20px; left: 20px; z-index: 100; transform: translateY(150%); transition: 0.5s; }
         #live-notif.show { transform: translateY(0); }
-
-        /* MODALE VIP */
         #custom-modal { display: none; position: fixed; inset: 0; z-index: 101; background: rgba(0,0,0,0.95); backdrop-filter: blur(30px); align-items: center; justify-content: center; }
-        .modal-content { width: 95%; max-width: 450px; padding: 45px; border-radius: 3rem; border: 1px solid rgba(59,130,246,0.3); background: #050505; text-align: center; }
-        
-        /* ANIMATIONS */
-        .btn-cta-pulse { animation: pulse-blue 2s infinite; background: linear-gradient(135deg, var(--primary), var(--accent)); transition: 0.3s; }
-        .btn-cta-pulse:disabled { opacity: 0.5; cursor: not-allowed; animation: none; }
-        @keyframes pulse-blue { 0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); } 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
-        
-        /* TOGGLES 4K */
-        .toggle-4k { width: 44px; height: 22px; background: #222; border-radius: 20px; position: relative; cursor: pointer; border: 1px solid #444; transition: 0.3s; }
+        .modal-content { width: 95%; max-width: 450px; padding: 45px; border-radius: 3rem; background: #050505; text-align: center; border: 1px solid rgba(59,130,246,0.3); }
+        .toggle-4k { width: 44px; height: 22px; background: #222; border-radius: 20px; position: relative; cursor: pointer; }
         .toggle-4k::before { content: ''; position: absolute; width: 16px; height: 16px; background: #fff; border-radius: 50%; top: 2px; left: 3px; transition: 0.3s; }
-        input:checked + .toggle-4k { background: var(--primary); border-color: var(--primary); }
+        input:checked + .toggle-4k { background: var(--primary); }
         input:checked + .toggle-4k::before { transform: translateX(21px); }
-
-        /* FAQ */
-        .faq-item { border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; }
-        .faq-answer { max-height: 0; overflow: hidden; transition: 0.3s ease-out; opacity: 0; }
-        .faq-item.active .faq-answer { max-height: 200px; opacity: 1; padding-bottom: 20px; }
-
-        .format-btn { opacity: 0.4; transition: 0.3s; border: 1px solid transparent; }
-        .format-btn.active { opacity: 1; border-color: var(--primary); background: rgba(59,130,246,0.1); }
+        .btn-cta-pulse { animation: pulse-blue 2s infinite; background: linear-gradient(135deg, var(--primary), var(--accent)); }
+        @keyframes pulse-blue { 0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); } 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
     </style>
 </head>
 <body class="select-none">
@@ -55,284 +28,159 @@
 
     <div id="live-notif" class="glass-master px-6 py-4 rounded-2xl flex items-center gap-4 border-blue-500/30">
         <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-        <p class="text-[10px] font-black uppercase tracking-widest text-white/80"><span id="notif-user" class="text-blue-400">Enzo</span> vient de créer <span class="text-white">8 clips</span></p>
+        <p class="text-[10px] font-black uppercase tracking-widest text-white/80"><span id="notif-user" class="text-blue-400">Lucas</span> <span id="t-notif-action">vient de générer</span> <span id="t-notif-qty">10 clips</span></p>
     </div>
 
     <div id="custom-modal">
         <div class="modal-content glass-master">
-            <h2 class="text-2xl font-black mb-2 italic text-blue-400 uppercase tracking-tighter">Accès Prioritaire</h2>
-            <p id="modal-desc" class="text-[10px] text-gray-500 mb-8 uppercase font-bold tracking-widest">Vérification du compte client</p>
-            <input type="email" id="modal-input" placeholder="votre@email.com" class="w-full py-4 px-6 rounded-2xl mb-6 text-center text-sm font-bold bg-white/5 border border-white/10 text-white outline-none focus:border-blue-500 transition-all">
-            <button id="modal-submit" onclick="confirmModal()" class="w-full py-5 btn-cta-pulse rounded-2xl font-black text-xs uppercase tracking-widest text-white">Lancer l'opération</button>
-            <button onclick="closeModal()" class="mt-4 text-[9px] text-gray-600 uppercase font-black hover:text-white transition">Retour</button>
+            <h2 id="t-modal-title" class="text-2xl font-black mb-2 italic text-blue-400 uppercase tracking-tighter">Vérification</h2>
+            <p id="t-modal-desc" class="text-[10px] text-gray-500 mb-8 uppercase font-bold tracking-widest">Identification Sécurisée</p>
+            <input type="email" id="modal-input" placeholder="votre@email.com" class="w-full py-4 px-6 rounded-2xl mb-6 text-center text-sm font-bold bg-white/5 border border-white/10 text-white outline-none focus:border-blue-500">
+            <button onclick="confirmModal()" class="w-full py-5 btn-cta-pulse rounded-2xl font-black text-xs uppercase text-white shadow-xl">Confirmer</button>
+            <button id="t-modal-cancel" onclick="closeModal()" class="mt-4 text-[9px] text-gray-600 uppercase font-black hover:text-white transition">Annuler</button>
         </div>
     </div>
 
     <nav class="max-w-7xl mx-auto px-8 py-8 flex justify-between items-center relative z-50">
         <div class="text-2xl font-black italic tracking-tighter">CASA<span class="text-blue-500">CLIP</span></div>
-        <div class="flex items-center gap-6">
-            <select id="langBox" class="bg-transparent border-none text-[10px] font-black uppercase text-gray-500 outline-none cursor-pointer hover:text-white transition">
-                <option value="fr">FRANÇAIS</option>
-                <option value="en">ENGLISH</option>
+        <div class="flex items-center gap-4">
+            <select id="langBox" onchange="changeLang(this.value)" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-[10px] font-black uppercase text-white outline-none cursor-pointer">
+                <option value="fr">🇫🇷 EUR (€)</option>
+                <option value="en">🇺🇸 USD ($)</option>
+                <option value="gb">🇬🇧 GBP (£)</option>
+                <option value="es">🇪🇸 EUR (€)</option>
+                <option value="ar">🇸🇦 SAR (﷼)</option>
             </select>
-            <button class="text-[10px] font-black uppercase py-2 px-6 border border-white/10 rounded-full hover:bg-white hover:text-black transition">Connexion</button>
+            <button id="t-login" class="text-[10px] font-black uppercase py-2 px-6 border border-white/10 rounded-full hover:bg-white hover:text-black transition">Connexion</button>
         </div>
     </nav>
 
     <header class="max-w-5xl mx-auto pt-10 pb-20 text-center px-6 relative z-10">
-        <h1 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.85]">
-            Dominez l'attention<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic">mondiale.</span>
-        </h1>
+        <h1 id="t-hero-title" class="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.85]">L'IA qui forge<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic">votre succès.</span></h1>
         
         <div class="max-w-3xl mx-auto glass-master p-3 rounded-[2.5rem] shadow-2xl mb-12 border-white/10">
             <div class="flex flex-col md:flex-row gap-2">
-                <input type="text" id="vUrl" placeholder="Lien ou Nom de la vidéo..." class="flex-1 bg-transparent px-8 py-5 outline-none text-white font-medium">
-                
-                <input type="file" id="file-upload" class="hidden" onchange="handleFile(this)">
-                <button onclick="document.getElementById('file-upload').click()" class="px-6 bg-white/5 rounded-[1.5rem] border border-white/10 hover:bg-white/10 transition">
-                    <svg class="w-5 h-5 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
-                </button>
-
-                <button onclick="openModal('scan')" class="btn-cta-pulse px-10 py-5 rounded-[1.8rem] font-black text-xs uppercase tracking-widest text-white">Analyser</button>
+                <input type="text" id="vUrl" placeholder="Collez un lien..." class="flex-1 bg-transparent px-8 py-5 outline-none text-white font-medium">
+                <button id="t-btn-scan" onclick="openModal()" class="btn-cta-pulse px-10 py-5 rounded-[1.8rem] font-black text-xs uppercase tracking-widest text-white">Analyser</button>
             </div>
-        </div>
-
-        <div class="flex flex-wrap justify-center gap-4 scale-90">
-            <button onclick="setFormat('tiktok')" id="f-tiktok" class="format-btn active px-6 py-3 rounded-2xl glass-master text-[10px] font-black uppercase tracking-tighter">📱 TikTok / Reels</button>
-            <button onclick="setFormat('shorts')" id="f-shorts" class="format-btn px-6 py-3 rounded-2xl glass-master text-[10px] font-black uppercase tracking-tighter">📺 Shorts</button>
-            <button onclick="setFormat('ads')" id="f-ads" class="format-btn px-6 py-3 rounded-2xl glass-master text-[10px] font-black uppercase tracking-tighter">💼 Ads / LinkedIn</button>
         </div>
     </header>
 
     <section class="max-w-7xl mx-auto px-8 pb-32 relative z-10">
         <div class="text-center mb-16">
-            <div class="glass-master p-1.5 rounded-full inline-flex gap-1 mb-10 border-white/5 shadow-2xl">
-                <button id="mode-perso" onclick="switchMode('perso')" class="px-12 py-4 rounded-full text-[11px] font-black uppercase bg-blue-600 text-white transition-all shadow-lg">PARTICULIER</button>
-                <button id="mode-pro" onclick="switchMode('pro')" class="px-12 py-4 rounded-full text-[11px] font-black text-gray-500 uppercase transition-all hover:text-white">LIGUE / AGENCE</button>
+            <div class="glass-master p-1.5 rounded-full inline-flex gap-1 mb-10">
+                <button id="mode-perso" onclick="switchMode('perso')" class="px-10 py-3 rounded-full text-[10px] font-black uppercase bg-blue-600 text-white">PARTICULIER</button>
+                <button id="mode-pro" onclick="switchMode('pro')" class="px-10 py-3 rounded-full text-[10px] font-black text-gray-500">AGENCE</button>
             </div>
             
-            <div id="toggle-container" class="flex items-center justify-center gap-4">
-                <span class="text-[9px] font-black text-gray-500 uppercase">Mensuel (+5€)</span>
-                <button id="cycleToggle" onclick="toggleCycle()" class="w-14 h-7 bg-blue-600/20 border border-blue-500/50 rounded-full relative transition-all">
-                    <div id="cycleCircle" class="w-5 h-5 bg-blue-500 rounded-full absolute top-1 left-1 transition-all"></div>
+            <div class="flex items-center justify-center gap-4">
+                <span id="t-cycle-m" class="text-[9px] font-black text-gray-500 uppercase">Mensuel</span>
+                <button onclick="toggleCycle()" class="w-12 h-6 bg-blue-600/20 border border-blue-500/50 rounded-full relative">
+                    <div id="cycleCircle" class="w-4 h-4 bg-blue-500 rounded-full absolute top-1 left-1 transition-all"></div>
                 </button>
-                <span class="text-[9px] font-black text-white uppercase italic tracking-widest">ANNUEL (-25%)</span>
+                <span id="t-cycle-a" class="text-[9px] font-black text-white uppercase italic tracking-widest">ANNUEL</span>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
-            <div class="glass-master p-12 rounded-[3.5rem] border-white/5 flex flex-col justify-between">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="glass-master p-10 rounded-[3.5rem] flex flex-col justify-between">
                 <div>
-                    <p id="tag1" class="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6 tracking-widest">Starter</p>
-                    <h3 class="text-5xl font-black mb-10 tracking-tighter" id="p1">14.99€<span class="text-xs font-light opacity-30">/mo</span></h3>
-                    <ul class="space-y-4 text-[11px] font-bold text-gray-400 mb-10 uppercase tracking-tighter">
-                        <li class="flex items-center gap-3"><span class="text-blue-500">●</span> 5 Clips Viraux / mois</li>
-                        <li id="res1" class="flex items-center gap-3"><span class="text-blue-500">●</span> Résolution HD Standard</li>
+                    <p id="tag1" class="text-[10px] font-black text-gray-500 uppercase mb-6">Starter</p>
+                    <h3 class="text-5xl font-black mb-10 tracking-tighter" id="p1">14.99€</h3>
+                    <ul class="space-y-4 text-[11px] font-bold text-gray-400 mb-10 uppercase">
+                        <li id="t-feat1">● 5 Clips Viraux / mois</li>
                     </ul>
                 </div>
                 <div class="border-t border-white/5 pt-8 flex items-center justify-between mb-8">
-                    <span class="text-[10px] font-black uppercase text-blue-400 italic">Option 4K HDR</span>
+                    <span class="text-[9px] font-black uppercase text-blue-400 t-option-4k">Option 4K HDR</span>
                     <label class="relative inline-block"><input type="checkbox" id="chk1" onchange="updatePrices()" class="hidden"><div class="toggle-4k"></div></label>
                 </div>
-                <button onclick="openModal('payment', 'Starter')" class="w-full py-5 rounded-2xl bg-white/5 border border-white/10 font-black uppercase text-[10px] hover:bg-white hover:text-black transition-all">Choisir</button>
+                <button id="btn1" class="w-full py-5 rounded-2xl bg-white/5 border border-white/10 font-black uppercase text-[10px] t-btn-choice">Choisir</button>
             </div>
 
-            <div class="glass-master p-12 rounded-[3.5rem] border-blue-500/50 bg-blue-500/5 scale-105 relative shadow-2xl flex flex-col justify-between">
-                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-[9px] font-black px-8 py-2 rounded-full uppercase tracking-widest">Le Plus Populaire</div>
+            <div class="glass-master p-10 rounded-[3.5rem] border-blue-500/50 bg-blue-500/5 scale-105 relative flex flex-col justify-between">
                 <div>
-                    <p id="tag2" class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-6 tracking-widest">Elite</p>
-                    <h3 class="text-5xl font-black mb-10 tracking-tighter" id="p2">34.99€<span class="text-xs font-light opacity-30">/mo</span></h3>
-                    <ul class="space-y-4 text-[11px] font-black text-white mb-10 uppercase tracking-tighter">
-                        <li class="flex items-center gap-3"><span class="text-blue-400">●</span> 30 Clips Viraux / mois</li>
-                        <li id="res2" class="flex items-center gap-3"><span class="text-blue-400">●</span> Full HD 1080p Natif</li>
-                        <li class="text-blue-400">⚡ Priorité Serveur Max</li>
+                    <p id="tag2" class="text-[10px] font-black text-blue-400 uppercase mb-6">Elite</p>
+                    <h3 class="text-5xl font-black mb-10 tracking-tighter" id="p2">34.99€</h3>
+                    <ul class="space-y-4 text-[11px] font-black text-white mb-10 uppercase">
+                        <li id="t-feat2">● 30 Clips Viraux / mois</li>
                     </ul>
                 </div>
                 <div class="border-t border-white/10 pt-8 flex items-center justify-between mb-8">
-                    <span class="text-[10px] font-black uppercase text-blue-400 italic">Boost 4K HDR</span>
+                    <span class="text-[10px] font-black uppercase text-blue-400 italic t-option-4k">Boost 4K HDR</span>
                     <label class="relative inline-block"><input type="checkbox" id="chk2" onchange="updatePrices()" class="hidden"><div class="toggle-4k"></div></label>
                 </div>
-                <button onclick="openModal('payment', 'Elite')" class="btn-cta-pulse w-full py-6 rounded-2xl font-black uppercase text-[10px] text-white">Prendre Elite</button>
+                <button class="btn-cta-pulse w-full py-6 rounded-2xl font-black uppercase text-[10px] text-white t-btn-elite">Prendre Elite</button>
             </div>
 
-            <div class="glass-master p-12 rounded-[3.5rem] border-purple-500/20 flex flex-col justify-between">
+            <div class="glass-master p-10 rounded-[3.5rem] border-purple-500/20 flex flex-col justify-between">
                 <div>
-                    <p id="tag3" class="text-[10px] font-black text-purple-400 uppercase tracking-widest mb-6 tracking-widest">Master AI</p>
-                    <h3 class="text-5xl font-black mb-10 tracking-tighter" id="p3">64.99€<span class="text-xs font-light opacity-30">/mo</span></h3>
-                    <ul class="space-y-4 text-[11px] font-bold text-gray-400 mb-10 uppercase tracking-tighter">
-                        <li class="text-white italic">✔ Accès ILLIMITÉ*</li>
-                        <li class="text-purple-300 italic">✔ 4K HDR Inclus D'office</li>
-                        <li>✔ Rendu Multilingue</li>
+                    <p id="tag3" class="text-[10px] font-black text-purple-400 uppercase mb-6">Master AI</p>
+                    <h3 class="text-5xl font-black mb-10 tracking-tighter" id="p3">64.99€</h3>
+                    <ul class="space-y-4 text-[11px] font-bold text-gray-400 mb-10 uppercase">
+                        <li id="t-feat3">✔ Accès ILLIMITÉ*</li>
                     </ul>
                 </div>
-                <div class="bg-purple-500/10 p-6 rounded-3xl text-center mb-8 border border-purple-500/10">
-                    <p class="text-[8px] font-black text-purple-400 uppercase italic tracking-widest leading-tight">Idéal Agences & Marques<br>Gérez vos collaborateurs</p>
-                </div>
-                <button onclick="openModal('payment', 'Master')" class="w-full py-5 rounded-2xl bg-purple-600/10 border border-purple-500/30 font-black uppercase text-[10px] text-purple-400 hover:bg-purple-600 hover:text-white transition-all">Accès Illimité</button>
+                <button class="w-full py-5 rounded-2xl bg-purple-600/10 border border-purple-500/30 font-black uppercase text-[10px] text-purple-400 t-btn-choice">Choisir</button>
             </div>
         </div>
     </section>
-
-    <section class="max-w-3xl mx-auto px-8 pb-32">
-        <h2 class="text-3xl font-black mb-12 text-center italic tracking-tighter uppercase">Questions <span class="text-blue-500">Fréquentes</span></h2>
-        <div class="space-y-2">
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="flex justify-between items-center py-6">
-                    <span class="text-[10px] font-black uppercase tracking-widest">Comment l'IA choisit les clips ?</span>
-                    <span class="text-blue-500">+</span>
-                </div>
-                <div class="faq-answer text-gray-400 text-[11px] leading-relaxed italic">Notre moteur scanne les pics d'énergie vocale et les expressions faciales pour isoler les 60 secondes les plus impactantes.</div>
-            </div>
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="flex justify-between items-center py-6">
-                    <span class="text-[10px] font-black uppercase tracking-widest">Puis-je changer de forfait ?</span>
-                    <span class="text-blue-500">+</span>
-                </div>
-                <div class="faq-answer text-gray-400 text-[11px] leading-relaxed italic">Oui, vous pouvez upgrader ou annuler votre abonnement à tout moment depuis votre tableau de bord Stripe.</div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="max-w-7xl mx-auto px-8 py-20 border-t border-white/5">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
-            <div class="col-span-2">
-                <div class="text-2xl font-black italic mb-6">CASA<span class="text-blue-500">CLIP</span></div>
-                <p class="text-[9px] text-gray-600 uppercase tracking-widest leading-loose">Propulsé par la technologie V-Render v2.0.<br>© 2024 - 2026 CasaClip AI. Tous droits réservés.</p>
-            </div>
-            <div>
-                <h4 class="text-[10px] font-black uppercase mb-6 text-white tracking-widest">Partenaires</h4>
-                <div class="flex justify-center md:justify-start gap-4 opacity-30 grayscale">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" class="h-4">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="h-4">
-                </div>
-            </div>
-            <div>
-                <h4 class="text-[10px] font-black uppercase mb-6 text-white tracking-widest">Aide</h4>
-                <p class="text-[10px] text-gray-500 uppercase font-bold hover:text-white cursor-pointer transition">contact@casaclip.ai</p>
-            </div>
-        </div>
-    </footer>
 
     <script>
-        // ÉTAT INITIAL (Vu en Étape 4)
-        let cycle = localStorage.getItem('casa_cycle') || 'a';
-        let mode = localStorage.getItem('casa_mode') || 'perso';
-        let selectedFormat = 'tiktok';
-        let currentAction = '';
-        let selectedPlan = '';
-        const WEBHOOK = "https://hook.eu1.make.com/rfyr9ysgkxukn6mu24c1qkc2vlmhm7cd";
-
-        const BASE = {
-            perso: { p1: 14.99, p2: 34.99, p3: 64.99 },
-            pro:   { lp1: 89.99, lp2: 189.99, lp3: 499.99 }
+        const config = {
+            fr: { dir: "ltr", cur: "€", rate: 1, symAfter: true, hero: "L'IA qui forge<br><span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic'>votre succès.</span>" },
+            en: { dir: "ltr", cur: "$", rate: 1.1, symAfter: false, hero: "The AI Engine<br><span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic'>Scaling your Empire.</span>" },
+            gb: { dir: "ltr", cur: "£", rate: 0.85, symAfter: false, hero: "AI Mastering<br><span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic'>Viral Content.</span>" },
+            ar: { dir: "rtl", cur: "﷼", rate: 4.1, symAfter: true, hero: "الذكاء الاصطناعي<br><span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic'>يصنع نجاحك.</span>" },
+            es: { dir: "ltr", cur: "€", rate: 1, symAfter: true, hero: "La IA que forja<br><span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 italic'>tu éxito viral.</span>" }
         };
 
-        // GESTION FICHIER (Vu en Étape 5)
-        function handleFile(input) {
-            if(input.files.length > 0) {
-                document.getElementById('vUrl').value = "[Fichier Local] " + input.files[0].name;
-            }
+        let curLang = 'fr';
+        let cycle = 'a';
+        let mode = 'perso';
+
+        function changeLang(l) {
+            curLang = l;
+            const c = config[l];
+            document.documentElement.dir = c.dir;
+            document.getElementById('t-hero-title').innerHTML = c.hero;
+            updatePrices();
         }
 
-        // MOTEUR DE PRIX (Vu en Étape 3)
-        function updatePrices() {
-            const extraM = (cycle === 'm' && mode === 'perso') ? 5 : 0;
-            const chk1 = document.getElementById('chk1').checked;
-            const chk2 = document.getElementById('chk2').checked;
+        function formatPrice(val) {
+            const c = config[curLang];
+            const final = (val * c.rate).toFixed(2);
+            return c.symAfter ? `${final}${c.cur}` : `${c.cur}${final}`;
+        }
 
-            if(mode === 'perso') {
-                document.getElementById('p1').innerHTML = (BASE.perso.p1 + extraM + (chk1 ? 9.99 : 0)).toFixed(2) + "€<span class='text-xs opacity-40'>/mo</span>";
-                document.getElementById('p2').innerHTML = (BASE.perso.p2 + extraM + (chk2 ? 9.99 : 0)).toFixed(2) + "€<span class='text-xs opacity-40'>/mo</span>";
-                document.getElementById('p3').innerHTML = (BASE.perso.p3 + extraM).toFixed(2) + "€<span class='text-xs opacity-40'>/mo</span>";
-                document.getElementById('res1').innerText = chk1 ? "● Qualité 4K Active" : "● Résolution HD Standard";
-                document.getElementById('res2').innerText = chk2 ? "● Qualité 4K Active" : "● Full HD 1080p Natif";
-            } else {
-                document.getElementById('p1').innerHTML = BASE.pro.lp1.toFixed(2) + "€<span class='text-xs opacity-40'>/mo</span>";
-                document.getElementById('p2').innerHTML = BASE.pro.lp2.toFixed(2) + "€<span class='text-xs opacity-40'>/mo</span>";
-                document.getElementById('p3').innerHTML = BASE.pro.lp3.toFixed(2) + "€<span class='text-xs opacity-40'>/mo</span>";
-            }
-            localStorage.setItem('casa_cycle', cycle);
-            localStorage.setItem('casa_mode', mode);
+        function updatePrices() {
+            const extra = (cycle === 'm') ? 5 : 0;
+            const p = { perso: [14.99, 34.99, 64.99], pro: [89.99, 189.99, 499.99] };
+            const c1 = document.getElementById('chk1').checked ? 9.99 : 0;
+            const c2 = document.getElementById('chk2').checked ? 9.99 : 0;
+
+            const base = (mode === 'perso') ? p.perso : p.pro;
+            document.getElementById('p1').innerText = formatPrice(base[0] + extra + c1);
+            document.getElementById('p2').innerText = formatPrice(base[1] + extra + c2);
+            document.getElementById('p3').innerText = formatPrice(base[2] + extra);
         }
 
         function switchMode(m) {
             mode = m;
-            const isPerso = (m === 'perso');
-            document.getElementById('mode-perso').className = isPerso ? "px-12 py-4 rounded-full text-[11px] font-black uppercase bg-blue-600 text-white shadow-lg" : "px-12 py-4 rounded-full text-[11px] font-black text-gray-500 uppercase";
-            document.getElementById('mode-pro').className = !isPerso ? "px-12 py-4 rounded-full text-[11px] font-black bg-blue-600 text-white shadow-lg" : "px-12 py-4 rounded-full text-[11px] font-black text-gray-500 uppercase";
-            document.getElementById('toggle-container').style.opacity = isPerso ? '1' : '0';
-            
-            document.getElementById('tag1').innerText = isPerso ? "Starter" : "Ligue Starter (5p)";
-            document.getElementById('tag2').innerText = isPerso ? "Elite" : "Ligue Business (15p)";
-            document.getElementById('tag3').innerText = isPerso ? "Master AI" : "Ligue Enterprise";
-            
-            if(!isPerso) cycle = 'a';
+            document.getElementById('mode-perso').className = (m==='perso') ? "px-10 py-3 rounded-full text-[10px] font-black bg-blue-600 text-white shadow-lg" : "px-10 py-3 rounded-full text-[10px] font-black text-gray-500";
+            document.getElementById('mode-pro').className = (m==='pro') ? "px-10 py-3 rounded-full text-[10px] font-black bg-blue-600 text-white shadow-lg" : "px-10 py-3 rounded-full text-[10px] font-black text-gray-500";
             updatePrices();
         }
 
         function toggleCycle() {
             cycle = (cycle === 'a') ? 'm' : 'a';
-            document.getElementById('cycleCircle').style.transform = (cycle === 'a') ? 'translateX(28px)' : 'translateX(0px)';
+            document.getElementById('cycleCircle').style.transform = (cycle === 'a') ? 'translateX(24px)' : 'translateX(0px)';
             updatePrices();
         }
 
-        function setFormat(f) {
-            selectedFormat = f;
-            document.querySelectorAll('.format-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('f-'+f).classList.add('active');
-        }
-
-        function toggleFaq(el) { el.classList.toggle('active'); }
-
-        function openModal(action, plan = '') {
-            currentAction = action; selectedPlan = plan;
-            document.getElementById('custom-modal').style.display = 'flex';
-        }
+        function openModal() { document.getElementById('custom-modal').style.display = 'flex'; }
         function closeModal() { document.getElementById('custom-modal').style.display = 'none'; }
-
-        // ENVOI DONNEES (Vu en Étape 4)
-        function confirmModal() {
-            const email = document.getElementById('modal-input').value;
-            const btn = document.getElementById('modal-submit');
-            if(!email.includes('@')) { alert("Email invalide"); return; }
-            
-            btn.disabled = true;
-            btn.innerText = "CONNEXION SERVEUR...";
-
-            const payload = {
-                email, url: document.getElementById('vUrl').value, 
-                plan: selectedPlan, action: currentAction,
-                cycle, mode, format: selectedFormat,
-                "4k": (selectedPlan === 'Starter') ? document.getElementById('chk1').checked : (selectedPlan === 'Elite' ? document.getElementById('chk2').checked : true)
-            };
-
-            fetch(WEBHOOK, { method: 'POST', body: JSON.stringify(payload) })
-            .then(() => {
-                alert("Flux activé ! Votre demande est en cours de traitement.");
-                closeModal();
-            })
-            .catch(() => alert("Erreur de connexion."))
-            .finally(() => {
-                btn.disabled = false;
-                btn.innerText = "LANCER L'OPÉRATION";
-            });
-        }
-
-        // NOTIF LIVE (Vu en Étape 6)
-        const buyers = ["Lucas M.", "Sarah K.", "Thomas L.", "Julie D.", "Kevin S.", "Yanis B."];
-        function showNotif() {
-            const notif = document.getElementById('live-notif');
-            document.getElementById('notif-user').innerText = buyers[Math.floor(Math.random() * buyers.length)];
-            notif.classList.add('show');
-            setTimeout(() => notif.classList.remove('show'), 4000);
-        }
-        setInterval(showNotif, 15000);
-        
-        window.onload = () => {
-            if(mode === 'pro') switchMode('pro');
-            if(cycle === 'm') { cycle = 'a'; toggleCycle(); }
-            updatePrices();
-        };
+        updatePrices();
     </script>
 </body>
 </html>
