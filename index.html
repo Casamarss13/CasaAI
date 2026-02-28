@@ -3,236 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA CLIP AI | Global Suite V35</title>
+    <title>CasaClip AI | V36 Ultimate</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #3b82f6; --accent: #8b5cf6; --bg: #010101; }
-        body { font-family: 'Plus Jakarta Sans', 'Noto Sans Arabic', sans-serif; background-color: var(--bg); color: #fff; overflow-x: hidden; }
-        .aurora { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(59,130,246,0.15) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(139,92,246,0.1) 0%, transparent 40%); }
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); transition: 0.3s; }
-        
-        /* Animation Scanner */
-        @keyframes scan { 0% { left: -100%; } 100% { left: 100%; } }
-        .scan-line { position: absolute; top: 0; height: 100%; width: 50%; background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent); animation: scan 2s infinite; display: none; }
-
-        /* Toggle 4K Switch */
-        .toggle-4k { width: 44px; height: 22px; background: #222; border-radius: 20px; position: relative; cursor: pointer; border: 1px solid #444; }
-        .toggle-4k::before { content: ''; position: absolute; width: 16px; height: 16px; background: #fff; border-radius: 50%; top: 2px; left: 3px; transition: 0.3s; }
-        input:checked + .toggle-4k { background: var(--primary); }
-        input:checked + .toggle-4k::before { transform: translateX(21px); }
-        [dir="rtl"] input:checked + .toggle-4k::before { transform: translateX(-21px); }
-        
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #fff; }
+        .aurora { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(59,130,246,0.15) 0%, transparent 40%); }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); transition: 0.3s; }
+        .tab-active { background: var(--primary) !important; color: white !important; box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
         .btn-grad { background: linear-gradient(135deg, var(--primary), var(--accent)); transition: 0.3s; }
-        .btn-grad:hover { transform: translateY(-2px); filter: brightness(1.2); box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3); }
+        .btn-grad:hover { transform: scale(1.02); filter: brightness(1.2); }
+        @keyframes scan { 0% { left: -100%; } 100% { left: 100%; } }
+        .scan-line { position: absolute; top: 0; height: 100%; width: 50%; background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent); animation: scan 2s infinite; display: none; }
     </style>
 </head>
 <body class="select-none">
     <div class="aurora"></div>
 
-    <nav class="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center relative z-50">
-        <div class="text-2xl font-black italic tracking-tighter uppercase">CASA<span class="text-blue-500">CLIP</span></div>
-        <select id="langBox" onchange="changeLang(this.value)" class="glass-card rounded-xl px-4 py-2 text-[10px] font-black uppercase text-white outline-none cursor-pointer border-white/10">
-            <option value="fr">🇫🇷 FR - EUR (€)</option>
-            <option value="en">🇺🇸 EN - USD ($)</option>
-            <option value="es">🇪🇸 ES - EUR (€)</option>
-            <option value="ar">🇸🇦 AR - SAR (﷼)</option>
+    <nav class="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
+        <div class="text-2xl font-black italic tracking-tighter">CASA<span class="text-blue-500">CLIP</span></div>
+        <select id="langBox" onchange="updateUI()" class="glass-card rounded-xl px-4 py-2 text-[10px] font-black uppercase text-white outline-none">
+            <option value="fr">🇫🇷 FR - EUR</option>
+            <option value="en">🇺🇸 EN - USD</option>
+            <option value="es">🇪🇸 ES - EUR</option>
+            <option value="ar">🇸🇦 AR - SAR</option>
         </select>
     </nav>
 
-    <header class="max-w-5xl mx-auto pt-12 pb-20 text-center px-6 relative z-10">
-        <h1 id="t-hero" class="text-6xl md:text-8xl font-black mb-10 tracking-tighter leading-[0.9]">Transformez vos vidéos<br><span class="text-blue-500 italic">en or viral.</span></h1>
+    <header class="max-w-5xl mx-auto pt-12 pb-20 text-center px-6">
+        <h1 id="t-hero" class="text-6xl md:text-8xl font-black mb-10 tracking-tighter leading-none">Transformez vos vidéos<br><span class="text-blue-500 italic">en or viral.</span></h1>
         
-        <div class="max-w-3xl mx-auto glass-card p-2 rounded-[2.5rem] border-white/10 shadow-2xl relative overflow-hidden">
+        <div class="max-w-4xl mx-auto glass-card p-3 rounded-[2.5rem] relative overflow-hidden">
             <div id="scanLine" class="scan-line"></div>
-            <div class="flex flex-col md:flex-row gap-2 relative z-10">
-                <input type="text" id="vUrl" placeholder="Collez le lien YouTube, TikTok..." class="flex-1 bg-transparent px-8 py-5 outline-none text-white font-medium rounded-[2rem]">
-                <button onclick="startScan()" id="t-scan-btn" class="btn-grad px-10 py-5 rounded-[1.8rem] font-black text-xs uppercase tracking-widest text-white shadow-lg">Analyser l'URL</button>
+            <div class="flex flex-col md:flex-row gap-3 relative z-10">
+                <input type="text" id="vUrl" placeholder="Collez un lien (YT, TikTok...)" class="flex-1 bg-white/5 px-6 py-5 outline-none text-white font-medium rounded-3xl border border-white/5 focus:border-blue-500/50">
+                
+                <label class="cursor-pointer bg-white/5 hover:bg-white/10 px-6 py-5 rounded-3xl border border-white/10 flex items-center justify-center gap-2 transition">
+                    <input type="file" class="hidden" onchange="alert('Fichier prêt !')">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                    <span class="text-[10px] font-black uppercase tracking-widest" id="t-import">Importer</span>
+                </label>
+
+                <button onclick="startScan()" id="t-scan-btn" class="btn-grad px-10 py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest">Analyser</button>
             </div>
         </div>
-        <p class="mt-6 text-[10px] font-bold text-gray-500 uppercase tracking-widest" id="t-free-msg">1 essai gratuit par jour • sans carte bancaire</p>
+        <p class="mt-6 text-[10px] font-bold text-gray-500 uppercase tracking-widest" id="t-limit">1 ESSAI GRATUIT PAR ADRESSE IP • AUCUNE CARTE</p>
     </header>
 
-    <section class="max-w-7xl mx-auto px-6 pb-32 text-center relative z-10">
+    <section class="max-w-7xl mx-auto px-6 pb-32">
         
-        <div class="glass-card p-1.5 rounded-full inline-flex gap-1 mb-12 border-white/5">
-            <button id="mode-perso" onclick="switchMode('perso')" class="px-10 py-3 rounded-full text-[10px] font-black uppercase bg-blue-600 text-white shadow-lg transition-all">PARTICULIER</button>
-            <button id="mode-pro" onclick="switchMode('pro')" class="px-10 py-3 rounded-full text-[10px] font-black text-gray-500 uppercase transition-all">AGENCE / LIGUE</button>
-        </div>
-        
-        <div class="flex flex-col items-center mb-16">
-            <div class="flex items-center gap-4">
-                <span id="t-m-cycle" class="text-[9px] font-black text-gray-500 uppercase">Mensuel (+5€)</span>
-                <button onclick="toggleCycle()" class="w-12 h-6 bg-blue-600/20 border border-blue-500/50 rounded-full relative">
-                    <div id="cycleCircle" class="w-4 h-4 bg-blue-500 rounded-full absolute top-1 left-1 transition-all"></div>
-                </button>
-                <span id="t-a-cycle" class="text-[9px] font-black text-white uppercase italic tracking-widest">ANNUEL (ÉCONOMISEZ 25%)</span>
+        <div class="flex justify-center mb-16">
+            <div class="glass-card p-1.5 rounded-2xl inline-flex gap-1 border-white/10">
+                <button id="tab-perso-engaged" onclick="setTab('perso-engaged')" class="px-8 py-4 rounded-xl text-[10px] font-black uppercase transition-all tab-active">Perso Engagé (1 an)</button>
+                <button id="tab-perso-free" onclick="setTab('perso-free')" class="px-8 py-4 rounded-xl text-[10px] font-black text-gray-400 uppercase transition-all">Perso Sans Engagement (+5€)</button>
+                <button id="tab-pro" onclick="setTab('pro')" class="px-8 py-4 rounded-xl text-[10px] font-black text-gray-400 uppercase transition-all">Agence / Pro (1 an)</button>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-left">
-            
-            <div class="glass-card p-10 rounded-[3.5rem] flex flex-col border-white/5 relative">
-                <p class="text-[10px] font-black text-gray-500 uppercase mb-4 tracking-widest">Starter</p>
-                <div class="flex items-baseline gap-2 mb-1">
-                    <h3 class="text-5xl font-black tracking-tighter" id="p1-m">14.99€</h3>
-                    <span class="text-xl text-gray-600 line-through font-bold hidden" id="p1-old"></span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="glass-card p-10 rounded-[3rem] flex flex-col relative overflow-hidden border-white/5">
+                <p class="text-[10px] font-black text-gray-500 uppercase mb-4 tracking-tighter" id="tag-1">Starter</p>
+                <div class="flex items-baseline gap-1 mb-1">
+                    <h3 class="text-5xl font-black" id="p1-price">14.99€</h3>
+                    <span class="text-sm font-bold text-gray-500">/mo</span>
                 </div>
-                <p class="text-[10px] text-gray-400 mb-6 uppercase font-bold t-per-txt">par mois</p>
-                <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-5 mb-8">
-                    <p class="text-[9px] font-black text-blue-400 uppercase mb-1 t-due-txt">Total à payer aujourd'hui :</p>
-                    <p id="p1-total" class="text-xl font-black text-white">179.88€</p>
-                </div>
+                <p class="text-[9px] font-bold text-blue-400 uppercase mb-8" id="t-commit-1">Engagement 1 an</p>
+                
                 <ul class="space-y-4 text-[11px] font-bold text-gray-400 mb-10 flex-1 uppercase">
                     <li>● 5 Clips Viraux / mois</li>
                     <li>● Rendu HD Standard</li>
                 </ul>
-                <div class="border-t border-white/5 pt-8 flex items-center justify-between mb-8">
-                    <span class="text-[9px] font-black uppercase text-blue-400 t-opt-txt">Option 4K HDR (+9.99)</span>
-                    <label class="relative inline-block"><input type="checkbox" id="chk1" onchange="updatePrices()" class="hidden"><div class="toggle-4k"></div></label>
+
+                <div class="pt-6 border-t border-white/5">
+                    <p class="text-[9px] font-black text-gray-500 uppercase mb-2">Total à payer aujourd'hui :</p>
+                    <p class="text-2xl font-black" id="p1-total">179.88€</p>
                 </div>
-                <button class="w-full py-5 rounded-2xl bg-white/5 border border-white/10 font-black uppercase text-[10px] t-sel-btn">Choisir</button>
+                <button class="btn-grad w-full py-5 rounded-2xl mt-8 font-black uppercase text-[10px]">Choisir</button>
             </div>
 
-            <div class="glass-card p-10 rounded-[3.5rem] border-blue-500/50 bg-blue-500/5 scale-105 relative flex flex-col">
-                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-[8px] font-black px-6 py-2 rounded-full uppercase tracking-widest t-reco-txt">Recommandé</div>
-                <p class="text-[10px] font-black text-blue-400 uppercase mb-4 tracking-widest">Elite</p>
-                <div class="flex items-baseline gap-2 mb-1">
-                    <h3 class="text-5xl font-black tracking-tighter" id="p2-m">34.99€</h3>
-                    <span class="text-xl text-gray-600 line-through font-bold hidden" id="p2-old"></span>
+            <div class="glass-card p-10 rounded-[3rem] flex flex-col relative border-blue-500/30 bg-blue-500/5 scale-105">
+                <div class="absolute top-6 right-10 bg-blue-600 text-[8px] font-black px-3 py-1 rounded-full uppercase italic">Populaire</div>
+                <p class="text-[10px] font-black text-blue-400 uppercase mb-4 tracking-tighter" id="tag-2">Elite AI</p>
+                <div class="flex items-baseline gap-1 mb-1">
+                    <h3 class="text-5xl font-black" id="p2-price">34.99€</h3>
+                    <span class="text-sm font-bold text-blue-400">/mo</span>
                 </div>
-                <p class="text-[10px] text-blue-300/60 mb-6 uppercase font-bold t-per-txt">par mois</p>
-                <div class="bg-blue-500/20 border border-blue-500/30 rounded-2xl p-5 mb-8">
-                    <p class="text-[9px] font-black text-blue-400 uppercase mb-1 t-due-txt">Total à payer aujourd'hui :</p>
-                    <p id="p2-total" class="text-xl font-black text-white">419.88€</p>
-                </div>
+                <p class="text-[9px] font-bold text-blue-300 uppercase mb-8" id="t-commit-2">Engagement 1 an</p>
+                
                 <ul class="space-y-4 text-[11px] font-black text-white mb-10 flex-1 uppercase">
                     <li>● 30 Clips Viraux / mois</li>
                     <li>● Full HD 1080p Natif</li>
                 </ul>
-                <div class="border-t border-white/10 pt-8 flex items-center justify-between mb-8">
-                    <span class="text-[10px] font-black uppercase text-blue-400 italic t-opt-txt">Boost 4K HDR (+9.99)</span>
-                    <label class="relative inline-block"><input type="checkbox" id="chk2" onchange="updatePrices()" class="hidden"><div class="toggle-4k"></div></label>
+
+                <div class="pt-6 border-t border-white/10">
+                    <p class="text-[9px] font-black text-blue-400 uppercase mb-2">Total à payer aujourd'hui :</p>
+                    <p class="text-2xl font-black text-white" id="p2-total">419.88€</p>
                 </div>
-                <button class="btn-grad w-full py-6 rounded-2xl font-black uppercase text-[10px] text-white">Prendre Elite</button>
+                <button class="btn-grad w-full py-5 rounded-2xl mt-8 font-black uppercase text-[10px]">Prendre Elite</button>
             </div>
 
-            <div class="glass-card p-10 rounded-[3.5rem] border-purple-500/20 flex flex-col">
-                <p class="text-[10px] font-black text-purple-400 uppercase mb-4 tracking-widest">Master AI</p>
-                <div class="flex items-baseline gap-2 mb-1">
-                    <h3 class="text-5xl font-black tracking-tighter" id="p3-m">64.99€</h3>
-                    <span class="text-xl text-gray-600 line-through font-bold hidden" id="p3-old"></span>
+            <div class="glass-card p-10 rounded-[3rem] flex flex-col border-purple-500/20">
+                <p class="text-[10px] font-black text-purple-400 uppercase mb-4 tracking-tighter" id="tag-3">Master AI</p>
+                <div class="flex items-baseline gap-1 mb-1">
+                    <h3 class="text-5xl font-black" id="p3-price">64.99€</h3>
+                    <span class="text-sm font-bold text-gray-500">/mo</span>
                 </div>
-                <p class="text-[10px] text-gray-400 mb-6 uppercase font-bold t-per-txt">par mois</p>
-                <div class="bg-purple-500/10 border border-purple-500/20 rounded-2xl p-5 mb-8">
-                    <p class="text-[9px] font-black text-purple-400 uppercase mb-1 t-due-txt">Total à payer aujourd'hui :</p>
-                    <p id="p3-total" class="text-xl font-black text-white">779.88€</p>
-                </div>
+                <p class="text-[9px] font-bold text-purple-400 uppercase mb-8" id="t-commit-3">Engagement 1 an</p>
+                
                 <ul class="space-y-4 text-[11px] font-bold text-gray-400 mb-10 flex-1 uppercase">
-                    <li class="text-white italic">✔ Accès ILLIMITÉ*</li>
+                    <li class="text-white italic">✔ ACCÈS ILLIMITÉ</li>
                     <li class="text-purple-300 italic">✔ 4K HDR INCLUS</li>
                 </ul>
-                <button class="w-full py-5 rounded-2xl bg-purple-600/10 border border-purple-500/30 font-black uppercase text-[10px] text-purple-400 hover:bg-purple-600 hover:text-white transition t-sel-btn">Choisir</button>
+
+                <div class="pt-6 border-t border-white/5">
+                    <p class="text-[9px] font-black text-gray-500 uppercase mb-2">Total à payer aujourd'hui :</p>
+                    <p class="text-2xl font-black" id="p3-total">779.88€</p>
+                </div>
+                <button class="btn-grad w-full py-5 rounded-2xl mt-8 font-black uppercase text-[10px]">Espace Master</button>
             </div>
         </div>
     </section>
 
     <script>
-        const i18n = {
-            fr: { cur: "€", rate: 1, after: true, dir: "ltr", hero: "Transformez vos vidéos<br><span class='text-blue-500 italic'>en or viral.</span>", m: "Mensuel (+5€)", a: "ANNUEL (-25%)", due: "Total à payer aujourd'hui :", per: "par mois", reco: "Recommandé", opt: "Option 4K HDR (+9.99)", p: "PARTICULIER", g: "AGENCE / LIGUE", scan: "Analyser l'URL", scanning: "Analyse en cours...", free: "1 essai gratuit par jour • sans carte", btn: "Choisir", ph: "Collez le lien YouTube, TikTok..." },
-            en: { cur: "$", rate: 1.1, after: false, dir: "ltr", hero: "Turn your content<br><span class='text-blue-500 italic'>into Viral Gold.</span>", m: "Monthly (+$5)", a: "ANNUAL (-25%)", due: "Due today (Full amount):", per: "per month", reco: "Most Popular", opt: "4K HDR Upgrade (+9.99)", p: "INDIVIDUAL", g: "AGENCY / ENTERPRISE", scan: "Analyze URL", scanning: "Analyzing...", free: "1 free daily trial • no credit card", btn: "Select", ph: "Paste YouTube, TikTok link..." },
-            es: { cur: "€", rate: 1, after: true, dir: "ltr", hero: "Transforma tus videos<br><span class='text-blue-500 italic'>en éxito viral.</span>", m: "Mensual (+5€)", a: "ANUAL (-25%)", due: "Total a pagar hoy:", per: "al mes", reco: "Recomendado", opt: "Opción 4K HDR (+9.99)", p: "PARTICULAR", g: "AGENCIA / LIGA", scan: "Analizar URL", scanning: "Analizando...", free: "1 prueba gratis al día • sin tarjeta", btn: "Elegir", ph: "Pega el enlace de YouTube, TikTok..." },
-            ar: { cur: "﷼", rate: 4.1, after: true, dir: "rtl", hero: "حول فيديوهاتك<br><span class='text-blue-500 italic'>إلى نجاح باهر.</span>", m: "شهري (+5﷼)", a: "سنوي (توفير 25%)", per: "في الشهر", due: "المبلغ الإجمالي اليوم:", reco: "الأكثر طلباً", opt: "خيار 4K HDR (+9.99)", p: "فردي", g: "وكالة / دوري", scan: "تحليل الرابط", scanning: "جاري التحليل...", free: "تجربة مجانية يومياً • بدون بطاقة", btn: "اختر", ph: "ضع رابط يوتيوب أو تيك توك..." }
+        let currentTab = 'perso-engaged';
+        const config = {
+            fr: { cur: "€", rate: 1, commit: "Engagement 1 an", free: "Sans Engagement (+5€)", limit: "1 ESSAI GRATUIT PAR ADRESSE IP • AUCUNE CARTE", import: "Importer" },
+            en: { cur: "$", rate: 1.1, commit: "1 Year Commitment", free: "No Commitment (+$5)", limit: "1 FREE TRIAL PER IP ADDRESS • NO CARD", import: "Import File" },
+            es: { cur: "€", rate: 1, commit: "Compromiso de 1 año", free: "Sin Compromiso (+5€)", limit: "1 PRUEBA GRATUITA POR IP • SIN TARJETA", import: "Importar" },
+            ar: { cur: "﷼", rate: 4.1, commit: "التزام لمدة سنة واحدة", free: "بدون التزام (+5 ريال)", limit: "تجربة مجانية واحدة لكل عنوان IP • بدون بطاقة", import: "استيراد ملف" }
         };
 
-        let lang = 'fr';
-        let cycle = 'a'; 
-        let mode = 'perso';
-
-        function changeLang(l) {
-            lang = l;
-            const t = i18n[l];
-            document.documentElement.dir = t.dir;
-            document.getElementById('t-hero').innerHTML = t.hero;
-            document.getElementById('t-m-cycle').innerText = t.m;
-            document.getElementById('t-a-cycle').innerText = t.a;
-            document.getElementById('t-scan-btn').innerText = t.scan;
-            document.getElementById('t-free-msg').innerText = t.free;
-            document.getElementById('vUrl').placeholder = t.ph;
-            document.querySelectorAll('.t-due-txt').forEach(e => e.innerText = t.due);
-            document.querySelectorAll('.t-per-txt').forEach(e => e.innerText = t.per);
-            document.querySelectorAll('.t-opt-txt').forEach(e => e.innerText = t.opt);
-            document.querySelectorAll('.t-sel-btn').forEach(e => e.innerText = t.btn);
-            document.querySelector('.t-reco-txt').innerText = t.reco;
-            updatePrices();
+        function setTab(t) {
+            currentTab = t;
+            ['perso-engaged', 'perso-free', 'pro'].forEach(id => {
+                document.getElementById('tab-'+id).classList.remove('tab-active');
+                document.getElementById('tab-'+id).classList.add('text-gray-400');
+            });
+            document.getElementById('tab-'+t).classList.add('tab-active');
+            document.getElementById('tab-'+t).classList.remove('text-gray-400');
+            updateUI();
         }
 
-        function startScan() {
-            const btn = document.getElementById('t-scan-btn');
-            const line = document.getElementById('scanLine');
-            if(!document.getElementById('vUrl').value) return alert("URL vide");
-            btn.innerText = i18n[lang].scanning;
-            line.style.display = "block";
-            setTimeout(() => {
-                line.style.display = "none";
-                btn.innerText = i18n[lang].scan;
-                alert("Scan OK !");
-            }, 2000);
-        }
+        function updateUI() {
+            const lang = document.getElementById('langBox').value;
+            const c = config[lang];
+            
+            // Textes statiques
+            document.getElementById('t-limit').innerText = c.limit;
+            document.getElementById('t-import').innerText = c.import;
+            
+            // Logique de prix
+            let base = [14.99, 34.99, 64.99]; // Perso
+            let tax = 0;
+            let mult = 12; // Par défaut engagé
 
-        function format(v) {
-            const t = i18n[lang];
-            const val = (v * t.rate).toFixed(2);
-            return t.after ? `${val}${t.cur}` : `${t.cur}${val}`;
-        }
+            if(currentTab === 'perso-free') {
+                tax = 5;
+                mult = 1; // On ne paie que le mois
+                document.querySelectorAll('[id^="t-commit-"]').forEach(e => e.innerText = c.free);
+            } else if (currentTab === 'pro') {
+                base = [89.99, 189.99, 499.99];
+                document.querySelectorAll('[id^="t-commit-"]').forEach(e => e.innerText = c.commit);
+            } else {
+                document.querySelectorAll('[id^="t-commit-"]').forEach(e => e.innerText = c.commit);
+            }
 
-        function updatePrices() {
-            const base = (mode === 'perso') ? [14.99, 34.99, 64.99] : [89.99, 189.99, 499.99];
-            const tax = (cycle === 'm') ? 5 : 0;
-            const o1 = document.getElementById('chk1').checked ? 9.99 : 0;
-            const o2 = document.getElementById('chk2').checked ? 9.99 : 0;
-
-            const plans = [
-                { id: "p1", val: base[0] + tax + o1, full: base[0] + 5 + o1 },
-                { id: "p2", val: base[1] + tax + o2, full: base[1] + 5 + o2 },
-                { id: "p3", val: base[2] + tax, full: base[2] + 5 }
-            ];
-
-            plans.forEach(p => {
-                document.getElementById(`${p.id}-m`).innerText = format(p.val);
-                const oldEl = document.getElementById(`${p.id}-old`);
-                if (cycle === 'a') {
-                    oldEl.innerText = format(p.full);
-                    oldEl.classList.remove('hidden');
-                } else {
-                    oldEl.classList.add('hidden');
-                }
-                const multiplier = (cycle === 'a') ? 12 : 1;
-                document.getElementById(`${p.id}-total`).innerText = format(p.val * multiplier);
+            base.forEach((val, i) => {
+                let finalVal = (val + tax) * c.rate;
+                let totalVal = finalVal * mult;
+                document.getElementById(`p${i+1}-price`).innerText = finalVal.toFixed(2) + c.cur;
+                document.getElementById(`p${i+1}-total`).innerText = totalVal.toFixed(2) + c.cur;
             });
         }
 
-        function toggleCycle() {
-            cycle = (cycle === 'a') ? 'm' : 'a';
-            const circle = document.getElementById('cycleCircle');
-            const isRTL = i18n[lang].dir === 'rtl';
-            
-            if (cycle === 'a') {
-                circle.style.transform = isRTL ? 'translateX(-24px)' : 'translateX(24px)';
-            } else {
-                circle.style.transform = 'translateX(0px)';
-            }
-            updatePrices();
+        function startScan() {
+            document.getElementById('scanLine').style.display = "block";
+            setTimeout(() => { 
+                document.getElementById('scanLine').style.display = "none";
+                alert("Scan IP terminé. Prêt pour l'essai gratuit.");
+            }, 2000);
         }
 
-        function switchMode(m) {
-            mode = m;
-            document.getElementById('mode-perso').className = (m==='perso') ? "px-10 py-3 rounded-full text-[10px] font-black bg-blue-600 text-white shadow-lg" : "px-10 py-3 rounded-full text-[10px] font-black text-gray-500";
-            document.getElementById('mode-pro').className = (m==='pro') ? "px-10 py-3 rounded-full text-[10px] font-black bg-blue-600 text-white shadow-lg" : "px-10 py-3 rounded-full text-[10px] font-black text-gray-500";
-            updatePrices();
-        }
-
-        updatePrices();
+        // Init au chargement
+        updateUI();
     </script>
 </body>
 </html>
