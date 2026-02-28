@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>CasaClip AI | 1 Vidéo YouTube = 30 Shorts Viraux en 2 Min</title>
+    <title>CasaClip AI | Créez des Clips Viraux en 1 Clic</title>
     <meta name="description" content="L'IA numéro 1 pour transformer vos vidéos longues en shorts viraux pour TikTok, Reels et Shorts. Essai gratuit par IP.">
     <meta property="og:title" content="CasaClip AI - Viral Video Factory">
     <meta property="og:description" content="Transformez votre contenu en or viral grâce à notre IA de détection de hooks.">
@@ -17,42 +17,38 @@
         :root { --primary: #3b82f6; --accent: #8b5cf6; --bg: #010101; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #fff; scroll-behavior: smooth; }
         
-        /* POINT 3 RECTIFIÉ : BACKGROUND AURORA REPRIS */
-        .aurora { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(59,130,246,0.15) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(139,92,246,0.1) 0%, transparent 40%); }
+        .aurora { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(59,130,246,0.15) 0%, transparent 40%); }
         
-        /* POINT 8 RECTIFIÉ : ANIMATIONS CSS PREMIUM (HOVER Y, GLOW) */
         .price-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .price-card:hover { transform: translateY(-12px); border-color: var(--primary); box-shadow: 0 0 30px rgba(59, 130, 246, 0.15); }
+        .price-card:hover { transform: translateY(-12px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15); }
 
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); transition: 0.3s; }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .tab-active { background: var(--primary) !important; color: white !important; box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
         
-        /* POINT 8 RECTIFIÉ : PULSE/GLOW SUR LES BOUTONS CTA PRINCIPAUX */
-        @keyframes pulse-glow { 0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); } 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
-        .btn-pulse { animation: pulse-glow 2s infinite; }
-
-        /* LOADER RÉEL POUR LE SCAN */
-        .loader-spinner { border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid var(--primary); border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display: none; }
+        .loader-spinner { border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid var(--primary); border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; display: none; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* POINT 3 RECTIFIÉ : TOAST NOTIFICATION STYLÉ */
         #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 12px; padding: 16px; position: fixed; z-index: 100; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 14px; font-weight: bold; border: 1px solid var(--primary); }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
-        /* POINT 2 RECTIFIÉ & STRIPE CHECKOUT PRÊT : STICKY CTA MOBILE */
-        .mobile-sticky-btn { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); padding: 15px; z-index: 90; border-top: 1px solid var(--primary); display: none; }
-        @media (max-width: 768px) { .mobile-sticky-btn { display: block; } }
+        /* AJOUT : STYLE DES LOGOS DE PAIEMENT */
+        .payment-methods img { filter: grayscale(1) brightness(2); opacity: 0.5; transition: 0.3s; height: 14px; }
+        .payment-methods img:hover { filter: grayscale(0) brightness(1); opacity: 1; }
+
+        @media (max-width: 768px) {
+            .mobile-sticky-btn { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); padding: 15px; z-index: 90; border-top: 1px solid rgba(255,255,255,0.1); }
+        }
     </style>
 </head>
 <body class="select-none">
     <div class="aurora"></div>
-    <div id="toast">Message toast stylé !</div>
+    <div id="toast">Ceci est un message toast !</div>
 
     <nav class="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center relative z-50">
         <div class="text-2xl font-black italic tracking-tighter uppercase">CASA<span class="text-blue-500">CLIP</span></div>
-        <select id="langBox" onchange="updateUI()" class="glass-card rounded-xl px-4 py-2 text-[10px] font-black uppercase text-white outline-none cursor-pointer border-white/10">
+        <select id="langBox" onchange="updateUI()" class="glass-card rounded-xl px-4 py-2 text-[10px] font-black uppercase text-white outline-none cursor-pointer">
             <option value="fr">🇫🇷 FR</option>
             <option value="en">🇺🇸 EN</option>
             <option value="es">🇪🇸 ES</option>
@@ -60,21 +56,21 @@
         </select>
     </nav>
 
-    <header class="max-w-5xl mx-auto pt-12 pb-20 text-center px-6 relative z-10">
-        <h1 id="t-hero" class="text-6xl md:text-8xl font-black mb-10 tracking-tighter leading-none">Transformez 1 vidéo YouTube<br><span class="text-blue-500 italic">en 30 shorts optimisés TikTok en 2 minutes.</span></h1>
+    <header class="max-w-5xl mx-auto pt-12 pb-20 text-center px-6">
+        <h1 id="t-hero" class="text-6xl md:text-8xl font-black mb-10 tracking-tighter leading-none">Transformez vos vidéos<br><span class="text-blue-500 italic">en or viral.</span></h1>
         
-        <div class="max-w-4xl mx-auto glass-card p-3 rounded-[2.5rem] border-white/10 shadow-2xl relative overflow-hidden">
+        <div class="max-w-4xl mx-auto glass-card p-3 rounded-[2.5rem] relative overflow-hidden shadow-2xl">
             <div class="flex flex-col md:flex-row gap-3 relative z-10">
-                <input type="text" id="vUrl" placeholder="Collez votre lien (YouTube, TikTok...)" class="flex-1 bg-white/5 px-6 py-5 outline-none text-white font-medium rounded-3xl border border-white/5 focus:border-blue-500/50">
+                <input type="text" id="vUrl" placeholder="Lien YouTube, TikTok..." class="flex-1 bg-white/5 px-6 py-5 outline-none text-white font-medium rounded-3xl border border-white/5">
                 
                 <div class="flex gap-2">
                     <label class="cursor-pointer bg-white/5 hover:bg-white/10 px-6 py-5 rounded-3xl border border-white/10 flex items-center justify-center gap-2 transition">
-                        <input type="file" class="hidden" onchange="showToast('Fichier prêt !')">
-                        <span class="text-[10px] font-black uppercase tracking-widest" id="t-import">Importer</span>
+                        <input type="file" class="hidden" onchange="showToast('Fichier prêt pour l\'analyse !')">
+                        <span class="text-[10px] font-black uppercase" id="t-import">Importer</span>
                     </label>
 
-                    <button onclick="startScan()" id="t-scan-btn" class="bg-blue-600 hover:bg-blue-500 px-10 py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest text-white shadow-lg btn-pulse flex items-center justify-center gap-2">
-                        <span id="btn-text">Analyse Gratuite</span>
+                    <button onclick="startScan()" id="t-scan-btn" class="bg-blue-600 hover:bg-blue-500 px-10 py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest flex items-center gap-3">
+                        <span id="btn-text">Analyser</span>
                         <div id="loader" class="loader-spinner"></div>
                     </button>
                 </div>
@@ -83,236 +79,139 @@
         <p class="mt-6 text-[10px] font-bold text-gray-500 uppercase tracking-widest" id="t-limit">1 ESSAI GRATUIT PAR ADRESSE IP • AUCUNE CARTE</p>
     </header>
 
-    <section class="max-w-7xl mx-auto px-6 py-10 text-center relative z-10 border-t border-white/5">
-        <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-600 mb-8">Ils nous font confiance</h2>
-        <div class="flex justify-center gap-10">
-            <p class="text-[10px] font-black uppercase text-gray-500 tracking-widest">+12 000 créateurs utilisent CasaClip</p>
-        </div>
-    </section>
-
-    <section class="max-w-4xl mx-auto px-6 py-20 relative z-10" id="demo">
-        <div class="glass-card rounded-[2.5rem] p-3 border-white/10 shadow-2xl overflow-hidden aspect-video flex items-center justify-center">
-            <p class="font-black uppercase tracking-widest text-gray-600"></p>
-        </div>
-    </section>
-
-    <section class="max-w-6xl mx-auto px-6 py-20 relative z-10 border-t border-white/5" id="how-it-works">
-        <h2 class="text-3xl font-black text-center mb-16 uppercase tracking-tighter">Comment ça marche en 3 étapes</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-            <div>
-                <div class="text-4xl mb-4 font-black text-blue-500">1.</div>
-                <h3 class="font-black uppercase text-xs mb-2 tracking-widest">Collez votre lien YouTube</h3>
-                <p class="text-xs text-gray-400">Importez n'importe quelle vidéo longue en un clic.</p>
-            </div>
-            <div>
-                <div class="text-4xl mb-4 font-black text-blue-500">2.</div>
-                <h3 class="font-black uppercase text-xs mb-2 tracking-widest">L'IA détecte les hooks</h3>
-                <p class="text-xs text-gray-400">Notre IA identifie les moments les plus viraux.</p>
-            </div>
-            <div>
-                <div class="text-4xl mb-4 font-black text-blue-500">3.</div>
-                <h3 class="font-black uppercase text-xs mb-2 tracking-widest">Téléchargez vos 30 shorts optimisés</h3>
-                <p class="text-xs text-gray-400">Recevez des clips prêts à publier sur TikTok et Reels.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="max-w-4xl mx-auto px-6 py-20 relative z-10 border-t border-white/5" id="why-us">
-        <div class="glass-card p-10 rounded-[3rem] border-blue-500/20 relative overflow-hidden">
-            <h2 class="text-2xl font-black uppercase mb-10 tracking-widest text-blue-400">Pourquoi vous et pas Opus Clip / Vidyo.ai ?</h2>
-            <ul class="space-y-6">
-                <li class="flex gap-4 items-start">
-                    <span class="bg-blue-600 p-1 rounded-full text-[10px] flex-shrink-0">✔</span>
-                    <p class="text-xs font-bold uppercase tracking-widest leading-relaxed">Notre IA analyse les micro-expressions et la rétention pour identifier les pics d'engagement.</p>
-                </li>
-                <li class="flex gap-4 items-start">
-                    <span class="bg-blue-600 p-1 rounded-full text-[10px] flex-shrink-0">✔</span>
-                    <p class="text-xs font-bold uppercase tracking-widest leading-relaxed">Découpe automatique en 30 clips optimisés en moins de 2 min.</p>
-                </li>
-                <li class="flex gap-4 items-start">
-                    <span class="bg-blue-600 p-1 rounded-full text-[10px] flex-shrink-0">✔</span>
-                    <p class="text-xs font-bold uppercase tracking-widest leading-relaxed">Exports HD/4K, prêts à publier instantanément, avec support prioritaire Elite/Master.</p>
-                </li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="max-w-7xl mx-auto px-6 py-10 text-center relative z-10 border-t border-white/5" id="pricing">
-        <div class="mb-16">
-            <div class="glass-card p-1.5 rounded-full inline-flex gap-1 border-white/10">
-                <button id="tab-annual" onclick="setTab('annual')" class="px-8 py-4 rounded-xl text-[10px] font-black uppercase transition-all tab-active">Perso Engagé 1 an (Eco 25%)</button>
-                <button id="tab-monthly" onclick="setTab('monthly')" class="px-8 py-4 rounded-xl text-[10px] font-black text-gray-400 uppercase transition-all">Perso Sans Engagement (+5€/mois)</button>
-                <button id="tab-pro" onclick="setTab('pro')" class="px-8 py-4 rounded-xl text-[10px] font-black text-gray-500 uppercase transition-all">Agence / Pro (1 an)</button>
+    <section class="max-w-7xl mx-auto px-6 pb-20">
+        <div class="flex justify-center mb-16">
+            <div class="glass-card p-1.5 rounded-2xl inline-flex flex-wrap md:flex-nowrap gap-1 border-white/10">
+                <button id="tab-perso-engaged" onclick="setTab('perso-engaged')" class="px-6 md:px-8 py-4 rounded-xl text-[10px] font-black uppercase transition-all tab-active">Perso Engagé (1 an)</button>
+                <button id="tab-perso-free" onclick="setTab('perso-free')" class="px-6 md:px-8 py-4 rounded-xl text-[10px] font-black text-gray-400 uppercase transition-all">Perso Sans Engagement (+5€)</button>
+                <button id="tab-pro" onclick="setTab('pro')" class="px-6 md:px-8 py-4 rounded-xl text-[10px] font-black text-gray-500 uppercase transition-all">Agence / Pro (1 an)</button>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-left">
-            <div class="glass-card price-card p-10 rounded-[3rem] flex flex-col border-white/5 relative">
-                <p class="text-[10px] font-black text-gray-500 uppercase mb-4 tracking-widest">Starter Plan</p>
-                <div class="flex items-baseline gap-1 mb-1">
-                    <h3 class="text-5xl font-black" id="p1-price">14.99€</h3>
-                    <span class="text-sm font-bold text-gray-500">/mois</span>
-                </div>
-                <p class="text-[9px] font-bold text-gray-600 uppercase mb-8 italic" id="p1-factu">Facturé annuellement (179.88€)</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="glass-card price-card p-10 rounded-[3rem] flex flex-col border-white/5">
+                <p class="text-[10px] font-black text-gray-500 uppercase mb-4 tracking-widest">Starter</p>
+                <h3 class="text-5xl font-black mb-1" id="p1-price">14.99€</h3>
+                <p class="text-[9px] font-bold text-blue-400 uppercase mb-8" id="t-commit-1">Engagement 1 an</p>
                 <ul class="space-y-4 text-[11px] font-bold text-gray-400 mb-10 flex-1 uppercase">
                     <li>● 5 Clips Viraux / mois</li>
                     <li>● Rendu HD Standard</li>
                 </ul>
-                <div class="border-t border-white/5 pt-6 mt-auto">
-                    <p class="text-[9px] font-black text-gray-500 uppercase mb-2">Total dû aujourd'hui :</p>
+                <div class="pt-6 border-t border-white/5">
+                    <p class="text-[9px] font-black text-gray-500 uppercase mb-2">Total aujourd'hui :</p>
                     <p class="text-2xl font-black" id="p1-total">179.88€</p>
                 </div>
-                <button class="w-full py-5 rounded-2xl mt-8 font-black uppercase text-[10px] glass-card border-white/10 hover:bg-white/10">Choisir</button>
+                <a href="TON_LIEN_STRIPE_STARTER" class="block text-center bg-white/10 hover:bg-white/20 w-full py-5 rounded-2xl mt-8 font-black uppercase text-[10px]">Choisir Starter</a>
+                <div class="flex justify-center gap-3 mt-4 payment-methods">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
+                </div>
             </div>
 
-            <div class="glass-card price-card p-10 rounded-[3rem] border-blue-500/40 bg-blue-500/5 scale-105 relative flex flex-col">
-                <div class="absolute top-6 right-10 bg-blue-600 text-[8px] font-black px-3 py-1 rounded-full uppercase italic tracking-widest">Populaire</div>
+            <div class="glass-card price-card p-10 rounded-[3rem] flex flex-col border-blue-500/30 bg-blue-500/5 scale-105 relative">
+                <div class="absolute top-6 right-10 bg-blue-600 text-[8px] font-black px-3 py-1 rounded-full uppercase">Populaire</div>
                 <p class="text-[10px] font-black text-blue-400 uppercase mb-4 tracking-widest">Elite AI</p>
-                <div class="flex items-baseline gap-1 mb-1">
-                    <h3 class="text-5xl font-black text-white" id="p2-price">34.99€</h3>
-                    <span class="text-sm font-bold text-blue-400">/mois</span>
-                </div>
-                <p class="text-[9px] font-bold text-blue-800 uppercase mb-8 italic" id="p2-factu">Facturé annuellement (419.88€)</p>
+                <h3 class="text-5xl font-black mb-1" id="p2-price">34.99€</h3>
+                <p class="text-[9px] font-bold text-blue-300 uppercase mb-8" id="t-commit-2">Engagement 1 an</p>
                 <ul class="space-y-4 text-[11px] font-black text-white mb-10 flex-1 uppercase">
                     <li>● 30 Clips Viraux / mois</li>
                     <li>● Full HD 1080p Natif</li>
-                    <li>● Support Prioritaire</li>
                 </ul>
-                <div class="border-t border-white/10 pt-6 mt-auto">
-                    <p class="text-[9px] font-black text-blue-400 uppercase mb-2">Total dû aujourd'hui :</p>
+                <div class="pt-6 border-t border-white/10">
+                    <p class="text-[9px] font-black text-blue-400 uppercase mb-2">Total aujourd'hui :</p>
                     <p class="text-2xl font-black text-white" id="p2-total">419.88€</p>
                 </div>
-                <button class="bg-blue-600 hover:bg-blue-500 w-full py-6 rounded-2xl mt-8 font-black uppercase text-[10px] btn-pulse">Prendre Elite</button>
+                <a href="TON_LIEN_STRIPE_ELITE" class="block text-center bg-blue-600 hover:bg-blue-500 w-full py-5 rounded-2xl mt-8 font-black uppercase text-[10px] shadow-lg shadow-blue-600/20">Prendre Elite</a>
+                <div class="flex justify-center gap-4 mt-4 payment-methods">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_Pay_logo.svg" alt="Apple Pay">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
+                </div>
             </div>
 
-            <div class="glass-card price-card p-10 rounded-[3rem] border-purple-500/20 flex flex-col">
-                <div class="absolute top-6 right-10 text-[8px] font-black uppercase text-purple-400 tracking-widest">⚡ Places limitées pour 4K</div>
+            <div class="glass-card price-card p-10 rounded-[3rem] flex flex-col border-purple-500/20">
                 <p class="text-[10px] font-black text-purple-400 uppercase mb-4 tracking-widest">Master AI</p>
-                <div class="flex items-baseline gap-1 mb-1">
-                    <h3 class="text-5xl font-black" id="p3-price">64.99€</h3>
-                    <span class="text-sm font-bold text-gray-500">/mois</span>
-                </div>
-                <p class="text-[9px] font-bold text-gray-600 uppercase mb-8 italic" id="p3-factu">Facturé annuellement (779.88€)</p>
-                <ul class="space-y-4 text-[11px] font-bold text-gray-400 mb-10 uppercase flex-1">
-                    <li class="text-white italic">✔ Illimité*</li>
+                <h3 class="text-5xl font-black mb-1" id="p3-price">64.99€</h3>
+                <p class="text-[9px] font-bold text-purple-400 uppercase mb-8" id="t-commit-3">Engagement 1 an</p>
+                <ul class="space-y-4 text-[11px] font-bold text-gray-400 mb-10 flex-1 uppercase">
+                    <li class="text-white italic">✔ Illimité (Max 60)</li>
                     <li class="text-purple-300 italic">✔ 4K HDR INCLUS</li>
                 </ul>
-                <p class="text-[8px] font-bold text-gray-700 uppercase tracking-widest mb-4">*Limite de 60 vidéos/mois (CGV)</p>
-                <div class="border-t border-white/5 pt-6 mt-auto">
-                    <p class="text-[9px] font-black text-gray-500 uppercase mb-2">Total dû aujourd'hui :</p>
+                <div class="pt-6 border-t border-white/5">
+                    <p class="text-[9px] font-black text-gray-500 uppercase mb-2">Total aujourd'hui :</p>
                     <p class="text-2xl font-black" id="p3-total">779.88€</p>
                 </div>
-                <button class="bg-purple-600/20 text-purple-400 hover:bg-purple-600/40 w-full py-5 rounded-2xl mt-8 font-black uppercase text-[10px]">Espace Master</button>
+                <a href="TON_LIEN_STRIPE_MASTER" class="block text-center bg-purple-600/20 hover:bg-purple-600/40 text-purple-400 w-full py-5 rounded-2xl mt-8 font-black uppercase text-[10px]">Choisir Master</a>
+                <div class="flex justify-center gap-3 mt-4 payment-methods">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
+                </div>
             </div>
+        </div>
+        
+        <div class="mt-16 flex items-center justify-center gap-2 text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+            <p class="text-[10px] font-black uppercase tracking-[0.2em]">Paiements sécurisés cryptés SSL</p>
         </div>
     </section>
 
-    <footer class="max-w-7xl mx-auto px-8 py-20 border-t border-white/5 mt-20 relative z-10" id="contact">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-center md:text-left">
-            <div>
-                <div class="text-xl font-black italic tracking-tighter uppercase mb-6">CASA<span class="text-blue-500">CLIP</span></div>
-                <p class="text-[10px] text-gray-600 font-bold uppercase leading-relaxed mb-6">L'usine à clips viraux automatisée par IA.</p>
-                <div class="flex justify-center md:justify-start gap-5">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" class="h-4 opacity-30 grayscale hover:grayscale-0" alt="YouTube Logo">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a9/TikTok_logo.svg/1280px-TikTok_logo.svg.png" class="h-4 opacity-30 grayscale hover:grayscale-0" alt="TikTok Logo">
-                </div>
-            </div>
-            <div>
-                <h4 class="text-[11px] font-black uppercase mb-6 tracking-widest text-white">Juridique</h4>
-                <ul class="text-[10px] text-gray-500 space-y-4 font-bold uppercase tracking-widest">
-                    <li><a href="#" class="hover:text-white transition">Politique de confidentialité</a></li>
-                    <li><a href="#" class="hover:text-white transition">CGV / Mentions Légales</a></li>
-                    <li><a href="#" class="hover:text-white transition">Gestion cookies</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-[11px] font-black uppercase mb-6 tracking-widest text-white">Produit</h4>
-                <ul class="text-[10px] text-gray-500 space-y-4 font-bold uppercase tracking-widest">
-                    <li><a href="#demo" class="hover:text-white transition">Mini Démo Vidéo</a></li>
-                    <li><a href="#how-it-works" class="hover:text-white transition">Comment ça marche ?</a></li>
-                    <li><a href="#pricing" class="hover:text-white transition">Plans Tarifaires</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-[11px] font-black uppercase mb-6 tracking-widest text-white">Support</h4>
-                <button onclick="showToast('Chargement du chat SAV...')" class="glass-card px-6 py-4 rounded-xl border-blue-500/20 text-blue-400 w-full text-[10px] font-black uppercase hover:bg-blue-600/10 transition">Contactez le SAV AI</button>
-            </div>
-        </div>
-        <p class="text-center text-[9px] text-gray-700 font-bold uppercase tracking-[0.3em]">© 2026 CasaClip AI. Tous droits réservés.</p>
+    <footer class="text-center py-20 border-t border-white/5">
+        <button onclick="showToast('Ouverture du support AI...')" class="text-[10px] font-black uppercase tracking-widest bg-blue-600/10 px-8 py-4 rounded-xl border border-blue-500/30 text-blue-400 hover:bg-blue-600 hover:text-white transition mb-10">Contactez le SAV AI</button>
+        <p class="text-[9px] text-gray-600 font-bold uppercase">© 2026 CasaClip AI. <a href="#" class="underline">Politique de confidentialité</a></p>
     </footer>
 
-    <div class="mobile-sticky-btn md:hidden">
-        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="w-full bg-blue-600 py-4 rounded-xl font-black uppercase text-[11px] btn-pulse shadow-lg shadow-blue-600/20">Analyser une vidéo maintenant</button>
-    </div>
-
     <script>
-        // POINT 3 RECTIFIÉ : OPTIMISATION JS simples (QuerySelector dehors du loop)
-        const factuBoxes = document.querySelectorAll('[id$="-factu"]');
-        let currentMode = 'annual'; 
-        const pValues = [14.99, 34.99, 64.99]; // Perso
-        const gValues = [89.99, 189.99, 499.99]; // Pro
+        let currentTab = 'perso-engaged';
+        const config = {
+            fr: { cur: "€", rate: 1, commit: "Engagement 1 an", free: "Sans Engagement (+5€)" },
+            en: { cur: "$", rate: 1.1, commit: "1 Year Commitment", free: "No Commitment (+$5)" },
+            es: { cur: "€", rate: 1, commit: "Compromiso de 1 año", free: "Sin Compromiso (+5€)" },
+            ar: { cur: "﷼", rate: 4.1, commit: "التزام لمدة سنة واحدة", free: "بدون التزام (+5 ريال)" }
+        };
 
         function showToast(msg) {
-            const t = document.getElementById("toast");
-            t.innerText = msg;
-            t.className = "show";
-            setTimeout(() => { t.className = ""; }, 3000);
+            const x = document.getElementById("toast");
+            x.innerText = msg;
+            x.className = "show";
+            setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
         }
 
-        function setTab(m) {
-            currentMode = m;
-            document.getElementById('tab-annual').className = (m === 'annual') ? "px-8 py-4 rounded-xl text-[10px] font-black uppercase tab-active" : "px-8 py-4 rounded-xl text-[10px] font-black text-gray-500 uppercase";
-            document.getElementById('tab-monthly').className = (m === 'monthly') ? "px-8 py-4 rounded-xl text-[10px] font-black uppercase tab-active" : "px-8 py-4 rounded-xl text-[10px] font-black text-gray-500 uppercase";
-            document.getElementById('tab-pro').className = (m === 'pro') ? "px-8 py-4 rounded-xl text-[10px] font-black uppercase tab-active" : "px-8 py-4 rounded-xl text-[10px] font-black text-gray-500 uppercase";
+        function setTab(t) {
+            currentTab = t;
+            ['perso-engaged', 'perso-free', 'pro'].forEach(id => {
+                document.getElementById('tab-'+id).classList.remove('tab-active');
+                document.getElementById('tab-'+id).classList.add('text-gray-400');
+            });
+            document.getElementById('tab-'+t).classList.add('tab-active');
             updateUI();
         }
 
         function updateUI() {
-            let active = pValues;
-            let mult = 12; // Annuel
-            let tax = 0; // Pas de taxe engagé 1 an
+            const lang = document.getElementById('langBox').value;
+            const c = config[lang];
+            let base = [14.99, 34.99, 64.99]; 
+            let tax = (currentTab === 'perso-free') ? 5 : 0;
+            let mult = (currentTab === 'perso-free') ? 1 : 12;
+            if (currentTab === 'pro') base = [89.99, 189.99, 499.99];
 
-            if (currentMode === 'monthly') {
-                active = pValues;
-                tax = 5; // Sans engagement (+5€/mois)
-                mult = 1;
-            } else if (currentMode === 'pro') {
-                active = gValues;
-                tax = 0; 
-                mult = 12;
-            }
-
-            active.forEach((v, i) => {
-                let monthlyFinal = v + tax;
-                let totalUpfront = (monthlyFinal * mult).toFixed(2);
-                
-                // POINT 1 RECTIFIÉ : INJECTION TEXTE SIMPLE (PAS DE DOUBLE ID)
-                document.getElementById(`p${i+1}-price`).innerText = monthlyFinal.toFixed(2) + "€";
-                document.getElementById(`p${i+1}-total`).innerText = totalUpfront + "€";
-                
-                if (currentMode === 'monthly') {
-                    factuBoxes[i].innerHTML = "Sans engagement (annulable 24h/24)";
-                } else {
-                    // POINT 1 : INJECTION SIMPLE
-                    factuBoxes[i].innerHTML = `Facturé annuellement (${totalUpfront}€)`;
-                }
+            base.forEach((val, i) => {
+                let finalVal = (val + tax) * c.rate;
+                document.getElementById(`p${i+1}-price`).innerText = finalVal.toFixed(2) + c.cur;
+                document.getElementById(`p${i+1}-total`).innerText = (finalVal * mult).toFixed(2) + c.cur;
+                document.querySelectorAll('[id^="t-commit-"]').forEach(e => e.innerText = (currentTab === 'perso-free' ? c.free : c.commit));
             });
         }
 
         function startScan() {
-            const url = document.getElementById('vUrl').value;
-            if(!url) return showToast("Veuillez coller un lien valide !");
-            
+            if(!document.getElementById('vUrl').value) return showToast("Veuillez entrer une URL valide !");
             document.getElementById('loader').style.display = "block";
-            document.getElementById('btn-text').innerText = "Vérification...";
-            
+            document.getElementById('btn-text').style.display = "none";
             setTimeout(() => { 
                 document.getElementById('loader').style.display = "none";
-                document.getElementById('btn-text').innerText = "Analyse Gratuite";
-                showToast("URL détectée ! Prêt pour le découpage IA.");
-            }, 2000);
+                document.getElementById('btn-text').style.display = "block";
+                showToast("Analyse terminée : Vidéo éligible !");
+            }, 2500);
         }
-
         updateUI();
     </script>
 </body>
