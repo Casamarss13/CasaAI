@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA CLIP | Sovereign System V106</title>
+    <title>CASA CLIP | Sovereign System V110</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Noto+Sans+Arabic:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+Devanagari:wght@700;900&display=swap" rel="stylesheet">
     <style>
@@ -41,7 +41,7 @@
         </div>
         <div class="flex gap-4">
             <button onclick="showSection('client-space')" class="glass px-6 py-4 rounded-xl text-[9px] font-900 uppercase tracking-widest border-blue-500/30 text-blue-400">Espace Client</button>
-            <button onclick="trackAction('NAV_LOGIN')" class="btn-master px-8 py-4 rounded-xl text-[9px] uppercase tracking-widest italic">Accès Studio</button>
+            <button onclick="trackAction('STUDIO_ACCESS_CLICK')" class="btn-master px-8 py-4 rounded-xl text-[9px] uppercase tracking-widest italic">Accès Studio</button>
         </div>
     </nav>
 
@@ -72,6 +72,14 @@
         </div>
     </section>
 
+    <section id="client-space" class="max-w-7xl mx-auto text-center py-20">
+        <h2 class="text-4xl font-900 mb-8 italic uppercase">Espace Client</h2>
+        <div class="glass p-20 border-white/10">
+            <p class="opacity-50 text-[12px] uppercase tracking-widest font-bold">Veuillez vous identifier pour accéder à vos rendus.</p>
+            <button onclick="showSection('landing')" class="mt-10 text-blue-500 font-900 text-[10px] uppercase underline">Retour à l'accueil</button>
+        </div>
+    </section>
+
     <div id="sav-bubble">
         <div id="sav-card" class="glass sav-card p-6">
             <div class="flex items-center justify-between mb-6 border-b border-white/5 pb-4">
@@ -95,14 +103,14 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20 text-[10px] font-900 uppercase tracking-widest">
             <div class="space-y-4">
                 <p class="text-blue-500" id="f-t1"></p>
-                <a class="block opacity-30 hover:opacity-100" id="f-l1"></a>
-                <a class="block opacity-30 hover:opacity-100" id="f-l2"></a>
-                <a class="block opacity-30 hover:opacity-100">RGPD / GDPR</a>
+                <a onclick="trackAction('LEGAL_CLICK', {type: 'CGV'})" class="block opacity-30 hover:opacity-100 cursor-pointer" id="f-l1"></a>
+                <a onclick="trackAction('LEGAL_CLICK', {type: 'PRIVACY'})" class="block opacity-30 hover:opacity-100 cursor-pointer" id="f-l2"></a>
+                <a class="block opacity-30 hover:opacity-100 cursor-pointer">RGPD / GDPR</a>
             </div>
             <div class="space-y-4">
                 <p class="text-blue-500" id="f-t2"></p>
-                <a class="block opacity-30 hover:opacity-100" id="f-l5"></a>
-                <a class="block opacity-30 hover:opacity-100" id="f-l6"></a>
+                <a class="block opacity-30 hover:opacity-100 cursor-pointer" id="f-l5"></a>
+                <a class="block opacity-30 hover:opacity-100 cursor-pointer" id="f-l6"></a>
             </div>
             <div class="md:col-span-2 space-y-6">
                 <h4 class="text-2xl italic">CASA CLIP</h4>
@@ -113,72 +121,20 @@
     </footer>
 
     <script>
-        let state = { lang: 'fr', tab: 'perso', option: 'annuel' };
+        // ARCHITECTURE MAKE.COM (EU1)
+        const WEBHOOK_URL = "https://hook.eu1.make.com/rfyr9ysgkxukn6mu24c1qkc2vlmhm7cd";
+        let state = { lang: 'fr', tab: 'perso', option: 'annuel', sessionID: 'CASA-' + Math.random().toString(36).substr(2,9) };
 
         const RATES = { fr: 1, en: 1.08, ar: 4.05, es: 1, zh: 7.8, hi: 89.5 };
         const SYMBOLS = { fr: '€', en: '$', ar: 'ر.س', es: '€', zh: '¥', hi: '₹' };
 
         const TR = {
-            fr: {
-                hero_pool: ["L'ÉLITE DU RENDU", "SOUVERAINETÉ VISUELLE", "LE STANDARD MONDIAL"],
-                sub: "PUISSANCE GPU ILLIMITÉE • RÉALISME ABSOLU",
-                tabP: "PARTICULIER", tabB: "LIGUE & AGENCE",
-                optA: "Annuel (-20%)", optE: "Mensuel Engagé", optL: "Mensuel Libre",
-                get: "COMMANDER", p: "par mois", tot: "Total annuel",
-                desc: "Système de production média par intelligence artificielle. Conformité mondiale assurée.",
-                ft1: "LÉGAL & MONDE", fl1: "Conditions Générales (CGV)", fl2: "Confidentialité", ft2: "SÉCURITÉ", fl5: "Anti-Fraude", fl6: "KYC",
-                dir: "ltr", font: ""
-            },
-            en: {
-                hero_pool: ["RENDERING ELITE", "VISUAL SOVEREIGNTY", "GLOBAL STANDARD"],
-                sub: "UNLIMITED GPU POWER • ABSOLUTE REALISM",
-                tabP: "INDIVIDUAL", tabB: "LEAGUE & AGENCY",
-                optA: "Yearly (-20%)", optE: "Monthly Committed", optL: "Monthly Flexible",
-                get: "ORDER NOW", p: "per month", tot: "Total yearly",
-                desc: "AI media production system. Global compliance guaranteed.",
-                ft1: "GLOBAL LEGAL", fl1: "Terms & Conditions", fl2: "Privacy Policy", ft2: "SECURITY", fl5: "Anti-Fraud", fl6: "KYC",
-                dir: "ltr", font: ""
-            },
-            ar: {
-                hero_pool: ["نخبة الإنتاج", "السيادة البصرية", "المعيار العالمي"],
-                sub: "قوة معالجة غير محدودة • واقعية مطلقة",
-                tabP: "حساب فردي", tabB: "وكالات وتحالفات",
-                optA: "سنوي (وفر 20%)", optE: "شهري بالتزام", optL: "شهري مرن",
-                get: "اطلب الآن", p: "في الشهر", tot: "الإجمالي السنوي",
-                desc: "نظام إنتاج الوسائط بالذكاء الاصطناعي. الامتثال العالمي مضمون.",
-                ft1: "القانون العالمي", fl1: "الشروط والأحكام", fl2: "سياسة الخصوصية", ft2: "الأمان", fl5: "مكافحة الاحتيال", fl6: "اتفاقية KYC",
-                dir: "rtl", font: "lang-ar"
-            },
-            es: {
-                hero_pool: ["ÉLITE DEL RENDER", "SOBERANÍA VISUAL", "ESTÁNDAR GLOBAL"],
-                sub: "POTENCIA GPU ILIMITADA • REALISMO ABSOLUTO",
-                tabP: "PARTICULAR", tabB: "LIGA Y AGENCIA",
-                optA: "Anual (-20%)", optE: "Mensual Comprometido", optL: "Mensual Libre",
-                get: "ORDENAR", p: "al mes", tot: "Total anual",
-                desc: "Sistema de producción por IA. Cumplimiento global.",
-                ft1: "LEGAL GLOBAL", fl1: "Términos y Condiciones", fl2: "Privacidad", ft2: "SEGURIDAD", fl5: "Anti-Fraude", fl6: "KYC",
-                dir: "ltr", font: ""
-            },
-            zh: {
-                hero_pool: ["渲染巅峰", "视觉主权", "全球标准"],
-                sub: "无限 GPU 算力 • 绝对写实主义",
-                tabP: "个人用户", tabB: "联盟与机构",
-                optA: "年度套餐 (-20%)", optE: "年度合约", optL: "自由订阅",
-                get: "立即加入", p: "每月", tot: "年度总计",
-                desc: "高精度人工智能媒体生产系统。全球合规性保证。",
-                ft1: "全球法律", fl1: "通用服务条款", fl2: "隐私政策", ft2: "安全", fl5: "反欺诈政策", fl6: "KYC 合规",
-                dir: "ltr", font: "lang-zh"
-            },
-            hi: {
-                hero_pool: ["रेंडरिंग एलीट", "विजुअल संप्रभुता", "वैश्विक मानक"],
-                sub: "असीमित GPU शक्ति • पूर्ण यथार्थवाद",
-                tabP: "व्यक्तिगत", tabB: "लीग और एजेंसी",
-                optA: "वार्षिक (-20%)", optE: "मासिक प्रतिबद्ध", optL: "मासिक लचीला",
-                get: "सदस्य बनें", p: "प्रति माह", tot: "कुल वार्षिक",
-                desc: "उच्च-सटीक एआई मीडिया उत्पादन प्रणाली।",
-                ft1: "वैश्विक कानूनी", fl1: "नियम और शर्तें", fl2: "गोपनीयता नीति", ft2: "प्रणाली नियम", fl5: "धोखाधड़ी विरोधी", fl6: "KYC अनुपालन",
-                dir: "ltr", font: "lang-hi"
-            }
+            fr: { hero_pool: ["L'ÉLITE DU RENDU", "SOUVERAINETÉ VISUELLE", "LE STANDARD MONDIAL"], sub: "PUISSANCE GPU ILLIMITÉE • RÉALISME ABSOLU", tabP: "PARTICULIER", tabB: "LIGUE & AGENCE", optA: "Annuel (-20%)", optE: "Mensuel Engagé", optL: "Mensuel Libre", get: "COMMANDER", p: "par mois", tot: "Total annuel", desc: "Système de production média par intelligence artificielle. Conformité mondiale assurée.", ft1: "LÉGAL & MONDE", fl1: "Conditions Générales (CGV)", fl2: "Confidentialité", ft2: "SÉCURITÉ", fl5: "Anti-Fraude", fl6: "KYC", dir: "ltr", font: "" },
+            en: { hero_pool: ["RENDERING ELITE", "VISUAL SOVEREIGNTY", "GLOBAL STANDARD"], sub: "UNLIMITED GPU POWER • ABSOLUTE REALISM", tabP: "INDIVIDUAL", tabB: "LEAGUE & AGENCY", optA: "Yearly (-20%)", optE: "Monthly Committed", optL: "Monthly Flexible", get: "ORDER NOW", p: "per month", tot: "Total yearly", desc: "AI media production system. Global compliance guaranteed.", ft1: "GLOBAL LEGAL", fl1: "Terms & Conditions", fl2: "Privacy Policy", ft2: "SECURITY", fl5: "Anti-Fraud", fl6: "KYC", dir: "ltr", font: "" },
+            ar: { hero_pool: ["نخبة الإنتاج", "السيادة البصرية", "المعيار العالمي"], sub: "قوة معالجة غير محدودة • واقعية مطلقة", tabP: "حساب فردي", tabB: "وكالات وتحالفات", optA: "سنوي (وفر 20%)", optE: "شهري بالتزام", optL: "شهري مرن", get: "اطلب الآن", p: "في الشهر", tot: "الإجمالي السنوي", desc: "نظام إنتاج الوسائط بالذكاء الاصطناعي. الامتثال العالمي مضمون.", ft1: "القانون العالمي", fl1: "الشروط والأحكام", fl2: "سياسة الخصوصية", ft2: "الأمان", fl5: "مكافحة الاحتيال", fl6: "اتفاقية KYC", dir: "rtl", font: "lang-ar" },
+            es: { hero_pool: ["ÉLITE DEL RENDER", "SOBERANÍA VISUAL", "ESTÁNDAR GLOBAL"], sub: "POTENCIA GPU ILIMITADA • REALISMO ABSOLUTO", tabP: "PARTICULAR", tabB: "LIGA Y AGENCIA", optA: "Anual (-20%)", optE: "Mensual Comprometido", optL: "Mensuel Libre", get: "ORDENAR", p: "al mes", tot: "Total anual", desc: "Sistema de producción por IA. Cumplimiento global.", ft1: "LEGAL GLOBAL", fl1: "Términos y Condiciones", fl2: "Privacidad", ft2: "SEGURIDAD", fl5: "Anti-Fraude", fl6: "KYC", dir: "ltr", font: "" },
+            zh: { hero_pool: ["渲染巅峰", "视觉主权", "全球标准"], sub: "无限 GPU 算力 • 绝对写实主义", tabP: "个人用户", tabB: "联盟与机构", optA: "年度套餐 (-20%)", optE: "年度合约", optL: "自由订阅", get: "立即加入", p: "每月", tot: "年度总计", desc: "高精度人工智能媒体生产系统。全球合规性保证。", ft1: "全球法律", fl1: "通用服务条款", fl2: "隐私政策", ft2: "安全", fl5: "反欺诈政策", fl6: "KYC 合规", dir: "ltr", font: "lang-zh" },
+            hi: { hero_pool: ["रेंडरिंग एलीट", "विजुअल संप्रभुता", "वैश्विक मानक"], sub: "असीमित GPU शक्ति • पूर्ण यथार्थवाद", tabP: "व्यक्तिगत", tabB: "लीग और एजेंसी", optA: "वार्षिक (-20%)", optE: "मासिक प्रतिबद्ध", optL: "मासिक लचीला", get: "सदस्य बनें", p: "प्रति माह", desc: "उच्च-सटीक एआई média उत्पादन प्रणाली।", ft1: "वैश्विक कानूनी", fl1: "नियम और शर्तें", fl2: "गोपनीयता नीति", ft2: "प्रणाली नियम", fl5: "धोखाधड़ी विरोधी", fl6: "KYC अनुपालन", dir: "ltr", font: "lang-hi" }
         };
 
         const DATA = {
@@ -186,8 +142,26 @@
             pro: { plans: ["League", "Agency", "Empire"], base: [89.99, 189.99, 499.99], vids: [120, 350, 1200] }
         };
 
-        function trackAction(type, data = {}) {
-            console.log("SENDING TO MAKE.COM:", { type, data, timestamp: new Date().toISOString() });
+        // FONCTION DE TRACKING UNIVERSELLE
+        async function trackAction(type, data = {}) {
+            const payload = { 
+                event: type, 
+                session: state.sessionID, 
+                lang: state.lang, 
+                tab: state.tab, 
+                billing: state.option,
+                timestamp: new Date().toISOString(),
+                ...data 
+            };
+            console.log("LOG:", payload);
+            try { 
+                fetch(WEBHOOK_URL, { 
+                    method: 'POST', 
+                    mode: 'no-cors', 
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload) 
+                }); 
+            } catch(e) {}
         }
 
         function setLang(l) {
@@ -195,10 +169,8 @@
             const r = document.getElementById('html-root');
             r.setAttribute('dir', TR[l].dir);
             r.className = "bg-black text-white " + TR[l].font;
-            
             document.querySelectorAll('[id^="l-"]').forEach(el => el.classList.add('opacity-30'));
             document.getElementById('l-'+l).classList.remove('opacity-30');
-            
             const pool = TR[l].hero_pool;
             document.getElementById('hero-title').innerText = pool[Math.floor(Math.random()*pool.length)];
             document.getElementById('hero-sub').innerText = TR[l].sub;
@@ -211,18 +183,27 @@
             document.getElementById('f-t2').innerText = TR[l].ft2;
             document.getElementById('f-l5').innerText = TR[l].fl5;
             document.getElementById('f-l6').innerText = TR[l].fl6;
-
             updateUI();
-            localStorage.setItem('casaclip_session', JSON.stringify(state));
+            trackAction('LANGUAGE_CHANGED', {new_lang: l});
         }
 
-        function switchTab(t) { state.tab = t; state.option = 'annuel'; updateUI(); trackAction('TAB_CHANGE', {tab: t}); }
-        function setOpt(o) { state.option = o; updateUI(); trackAction('OPT_CHANGE', {opt: o}); }
+        function switchTab(t) { 
+            state.tab = t; 
+            state.option = 'annuel'; 
+            updateUI(); 
+            trackAction('TAB_SWITCHED', {category: t}); 
+        }
+
+        function setOpt(o) { 
+            state.option = o; 
+            updateUI(); 
+            trackAction('BILLING_OPTION_CHANGED', {option: o}); 
+        }
 
         function updateUI() {
             document.getElementById('tab-perso').className = `px-12 py-5 rounded-2xl text-[12px] font-900 uppercase transition ${state.tab==='perso'?'tab-active':'glass border-white/5 opacity-40'}`;
             document.getElementById('tab-pro').className = `px-12 py-5 rounded-2xl text-[12px] font-900 uppercase transition ${state.tab==='pro'?'tab-active':'glass border-white/5 opacity-40'}`;
-
+            
             let optHtml = `
                 <button onclick="setOpt('annuel')" class="px-8 py-4 glass text-[10px] font-900 uppercase border-white/5 transition ${state.option==='annuel'?'tab-active':'opacity-40'}">${TR[state.lang].optA}</button>
                 <button onclick="setOpt('eng')" class="px-8 py-4 glass text-[10px] font-900 uppercase border-white/5 transition ${state.option==='eng'?'tab-active':'opacity-40'}">${TR[state.lang].optE}</button>
@@ -242,22 +223,37 @@
                     <span class="text-blue-500 font-900 text-[11px] mb-8 block uppercase tracking-widest italic">${p}</span>
                     <div class="text-6xl font-900 mb-2 tracking-tighter">${conv.toFixed(2)} ${sym}</div>
                     <span class="text-white/20 text-[10px] font-bold block mb-12 uppercase">${TR[state.lang].p}</span>
-                    <button onclick="trackAction('PLAN_SELECT', {plan: '${p}'})" class="w-full py-6 rounded-2xl border border-white/10 font-900 text-[11px] uppercase group-hover:bg-blue-600 transition">${TR[state.lang].get}</button>
+                    <button onclick="trackAction('PLAN_PURCHASE_CLICK', {plan_name: '${p}', final_price: ${conv}, currency: '${sym}'})" class="w-full py-6 rounded-2xl border border-white/10 font-900 text-[11px] uppercase group-hover:bg-blue-600 transition active:scale-95">${TR[state.lang].get}</button>
                 </div>`;
             });
             document.getElementById('pricing-grid').innerHTML = gridHtml;
         }
 
-        function toggleSAV() { document.getElementById('sav-card').style.display = (document.getElementById('sav-card').style.display === 'flex' ? 'none' : 'flex'); }
+        function toggleSAV() { 
+            const el = document.getElementById('sav-card');
+            const isVisible = el.style.display === 'flex';
+            el.style.display = isVisible ? 'none' : 'flex'; 
+            trackAction('SAV_WIDGET_TOGGLE', {visible: !isVisible});
+        }
+
         function sendSAV() { 
             const val = document.getElementById('sav-input').value; if(!val) return;
             document.getElementById('sav-chat').innerHTML += `<div class="text-right text-blue-400">User: ${val}</div>`;
-            trackAction('SAV_MSG', {msg: val}); document.getElementById('sav-input').value = "";
+            trackAction('SAV_MESSAGE_SENT', {message: val}); 
+            document.getElementById('sav-input').value = "";
         }
-        function showSection(id) { document.querySelectorAll('section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
 
-        const saved = localStorage.getItem('casaclip_session');
-        if(saved) { state = JSON.parse(saved); setLang(state.lang); } else { setLang('fr'); }
+        function showSection(id) { 
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active')); 
+            document.getElementById(id).classList.add('active'); 
+            trackAction('PAGE_NAVIGATION', {target_section: id});
+        }
+
+        // INITIALISATION
+        window.onload = () => {
+            setLang('fr');
+            trackAction('SESSION_STARTED', {user_agent: navigator.userAgent});
+        };
     </script>
 </body>
 </html>
