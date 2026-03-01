@@ -1,248 +1,156 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="bg-black">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CasaClip AI | Professional Sovereign SaaS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <title>CASA CLIP | L'Excellence Vidéo IA</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://js.stripe.com/v3/"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #3b82f6; --bg: #010101; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #fff; scroll-behavior: smooth; overflow-x: hidden; }
-        .aurora { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(59,130,246,0.12), transparent 40%); }
-        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .tab-active { background: var(--primary) !important; color: white !important; box-shadow: 0 0 25px rgba(59, 130, 246, 0.4); }
-        .vip-border { border: 2px solid #fbbf24 !important; box-shadow: 0 0 40px rgba(251, 191, 36, 0.25); }
-        #toast { visibility: hidden; min-width: 280px; background: #080808; color: #fff; text-align: center; border-radius: 12px; padding: 18px; position: fixed; z-index: 9999; left: 50%; bottom: 35px; transform: translateX(-50%); font-size: 11px; font-weight: 800; border: 1px solid var(--primary); text-transform: uppercase; letter-spacing: 1px; }
-        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 35px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 35px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+        :root { --blue: #3b82f6; --gold: #fbbf24; --bg: #000; }
+        * { -webkit-tap-highlight-color: transparent; outline: none; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; opacity: 0; transition: opacity 0.5s ease-in; overflow-x: hidden; }
+        
+        /* Hyper-Glass Edition */
+        .glass-v56 { background: rgba(255,255,255,0.02); backdrop-filter: blur(80px); -webkit-backdrop-filter: blur(80px); border: 1px solid rgba(255,255,255,0.08); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .glass-v56:hover { border-color: rgba(59,130,246,0.4); background: rgba(255,255,255,0.04); transform: translateY(-4px); }
+        
+        .btn-main { background: var(--blue); box-shadow: 0 10px 40px rgba(59,130,246,0.3); transition: 0.3s; }
+        .btn-main:hover { transform: scale(1.02); box-shadow: 0 15px 50px rgba(59,130,246,0.5); }
+        
+        .tab-on { background: var(--blue) !important; color: white !important; font-weight: 800; box-shadow: 0 8px 25px rgba(59,130,246,0.3); }
+        .master-card { border: 1px solid var(--gold) !important; background: linear-gradient(180deg, rgba(251,191,36,0.05), transparent) !important; }
+
+        #toast { visibility: hidden; min-width: 320px; background: #050505; border: 1px solid var(--blue); color: #fff; text-align: center; border-radius: 30px; padding: 22px; position: fixed; z-index: 10000000; left: 50%; bottom: 50px; transform: translate(-50%, 80px); font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; opacity: 0; transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
+        #toast.show { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
+        
+        .rtl { direction: rtl; text-align: right; }
     </style>
 </head>
 <body class="select-none" oncontextmenu="return false;">
-    <div class="aurora"></div>
     <div id="toast"></div>
 
-    <div id="login-modal" class="hidden fixed inset-0 bg-black/98 backdrop-blur-2xl z-[5000] flex items-center justify-center p-6">
-        <div class="glass-card w-full max-w-[420px] p-12 rounded-[3.5rem] border-blue-500/30 text-center shadow-2xl">
-            <div class="w-16 h-16 bg-blue-600/10 rounded-2xl flex items-center justify-center mx-auto mb-8 border border-blue-500/20">
-                <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div id="auth-modal" class="hidden fixed inset-0 bg-black/98 backdrop-blur-[120px] z-[999999] flex items-center justify-center p-8">
+        <div class="glass-v56 w-full max-w-[450px] p-16 rounded-[4.5rem] text-center border-white/5">
+            <div class="mb-10 flex justify-center">
+                <div class="w-20 h-20 bg-blue-600/10 rounded-[2rem] flex items-center justify-center border border-blue-500/20 shadow-2xl">
+                    <svg class="w-10 h-10 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                </div>
             </div>
-            <h2 id="m-title" class="text-2xl font-black mb-2 uppercase italic">Accès CasaClip</h2>
-            <p id="m-desc" class="text-[10px] text-gray-500 mb-10 uppercase font-bold tracking-[0.2em] leading-relaxed"></p>
-            <input type="email" id="logEmail" placeholder="VOTRE EMAIL" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl mb-4 text-center font-bold outline-none focus:border-blue-500 transition-all text-white">
-            <input type="password" id="logPass" placeholder="MOT DE PASSE" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl mb-8 text-center font-bold outline-none focus:border-blue-500 transition-all text-white">
-            <button onclick="checkAuth()" id="m-btn" class="w-full bg-blue-600 hover:bg-blue-500 py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl active:scale-95 transition-all text-white"></button>
+            <h2 id="m-t" class="text-3xl font-900 uppercase mb-4 tracking-tighter"></h2>
+            <p id="m-d" class="text-[10px] text-gray-700 font-900 uppercase tracking-[0.5em] mb-12"></p>
+            <input type="email" id="email" placeholder="EMAIL MASTER" class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl mb-5 text-center font-bold text-white focus:border-blue-500 transition-all outline-none">
+            <input type="password" id="pass" placeholder="PASSWORD" class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl mb-10 text-center font-bold text-white focus:border-blue-500 transition-all outline-none">
+            <button onclick="checkAuth()" id="m-b" class="w-full btn-main py-6 rounded-2xl font-900 uppercase text-[12px] tracking-widest text-white shadow-lg"></button>
+            <button onclick="closeModal()" class="mt-8 text-[10px] text-gray-800 font-900 uppercase tracking-widest hover:text-white transition">Fermer</button>
         </div>
     </div>
 
-    <nav class="max-w-7xl mx-auto px-10 py-10 flex justify-between items-center relative z-50">
-        <div class="text-3xl font-black italic tracking-tighter uppercase">CASA<span class="text-blue-500">CLIP</span></div>
-        <div class="flex items-center gap-6">
-            <div id="vip-badge" class="hidden glass-card px-5 py-2.5 rounded-full border-yellow-500/30 text-[10px] font-black text-yellow-500 uppercase tracking-widest animate-pulse">👑 MAÎTRE : JÉRÉMY</div>
-            <select id="langBox" onchange="updateUI()" class="glass-card rounded-xl px-4 py-2 text-[10px] font-black uppercase text-white outline-none bg-black border-white/10 cursor-pointer">
-                <option value="fr">🇫🇷 FR</option><option value="en">🇺🇸 EN</option>
-                <option value="es">🇪🇸 ES</option><option value="ar">🇸🇦 AR</option>
+    <nav class="max-w-7xl mx-auto px-10 py-14 flex justify-between items-center relative z-50">
+        <div class="text-3xl font-900 italic uppercase tracking-tighter cursor-pointer" onclick="location.reload()">CASA<span class="text-blue-500">CLIP</span></div>
+        <div class="flex items-center gap-8">
+            <div id="master-badge" class="hidden glass-v56 px-8 py-3.5 rounded-full text-[10px] font-900 text-yellow-500 border-yellow-500/20 animate-pulse tracking-widest">👑 JÉRÉMY SOUVERAIN</div>
+            <select id="lang" onchange="refreshUI()" class="glass-v56 bg-black rounded-2xl px-6 py-3.5 text-[11px] font-900 uppercase outline-none cursor-pointer border-white/5 hover:border-blue-500/30">
+                <option value="fr">🇫🇷 FR</option><option value="en">🇺🇸 EN</option><option value="es">🇪🇸 ES</option><option value="ar">🇸🇦 AR</option>
             </select>
         </div>
     </nav>
 
-    <header class="max-w-6xl mx-auto pt-20 pb-32 text-center px-6">
-        <h1 id="t-hero" class="text-7xl md:text-9xl font-black mb-12 tracking-tighter leading-[0.9] min-h-[220px]"></h1>
-        <div class="max-w-4xl mx-auto glass-card p-5 rounded-[3rem] relative shadow-2xl border-white/5">
-            <div class="flex flex-col md:flex-row gap-4">
-                <input type="text" id="vUrl" class="flex-1 bg-white/5 px-8 py-7 outline-none text-white font-bold rounded-3xl border border-white/5 focus:border-blue-500/50 transition-all" placeholder="Lien Vidéo (YouTube, TikTok, Insta)...">
-                <div class="flex gap-3">
-                    <label class="cursor-pointer bg-white/5 hover:bg-white/10 px-8 py-7 rounded-3xl border border-white/10 flex items-center justify-center gap-3 transition-all">
-                        <input type="file" id="fileInput" class="hidden" onchange="handleFile(this)">
-                        <span id="t-import" class="text-[11px] font-black uppercase tracking-widest text-gray-400"></span>
+    <main class="max-w-6xl mx-auto pt-16 pb-40 text-center px-6">
+        <h1 id="h-t" class="text-7xl md:text-9xl font-900 mb-20 tracking-tighter leading-[0.85] min-h-[220px]"></h1>
+        <div class="glass-v56 p-6 rounded-[4rem] max-w-4xl mx-auto shadow-3xl border-white/5">
+            <div class="flex flex-col md:flex-row gap-5">
+                <input type="text" id="urlInput" class="flex-1 bg-white/5 px-10 py-8 rounded-3xl outline-none font-bold border border-transparent focus:border-blue-500/30 transition-all text-white" placeholder="URL...">
+                <div class="flex gap-4">
+                    <label class="glass-v56 px-10 py-8 rounded-3xl cursor-pointer hover:bg-white/10 transition border-white/5">
+                        <input type="file" class="hidden" onchange="pop('DATA CHARGÉE')">
+                        <span id="h-up" class="text-[11px] font-900 uppercase tracking-widest text-gray-600"></span>
                     </label>
-                    <button onclick="startProcess()" id="t-btn" class="bg-blue-600 hover:bg-blue-500 px-14 py-7 rounded-3xl font-black text-sm uppercase tracking-widest shadow-2xl shadow-blue-600/20 active:scale-95 transition-all text-white"></button>
+                    <button onclick="startIA()" id="h-b" class="btn-main px-16 py-8 rounded-3xl font-900 text-sm uppercase tracking-widest text-white shrink-0"></button>
                 </div>
             </div>
         </div>
-        <p class="mt-10 text-[11px] font-black text-gray-500 uppercase tracking-[0.5em]" id="t-limit"></p>
-    </header>
+        <p id="h-l" class="mt-16 text-[12px] font-900 text-gray-800 uppercase tracking-[0.8em]"></p>
+    </main>
 
-    <section id="pricing" class="max-w-7xl mx-auto px-6 pb-40">
-        <div class="flex justify-center mb-24">
-            <div class="glass-card p-2 rounded-[2.5rem] inline-flex gap-2">
-                <button id="tab-annuel" onclick="setTab('annuel')" class="px-10 py-6 rounded-2xl text-[11px] font-black uppercase transition-all tab-active"></button>
-                <button id="tab-mensuel" onclick="setTab('mensuel')" class="px-10 py-6 rounded-2xl text-[11px] font-black text-gray-500 uppercase transition-all"></button>
+    <section class="max-w-7xl mx-auto px-6 pb-64">
+        <div class="flex justify-center mb-32">
+            <div class="glass-v56 p-2 rounded-[2.5rem] flex gap-2 border-white/5">
+                <button id="p-ann" onclick="setPeriod('ann')" class="px-16 py-6 rounded-2xl text-[11px] font-900 uppercase transition-all"></button>
+                <button id="p-men" onclick="setPeriod('men')" class="px-16 py-6 rounded-2xl text-[11px] font-900 uppercase transition-all"></button>
             </div>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-            <div id="c1" class="glass-card p-14 rounded-[4.5rem] flex flex-col border-white/5 transition-all duration-700">
-                <p class="text-[11px] font-black text-gray-500 uppercase mb-5 tracking-widest">Starter AI</p>
-                <h3 class="text-6xl font-black mb-2" id="p1-price"></h3>
-                <p id="p1-sub" class="text-[10px] font-black text-blue-400 uppercase mb-12 tracking-widest"></p>
-                <ul id="p1-list" class="space-y-5 text-[12px] font-bold text-gray-400 mb-14 flex-1 uppercase"></ul>
-                <button onclick="pay(14.99)" class="bg-white/5 w-full py-7 rounded-3xl font-black uppercase text-[11px] border border-white/10 btn-sel text-white"></button>
-            </div>
-
-            <div id="c2" class="glass-card p-14 rounded-[4.5rem] flex flex-col border-blue-500/40 bg-blue-600/5 scale-105 relative shadow-2xl transition-all duration-700">
-                <div id="t-pop" class="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-600 text-[9px] font-black px-8 py-3 rounded-full uppercase italic tracking-widest shadow-xl text-white"></div>
-                <p class="text-[11px] font-black text-blue-400 uppercase mb-5 tracking-widest">Elite Intelligence</p>
-                <h3 class="text-7xl font-black mb-2" id="p2-price"></h3>
-                <p id="p2-sub" class="text-[10px] font-black text-blue-300 uppercase mb-12 tracking-widest"></p>
-                <ul id="p2-list" class="space-y-5 text-[12px] font-black text-white mb-14 flex-1 uppercase"></ul>
-                <button onclick="pay(34.99)" class="bg-blue-600 hover:bg-blue-500 w-full py-7 rounded-3xl font-black uppercase text-[11px] shadow-2xl shadow-blue-600/30 btn-sel text-white"></button>
-            </div>
-
-            <div id="c3" class="glass-card p-14 rounded-[4.5rem] flex flex-col border-purple-500/20 transition-all duration-700">
-                <p class="text-[11px] font-black text-purple-400 uppercase mb-5 tracking-widest">Master AI</p>
-                <h3 class="text-6xl font-black mb-2" id="p3-price"></h3>
-                <p id="p3-sub" class="text-[10px] font-black text-purple-400 uppercase mb-12 tracking-widest"></p>
-                <ul id="p3-list" class="space-y-5 text-[12px] font-bold text-gray-400 mb-14 flex-1 uppercase"></ul>
-                <button onclick="pay(64.99)" class="bg-purple-600/20 text-purple-400 w-full py-7 rounded-3xl font-black uppercase text-[11px] border border-purple-500/20 btn-sel"></button>
-            </div>
-        </div>
+        <div id="pricing-matrix" class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto"></div>
     </section>
 
-    <footer class="text-center py-24 border-t border-white/5 bg-black/40">
-        <div class="flex justify-center gap-10 text-[11px] font-black uppercase text-gray-600 tracking-widest mb-10">
-            <a href="#privacy" id="f1" class="hover:text-white transition"></a>
-            <a href="#terms" id="f2" class="hover:text-white transition"></a>
-            <a href="#legal" id="f3" class="hover:text-white transition"></a>
-        </div>
-        <div class="flex justify-center items-center gap-6 opacity-30 grayscale mb-8">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" class="h-5" alt="Stripe">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="h-4" alt="Visa">
-        </div>
-        <p class="text-[10px] text-gray-800 font-bold uppercase tracking-[0.5em]">🔒 SECURITY LEVEL V42 • AES-256 ENCRYPTION • 0615501201 MONITORING</p>
+    <footer class="text-center py-40 border-t border-white/5">
+        <p class="text-[10px] font-900 text-gray-800 uppercase tracking-[1.2em]">SOUVERAINETÉ JÉRÉMY FAURE • CASA CLIP V56 • 2026</p>
     </footer>
 
     <script>
-        const ADMIN = { user: "jeremyfaure96@gmail.com", pass: "Prissoulia.13", phone: "0615501201" };
-        const translations = {
-            fr: {
-                hero: 'Transformez vos vidéos<br><span class="text-blue-500 italic">en or viral.</span>',
-                import: "Importer", btn: "Analyser", limit: "1 Essai Gratuit • Sans Carte",
-                ann: "Annuel", mens: "Mensuel", sub1: "Engagement 1 an", sub2: "Sans Engagement",
-                pop: "Le plus choisi", sel: "Sélectionner", mTitle: "Accès Membre", mBtn: "Se Connecter",
-                mDesc: "Vérification de sécurité CasaClip requise.",
-                f1: "Confidentialité", f2: "CGV / CGU", f3: "Légal", cur: "€", rate: 1,
-                l1: ["● 5 clips / mois", "● Rendu HD"], l2: ["● 30 clips / mois", "● Full HD 1080p"], l3: ["✔ Illimité", "✔ 4K HDR"]
-            },
-            en: {
-                hero: 'Turn your videos<br><span class="text-blue-500 italic">into viral gold.</span>',
-                import: "Import", btn: "Analyze", limit: "1 Free Trial • No Card",
-                ann: "Annual", mens: "Monthly", sub1: "1 Year Plan", sub2: "No Commitment",
-                pop: "Most Popular", sel: "Select Plan", mTitle: "Member Login", mBtn: "Login Now",
-                mDesc: "CasaClip Secure authentication required.",
-                f1: "Privacy", f2: "Terms", f3: "Legal", cur: "$", rate: 1.1,
-                l1: ["● 5 clips / month", "● HD Render"], l2: ["● 30 clips / month", "● 1080p Full HD"], l3: ["✔ Unlimited", "✔ 4K HDR"]
-            },
-            es: {
-                hero: 'Convierte tus videos<br><span class="text-blue-500 italic">en oro viral.</span>',
-                import: "Importar", btn: "Analizar", limit: "1 Prueba Gratis • Sin Tarjeta",
-                ann: "Anual", mens: "Mensual", sub1: "Contrato 1 año", sub2: "Sin compromiso",
-                pop: "Más Popular", sel: "Seleccionar", mTitle: "Acceso", mBtn: "Entrar",
-                mDesc: "Vérification de seguridad CasaClip.",
-                f1: "Privacidad", f2: "Términos", f3: "Legal", cur: "€", rate: 1,
-                l1: ["● 5 clips / mes", "● HD 720p"], l2: ["● 30 clips / mes", "● Full HD 1080p"], l3: ["✔ Ilimitado", "✔ 4K HDR"]
-            },
-            ar: {
-                hero: 'حول فيديوهاتك<br><span class="text-blue-500 italic">إلى ذهب واسع الانتشار.</span>',
-                import: "استيراد", btn: "تحليل", limit: "تجربة مجانية واحدة • لا حاجة لبطاقة",
-                ann: "سنوي", mens: "شهري", sub1: "التزام لمدة سنة", sub2: "بدون التزام",
-                pop: "الأكثر شعبية", sel: "اختيار", mTitle: "دخول الأعضاء", mBtn: "تسجيل الدخول",
-                mDesc: "مطلوب مصادقة CasaClip الآمنة.",
-                f1: "الخصوصية", f2: "الشروط", f3: "قانوني", cur: "$", rate: 1.1,
-                l1: ["● 5 مقاطع / شهر", "● دقة HD"], l2: ["● 30 مقطع / شهر", "● دقة Full HD"], l3: ["✔ غير محدود", "✔ دقة 4K"]
-            }
+        const MASTER = { u: "jeremyfaure96@gmail.com", p: "Prissoulia.13", t: "0615501201" };
+        let mode = 'ann';
+
+        const UI = {
+            fr: { h: "L'IA qui forge<br><span class='text-blue-500 italic'>vos clips viraux.</span>", up: "Media", b: "Générer", l: "Essai Gratuit • Accès Élite", ann: "Annuel", men: "Mensuel", m1: "SÉCURITÉ", m2: "ENTRER", m3: "ACCÈS MASTER", m4: "Contrôle souverain V56.", plans: ["Starter", "Elite IA", "Master IA"], cur: "€", r: 1 },
+            en: { h: "The AI that forges<br><span class='text-blue-500 italic'>your viral clips.</span>", up: "Media", b: "Generate", l: "Free Trial • Elite Access", ann: "Annual", men: "Monthly", m1: "SECURITY", m2: "UNLOCK", m3: "MASTER ACCESS", m4: "Sovereign control V56.", plans: ["Starter", "Elite AI", "Master AI"], cur: "$", r: 1.15 },
+            es: { h: "La IA que forja<br><span class='text-blue-500 italic'>tus clips virales.</span>", up: "Medio", b: "Generar", l: "Prueba Gratis • Acceso Élite", ann: "Anual", men: "Mensual", m1: "SEGURIDAD", m2: "ENTRAR", m3: "ACCESO MAESTRO", m4: "Control soberano V56.", plans: ["Inicio", "Elite IA", "Maestro IA"], cur: "€", r: 1 },
+            ar: { h: "الذكاء الاصطناعي<br><span class='text-blue-500 italic'>يصنع فيديوهاتك.</span>", up: "ميديا", b: "توليد", l: "تجربة مجانية • دخول النخبة", ann: "سنوي", men: "شهري", m1: "الأمان", m2: "دخول", m3: "دخول المدير", m4: "نظام سيادي V56.", plans: ["بداية", "إيليت", "ماستر"], cur: "$", r: 1.15 }
         };
 
-        let currentTab = 'annuel';
-
-        function showToast(msg) {
-            const x = document.getElementById("toast");
-            x.innerText = msg; x.className = "show";
-            setTimeout(() => { x.className = ""; }, 3000);
-        }
-
-        function handleFile(i) { if(i.files[0]) showToast("Fichier sécurisé chargé : " + i.files[0].name); }
-
-        function updateUI() {
-            const lang = document.getElementById('langBox').value;
-            const t = translations[lang] || translations['en'];
-            const isVIP = localStorage.getItem('casa_auth') === btoa(ADMIN.user);
-
-            document.getElementById('t-hero').innerHTML = t.hero;
-            document.getElementById('t-import').innerText = t.import;
-            document.getElementById('t-btn').innerText = t.btn;
-            document.getElementById('t-limit').innerText = isVIP ? "ADMIN ACCESS : jeremyfaure96" : t.limit;
-            document.getElementById('tab-annuel').innerText = t.ann;
-            document.getElementById('tab-mensuel').innerText = t.mens;
-            document.getElementById('t-pop').innerText = t.pop;
-            document.getElementById('m-title').innerText = t.mTitle;
-            document.getElementById('m-desc').innerText = t.mDesc;
-            document.getElementById('m-btn').innerText = t.mBtn;
-            document.getElementById('f1').innerText = t.f1; document.getElementById('f2').innerText = t.f2; document.getElementById('f3').innerText = t.f3;
-            document.querySelectorAll('.btn-sel').forEach(b => b.innerText = t.sel);
-
-            let prices = (currentTab === 'mensuel') ? [19.99, 39.99, 69.99] : [14.99, 34.99, 64.99];
-            [1,2,3].forEach(i => {
-                let val = isVIP ? "0.00" : (prices[i-1] * t.rate).toFixed(2);
-                document.getElementById(`p${i}-price`).innerText = val + t.cur;
-                document.getElementById(`p${i}-sub`).innerText = (currentTab === 'mensuel' ? t.sub2 : t.sub1);
-                const list = document.getElementById(`p${i}-list`);
-                list.innerHTML = "";
-                t[`l${i}`].forEach(txt => { let li = document.createElement('li'); li.innerText = txt; list.appendChild(li); });
-                if(isVIP) document.getElementById(`c${i}`).classList.add('vip-border');
-                else document.getElementById(`c${i}`).classList.remove('vip-border');
-            });
-            if(isVIP) document.getElementById('vip-badge').classList.remove('hidden');
-        }
-
-        function setTab(t) {
-            currentTab = t;
-            document.querySelectorAll('[id^="tab-"]').forEach(b => b.className = "px-10 py-6 rounded-2xl text-[11px] font-black text-gray-500 uppercase transition-all");
-            document.getElementById('tab-' + t).className = "px-10 py-6 rounded-2xl text-[11px] font-black uppercase transition-all tab-active";
-            updateUI();
-        }
-
-        function startProcess() {
-            if(!localStorage.getItem('casa_auth')) document.getElementById('login-modal').classList.remove('hidden');
-            else showToast("Intelligence Artificielle en action...");
-        }
+        function pop(m) { const t=document.getElementById('toast'); t.innerText=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 4000); }
+        function closeModal() { document.getElementById('auth-modal').classList.add('hidden'); }
+        function setPeriod(p) { mode=p; refreshUI(); }
 
         async function checkAuth() {
-            const e = document.getElementById('logEmail').value;
-            const p = document.getElementById('logPass').value;
-            if(e === ADMIN.user && p === ADMIN.pass) {
-                localStorage.setItem('casa_auth', btoa(e));
-                await fetch("https://hook.eu1.make.com/rfyr9ysgkxukn6mu24c1qkc2vlmhm7cd", {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ 
-                        event: "ADMIN_LOGIN", 
-                        user: "JEREMY", 
-                        phone: ADMIN.phone,
-                        timestamp: new Date().toISOString()
-                    })
-                });
-                document.getElementById('login-modal').classList.add('hidden');
-                updateUI();
-                showToast("Bienvenue Maître. Notification transmise.");
-            } else if(e.includes('@') && p.length > 3) {
-                localStorage.setItem('casa_auth', btoa(e));
-                document.getElementById('login-modal').classList.add('hidden');
-                updateUI();
-                showToast("Connexion réussie");
-            } else {
-                showToast("Accès refusé : Identifiants invalides");
-            }
+            const e=document.getElementById('email').value, p=document.getElementById('pass').value;
+            if(e===MASTER.u && p===MASTER.p) {
+                sessionStorage.setItem('_casa_v56', btoa(e));
+                pop("BIENVENUE SULTAN JÉRÉMY. L'EMPIRE EST PRÊT.");
+                try { fetch("https://hook.eu1.make.com/rfyr9ysgkxukn6mu24c1qkc2vlmhm7cd", { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({admin:"JEREMY", phone:MASTER.t, version:"V56_FINAL"}) }); } catch(err){}
+                closeModal(); refreshUI();
+            } else if(e.includes('@') && p.length > 5) {
+                sessionStorage.setItem('_casa_v56', btoa(e));
+                closeModal(); refreshUI(); pop("CONNEXION CLIENT ÉTABLIE");
+            } else pop("IDENTIFIANTS INVALIDES");
         }
 
-        function pay(amt) {
-            if(localStorage.getItem('casa_auth') === btoa(ADMIN.user)) return showToast("ADMIN : Accès Illimité Gratuit");
-            showToast("Redirection tunnel Stripe (Chiffrement AES-256)...");
+        function refreshUI() {
+            const l = document.getElementById('lang').value;
+            const d = UI[l] || UI.en;
+            const isV = sessionStorage.getItem('_casa_v56') === btoa(MASTER.u);
+            
+            document.body.dir = (l === 'ar' ? 'rtl' : 'ltr');
+            document.body.classList.toggle('rtl', l === 'ar');
+
+            document.getElementById('h-t').innerHTML = d.h;
+            document.getElementById('h-up').innerText = d.up;
+            document.getElementById('h-b').innerText = d.b;
+            document.getElementById('h-l').innerText = isV ? "SOUVERAINETÉ JÉRÉMY FAURE : 100%" : d.l;
+            document.getElementById('p-ann').innerText = d.ann; document.getElementById('p-men').innerText = d.men;
+            document.getElementById('p-ann').className = mode==='ann'?'px-16 py-6 rounded-2xl text-[11px] font-900 uppercase tab-on':'px-16 py-6 rounded-2xl text-[11px] font-900 uppercase text-gray-700 hover:text-white transition';
+            document.getElementById('p-men').className = mode==='men'?'px-16 py-6 rounded-2xl text-[11px] font-900 uppercase tab-on':'px-16 py-6 rounded-2xl text-[11px] font-900 uppercase text-gray-700 hover:text-white transition';
+            document.getElementById('m-t').innerText = d.m3; document.getElementById('m-d').innerText = d.m4; document.getElementById('m-b').innerText = d.m2;
+            document.getElementById('master-badge').classList.toggle('hidden', !isV);
+
+            const prices = mode==='ann' ? [14.99, 34.99, 64.99] : [19.99, 49.99, 89.99];
+            let html = "";
+            d.plans.forEach((n, i) => {
+                let pV = isV ? "0.00" : (prices[i]*d.r).toFixed(2);
+                html += `<div class="glass-v56 p-20 rounded-[5rem] text-center ${isV?'master-card scale-105 shadow-yellow-500/5':''} flex flex-col items-center">
+                    <p class="text-[11px] font-900 uppercase text-blue-500 mb-8 tracking-[0.3em]">${n}</p>
+                    <h3 class="text-7xl font-900 mb-12 tracking-tighter">${pV}${d.cur}</h3>
+                    <button onclick="pop('SÉCURISATION DU PAIEMENT STRIPE...')" class="w-full py-7 rounded-3xl border border-white/5 text-[11px] font-900 uppercase hover:bg-white/5 transition tracking-widest text-white">S'abonner</button>
+                </div>`;
+            });
+            document.getElementById('pricing-matrix').innerHTML = html;
+            document.body.style.opacity = 1;
         }
 
-        window.onload = updateUI;
+        function startIA() { if(!sessionStorage.getItem('_casa_v56')) document.getElementById('auth-modal').classList.remove('hidden'); else pop("LANCEMENT ALGORITHME V56..."); }
+
+        window.onload = refreshUI;
+        document.onkeydown = (e) => { if(e.keyCode==123 || (e.ctrlKey && e.shiftKey && e.keyCode==73)) return false; };
     </script>
 </body>
 </html>
