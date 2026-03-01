@@ -3,185 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA CLIP | Global AI Sovereign V93</title>
+    <title>CASA CLIP | Global AI Sovereign V98</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Noto+Sans+Arabic:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
         :root { --blue: #3b82f6; --accent: #1d4ed8; --success: #10b981; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: #fff; overflow-x: hidden; scroll-behavior: smooth; }
-        .arabic { font-family: 'Noto Sans Arabic', sans-serif; }
-        .glass { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.07); border-radius: 28px; backdrop-filter: blur(15px); }
-        .tab-btn { transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); border: 1px solid transparent; }
+        .glass { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.08); border-radius: 28px; backdrop-filter: blur(15px); }
         .tab-active { background: var(--blue) !important; color: white !important; box-shadow: 0 15px 35px rgba(59,130,246,0.4); transform: translateY(-3px); }
-        .btn-master { background: linear-gradient(135deg, var(--blue), var(--accent)); transition: 0.4s; font-weight: 900; letter-spacing: 0.1em; }
-        .btn-master:hover { transform: scale(1.03); box-shadow: 0 25px 50px rgba(59,130,246,0.5); }
-        .lang-btn { opacity: 0.2; cursor: pointer; font-size: 10px; font-weight: 900; padding: 8px 12px; border-radius: 10px; transition: 0.3s; }
-        .lang-btn.active { opacity: 1; background: rgba(59,130,246,0.15); border: 1px solid var(--blue); color: var(--blue); }
+        .btn-master { background: linear-gradient(135deg, var(--blue), var(--accent)); transition: 0.4s; font-weight: 900; }
+        
         section { display: none; }
-        section.active { display: block; animation: ultraFade 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        @keyframes ultraFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        [dir="rtl"] { text-align: right; }
+        section.active { display: block; animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Animation Watermark Démo */
+        @keyframes floatLogo {
+            0% { top: 10%; left: 10%; }
+            25% { top: 10%; left: 75%; }
+            50% { top: 80%; left: 80%; }
+            75% { top: 80%; left: 10%; }
+            100% { top: 10%; left: 10%; }
+        }
+        .watermark { position: absolute; font-weight: 900; color: rgba(59, 130, 246, 0.6); animation: floatLogo 10s infinite linear; z-index: 50; font-size: 2.5vw; text-shadow: 0 0 10px rgba(0,0,0,0.9); pointer-events: none; font-style: italic; }
+
+        /* Modal Félicitations */
+        #success-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: none; align-items: center; justify-content: center; backdrop-filter: blur(20px); }
+        .confetti { position: absolute; width: 8px; height: 8px; animation: drop 3s infinite linear; }
+        @keyframes drop { from { transform: translateY(-100vh) rotate(0); } to { transform: translateY(100vh) rotate(720deg); } }
     </style>
 </head>
-<body class="p-4 md:p-10">
+<body class="p-4 md:p-8">
 
-    <nav class="max-w-7xl mx-auto mb-16 flex flex-col lg:flex-row justify-between items-center gap-8 p-8 glass">
-        <div class="flex items-center gap-3 cursor-pointer group" onclick="showSection('landing')">
-            <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center font-900 italic text-xl shadow-lg">CC</div>
-            <h1 class="text-3xl font-900 tracking-tighter uppercase italic">CASA<span class="text-blue-500">CLIP</span></h1>
+    <div id="success-modal">
+        <div class="glass p-16 text-center max-w-lg border-blue-500 relative z-50">
+            <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-500/50">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-4xl font-900 uppercase italic mb-4">FÉLICITATIONS</h2>
+            <p class="text-white/50 font-bold uppercase tracking-widest text-[10px] mb-8">Engagement validé. Votre accès au Studio est désormais actif.</p>
+            <button onclick="closeSuccess()" class="btn-master px-12 py-5 rounded-2xl text-[10px] uppercase tracking-widest">Entrer dans le Studio</button>
         </div>
-        
-        <div class="flex flex-wrap justify-center gap-1.5 bg-white/5 p-2 rounded-2xl border border-white/10">
-            <span onclick="setLang('fr')" id="l-fr" class="lang-btn active">FR</span>
-            <span onclick="setLang('en')" id="l-en" class="lang-btn">EN</span>
-            <span onclick="setLang('ar')" id="l-ar" class="lang-btn">AR</span>
-            <span onclick="setLang('es')" id="l-es" class="lang-btn">ES</span>
-            <span onclick="setLang('de')" id="l-de" class="lang-btn">DE</span>
-            <span onclick="setLang('it')" id="l-it" class="lang-btn">IT</span>
-            <span onclick="setLang('pt')" id="l-pt" class="lang-btn">PT</span>
-        </div>
+    </div>
 
-        <button onclick="showSection('login')" data-t="n-studio" class="btn-master px-10 py-5 rounded-2xl text-[11px] uppercase">Studio AI</button>
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-3 bg-blue-600/5 border border-white/5 rounded-t-[32px] text-[9px] font-900 tracking-[0.2em] uppercase">
+        <div class="flex gap-6">
+            <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span> <span id="s-online">1,402</span> EN LIGNE</span>
+            <span class="opacity-30">●</span>
+            <span><span id="s-vids">859,201</span> VIDÉOS GÉNÉRÉES</span>
+        </div>
+        <div class="hidden md:block text-blue-500">GPU STATUS: 100% OPERATIONAL</div>
+    </div>
+
+    <nav class="max-w-7xl mx-auto mb-16 flex justify-between items-center p-8 glass !rounded-t-none border-white/10">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('landing')">
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-900 italic">CC</div>
+            <h1 class="text-2xl font-900 tracking-tighter uppercase italic">CASA<span class="text-blue-500">CLIP</span></h1>
+        </div>
+        <div class="flex gap-2 bg-white/5 p-1 rounded-xl">
+            <span onclick="setLang('fr')" id="l-fr" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-40">FR</span>
+            <span onclick="setLang('en')" id="l-en" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-40">EN</span>
+            <span onclick="setLang('ar')" id="l-ar" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-40">AR</span>
+        </div>
+        <button onclick="showSection('login')" class="btn-master px-10 py-4 rounded-xl text-[10px] uppercase tracking-widest">Studio Login</button>
     </nav>
 
-    <section id="landing" class="active">
-        <div class="text-center mb-20">
-            <h2 id="h-title" data-t="h-title" class="text-6xl md:text-9xl font-900 tracking-tighter mb-6 uppercase italic">DOMINATION IA</h2>
-            <p id="h-sub" data-t="h-sub" class="text-white/30 font-bold uppercase tracking-[0.5em] text-[10px]">7 LANGUES • NO-ROLLOVER • RENTABILITÉ IA</p>
-        </div>
-
-        <div class="flex flex-col items-center gap-8 mb-24">
-            <div class="glass p-2.5 flex gap-2 border-white/10 shadow-2xl">
-                <button id="nav-perso" onclick="switchTab('perso')" data-t="t-perso" class="tab-btn px-12 py-5 rounded-2xl text-[12px] font-900 uppercase tab-active">Particulier</button>
-                <button id="nav-pro" onclick="switchTab('pro')" data-t="t-pro" class="tab-btn px-12 py-5 rounded-2xl text-[12px] font-900 uppercase">Ligue & Agence</button>
-            </div>
-            <div id="option-container" class="flex gap-4">
+    <section id="landing" class="active space-y-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col items-center gap-8 mb-20 text-center">
+                <h2 class="text-6xl md:text-8xl font-900 tracking-tighter italic uppercase mb-4">CASA <span class="text-blue-500">CLIP</span></h2>
+                <div class="glass p-2 flex gap-2 border-white/10">
+                    <button id="tab-perso" onclick="switchTab('perso')" class="px-12 py-5 rounded-2xl text-[12px] font-900 uppercase transition tab-active">Particulier</button>
+                    <button id="tab-pro" onclick="switchTab('pro')" class="px-12 py-5 rounded-2xl text-[12px] font-900 uppercase transition">Ligue & Agence</button>
                 </div>
+                <div id="option-bar" class="flex flex-wrap justify-center gap-4"></div>
+            </div>
+            <div id="pricing-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10"></div>
         </div>
 
-        <div id="pricing-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto mb-32"></div>
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 px-8">
+            <div class="glass p-12 border-blue-500/20">
+                <h3 class="text-2xl font-900 uppercase italic mb-6">Puissance GPU Dédiée</h3>
+                <p class="text-white/40 text-sm font-bold leading-relaxed">
+                    Grâce à notre politique No-Rollover, chaque crédit est réalloué pour garantir une vitesse de rendu instantanée. Vous payez pour une performance brute et prioritaire sur nos serveurs.
+                </p>
+            </div>
+            <div class="glass p-12 border-white/10">
+                <h3 class="text-2xl font-900 uppercase italic mb-6">SAV AI Instantané</h3>
+                <p class="text-white/40 text-sm font-bold leading-relaxed mb-6">
+                    Bot AI synchronisé. Latence de réponse : 0.2 seconde. Une assistance technique souveraine disponible 24/7.
+                </p>
+                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-2xl">
+                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="text-[10px] font-900 uppercase tracking-widest">Système de Support Actif</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto glass p-12 space-y-6">
+            <h3 class="text-2xl font-900 uppercase italic">FAQ Live</h3>
+            <div class="space-y-4 text-[11px] font-bold uppercase opacity-60">
+                <details class="cursor-pointer border-b border-white/5 pb-4"><summary>Qu'est-ce que le Mensuel Libre ?</summary><p class="mt-2 text-blue-400">Une offre sans engagement de durée (+5€/mois).</p></details>
+                <details class="cursor-pointer border-b border-white/5 pb-4"><summary>Comment sont calculés les prix ?</summary><p class="mt-2 text-blue-400">Tous nos tarifs finissent en .99 pour une transparence totale.</p></details>
+            </div>
+        </div>
     </section>
 
-    <section id="login" class="max-w-md mx-auto py-24">
-        <div class="glass p-14 space-y-8 border-blue-500/20 shadow-2xl">
-            <h3 data-t="auth-title" class="text-2xl font-900 uppercase italic mb-2 tracking-tighter text-center">Accès Privé</h3>
-            <div class="space-y-4">
-                <input type="email" id="email-in" placeholder="MAIL" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 transition font-bold text-sm tracking-widest">
-                <input type="password" id="pass-in" placeholder="PASSWORD" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 transition font-bold text-sm tracking-widest">
-            </div>
-            <button onclick="checkAuth()" data-t="auth-btn" class="w-full py-6 btn-master rounded-2xl font-900 uppercase tracking-widest text-xs">Ouvrir</button>
-        </div>
-    </section>
-
-    <section id="app" class="max-w-7xl mx-auto mb-32">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div class="glass p-10 space-y-10 border-blue-500/10 h-fit">
-                <div>
-                    <p data-t="d-cred" class="text-[11px] font-900 uppercase opacity-30 tracking-[0.2em] mb-6">Crédits</p>
-                    <div class="text-7xl font-900 tracking-tighter text-white"><span id="c-used">0</span><span class="text-2xl opacity-10">/120</span></div>
-                    <p id="admin-badge" class="hidden text-green-500 text-[10px] font-900 uppercase mt-4">● ILLIMITÉ</p>
-                </div>
-                <div class="p-6 bg-white/5 border border-white/10 rounded-2xl">
-                    <p data-t="sav-title" class="text-[11px] font-900 uppercase text-blue-500 mb-4 tracking-widest">SAV AI 24/7</p>
-                    <div id="sav-box" class="h-32 overflow-y-auto text-[10px] space-y-2 mb-4 pr-2 font-bold opacity-50">
-                        <p data-t="sav-init">Comment puis-je vous aider ?</p>
+    <section id="app" class="max-w-7xl mx-auto pb-40">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <div class="lg:col-span-2 space-y-8">
+                <div class="glass p-2 border-blue-500/20 overflow-hidden relative aspect-video bg-zinc-900 rounded-[32px] flex items-center justify-center">
+                    <div class="watermark uppercase tracking-tighter">CASACLIP MASTER</div>
+                    <div class="text-center z-10 opacity-30">
+                        <p class="text-[10px] font-900 uppercase mb-4 tracking-widest">Aperçu Démo</p>
+                        <div class="w-20 h-20 border-2 border-white rounded-full flex items-center justify-center mx-auto cursor-pointer"><div class="w-0 h-0 border-y-[12px] border-y-transparent border-l-[18px] border-l-white ml-2"></div></div>
                     </div>
-                    <input type="text" id="sav-in" class="w-full bg-black/40 border border-white/5 p-3 rounded-xl text-[10px] outline-none" placeholder="Question...">
+                </div>
+                <div class="glass p-16 text-center space-y-8 border-white/5">
+                    <h3 class="text-2xl font-900 uppercase italic">Import & Analyse</h3>
+                    <div onclick="document.getElementById('f-in').click()" class="border-2 border-dashed border-white/5 rounded-[40px] p-24 hover:border-blue-500/30 transition cursor-pointer">
+                        <input type="file" id="f-in" class="hidden">
+                        <p class="text-[10px] font-900 uppercase tracking-widest">Insérer le média source</p>
+                    </div>
+                    <button class="w-full py-8 btn-master rounded-3xl font-900 uppercase text-xs tracking-[0.3em]">Lancer le Rendu Neural</button>
                 </div>
             </div>
-
-            <div class="lg:col-span-2 glass p-14 relative">
-                <h3 data-t="s-title" class="text-4xl font-900 uppercase italic mb-12">Neural <span class="text-blue-500">Studio</span></h3>
-                <div onclick="document.getElementById('f-input').click()" class="border-2 border-dashed border-blue-500/20 rounded-[40px] p-24 text-center hover:border-blue-500/50 transition-all cursor-pointer">
-                    <input type="file" id="f-input" class="hidden">
-                    <p data-t="s-drop" class="text-xl font-900 uppercase tracking-[0.2em]">Déposer le Média</p>
+            <div class="glass p-10 border-blue-500/10 flex flex-col">
+                <div class="flex justify-between items-center mb-10">
+                    <p class="text-[10px] font-900 uppercase text-blue-500 tracking-widest">SAV AI 24/7</p>
+                    <span class="text-[8px] bg-blue-600/20 px-2 py-1 rounded text-blue-400 font-900">LATENCY: 0.2s</span>
                 </div>
-                <textarea class="w-full bg-white/5 border border-white/10 rounded-3xl p-8 mt-10 h-40 outline-none focus:border-blue-500 font-bold" placeholder="Instructions..."></textarea>
-                <button onclick="executeAI()" data-t="s-gen" class="w-full py-8 btn-master rounded-3xl font-900 uppercase mt-10 tracking-[0.4em]">Lancer le Rendu</button>
+                <div class="flex-grow space-y-4 overflow-y-auto mb-8 pr-2" id="chat-box">
+                    <div class="bg-white/5 p-4 rounded-2xl text-[11px] font-bold opacity-70 italic">CASA BOT: Comment puis-je vous aider ?</div>
+                </div>
+                <input type="text" placeholder="Question technique..." class="w-full bg-black border border-white/10 p-5 rounded-2xl text-[11px] outline-none focus:border-blue-500 font-bold">
             </div>
         </div>
     </section>
+
+    <footer class="max-w-7xl mx-auto border-t border-white/5 py-24 px-10 flex flex-col md:flex-row justify-between items-start gap-16">
+        <div class="max-w-xs space-y-4">
+            <h4 class="text-2xl font-900 uppercase italic">CASA<span class="text-blue-500">CLIP</span></h4>
+            <p class="text-[9px] font-bold opacity-30 leading-loose uppercase tracking-[0.2em]">Sovereign AI Production. © 2026.<br>No-Rollover Policy Enabled.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-16 text-[10px] font-900 uppercase tracking-widest">
+            <div class="space-y-4"><p class="text-blue-500">Légal</p><p>CGV / Terms</p><p>Privacy</p></div>
+            <div class="space-y-4"><p class="text-blue-500">Contact</p><p>Support</p><p>Partners</p></div>
+        </div>
+    </footer>
 
     <script>
         const MASTER_MAIL = "jeremyfaure96@gmail.com";
         const MASTER_PASS = "Prissoulia.13";
-
-        const DICT = {
-            fr: { "h-title": "DOMINATION IA", "h-sub": "7 LANGUES • NO-ROLLOVER • RENTABILITÉ IA", "n-studio": "Studio AI", "t-perso": "Particulier", "t-pro": "Ligue & Agence", "o-ann": "Annuel (-20%)", "o-eng": "Mensuel Engagé", "o-lib": "Mensuel Libre", "get": "Commander", "per": "par mois", "tot": "Total à payer", "sav-title": "SAV AI 24/7", "sav-init": "Comment puis-je vous aider ?", "s-title": "Studio IA", "s-drop": "Déposer le Média", "s-gen": "Lancer le Rendu", "auth-title": "Accès Privé", "auth-btn": "Ouvrir", "d-cred": "Crédits", dir: "ltr" },
-            en: { "h-title": "AI DOMINATION", "h-sub": "7 LANGUAGES • NO-ROLLOVER • AI PROFIT", "n-studio": "AI Studio", "t-perso": "Individual", "t-pro": "League & Agency", "o-ann": "Annual (-20%)", "o-eng": "Monthly (1yr)", "o-lib": "Monthly Free", "get": "Order Now", "per": "per month", "tot": "Total to pay", "sav-title": "AI SUPPORT 24/7", "sav-init": "How can I help you?", "s-title": "AI Studio", "s-drop": "Drop Media", "s-gen": "Launch Render", "auth-title": "Private Access", "auth-btn": "Open", "d-cred": "Credits", dir: "ltr" },
-            ar: { "h-title": "السيطرة الكاملة", "h-sub": "7 لغات • لا ترحيل للرصيد • ربحية الذكاء الاصطناعي", "n-studio": "استوديو الذكاء الاصطناعي", "t-perso": "فردي", "t-pro": "رابطة ووكالة", "o-ann": "سنوي (-20%)", "o-eng": "شهري (التزام سنة)", "o-lib": "شهري حر", "get": "اطلب الآن", "per": "في الشهر", "tot": "إجمالي الدفع", "sav-title": "الدعم الذكي 24/7", "sav-init": "كيف يمكنني مساعدتك؟", "s-title": "استوديو الذكاء الاصطناعي", "s-drop": "أدرج الوسائط", "s-gen": "بدء الرندر", "auth-title": "دخول خاص", "auth-btn": "فتح", "d-cred": "الرصيد", dir: "rtl" },
-            es: { "h-title": "DOMINACIÓN IA", "h-sub": "7 IDIOMAS • NO-ROLLOVER • RENTABILIDAD IA", "n-studio": "Estudio IA", "t-perso": "Particular", "t-pro": "Liga y Agencia", "o-ann": "Anual (-20%)", "o-eng": "Mensual (1 año)", "o-lib": "Mensual Libre", "get": "Pedir Ahora", "per": "por mes", "tot": "Total a pagar", "sav-title": "SOPORTE IA 24/7", "sav-init": "¿Cómo puedo ayudarte?", "s-title": "Estudio IA", "s-drop": "Soltar Medio", "s-gen": "Lanzar Render", "auth-title": "Acceso Privado", "auth-btn": "Abrir", "d-cred": "Créditos", dir: "ltr" },
-            de: { "h-title": "KI DOMINATION", "h-sub": "7 SPRACHEN • NO-ROLLOVER • KI RENTABILITÄT", "n-studio": "KI Studio", "t-perso": "Privat", "t-pro": "Liga & Agentur", "o-ann": "Jährlich (-20%)", "o-eng": "Monatlich (1 J.)", "o-lib": "Monatlich Frei", "get": "Bestellen", "per": "pro Monat", "tot": "Gesamtpreis", "sav-title": "KI-SUPPORT 24/7", "sav-init": "Wie kann ich helfen?", "s-title": "KI Studio", "s-drop": "Medium ablegen", "s-gen": "Render starten", "auth-title": "Privater Zugang", "auth-btn": "Öffnen", "d-cred": "Guthaben", dir: "ltr" },
-            it: { "h-title": "DOMINAZIONE IA", "h-sub": "7 LINGUE • NO-ROLLOVER • RENDITA IA", "n-studio": "Studio IA", "t-perso": "Privato", "t-pro": "Lega & Agenzia", "o-ann": "Annuale (-20%)", "o-eng": "Mensile (1 anno)", "o-lib": "Mensile Libero", "get": "Ordina", "per": "al mese", "tot": "Totale da pagare", "sav-title": "SUPPORTO IA 24/7", "sav-init": "Come posso aiutarti?", "s-title": "Studio IA", "s-drop": "Rilascia Media", "s-gen": "Avvia Render", "auth-title": "Accesso Privato", "auth-btn": "Apri", "d-cred": "Crediti", dir: "ltr" },
-            pt: { "h-title": "DOMINAÇÃO IA", "h-sub": "7 IDIOMAS • NO-ROLLOVER • LUCRO IA", "n-studio": "Estúdio IA", "t-perso": "Particular", "t-pro": "Liga & Agência", "o-ann": "Anual (-20%)", "o-eng": "Mensal (1 ano)", "o-lib": "Mensal Livre", "get": "Pedir", "per": "por mês", "tot": "Total a pagar", "sav-title": "SUPORTE IA 24/7", "sav-init": "Como posso ajudar?", "s-title": "Estúdio IA", "s-drop": "Soltar Mídia", "s-gen": "Iniciar Render", "auth-title": "Acesso Privado", "auth-btn": "Abrir", "d-cred": "Créditos", dir: "ltr" }
+        let curL = 'fr', curT = 'perso', curO = 'annuel';
+        
+        const CONFIG = {
+            fr: { cur: "€", get: "Commander", p: "par mois", tot: "Total annuel", dir: "ltr" },
+            en: { cur: "$", get: "Order Now", p: "per month", tot: "Yearly total", dir: "ltr" },
+            ar: { cur: "$", get: "اطلب الآن", p: "في الشهر", tot: "الإجمالي", dir: "rtl" }
         };
 
-        let curL = 'fr', curT = 'perso', curO = 'annuel';
         const DATA = {
             perso: { plans: ["Starter", "Elite", "Master"], base: [14.99, 34.99, 69.99], vids: [10, 30, 75] },
-            pro: { plans: ["League", "Agency", "Empire AI"], base: [89.99, 189.99, 499.99], vids: [120, 350, 1200] }
+            pro: { plans: ["League", "Agency", "Empire"], base: [89.99, 189.99, 499.99], vids: [120, 350, 1200] }
         };
 
         function setLang(l) {
-            curL = l; document.getElementById('html-root').setAttribute('dir', DICT[l].dir);
-            document.body.classList.toggle('arabic', l === 'ar');
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.id === 'l-'+l));
-            document.querySelectorAll('[data-t]').forEach(el => el.innerText = DICT[l][el.getAttribute('data-t')]);
-            updateOptions(); updateUI();
+            curL = l; 
+            document.getElementById('html-root').setAttribute('dir', CONFIG[l].dir);
+            document.querySelectorAll('[id^="l-"]').forEach(el => el.style.opacity = "0.4");
+            document.getElementById('l-'+l).style.opacity = "1";
+            updateUI();
         }
 
-        function switchTab(t) { curT = t; curO = 'annuel'; updateOptions(); updateUI(); }
+        function switchTab(t) { 
+            curT = t; curO = 'annuel'; 
+            document.getElementById('tab-perso').className = `px-12 py-5 rounded-2xl text-[12px] font-900 uppercase transition ${t==='perso'?'tab-active':'glass border-white/5'}`;
+            document.getElementById('tab-pro').className = `px-12 py-5 rounded-2xl text-[12px] font-900 uppercase transition ${t==='pro'?'tab-active':'glass border-white/5'}`;
+            updateUI(); 
+        }
+
         function setOpt(o) { curO = o; updateUI(); }
 
-        function updateOptions() {
-            const container = document.getElementById('option-container');
-            let html = `<button id="opt-annuel" onclick="setOpt('annuel')" class="tab-btn px-8 py-4 glass text-[10px] font-900 uppercase ${curO==='annuel'?'tab-active':''}">${DICT[curL]['o-ann']}</button>
-                        <button id="opt-eng" onclick="setOpt('eng')" class="tab-btn px-8 py-4 glass text-[10px] font-900 uppercase ${curO==='eng'?'tab-active':''}">${DICT[curL]['o-eng']}</button>`;
-            if(curT === 'perso') {
-                html += `<button id="opt-lib" onclick="setOpt('lib')" class="tab-btn px-8 py-4 glass text-[10px] font-900 uppercase ${curO==='lib'?'tab-active':''}">${DICT[curL]['o-lib']}</button>`;
-            }
-            container.innerHTML = html;
-        }
-
         function updateUI() {
-            const grid = document.getElementById('pricing-grid');
+            let optHtml = `<button onclick="setOpt('annuel')" class="px-8 py-4 glass text-[10px] font-900 uppercase ${curO==='annuel'?'tab-active':''} border-white/5">Annuel (-20%)</button>
+                           <button onclick="setOpt('eng')" class="px-8 py-4 glass text-[10px] font-900 uppercase ${curO==='eng'?'tab-active':''} border-white/5">Mensuel Engagé (1 an)</button>`;
+            if(curT === 'perso') optHtml += `<button onclick="setOpt('lib')" class="px-8 py-4 glass text-[10px] font-900 uppercase ${curO==='lib'?'tab-active':''} border-white/5">Mensuel Libre (+5€)</button>`;
+            document.getElementById('option-bar').innerHTML = optHtml;
+
             const d = DATA[curT]; let html = "";
             d.plans.forEach((p, i) => {
-                let monthlyPrice = d.base[i];
-                if(curO === 'annuel') monthlyPrice *= 0.8;
-                if(curO === 'lib') monthlyPrice += 5;
-                
+                let price = d.base[i];
+                if(curO === 'annuel') price *= 0.8;
+                if(curO === 'lib') price += 5;
+                price = Math.floor(price) + 0.99;
+                let sym = CONFIG[curL].cur;
+
                 html += `
-                <div class="glass p-12 text-center border-white/10 shadow-2xl">
-                    <span class="text-blue-500 font-900 text-[11px] mb-6 block uppercase italic">${p}</span>
-                    <div class="text-6xl font-900 mb-2 tracking-tighter">${monthlyPrice.toFixed(2)}€</div>
-                    <span class="text-white/20 text-[10px] uppercase block mb-2 font-bold">${DICT[curL].per}</span>
-                    ${curO === 'annuel' ? `<span class="text-white/40 text-[9px] uppercase block mb-10 font-bold italic">${DICT[curL].tot}: ${(monthlyPrice*12).toFixed(2)}€</span>` : `<div class="mb-10"></div>`}
-                    <p class="text-xl font-900 uppercase pb-10 tracking-tighter">${d.vids[i]} VIDÉOS</p>
-                    <button class="w-full py-5 rounded-2xl border border-white/10 font-900 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 shadow-xl">${DICT[curL].get}</button>
+                <div class="glass p-14 text-center border-white/5 hover:border-blue-500/30 transition-all group">
+                    <span class="text-blue-500 font-900 text-[11px] mb-8 block uppercase tracking-widest italic">${p}</span>
+                    <div class="text-7xl font-900 mb-2 tracking-tighter">${price.toFixed(2)}${sym}</div>
+                    <span class="text-white/20 text-[10px] font-bold block mb-4 uppercase">${CONFIG[curL].p}</span>
+                    ${curO === 'annuel' ? `<span class="text-white/40 text-[9px] font-bold block mb-12 italic uppercase">${CONFIG[curL].tot}: ${(price*12).toFixed(2)}${sym}</span>` : `<div class="mb-12"></div>`}
+                    <p class="text-2xl font-900 uppercase border-b border-white/5 pb-10 mb-12 tracking-tighter">${d.vids[i]} VIDÉOS</p>
+                    <button onclick="triggerSuccess()" class="w-full py-6 rounded-2xl border border-white/10 font-900 text-[11px] uppercase tracking-widest group-hover:bg-blue-600 group-hover:border-blue-600 transition-all">${CONFIG[curL].get}</button>
                 </div>`;
             });
-            grid.innerHTML = html;
-            document.querySelectorAll('.tab-btn').forEach(b => {
-                if(b.id === 'nav-'+curT || b.id === 'opt-'+curO) b.classList.add('tab-active');
-                else b.classList.remove('tab-active');
-            });
+            document.getElementById('pricing-grid').innerHTML = html;
         }
 
-        function checkAuth() {
-            if(document.getElementById('email-in').value === MASTER_MAIL && document.getElementById('pass-in').value === MASTER_PASS) {
-                showSection('app'); document.getElementById('admin-badge').classList.remove('hidden');
+        function triggerSuccess() {
+            const modal = document.getElementById('success-modal');
+            modal.style.display = 'flex';
+            for(let i=0; i<40; i++) {
+                let c = document.createElement('div');
+                c.className = 'confetti';
+                c.style.left = Math.random() * 100 + 'vw';
+                c.style.backgroundColor = Math.random() > 0.5 ? '#3b82f6' : '#ffffff';
+                c.style.animationDelay = Math.random() * 2 + 's';
+                modal.appendChild(c);
             }
+        }
+
+        function closeSuccess() {
+            document.getElementById('success-modal').style.display = 'none';
+            document.querySelectorAll('.confetti').forEach(c => c.remove());
+            showSection('app');
         }
 
         function showSection(id) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
         }
 
-        function executeAI() { alert("RENDU DÉMARRÉ"); }
-        
-        // Init
+        setInterval(() => {
+            document.getElementById('s-online').innerText = (1400 + Math.floor(Math.random()*40)).toLocaleString();
+        }, 4000);
+
         setLang('fr');
     </script>
 </body>
