@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CasaClip AI | Viral Video SaaS</title>
+    <title>CasaClip AI | La Référence du SaaS Viral</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
     
@@ -16,10 +16,9 @@
         .price-card:hover { transform: translateY(-12px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15); }
         .tab-active { background: var(--primary) !important; color: white !important; box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
         
-        /* Modales & Overlays */
         #scan-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; flex-direction: column; align-items: center; justify-content: center; }
         #email-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1001; width: 90%; max-width: 450px; }
-        .progress-glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); transition: width 0.3s ease; }
+        .progress-glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
         
         #toast { visibility: hidden; min-width: 250px; background: #111; color: #fff; text-align: center; border-radius: 12px; padding: 16px; position: fixed; z-index: 2000; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 13px; font-weight: 800; border: 1px solid var(--primary); text-transform: uppercase; }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
@@ -32,260 +31,256 @@
     <div id="toast"></div>
 
     <div id="scan-overlay">
-        <div class="w-full max-w-xl px-8">
-            <div id="scan-status" class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-500 mb-6 text-center italic">IA INITIALIZING...</div>
+        <div class="w-full max-w-xl px-8 text-center">
+            <div id="scan-status" class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-500 mb-6 italic">Initialisation IA...</div>
             <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/10">
-                <div id="scan-bar" class="h-full bg-blue-600 progress-glow w-0"></div>
+                <div id="scan-bar" class="h-full bg-blue-600 progress-glow w-0 transition-all duration-300"></div>
             </div>
             <div class="mt-6 flex justify-between text-[10px] font-black text-gray-500 uppercase tracking-widest">
                 <span id="scan-perc">0%</span>
-                <span>Deep Scan V38 Ultimate</span>
+                <span>Analyse Profonde V38</span>
             </div>
         </div>
     </div>
 
     <div id="email-modal" class="glass-card p-12 rounded-[3rem] border-blue-500/30 text-center shadow-2xl">
-        <div class="w-16 h-16 bg-blue-600/20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-blue-500/30">
-            <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-        </div>
-        <h2 id="t-modal-title" class="text-2xl font-black mb-4 uppercase italic"></h2>
-        <p id="t-modal-desc" class="text-gray-400 text-[10px] mb-8 uppercase font-bold tracking-widest leading-loose"></p>
-        <input type="email" id="userEmail" placeholder="votre@email.com" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl mb-4 outline-none focus:border-blue-500 transition text-center font-bold">
-        <button onclick="confirmEmail()" id="t-modal-btn" class="w-full bg-blue-600 hover:bg-blue-500 py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-lg shadow-blue-600/20 transition-all active:scale-95"></button>
+        <h2 id="t-modal-title" class="text-2xl font-black mb-4 uppercase italic">Vérification Requise</h2>
+        <p id="t-modal-desc" class="text-gray-400 text-[10px] mb-8 uppercase font-bold tracking-widest leading-loose">Entrez votre email pour synchroniser vos clips viraux.</p>
+        <input type="email" id="userEmail" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl mb-4 outline-none focus:border-blue-500 transition text-center font-bold" placeholder="votre@email.com">
+        <button onclick="confirmEmail()" id="t-modal-btn" class="w-full bg-blue-600 hover:bg-blue-500 py-5 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all">Confirmer & Accéder</button>
     </div>
 
     <nav class="max-w-7xl mx-auto px-8 py-8 flex justify-between items-center relative z-50">
         <div class="text-2xl font-black italic tracking-tighter uppercase">CASA<span class="text-blue-500">CLIP</span></div>
-        <div class="flex items-center gap-4">
-            <div id="user-badge" class="hidden glass-card px-4 py-2 rounded-full border-blue-500/20 text-[9px] font-black text-blue-400 uppercase tracking-widest"></div>
-            <select id="langBox" onchange="updateUI()" class="glass-card rounded-xl px-4 py-2 text-[10px] font-black uppercase text-white outline-none cursor-pointer">
+        <div class="flex items-center gap-6">
+            <div id="user-badge" class="hidden glass-card px-4 py-2 rounded-full border-blue-500/20 text-[9px] font-black text-blue-400 uppercase tracking-widest animate-pulse"></div>
+            <select id="langBox" onchange="updateUI()" class="glass-card rounded-xl px-4 py-2 text-[10px] font-black uppercase text-white outline-none cursor-pointer border-white/10">
                 <option value="fr">🇫🇷 FR</option>
                 <option value="en">🇺🇸 EN</option>
-                <option value="es">🇪🇸 ES</option>
-                <option value="ar">🇸🇦 AR</option>
             </select>
         </div>
     </nav>
 
     <header class="max-w-5xl mx-auto pt-16 pb-24 text-center px-6">
         <h1 id="t-hero" class="text-6xl md:text-8xl font-black mb-10 tracking-tighter leading-tight min-h-[160px]"></h1>
+        
         <div class="max-w-4xl mx-auto glass-card p-4 rounded-[3rem] relative shadow-2xl border-white/10">
             <div class="flex flex-col md:flex-row gap-3">
-                <input type="text" id="vUrl" class="flex-1 bg-white/5 px-8 py-6 outline-none text-white font-bold rounded-3xl border border-white/5 focus:border-blue-500/50 transition" placeholder="Lien Vidéo...">
+                <input type="text" id="vUrl" class="flex-1 bg-white/5 px-8 py-6 outline-none text-white font-bold rounded-3xl border border-white/5 focus:border-blue-500/50 transition" placeholder="Collez votre lien ici...">
+                
                 <div class="flex gap-2">
+                    <label class="cursor-pointer bg-white/5 hover:bg-white/10 px-8 py-6 rounded-3xl border border-white/10 flex items-center justify-center gap-3 transition">
+                        <input type="file" id="fileInput" class="hidden" onchange="handleFile(this)">
+                        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span class="text-[10px] font-black uppercase tracking-widest" id="t-import">Importer</span>
+                    </label>
+                    
                     <button onclick="startScan()" id="t-scan-btn" class="bg-blue-600 hover:bg-blue-500 px-12 py-6 rounded-[2rem] font-black text-xs uppercase tracking-widest flex items-center gap-4 transition-all active:scale-95 shadow-xl shadow-blue-600/20">
-                        <span id="btn-text"></span>
+                        <span id="btn-text">Analyser</span>
                     </button>
                 </div>
             </div>
         </div>
-        <p class="mt-8 text-[10px] font-black text-gray-500 uppercase tracking-[0.4em]" id="t-limit"></p>
+        <p class="mt-8 text-[10px] font-black text-gray-500 uppercase tracking-[0.4em]" id="t-limit">1 Essai Gratuit • Aucune Carte Requise</p>
     </header>
 
     <section id="pricing" class="max-w-7xl mx-auto px-6 pb-32">
         <div class="flex justify-center mb-20">
             <div class="glass-card p-1.5 rounded-[2rem] inline-flex gap-1 border-white/10">
-                <button id="tab-perso-engaged" onclick="setTab('perso-engaged')" class="px-8 py-5 rounded-2xl text-[10px] font-black uppercase transition-all tab-active"></button>
-                <button id="tab-perso-free" onclick="setTab('perso-free')" class="px-8 py-5 rounded-2xl text-[10px] font-black text-gray-500 uppercase transition-all"></button>
-                <button id="tab-pro" onclick="setTab('pro')" class="px-8 py-5 rounded-2xl text-[10px] font-black text-gray-500 uppercase transition-all"></button>
+                <button id="tab-perso-engaged" onclick="setTab('perso-engaged')" class="px-8 py-5 rounded-2xl text-[10px] font-black uppercase transition-all tab-active">Annuel</button>
+                <button id="tab-perso-free" onclick="setTab('perso-free')" class="px-8 py-5 rounded-2xl text-[10px] font-black text-gray-500 uppercase transition-all">Mensuel</button>
+                <button id="tab-pro" onclick="setTab('pro')" class="px-8 py-5 rounded-2xl text-[10px] font-black text-gray-500 uppercase transition-all">Agence</button>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <div class="glass-card price-card p-12 rounded-[4rem] flex flex-col border-white/5">
                 <p class="text-[10px] font-black text-gray-500 uppercase mb-4 tracking-widest">Starter</p>
-                <h3 class="text-6xl font-black mb-2" id="p1-price"></h3>
-                <p class="text-[9px] font-black text-blue-400 uppercase mb-10 tracking-widest" id="t-commit-1"></p>
-                <ul class="space-y-5 text-[11px] font-bold text-gray-400 mb-12 flex-1 uppercase tracking-wide" id="list-1"></ul>
-                <button class="bg-white/5 hover:bg-white/10 w-full py-6 rounded-3xl font-black uppercase text-[10px] tracking-widest border border-white/10 btn-select"></button>
+                <h3 class="text-6xl font-black mb-2" id="p1-price">14.99€</h3>
+                <p class="text-[9px] font-black text-blue-400 uppercase mb-10 tracking-widest" id="t-commit-1">Engagement 1 an</p>
+                <ul class="space-y-5 text-[11px] font-bold text-gray-400 mb-12 flex-1 uppercase" id="list-1">
+                    <li>● 5 Clips Viraux / mois</li>
+                    <li>● Rendu HD 720p</li>
+                    <li>● Sous-titres IA</li>
+                </ul>
+                <button onclick="checkout(1)" class="bg-white/5 hover:bg-white/10 w-full py-6 rounded-3xl font-black uppercase text-[10px] tracking-widest border border-white/10">Sélectionner</button>
             </div>
 
             <div class="glass-card price-card p-12 rounded-[4rem] flex flex-col border-blue-500/40 bg-blue-600/5 scale-105 relative">
-                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-[9px] font-black px-6 py-2 rounded-full uppercase italic tracking-widest shadow-xl shadow-blue-600/40" id="t-pop"></div>
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-[8px] font-black px-6 py-2 rounded-full uppercase italic tracking-widest shadow-xl" id="t-pop">Plus Populaire</div>
                 <p class="text-[10px] font-black text-blue-400 uppercase mb-4 tracking-widest">Elite AI</p>
-                <h3 class="text-6xl font-black mb-2" id="p2-price"></h3>
-                <p class="text-[9px] font-black text-blue-300 uppercase mb-10 tracking-widest" id="t-commit-2"></p>
-                <ul class="space-y-5 text-[11px] font-black text-white mb-12 flex-1 uppercase tracking-wide" id="list-2"></ul>
-                <button class="bg-blue-600 hover:bg-blue-500 w-full py-6 rounded-3xl font-black uppercase text-[10px] tracking-widest shadow-xl shadow-blue-600/30 btn-select"></button>
+                <h3 class="text-6xl font-black mb-2" id="p2-price">34.99€</h3>
+                <p class="text-[9px] font-black text-blue-300 uppercase mb-10 tracking-widest" id="t-commit-2">Engagement 1 an</p>
+                <ul class="space-y-5 text-[11px] font-black text-white mb-12 flex-1 uppercase" id="list-2">
+                    <li>● 30 Clips Viraux / mois</li>
+                    <li>● Full HD 1080p Natif</li>
+                    <li>● Templates Premium</li>
+                </ul>
+                <button onclick="checkout(2)" class="bg-blue-600 hover:bg-blue-500 w-full py-6 rounded-3xl font-black uppercase text-[10px] tracking-widest shadow-xl shadow-blue-600/30">Sélectionner</button>
             </div>
 
             <div class="glass-card price-card p-12 rounded-[4rem] flex flex-col border-purple-500/20">
                 <p class="text-[10px] font-black text-purple-400 uppercase mb-4 tracking-widest">Master AI</p>
-                <h3 class="text-6xl font-black mb-2" id="p3-price"></h3>
-                <p class="text-[9px] font-black text-purple-400 uppercase mb-10 tracking-widest" id="t-commit-3"></p>
-                <ul class="space-y-5 text-[11px] font-bold text-gray-400 mb-12 flex-1 uppercase tracking-wide" id="list-3"></ul>
-                <button class="bg-purple-600/20 text-purple-400 hover:bg-purple-600/40 w-full py-6 rounded-3xl font-black uppercase text-[10px] tracking-widest border border-purple-500/20 btn-select"></button>
+                <h3 class="text-6xl font-black mb-2" id="p3-price">64.99€</h3>
+                <p class="text-[9px] font-black text-purple-400 uppercase mb-10 tracking-widest" id="t-commit-3">Engagement 1 an</p>
+                <ul class="space-y-5 text-[11px] font-bold text-gray-400 mb-12 flex-1 uppercase" id="list-3">
+                    <li>● Clips Illimités</li>
+                    <li>● 4K HDR & Priorité</li>
+                    <li>● Support 24/7</li>
+                </ul>
+                <button onclick="checkout(3)" class="bg-purple-600/20 text-purple-400 hover:bg-purple-600/40 w-full py-6 rounded-3xl font-black uppercase text-[10px] tracking-widest border border-purple-500/20">Sélectionner</button>
             </div>
         </div>
     </section>
 
     <footer class="text-center py-24 border-t border-white/5">
-        <div class="flex justify-center items-center gap-8 mb-12 opacity-40">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="footer-pay h-4">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" class="footer-pay h-4">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_Pay_logo.svg" class="footer-pay h-4">
+        <div class="flex justify-center items-center gap-8 mb-12 opacity-50">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="h-4" alt="Visa">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" class="h-4" alt="PayPal">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_Pay_logo.svg" class="h-4" alt="Apple Pay">
         </div>
-        <p class="text-[9px] text-gray-600 font-black uppercase tracking-[0.3em]">
+        <div class="max-w-4xl mx-auto px-6 mb-10 text-[9px] text-gray-600 font-bold uppercase tracking-widest leading-loose">
+            CasaClip AI utilise des algorithmes de pointe pour la détection de moments viraux. <br>
+            RGPD 2026 Compatible | Sécurisation SSL 256 bits.
+        </div>
+        <p class="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em]">
             © 2026 CasaClip AI. 
-            <a href="#" class="underline ml-4" id="t-policy"></a> | 
-            <a href="#" class="underline ml-4" id="t-terms"></a> | 
-            <a href="#" class="underline ml-4" id="t-legal"></a>
+            <a href="#privacy" class="underline ml-4 hover:text-white transition" id="t-privacy">Confidentialité</a> | 
+            <a href="#terms" class="underline ml-4 hover:text-white transition" id="t-terms">CGV / CGU</a> | 
+            <a href="#legal" class="underline ml-4 hover:text-white transition" id="t-legal">Mentions Légales</a>
         </p>
     </footer>
 
     <script>
         const translations = {
             fr: {
-                hooks: ['Transformez vos vidéos<br><span class="text-blue-500 italic">en or viral.</span>'],
-                scan: "Analyser", limit: "1 ESSAI GRATUIT • AUCUNE CARTE",
+                hero: 'Transformez vos vidéos<br><span class="text-blue-500 italic text-shadow">en or viral.</span>',
+                import: "Importer", scan: "Analyser", limit: "1 Essai Gratuit • Aucune Carte",
+                mTitle: "Analyse Terminée", mDesc: "Créez votre compte pour synchroniser vos clips.", mBtn: "Accéder à mon Espace",
                 tab1: "Engagement 1 an", tab2: "Sans Engagement", tab3: "Pro / Agence",
-                choose: "Sélectionner", popular: "Plus Populaire",
-                l1: ["● 5 Clips / mois", "● Rendu HD"], l2: ["● 30 Clips / mois", "● Full HD 1080p"], l3: ["✔ Illimité", "✔ 4K HDR"],
-                policy: "Confidentialité", terms: "CGU", legal: "Mentions",
-                s1: "Algorithmes IA...", s2: "Détection des Hooks...", s3: "Format 9:16...", s4: "Finalisation...",
-                mTitle: "Analyse Terminée", mDesc: "Créez votre compte gratuit pour accéder à vos clips.", mBtn: "Accéder à mon Espace",
-                toastDone: "Compte synchronisé avec succès !", toastUrl: "Entrez un lien valide"
+                pPop: "Plus Populaire", select: "Sélectionner", toastFile: "Fichier prêt !", toastUrl: "URL manquante"
             },
             en: {
-                hooks: ['Turn your videos<br><span class="text-blue-500 italic">into viral gold.</span>'],
-                scan: "Analyze", limit: "1 FREE TRIAL • NO CARD REQUIRED",
-                tab1: "1 Year Plan", tab2: "No Commitment", tab3: "Agency / Pro",
-                choose: "Select Plan", popular: "Most Popular",
-                l1: ["● 5 Clips / month", "● HD Render"], l2: ["● 30 Clips / month", "● 1080p Full HD"], l3: ["✔ Unlimited", "✔ 4K HDR"],
-                policy: "Privacy", terms: "Terms", legal: "Legal",
-                s1: "AI Loading...", s2: "Hook Detection...", s3: "Format 9:16...", s4: "Finalizing...",
-                mTitle: "Analysis Done", mDesc: "Create your free account to access your clips.", mBtn: "Access my Dashboard",
-                toastDone: "Account synced successfully!", toastUrl: "Enter a valid link"
+                hero: 'Turn your videos<br><span class="text-blue-500 italic text-shadow">into viral gold.</span>',
+                import: "Import", scan: "Analyze", limit: "1 Free Trial • No Card Needed",
+                mTitle: "Analysis Done", mDesc: "Create your account to sync your clips.", mBtn: "Go to Dashboard",
+                tab1: "1 Year Plan", tab2: "No Commitment", tab3: "Pro Plan",
+                pPop: "Most Popular", select: "Select Plan", toastFile: "File Ready!", toastUrl: "Missing URL"
             }
         };
 
         let currentTab = 'perso-engaged';
-        const pricingConfig = { fr: { cur: "€", rate: 1 }, en: { cur: "$", rate: 1.1 } };
 
         function showToast(msg) {
             const x = document.getElementById("toast");
             x.innerText = msg; x.className = "show";
-            setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
+            setTimeout(() => { x.className = ""; }, 3000);
         }
 
-        // --- GESTION DU COMPTE INVISIBLE ---
-        function checkUserSession() {
-            const email = localStorage.getItem('casaclip_user');
-            if(email) {
-                const badge = document.getElementById('user-badge');
-                badge.innerText = "Connecté: " + email;
-                badge.classList.remove('hidden');
-                document.getElementById('t-limit').innerText = "Session Active • " + email;
+        function handleFile(input) {
+            if(input.files && input.files[0]) {
+                showToast(translations[document.getElementById('langBox').value].toastFile + " (" + input.files[0].name + ")");
             }
         }
 
-        function setTab(t) { currentTab = t; updateUI(); }
-
         function updateUI() {
             const lang = document.getElementById('langBox').value;
-            const t = translations[lang] || translations['en'];
-            const p = pricingConfig[lang] || pricingConfig['en'];
-
-            document.getElementById('t-hero').innerHTML = t.hooks[0];
+            const t = translations[lang];
+            document.getElementById('t-hero').innerHTML = t.hero;
+            document.getElementById('t-import').innerText = t.import;
             document.getElementById('btn-text').innerText = t.scan;
-            document.getElementById('tab-perso-engaged').innerText = t.tab1;
-            document.getElementById('tab-perso-free').innerText = t.tab2;
-            document.getElementById('tab-pro').innerText = t.tab3;
-            document.getElementById('t-pop').innerText = t.popular;
-            document.getElementById('t-policy').innerText = t.policy;
-            document.getElementById('t-terms').innerText = t.terms;
-            document.getElementById('t-legal').innerText = t.legal;
-
-            let base = (currentTab === 'pro') ? [89.99, 189.99, 499.99] : [14.99, 34.99, 64.99];
-            let tax = (currentTab === 'perso-free') ? 5 : 0;
-
-            [1, 2, 3].forEach(i => {
-                let finalVal = (base[i-1] + tax) * p.rate;
-                document.getElementById(`p${i}-price`).innerText = finalVal.toFixed(2) + p.cur;
-                document.getElementById(`t-commit-${i}`).innerText = (currentTab === 'perso-free' ? "Sans engagement" : "Engagement 1 an");
-                let list = document.getElementById(`list-${i}`);
-                list.innerHTML = "";
-                t[`l${i}`].forEach(item => { let li = document.createElement('li'); li.innerText = item; list.appendChild(li); });
-            });
-            document.querySelectorAll('.btn-select').forEach(btn => btn.innerText = t.choose);
-        }
-
-        function startScan() {
-            const lang = document.getElementById('langBox').value;
-            if(!document.getElementById('vUrl').value) return showToast(translations[lang].toastUrl);
-
-            document.getElementById('scan-overlay').style.display = 'flex';
-            let progress = 0;
-            const bar = document.getElementById('scan-bar');
-            const perc = document.getElementById('scan-perc');
-            const status = document.getElementById('scan-status');
-            const t = translations[lang] || translations['en'];
-            const steps = [t.s1, t.s2, t.s3, t.s4];
-
-            const interval = setInterval(() => {
-                progress += Math.random() * 2.5;
-                if (progress > 100) progress = 100;
-                bar.style.width = progress + '%';
-                perc.innerText = Math.floor(progress) + '%';
-                if(progress < 25) status.innerText = steps[0];
-                else if(progress < 50) status.innerText = steps[1];
-                else if(progress < 75) status.innerText = steps[2];
-                else status.innerText = steps[3];
-
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        document.getElementById('scan-overlay').style.display = 'none';
-                        // SMART SCAN : Si déjà connecté, on passe direct aux prix
-                        if(localStorage.getItem('casaclip_user')) {
-                            window.location.href = "#pricing";
-                            showToast(t.toastDone);
-                        } else {
-                            showEmailModal();
-                        }
-                    }, 800);
-                }
-            }, 50);
-        }
-
-        function showEmailModal() {
-            const lang = document.getElementById('langBox').value;
-            const t = translations[lang] || translations['en'];
+            document.getElementById('t-limit').innerText = t.limit;
             document.getElementById('t-modal-title').innerText = t.mTitle;
             document.getElementById('t-modal-desc').innerText = t.mDesc;
             document.getElementById('t-modal-btn').innerText = t.mBtn;
-            document.getElementById('email-modal').style.display = 'block';
+            document.getElementById('tab-perso-engaged').innerText = t.tab1;
+            document.getElementById('tab-perso-free').innerText = t.tab2;
+            document.getElementById('tab-pro').innerText = t.tab3;
+            document.getElementById('t-pop').innerText = t.pPop;
+            
+            // Mise à jour prix
+            let prices = (currentTab === 'pro') ? ["89.99€", "189.99€", "499.99€"] : 
+                         (currentTab === 'perso-free') ? ["19.99€", "39.99€", "69.99€"] : ["14.99€", "34.99€", "64.99€"];
+            
+            document.getElementById('p1-price').innerText = prices[0];
+            document.getElementById('p2-price').innerText = prices[1];
+            document.getElementById('p3-price').innerText = prices[2];
+            
+            const commits = document.querySelectorAll('[id^="t-commit-"]');
+            commits.forEach(c => c.innerText = (currentTab === 'perso-free' ? t.tab2 : t.tab1));
+        }
+
+        function setTab(t) {
+            currentTab = t;
+            document.querySelectorAll('[id^="tab-"]').forEach(btn => btn.className = "px-8 py-5 rounded-2xl text-[10px] font-black text-gray-500 uppercase transition-all");
+            document.getElementById('tab-' + t).className = "px-8 py-5 rounded-2xl text-[10px] font-black uppercase transition-all tab-active";
+            updateUI();
+        }
+
+        function startScan() {
+            const url = document.getElementById('vUrl').value;
+            if(!url && !document.getElementById('fileInput').files[0]) return showToast(translations[document.getElementById('langBox').value].toastUrl);
+
+            document.getElementById('scan-overlay').style.display = 'flex';
+            let p = 0;
+            const bar = document.getElementById('scan-bar');
+            const perc = document.getElementById('scan-perc');
+            
+            const interval = setInterval(() => {
+                p += Math.random() * 4;
+                if(p >= 100) {
+                    p = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('scan-overlay').style.display = 'none';
+                        if(localStorage.getItem('user_email')) {
+                            window.location.href = "#pricing";
+                        } else {
+                            document.getElementById('email-modal').style.display = 'block';
+                        }
+                    }, 800);
+                }
+                bar.style.width = p + "%";
+                perc.innerText = Math.floor(p) + "%";
+            }, 50);
         }
 
         async function confirmEmail() {
             const email = document.getElementById('userEmail').value;
-            const lang = document.getElementById('langBox').value;
-            if(!email || !email.includes('@')) return alert("Email requis");
+            if(!email.includes('@')) return alert("Email invalide");
 
-            // SAUVEGARDE LOCALE
-            localStorage.setItem('casaclip_user', email);
-
-            // ENVOI WEBHOOK
+            localStorage.setItem('user_email', email);
+            
+            // WEBHOOK MAKE.COM
             try {
                 await fetch("https://hook.eu1.make.com/rfyr9ysgkxukn6mu24c1qkc2vlmhm7cd", {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        email: email, 
-                        url: document.getElementById('vUrl').value, 
-                        lang: lang,
-                        action: "account_creation"
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        email: email,
+                        url: document.getElementById('vUrl').value,
+                        action: "creation_compte_v38",
+                        date: new Date().toISOString()
                     })
                 });
             } catch(e) {}
 
             document.getElementById('email-modal').style.display = 'none';
-            checkUserSession();
+            checkSession();
             window.location.href = "#pricing";
-            showToast(translations[lang].toastDone);
+            showToast("Compte Synchronisé !");
         }
 
-        window.onload = () => { updateUI(); checkUserSession(); };
+        function checkSession() {
+            const email = localStorage.getItem('user_email');
+            if(email) {
+                const badge = document.getElementById('user-badge');
+                badge.innerText = "SESS: " + email;
+                badge.classList.remove('hidden');
+            }
+        }
+
+        window.onload = () => { updateUI(); checkSession(); };
     </script>
 </body>
 </html>
