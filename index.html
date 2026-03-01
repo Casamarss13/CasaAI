@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA CLIP | Sovereign Marketing V103</title>
+    <title>CASA CLIP | Sovereign Global System V104</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Noto+Sans+Arabic:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+Devanagari:wght@700;900&display=swap" rel="stylesheet">
     <style>
@@ -16,9 +16,9 @@
         .tab-active { background: var(--blue) !important; color: white !important; box-shadow: 0 15px 45px rgba(59,130,246,0.5); transform: translateY(-2px); }
         .btn-master { background: linear-gradient(135deg, var(--blue), var(--accent)); transition: 0.4s; font-weight: 900; }
         section { display: none; }
-        section.active { display: block; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .footer-link { opacity: 0.3; transition: 0.3s; cursor: pointer; }
+        section.active { display: block; animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.99); } to { opacity: 1; transform: scale(1); } }
+        .footer-link { opacity: 0.3; transition: 0.3s; cursor: pointer; display: block; margin-bottom: 8px; }
         .footer-link:hover { opacity: 1; color: var(--blue); }
     </style>
 </head>
@@ -40,22 +40,22 @@
         </div>
         <div class="flex flex-wrap justify-center gap-2 bg-white/5 p-1.5 rounded-2xl border border-white/5">
             <span onclick="setLang('fr')" id="l-fr" class="px-3 py-1 text-[10px] cursor-pointer font-900">FR</span>
-            <span onclick="setLang('en')" id="l-en" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-30">EN</span>
-            <span onclick="setLang('ar')" id="l-ar" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-30">AR</span>
-            <span onclick="setLang('es')" id="l-es" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-30">ES</span>
-            <span onclick="setLang('zh')" id="l-zh" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-30">中文</span>
-            <span onclick="setLang('hi')" id="l-hi" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-30">हिन्दी</span>
+            <span onclick="setLang('en')" id="l-en" class="px-3 py-1 text-[10px] cursor-pointer font-900">EN</span>
+            <span onclick="setLang('ar')" id="l-ar" class="px-3 py-1 text-[10px] cursor-pointer font-900">AR</span>
+            <span onclick="setLang('es')" id="l-es" class="px-3 py-1 text-[10px] cursor-pointer font-900">ES</span>
+            <span onclick="setLang('zh')" id="l-zh" class="px-3 py-1 text-[10px] cursor-pointer font-900">中文</span>
+            <span onclick="setLang('hi')" id="l-hi" class="px-3 py-1 text-[10px] cursor-pointer font-900">हिन्दी</span>
         </div>
         <div class="flex gap-4">
-            <button onclick="showSection('client-space')" id="btn-client" class="glass px-6 py-4 rounded-xl text-[9px] font-900 uppercase tracking-widest border-blue-500/30 text-blue-400">Mon Espace Client</button>
-            <button onclick="showSection('login')" id="nav-login" class="btn-master px-8 py-4 rounded-xl text-[9px] uppercase tracking-widest italic"></button>
+            <button onclick="showSection('client-space')" id="btn-client" class="glass px-6 py-4 rounded-xl text-[9px] font-900 uppercase tracking-widest border-blue-500/30 text-blue-400">Espace Client</button>
+            <button id="nav-login" class="btn-master px-8 py-4 rounded-xl text-[9px] uppercase tracking-widest italic">Accès Studio</button>
         </div>
     </nav>
 
     <section id="landing" class="active space-y-24">
-        <div class="text-center space-y-4">
-            <h2 id="hero-title" class="text-6xl md:text-[10rem] font-900 tracking-tighter italic uppercase leading-[0.85] mb-6"></h2>
-            <p id="hero-sub" class="text-blue-500 font-900 uppercase tracking-[0.6em] text-[12px] animate-pulse"></p>
+        <div class="text-center space-y-6">
+            <h2 id="hero-title" class="text-5xl md:text-[8rem] font-900 tracking-tighter italic uppercase leading-[0.85] mb-6 min-h-[1.2em]"></h2>
+            <p id="hero-sub" class="text-blue-500 font-900 uppercase tracking-[0.5em] text-[12px] animate-pulse"></p>
         </div>
         <div class="max-w-7xl mx-auto flex flex-col items-center gap-8 mb-20">
             <div class="glass p-2 flex gap-2 border-white/10">
@@ -69,109 +69,126 @@
 
     <section id="client-space" class="max-w-7xl mx-auto pb-40">
         <div class="glass p-20 text-center border-blue-500/20">
-            <h3 class="text-4xl font-900 italic uppercase mb-4">Tableau de Bord Souverain</h3>
-            <p class="opacity-30 uppercase tracking-widest text-xs">Accès restreint aux membres actifs</p>
+            <h3 class="text-4xl font-900 italic uppercase mb-4">Sovereign Dashboard</h3>
+            <p class="opacity-30 uppercase tracking-widest text-xs">Authentification requise</p>
         </div>
     </section>
 
     <footer class="max-w-7xl mx-auto border-t border-white/5 py-24 px-10">
-        <div class="flex flex-col md:flex-row justify-between items-start gap-16 mb-20">
-            <div class="max-w-xs space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-16 mb-20">
+            <div class="md:col-span-2 space-y-6">
                 <h4 class="text-2xl font-900 uppercase italic">CASA<span class="text-blue-500">CLIP</span></h4>
-                <p id="footer-desc" class="text-[9px] font-bold opacity-30 leading-loose uppercase tracking-[0.2em]"></p>
+                <p id="footer-desc" class="text-[10px] font-bold opacity-30 leading-relaxed uppercase tracking-widest"></p>
+                <div class="flex gap-4 opacity-20 text-[9px] font-900 uppercase">
+                    <span>SSL Secured</span> <span>●</span> <span>AES-256</span> <span>●</span> <span>GDPR Compliant</span>
+                </div>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-[10px] font-900 uppercase tracking-widest">
-                <div class="space-y-4">
-                    <p class="text-blue-500" id="f-t1">LÉGAL</p>
-                    <p class="footer-link" id="f-l1">CGV / CGU</p>
-                    <p class="footer-link" id="f-l2">Confidentialité</p>
-                    <p class="footer-link" id="f-l3">Mentions Légales</p>
-                </div>
-                <div class="space-y-4">
-                    <p class="text-blue-500" id="f-t2">SÉCURITÉ</p>
-                    <p class="footer-link">Anti-Fraud</p>
-                    <p class="footer-link">Chiffrement AES</p>
-                    <p class="footer-link">RGPD / GDPR</p>
-                </div>
-                <div class="space-y-4">
-                    <p class="text-blue-500" id="f-t3">ENTREPRISE</p>
-                    <p class="footer-link">Partners</p>
-                    <p class="footer-link">Carrières</p>
-                    <p class="footer-link">Press Kit</p>
-                </div>
-                <div class="space-y-4">
-                    <p class="text-blue-500">SUPPORT</p>
-                    <p class="footer-link">Documentation</p>
-                    <p class="footer-link">API Status</p>
-                    <p class="footer-link">Contact</p>
-                </div>
+            
+            <div class="space-y-4">
+                <p class="text-blue-500 text-[11px] font-900 uppercase tracking-widest" id="f-t1"></p>
+                <a class="footer-link" id="f-l1"></a>
+                <a class="footer-link" id="f-l2"></a>
+                <a class="footer-link" id="f-l3"></a>
+                <a class="footer-link" id="f-l4">RGPD / GDPR</a>
+            </div>
+
+            <div class="space-y-4">
+                <p class="text-blue-500 text-[11px] font-900 uppercase tracking-widest" id="f-t2"></p>
+                <a class="footer-link" id="f-l5"></a>
+                <a class="footer-link" id="f-l6"></a>
+                <a class="footer-link" id="f-l7"></a>
+            </div>
+
+            <div class="space-y-4">
+                <p class="text-blue-500 text-[11px] font-900 uppercase tracking-widest" id="f-t3"></p>
+                <a class="footer-link">Documentation</a>
+                <a class="footer-link">Support Hub</a>
+                <a class="footer-link">Contact</a>
             </div>
         </div>
-        <div class="text-center opacity-10 text-[8px] font-900 uppercase tracking-[1em]">
-            CASA CLIP GLOBAL SOVEREIGNTY SYSTEM v103.2026
+        <div class="pt-10 border-t border-white/5 text-center opacity-10 text-[8px] font-900 uppercase tracking-[1em]">
+            GLOBAL SOVEREIGNTY SYSTEM © 2026 • CASA CLIP INTERNATIONAL
         </div>
     </footer>
 
     <script>
-        let state = { lang: 'fr', tab: 'perso', option: 'annuel', currentPlan: 'Aucun' };
+        let state = { lang: 'fr', tab: 'perso', option: 'annuel' };
 
         const RATES = { fr: 1, en: 1.08, ar: 4.05, es: 1, zh: 7.8, hi: 89.5 };
         const SYMBOLS = { fr: '€', en: '$', ar: 'ر.س', es: '€', zh: '¥', hi: '₹' };
 
         const TR = {
             fr: {
-                hero: "L'EMPIRE IA", sub: "MONOPOLE VISUEL • PUISSANCE GPU ABSOLUE",
+                hero_pool: ["L'ÉLITE DU RENDU", "PRODUCTION SOUVERAINE", "LE STANDARD MONDIAL", "LE MONOPOLE VISUEL"],
+                sub: "PUISSANCE GPU ILLIMITÉE • RÉALISME ABSOLU",
                 tabP: "PARTICULIER", tabB: "LIGUE & AGENCE",
                 optA: "Annuel (-20%)", optE: "Mensuel Engagé", optL: "Mensuel Libre",
-                get: "PRENDRE LE CONTRÔLE", p: "par mois", tot: "Investissement annuel",
-                ok: "ACCÈS ACCORDÉ", ok_msg: "Félicitations. Vous entrez dans l'élite du rendu.", ok_btn: "OUVRIR LE STUDIO",
-                login: "STUDIO LOGIN", desc: "Souveraineté Digitale. © 2026. Tout droit de reproduction interdit.",
-                ft1: "LÉGAL", fl1: "CGV / CGU", fl2: "CONFIDENTIALITÉ", fl3: "MENTIONS LÉGALES", ft2: "SÉCURITÉ", ft3: "ENTREPRISE", dir: "ltr", font: ""
+                get: "DEVENIR MEMBRE", p: "par mois", tot: "Total annuel",
+                ok: "ACCÈS VALIDÉ", ok_msg: "Votre session sécurisée est active.", ok_btn: "OUVRIR STUDIO",
+                desc: "Système de production média par intelligence artificielle de haute précision. Conformité mondiale assurée.",
+                ft1: "LÉGAL & MONDE", fl1: "Conditions Générales (CGV)", fl2: "Politique de Confidentialité", fl3: "Mentions Légales",
+                ft2: "RÈGLES DU SYSTÈME", fl5: "Utilisation Acceptable", fl6: "Politique Anti-Fraude", fl7: "Conformité KYC",
+                ft3: "RESSOURCES", dir: "ltr", font: ""
             },
             en: {
-                hero: "AI EMPIRE", sub: "VISUAL MONOPOLY • ABSOLUTE GPU POWER",
+                hero_pool: ["RENDERING ELITE", "SOVEREIGN PRODUCTION", "GLOBAL STANDARD", "VISUAL MONOPOLY"],
+                sub: "UNLIMITED GPU POWER • ABSOLUTE REALISM",
                 tabP: "INDIVIDUAL", tabB: "LEAGUE & AGENCY",
                 optA: "Yearly (-20%)", optE: "Monthly Committed", optL: "Monthly Flexible",
-                get: "TAKE CONTROL", p: "per month", tot: "Yearly investment",
-                ok: "ACCESS GRANTED", ok_msg: "Congratulations. You are now part of the rendering elite.", ok_btn: "OPEN STUDIO",
-                login: "STUDIO LOGIN", desc: "Digital Sovereignty. © 2026. All rights reserved.",
-                ft1: "LEGAL", fl1: "TERMS & CONDITIONS", fl2: "PRIVACY POLICY", fl3: "LEGAL NOTICE", ft2: "SECURITY", ft3: "COMPANY", dir: "ltr", font: ""
+                get: "BECOME A MEMBER", p: "per month", tot: "Total yearly",
+                ok: "ACCESS GRANTED", ok_msg: "Your secure session is now active.", ok_btn: "OPEN STUDIO",
+                desc: "High-precision AI media production system. Worldwide compliance guaranteed.",
+                ft1: "GLOBAL LEGAL", fl1: "Terms & Conditions", fl2: "Privacy Policy", fl3: "Legal Notice",
+                ft2: "SYSTEM RULES", fl5: "Acceptable Use", fl6: "Anti-Fraud Policy", fl7: "KYC Compliance",
+                ft3: "RESOURCES", dir: "ltr", font: ""
             },
             ar: {
-                hero: "إمبراطورية الذكاء", sub: "احتكار بصري • قوة معالجة مطلقة",
+                hero_pool: ["نخبة الإنتاج", "السيادة الكاملة", "المعيار العالمي", "الاحتكار البصري"],
+                sub: "قوة معالجة غير محدودة • واقعية مطلقة",
                 tabP: "حساب فردي", tabB: "وكالات وتحالفات",
                 optA: "سنوي (وفر 20%)", optE: "شهري بالتزام", optL: "شهري مرن",
-                get: "فرض السيطرة", p: "في الشهر", tot: "الاستثمار السنوي",
-                ok: "تم منح الوصول", ok_msg: "تهانينا. لقد دخلت نخبة الإنتاج العالمي.", ok_btn: "فتح الاستوديو",
-                login: "دخول الاستوديو", desc: "السيادة الرقمية. © 2026. جميع الحقوق محفوظة.",
-                ft1: "قانوني", fl1: "الشروط والأحكام", fl2: "سياسة الخصوصية", fl3: "إشعار قانوني", ft2: "الأمان", ft3: "الشركة", dir: "rtl", font: "lang-ar"
+                get: "انضم الآن", p: "في الشهر", tot: "الإجمالي السنوي",
+                ok: "تم التحقق", ok_msg: "تم تفعيل جلستك الآمنة بنجاح.", ok_btn: "فتح الاستوديو",
+                desc: "نظام إنتاج الوسائط بالذكاء الاصطناعي عالي الدقة. الامتثال العالمي مضمون.",
+                ft1: "القانون العالمي", fl1: "الشروط والأحكام العامة", fl2: "سياسة الخصوصية", fl3: "إشعار قانوني",
+                ft2: "قواعد النظام", fl5: "الاستخدام المقبول", fl6: "سياسة مكافحة الاحتيال", fl7: "اتفاقية الامتثال",
+                ft3: "الموارد", dir: "rtl", font: "lang-ar"
             },
             es: {
-                hero: "EL IMPERIO IA", sub: "MONOPOLIO VISUAL • POTENCIA GPU ABSOLUTA",
-                tabP: "PARTICULAR", tabB: "LIGA Y AGENCIA",
+                hero_pool: ["ÉLITE DEL RENDER", "PRODUCCIÓN SOBERANA", "ESTÁNDAR GLOBAL", "MONOPOLIO VISUAL"],
+                sub: "POTENCIA GPU ILIMITADA • REALISMO ABSOLUTO",
+                tabP: "INDIVIDUAL", tabB: "AGENCIA Y LIGA",
                 optA: "Anual (-20%)", optE: "Mensual Comprometido", optL: "Mensual Libre",
-                get: "TOMAR EL CONTROL", p: "al mes", tot: "Inversión anual",
-                ok: "ACCESO CONCEDIDO", ok_msg: "Felicidades. Entras en la élite del renderizado.", ok_btn: "ABRIR STUDIO",
-                login: "STUDIO LOGIN", desc: "Soberanía Digital. © 2026. Prohibida la reproducción.",
-                ft1: "LEGAL", fl1: "TÉRMINOS Y CONDICIONES", fl2: "PRIVACIDAD", fl3: "AVISO LEGAL", ft2: "SEGURIDAD", ft3: "EMPRESA", dir: "ltr", font: ""
+                get: "HACERSE MIEMBRO", p: "al mes", tot: "Total anual",
+                ok: "ACCESO VALIDADO", ok_msg: "Su sesión segura está activa.", ok_btn: "ABRIR STUDIO",
+                desc: "Sistema de producción de medios por IA de alta precisión. Cumplimiento global garantizado.",
+                ft1: "LEGAL GLOBAL", fl1: "Términos y Condiciones", fl2: "Política de Privacidad", fl3: "Aviso Legal",
+                ft2: "REGLAS", fl5: "Uso Aceptable", fl6: "Anti-Fraude", fl7: "Cumplimiento KYC",
+                ft3: "RECURSOS", dir: "ltr", font: ""
             },
             zh: {
-                hero: "人工智能帝国", sub: "视觉垄断 • 绝对 GPU 算力",
-                tabP: "个人用户", tabB: "机构与联盟",
-                optA: "年度套餐 (-20%)", optE: "年度合约", optL: "自由月付",
-                get: "掌控全局", p: "每月", tot: "年度总投资",
-                ok: "授权成功", ok_msg: "恭喜。您已进入顶级渲染领域。", ok_btn: "开启工作室",
-                login: "登录", desc: "数字主权。© 2026. 版权所有。",
-                ft1: "法律", fl1: "条款与协议", fl2: "隐私政策", fl3: "法律声明", ft2: "安全", ft3: "公司", dir: "ltr", font: "lang-zh"
+                hero_pool: ["渲染巅峰", "主权生产系统", "全球标准", "视觉垄断"],
+                sub: "无限 GPU 算力 • 绝对写实主义",
+                tabP: "个人用户", tabB: "联盟与机构",
+                optA: "年度套餐 (-20%)", optE: "年度合约", optL: "自由订阅",
+                get: "立即加入", p: "每月", tot: "年度总计",
+                ok: "授权成功", ok_msg: "安全会话已激活。", ok_btn: "开启工作室",
+                desc: "高精度人工智能媒体生产系统。全球合规性保证。",
+                ft1: "全球法律", fl1: "通用服务条款", fl2: "隐私政策", fl3: "法律声明",
+                ft2: "系统规则", fl5: "使用规范", fl6: "反欺诈政策", fl7: "KYC 合规",
+                ft3: "资源", dir: "ltr", font: "lang-zh"
             },
             hi: {
-                hero: "एआई साम्राज्य", sub: "विजुअल एकाधिकार • पूर्ण जीपीयू शक्ति",
+                hero_pool: ["रेंडरिंग एलीट", "संप्रभु उत्पादन", "वैश्विक मानक", "विजुअल एकाधिकार"],
+                sub: "असीमित GPU शक्ति • पूर्ण यथार्थवाद",
                 tabP: "व्यक्तिगत", tabB: "लीग और एजेंसी",
                 optA: "वार्षिक (-20%)", optE: "मासिक प्रतिबद्ध", optL: "मासिक लचीला",
-                get: "नियंत्रण लें", p: "प्रति माह", tot: "वार्षिक निवेश",
-                ok: "एक्सेस मिला", ok_msg: "बधाई हो। आप रेंडरिंग एलीट में शामिल हो गए हैं।", ok_btn: "स्टूडियो खोलें",
-                login: "लॉगिन", desc: "डिजिटल संप्रभुता। © 2026. सभी अधिकार सुरक्षित।",
-                ft1: "कानूनी", fl1: "नियम और शर्तें", fl2: "गोपनीयता नीति", fl3: "कानूनी नोटिस", ft2: "सुरक्षा", ft3: "कंपनी", dir: "ltr", font: "lang-hi"
+                get: "सदस्य बनें", p: "प्रति माह", tot: "कुल वार्षिक",
+                ok: "एक्सेस स्वीकृत", ok_msg: "आपका सुरक्षित सत्र सक्रिय है।", ok_btn: "स्टूडियो खोलें",
+                desc: "उच्च-सटीक एआई मीडिया उत्पादन प्रणाली। वैश्विक अनुपालन सुनिश्चित।",
+                ft1: "वैश्विक कानूनी", fl1: "नियम और शर्तें", fl2: "गोपनीयता नीति", fl3: "कानूनी नोटिस",
+                ft2: "प्रणाली नियम", fl5: "स्वीकार्य उपयोग", fl6: "धोखाधड़ी विरोधी", fl7: "KYC अनुपालन",
+                ft3: "संसाधन", dir: "ltr", font: "lang-hi"
             }
         };
 
@@ -185,14 +202,14 @@
             const r = document.getElementById('html-root');
             r.setAttribute('dir', TR[l].dir);
             r.className = "bg-black text-white " + TR[l].font;
-            document.querySelectorAll('[id^="l-"]').forEach(el => el.classList.add('opacity-30'));
-            document.getElementById('l-'+l).classList.remove('opacity-30');
             
-            document.getElementById('hero-title').innerText = TR[l].hero;
+            // Random Hero Selection
+            const pool = TR[l].hero_pool;
+            document.getElementById('hero-title').innerText = pool[Math.floor(Math.random() * pool.length)];
+            
             document.getElementById('hero-sub').innerText = TR[l].sub;
             document.getElementById('tab-perso').innerText = TR[l].tabP;
             document.getElementById('tab-pro').innerText = TR[l].tabB;
-            document.getElementById('nav-login').innerText = TR[l].login;
             document.getElementById('modal-title').innerText = TR[l].ok;
             document.getElementById('modal-msg').innerText = TR[l].ok_msg;
             document.getElementById('modal-btn').innerText = TR[l].ok_btn;
@@ -204,6 +221,9 @@
             document.getElementById('f-l2').innerText = TR[l].fl2;
             document.getElementById('f-l3').innerText = TR[l].fl3;
             document.getElementById('f-t2').innerText = TR[l].ft2;
+            document.getElementById('f-l5').innerText = TR[l].fl5;
+            document.getElementById('f-l6').innerText = TR[l].fl6;
+            document.getElementById('f-l7').innerText = TR[l].fl7;
             document.getElementById('f-t3').innerText = TR[l].ft3;
             
             updateUI();
@@ -248,7 +268,7 @@
         function closeSuccess() { document.getElementById('success-modal').style.display = 'none'; showSection('client-space'); }
         function showSection(id) { document.querySelectorAll('section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
 
-        // Load Session
+        // Boot
         const s = localStorage.getItem('casaclip_session');
         if(s) { state = JSON.parse(s); setLang(state.lang); } else { setLang('fr'); }
     </script>
