@@ -1,248 +1,214 @@
 <!DOCTYPE html>
-<html lang="fr" class="bg-black text-white">
+<html lang="fr" id="html-root" class="bg-black text-white">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA CLIP | Global AI Enterprise V87</title>
+    <title>CASA CLIP | Global AI Sovereign V92</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Noto+Sans+Arabic:wght@700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #3b82f6; --success: #10b981; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; scroll-behavior: smooth; overflow-x: hidden; color: #fff; }
+        :root { --blue: #3b82f6; --accent: #1d4ed8; --success: #10b981; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: #fff; overflow-x: hidden; scroll-behavior: smooth; }
+        .arabic { font-family: 'Noto Sans Arabic', sans-serif; }
         
-        /* Design Premium Glassmorphism */
-        .glass { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .glass:hover { border-color: rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.03); transform: translateY(-4px); }
+        /* Ultra-Glassmorphism V92 */
+        .glass { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.07); border-radius: 28px; backdrop-filter: blur(15px); }
+        .glass-premium { background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%); border: 1px solid rgba(59,130,246,0.2); }
         
-        /* Buttons & Tabs */
-        .tab-active { background: var(--accent) !important; color: white !important; box-shadow: 0 10px 30px rgba(59,130,246,0.4); }
-        .btn-grad { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); transition: 0.4s; font-weight: 900; border: none; cursor: pointer; }
-        .btn-grad:hover { transform: scale(1.02); box-shadow: 0 20px 40px rgba(59,130,246,0.5); }
+        /* Interactions Dynamiques */
+        .tab-btn { transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); border: 1px solid transparent; }
+        .tab-active { background: var(--blue) !important; color: white !important; box-shadow: 0 15px 35px rgba(59,130,246,0.4); transform: translateY(-3px); }
         
-        /* Language System */
-        .lang-btn { opacity: 0.3; cursor: pointer; font-size: 11px; font-weight: 900; padding: 6px 12px; transition: 0.3s; border-radius: 8px; }
-        .lang-btn.active { opacity: 1; background: var(--accent); color: white; }
-        
-        /* Animations */
+        .btn-master { background: linear-gradient(135deg, var(--blue), var(--accent)); transition: 0.4s; font-weight: 900; letter-spacing: 0.1em; }
+        .btn-master:hover { transform: scale(1.03); box-shadow: 0 25px 50px rgba(59,130,246,0.5); }
+
+        .lang-btn { opacity: 0.2; cursor: pointer; font-size: 10px; font-weight: 900; padding: 8px 12px; border-radius: 10px; transition: 0.3s; }
+        .lang-btn.active { opacity: 1; background: rgba(59,130,246,0.15); border: 1px solid var(--blue); color: var(--blue); }
+
         section { display: none; }
-        section.active { display: block; animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .promo-tag { background: var(--success); color: #000; font-size: 8px; font-weight: 900; padding: 4px 8px; border-radius: 8px; }
+        section.active { display: block; animation: ultraFade 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes ultraFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        [dir="rtl"] { text-align: right; }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-4 md:p-10">
 
-    <nav class="max-w-7xl mx-auto mb-12 flex flex-col lg:flex-row justify-between items-center gap-6 p-6 glass border-blue-500/10">
-        <div class="flex items-center gap-2 cursor-pointer" onclick="showSection('landing')">
-            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-900 italic tracking-tighter text-sm">CC</div>
-            <h1 class="text-2xl font-900 tracking-tighter uppercase italic">CASA<span class="text-blue-500 italic">CLIP</span></h1>
+    <nav class="max-w-7xl mx-auto mb-16 flex flex-col lg:flex-row justify-between items-center gap-8 p-8 glass border-white/10">
+        <div class="flex items-center gap-3 cursor-pointer group" onclick="showSection('landing')">
+            <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center font-900 italic text-xl shadow-lg">CC</div>
+            <h1 class="text-3xl font-900 tracking-tighter uppercase italic">CASA<span class="text-blue-500">CLIP</span></h1>
         </div>
         
-        <div class="flex flex-wrap justify-center gap-1 bg-white/5 p-1.5 rounded-2xl border border-white/5">
+        <div class="flex flex-wrap justify-center gap-1.5 bg-white/5 p-2 rounded-2xl border border-white/10">
             <span onclick="setLang('fr')" id="l-fr" class="lang-btn active">FR</span>
             <span onclick="setLang('en')" id="l-en" class="lang-btn">EN</span>
+            <span onclick="setLang('ar')" id="l-ar" class="lang-btn">AR</span>
             <span onclick="setLang('es')" id="l-es" class="lang-btn">ES</span>
             <span onclick="setLang('de')" id="l-de" class="lang-btn">DE</span>
             <span onclick="setLang('it')" id="l-it" class="lang-btn">IT</span>
             <span onclick="setLang('pt')" id="l-pt" class="lang-btn">PT</span>
         </div>
 
-        <div class="flex items-center gap-6">
-            <button onclick="showSection('landing')" data-t="n-prices" class="text-[11px] font-900 uppercase opacity-60 hover:opacity-100 tracking-widest">Tarifs</button>
-            <button onclick="showSection('login')" data-t="n-studio" class="btn-grad px-8 py-4 rounded-xl text-[11px] uppercase tracking-widest shadow-xl shadow-blue-500/20">Studio AI</button>
-        </div>
+        <button onclick="showSection('login')" class="btn-master px-10 py-5 rounded-2xl text-[11px] uppercase">Studio Dashboard</button>
     </nav>
 
     <section id="landing" class="active">
-        <div class="text-center mb-16">
-            <h2 id="h-title" class="text-6xl md:text-9xl font-900 tracking-tighter mb-4 uppercase italic">VOS VIDÉOS EN 1 CLIC</h2>
-            <p id="h-sub" class="text-white/40 font-bold uppercase tracking-[0.5em] text-[10px]">6 LANGUES • GPU HAUTE PERFORMANCE • RENTABILITÉ GARANTIE</p>
+        <div class="text-center mb-20">
+            <h2 id="h-title" class="text-6xl md:text-9xl font-900 tracking-tighter mb-6 uppercase italic">DOMINATION IA</h2>
+            <p id="h-sub" class="text-white/30 font-bold uppercase tracking-[0.5em] text-[10px]">7 Languages • Neural Engine V92 • 0% Latency</p>
         </div>
 
-        <div class="flex flex-col items-center gap-6 mb-20">
-            <div class="glass p-2 flex gap-2 border-white/10">
-                <button id="nav-perso" onclick="switchTab('perso')" data-t="t-perso" class="px-12 py-5 rounded-2xl text-[11px] font-900 uppercase tab-active">Particulier</button>
-                <button id="nav-pro" onclick="switchTab('pro')" data-t="t-pro" class="px-12 py-5 rounded-2xl text-[11px] font-900 uppercase">Ligue & Agence</button>
+        <div class="flex flex-col items-center gap-8 mb-24">
+            <div class="glass p-2.5 flex gap-2 border-white/10 shadow-2xl">
+                <button id="nav-perso" onclick="switchTab('perso')" class="tab-btn px-12 py-5 rounded-2xl text-[12px] font-900 uppercase tab-active">Particulier</button>
+                <button id="nav-pro" onclick="switchTab('pro')" class="tab-btn px-12 py-5 rounded-2xl text-[12px] font-900 uppercase">Ligue & Agence</button>
             </div>
             <div class="flex gap-4">
-                <button id="opt-annuel" onclick="setOpt('annuel')" class="px-8 py-4 glass text-[11px] font-900 uppercase tab-active border-blue-500/40">Annuel <span class="promo-tag">-20%</span></button>
-                <button id="opt-mensuel" onclick="setOpt('mensuel')" data-t="o-mon" class="px-8 py-4 glass text-[11px] font-900 uppercase">Mensuel</button>
+                <button id="opt-annuel" onclick="setOpt('annuel')" class="tab-btn px-10 py-4 glass text-[11px] font-900 uppercase tab-active border-blue-500/30">Annuel (-20%)</button>
+                <button id="opt-mensuel" onclick="setOpt('mensuel')" class="tab-btn px-10 py-4 glass text-[11px] font-900 uppercase">Mensuel Libre</button>
             </div>
         </div>
 
-        <div id="pricing-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto mb-32"></div>
+        <div id="pricing-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto mb-32"></div>
     </section>
 
-    <section id="login" class="max-w-md mx-auto py-20">
-        <div class="glass p-12 space-y-8 border-blue-500/20 shadow-2xl">
+    <section id="login" class="max-w-md mx-auto py-24">
+        <div class="glass p-14 space-y-8 border-blue-500/20 shadow-2xl relative overflow-hidden">
             <div class="text-center">
-                <h3 class="text-2xl font-900 uppercase italic mb-2">Authentification</h3>
-                <p class="text-[9px] text-white/30 uppercase tracking-widest font-bold">Accès Sécurisé Protocol V87</p>
+                <h3 class="text-2xl font-900 uppercase italic mb-2 tracking-tighter">Accès Privé</h3>
+                <p class="text-[9px] text-white/20 uppercase font-bold tracking-widest">Sovereign Protocol Active</p>
             </div>
             <div class="space-y-4">
-                <input type="email" id="email-in" placeholder="Email" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 transition font-bold text-sm">
-                <input type="password" id="pass-in" placeholder="Mot de passe" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 transition font-bold text-sm">
+                <input type="email" id="email-in" placeholder="MAIL" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 transition font-bold text-sm tracking-widest">
+                <input type="password" id="pass-in" placeholder="PASSWORD" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 transition font-bold text-sm tracking-widest">
             </div>
-            <button onclick="checkAuth()" class="w-full py-5 btn-grad rounded-2xl font-900 uppercase tracking-widest">Ouvrir le Studio</button>
-            <p id="auth-err" class="hidden text-red-500 text-[10px] font-900 text-center uppercase tracking-widest animate-pulse">Erreur: Identifiants non reconnus</p>
+            <button onclick="checkAuth()" class="w-full py-6 btn-master rounded-2xl font-900 uppercase tracking-widest text-xs">Ouvrir le Système</button>
+            <p id="auth-err" class="hidden text-red-500 text-[10px] font-900 text-center uppercase">Refusé : Identifiants non valides</p>
         </div>
     </section>
 
     <section id="app" class="max-w-7xl mx-auto mb-32">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            <div class="glass p-10 space-y-10 border-blue-500/10 h-fit">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div class="glass p-12 space-y-12 border-blue-500/10">
                 <div>
-                    <p data-t="d-cred" class="text-[11px] font-900 uppercase opacity-40 tracking-widest mb-4">Crédits Disponibles</p>
-                    <div class="text-7xl font-900 tracking-tighter"><span id="c-used">0</span><span class="text-2xl opacity-20"> / <span id="c-max">120</span></span></div>
-                    <div class="w-full bg-white/5 h-2 rounded-full mt-8 overflow-hidden"><div id="c-bar" class="bg-blue-600 h-full transition-all duration-1000" style="width: 0%"></div></div>
-                    <p id="admin-badge" class="hidden text-green-500 text-[10px] font-900 uppercase mt-8 flex items-center gap-2">
-                        <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span> 
-                        SESSION PROPRIÉTAIRE : ILLIMITÉ
+                    <p class="text-[11px] font-900 uppercase opacity-30 tracking-[0.2em] mb-6">Capacité CPU/GPU</p>
+                    <div class="text-8xl font-900 tracking-tighter text-white"><span id="c-used">0</span><span class="text-3xl opacity-10">/</span><span id="c-max" class="text-3xl opacity-10">120</span></div>
+                    <div class="w-full bg-white/5 h-1.5 rounded-full mt-10 overflow-hidden"><div id="c-bar" class="bg-blue-600 h-full w-0 transition-all duration-1000"></div></div>
+                    <p id="admin-badge" class="hidden text-green-500 text-[10px] font-900 uppercase mt-8 flex items-center gap-3">
+                        <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-ping"></span> 
+                        ADMINISTRATEUR : MODE ILLIMITÉ
                     </p>
                 </div>
-                <div class="p-6 bg-red-500/5 border border-red-500/20 rounded-2xl">
-                    <p data-t="d-warn" class="text-[9px] font-900 text-red-400 uppercase leading-relaxed italic">Politique No-Rollover active. Les crédits expirent mensuellement.</p>
+                <div class="p-6 bg-red-500/5 border border-red-500/10 rounded-2xl">
+                    <p class="text-[10px] font-900 text-red-400 uppercase italic leading-relaxed">No-Rollover Policy Strict.</p>
                 </div>
             </div>
 
-            <div class="lg:col-span-2 glass p-12 border-blue-600/20 shadow-2xl">
-                <h3 data-t="s-title" class="text-3xl font-900 uppercase mb-10 italic">Studio <span class="text-blue-500 italic">Souverain</span></h3>
-                
-                <div id="drop-zone" class="relative w-full border-2 border-dashed border-white/10 rounded-3xl p-16 mb-10 text-center hover:border-blue-500/50 hover:bg-blue-500/5 transition-all cursor-pointer">
-                    <input type="file" id="f-input" class="absolute inset-0 opacity-0 cursor-pointer" accept="video/*,image/*">
-                    <div id="import-txt">
-                        <div class="w-16 h-16 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                        </div>
-                        <p class="text-[12px] font-900 uppercase tracking-widest mb-2">Analyseur de média</p>
-                        <p class="text-[9px] text-white/30 uppercase">Prêt pour MP4, MOV, JPG, PNG</p>
-                    </div>
-                    <div id="analysing" class="hidden space-y-4">
-                        <p class="text-blue-500 font-900 text-[11px] animate-pulse">ANALYSE IA EN COURS...</p>
-                        <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden"><div id="anal-bar" class="bg-blue-500 h-full w-0 transition-all duration-1000"></div></div>
+            <div class="lg:col-span-2 glass glass-premium p-14 relative">
+                <h3 class="text-4xl font-900 uppercase italic mb-12">Neural <span class="text-blue-500">Studio</span></h3>
+                <div id="drop-zone" class="border-2 border-dashed border-blue-500/20 rounded-[40px] p-24 text-center hover:border-blue-500/50 hover:bg-blue-500/5 transition-all cursor-pointer group relative overflow-hidden">
+                    <input type="file" id="f-input" class="hidden" onchange="handleFile(this)">
+                    <div onclick="document.getElementById('f-input').click()" class="relative z-10">
+                        <p class="text-xl font-900 uppercase tracking-[0.2em] group-hover:text-blue-400 transition-colors">Déposer le Média</p>
                     </div>
                 </div>
-
-                <textarea id="ai-prompt" class="w-full bg-white/5 border border-white/10 rounded-2xl p-8 h-32 focus:border-blue-500 outline-none text-sm mb-8 font-bold" placeholder="Ajouter un prompt ou des instructions de style..."></textarea>
-                <button onclick="executeAI()" id="gen-btn" class="w-full py-8 rounded-2xl btn-grad text-[13px] uppercase tracking-[0.4em] shadow-lg shadow-blue-500/10">LANCER LE RENDU (-1)</button>
+                <textarea id="ai-inst" class="w-full bg-white/5 border border-white/10 rounded-3xl p-8 mt-10 h-40 outline-none focus:border-blue-500 transition font-bold text-lg" placeholder="Directives neuronales..."></textarea>
+                <button onclick="executeAI()" id="run-btn" class="w-full py-8 btn-master rounded-3xl font-900 uppercase mt-10 tracking-[0.4em] text-sm">Lancer l'Exécution IA</button>
             </div>
         </div>
     </section>
-
-    <section id="legal" class="max-w-4xl mx-auto glass p-16 mb-32">
-        <h2 class="text-3xl font-900 uppercase italic mb-10">CGV & <span class="text-blue-500">Protection</span></h2>
-        <div class="space-y-8 text-[11px] text-white/40 uppercase font-bold tracking-wider leading-relaxed">
-            <p><b class="text-white">Abonnement :</b> Renouvellement automatique. Désactivation possible à tout moment via le dashboard.</p>
-            <p><b class="text-white">Crédits :</b> Système de consommation par seconde de rendu. Les crédits ne sont pas cumulables sur le mois suivant.</p>
-            <p><b class="text-white">Usage :</b> Toute vidéo générée appartient à l'utilisateur final pour un usage commercial libre.</p>
-        </div>
-        <button onclick="showSection('landing')" class="mt-12 text-blue-500 font-900 text-[10px] uppercase border-b border-blue-500/20 pb-1">← Retour Accueil</button>
-    </section>
-
-    <footer class="max-w-7xl mx-auto border-t border-white/5 pt-20 pb-12 flex flex-col md:flex-row justify-between items-center gap-10">
-        <div>
-            <h4 class="text-2xl font-900 uppercase mb-4 italic italic">CASA<span class="text-blue-500 italic">CLIP</span></h4>
-            <p class="text-white/20 text-[10px] font-900 uppercase tracking-widest">Global Sovereign Protocol V87</p>
-        </div>
-        <div class="flex gap-12 text-[10px] font-900 uppercase tracking-widest opacity-50">
-            <a href="#" onclick="showSection('legal')">CGV / Terms</a>
-            <a href="#" onclick="showSection('legal')">Privacy</a>
-            <span class="text-green-500 italic flex items-center gap-2"> <span class="w-2 h-2 bg-green-500 rounded-full"></span> GPU Status: Online</span>
-        </div>
-    </footer>
 
     <script>
-        // --- ⚙️ CONFIGURATION PROPRIÉTAIRE VERROUILLÉE ---
         const MASTER_MAIL = "jeremyfaure96@gmail.com";
         const MASTER_PASS = "Prissoulia.13";
 
-        // --- 🌍 SYSTÈME MULTILINGUE ---
         const DICT = {
-            fr: { "n-prices": "Tarifs", "n-studio": "Studio AI", "t-perso": "Particulier", "t-pro": "Ligue & Agence", "o-mon": "Mensuel", "d-cred": "Crédits Disponibles", "d-warn": "No-Rollover actif. Les crédits expirent mensuellement.", "s-title": "Studio Souverain", "get": "Commander", "per": "par mois" },
-            en: { "n-prices": "Pricing", "n-studio": "AI Studio", "t-perso": "Individual", "t-pro": "Agency", "o-mon": "Monthly", "d-cred": "Credits Available", "d-warn": "No-Rollover active. Credits expire every month.", "s-title": "Sovereign Studio", "get": "Order", "per": "per month" },
-            es: { "n-prices": "Precios", "n-studio": "Estudio IA", "t-perso": "Particular", "t-pro": "Agencia", "o-mon": "Mensual", "d-cred": "Créditos", "d-warn": "No-Rollover: Los créditos caducan cada mes.", "s-title": "Estudio Soberano", "get": "Pedir", "per": "por mes" },
-            de: { "n-prices": "Preise", "n-studio": "KI Studio", "t-perso": "Privat", "t-pro": "Agentur", "o-mon": "Monatlich", "d-cred": "Guthaben", "d-warn": "No-Rollover: Guthaben verfällt monatlich.", "s-title": "Souverän Studio", "get": "Wählen", "per": "pro Monat" },
-            it: { "n-prices": "Prezzi", "n-studio": "Studio IA", "t-perso": "Privato", "t-pro": "Agenzia", "o-mon": "Mensile", "d-cred": "Crediti", "d-warn": "No-Rollover: I crediti scadono ogni mese.", "s-title": "Studio Sovrano", "get": "Scegli", "per": "al mese" },
-            pt: { "n-prices": "Preços", "n-studio": "Estúdio IA", "t-perso": "Particular", "t-pro": "Agência", "o-mon": "Mensal", "d-cred": "Créditos", "d-warn": "No-Rollover: Os créditos expiram mensalmente.", "s-title": "Estúdio Soberano", "get": "Escolher", "per": "por mês" }
+            fr: { title: "DOMINATION IA", get: "Prendre l'Offre", per: "par mois", dir: "ltr" },
+            en: { title: "AI DOMINATION", get: "Get Started", per: "per month", dir: "ltr" },
+            ar: { title: "السيطرة الكاملة", get: "اطلب الآن", per: "في الشهر", dir: "rtl" },
+            es: { title: "DOMINACIÓN IA", get: "Empezar", per: "por mes", dir: "ltr" },
+            de: { title: "KI DOMINATION", get: "Wählen", per: "pro Monat", dir: "ltr" },
+            it: { title: "DOMINAZIONE IA", get: "Scegli", per: "al mese", dir: "ltr" },
+            pt: { title: "DOMINAÇÃO IA", get: "Começar", per: "por mês", dir: "ltr" }
         };
 
         let curL = 'fr'; let curT = 'perso'; let curO = 'annuel';
         const DATA = {
             perso: { plans: ["Starter", "Elite", "Master"], base: [14.99, 34.99, 69.99], vids: [10, 30, 75] },
-            pro: { plans: ["Ligue", "Agence", "Empire AI"], base: [89.99, 189.99, 499.99], vids: [120, 350, 1200] }
+            pro: { plans: ["League", "Agency", "Empire AI"], base: [89.99, 189.99, 499.99], vids: [120, 350, 1200] }
         };
 
         function setLang(l) {
             curL = l;
+            const root = document.getElementById('html-root');
+            root.setAttribute('dir', DICT[l].dir);
+            document.body.classList.toggle('arabic', l === 'ar');
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.id === 'l-'+l));
-            document.querySelectorAll('[data-t]').forEach(el => el.innerText = DICT[l][el.getAttribute('data-t')] || el.innerText);
+            document.getElementById('h-title').innerText = DICT[l].title;
             updateUI();
         }
 
-        function showSection(id) {
-            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            window.scrollTo(0,0);
+        function switchTab(t) { 
+            curT = t; 
+            document.getElementById('nav-perso').classList.toggle('tab-active', t === 'perso');
+            document.getElementById('nav-pro').classList.toggle('tab-active', t === 'pro');
+            updateUI(); 
         }
 
-        // --- AUTHENTIFICATION SOUVERAINE ---
+        function setOpt(o) { 
+            curO = o; 
+            document.getElementById('opt-annuel').classList.toggle('tab-active', o === 'annuel');
+            document.getElementById('opt-mensuel').classList.toggle('tab-active', o === 'mensuel');
+            updateUI(); 
+        }
+
+        function updateUI() {
+            const grid = document.getElementById('pricing-grid');
+            const d = DATA[curT]; let html = "";
+            d.plans.forEach((p, i) => {
+                let price = (curO === 'annuel') ? d.base[i] * 0.8 : d.base[i];
+                html += `
+                <div class="glass glass-premium p-14 text-center hover:scale-[1.03] transition-all duration-500 group">
+                    <span class="text-blue-500 font-900 text-[11px] mb-8 block uppercase tracking-[0.4em] italic">${p}</span>
+                    <div class="text-7xl font-900 mb-2 tracking-tighter group-hover:text-blue-400 transition-colors">${price.toFixed(2)}€</div>
+                    <span class="text-white/20 text-[10px] uppercase block mb-12 font-bold tracking-widest">${DICT[curL].per}</span>
+                    <p class="text-2xl font-900 uppercase pb-12 tracking-tighter">${d.vids[i]} VIDÉOS / MOIS</p>
+                    <button class="w-full py-6 rounded-2xl border border-white/10 font-900 text-[11px] uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 shadow-xl">${DICT[curL].get}</button>
+                </div>`;
+            });
+            grid.innerHTML = html;
+        }
+
         function checkAuth() {
-            const m = document.getElementById('email-in').value;
-            const p = document.getElementById('pass-in').value;
-            if(m === MASTER_MAIL && p === MASTER_PASS) {
+            if(document.getElementById('email-in').value === MASTER_MAIL && document.getElementById('pass-in').value === MASTER_PASS) {
                 showSection('app');
                 document.getElementById('c-used').innerText = "∞";
-                document.getElementById('c-max').innerText = "∞";
                 document.getElementById('admin-badge').classList.remove('hidden');
                 document.getElementById('c-bar').style.width = "100%";
-                document.getElementById('c-bar').style.background = "#10b981";
+                document.getElementById('c-bar').style.background = "var(--success)";
             } else {
                 document.getElementById('auth-err').classList.remove('hidden');
                 setTimeout(() => document.getElementById('auth-err').classList.add('hidden'), 3000);
             }
         }
 
-        function switchTab(t) { curT = t; updateUI(); }
-        function setOpt(o) { curO = o; updateUI(); }
-
-        function updateUI() {
-            const grid = document.getElementById('pricing-grid');
-            const d = DATA[curT]; let html = "";
-            d.plans.forEach((p, i) => {
-                let m = d.base[i]; if(curO==='annuel') m*=0.8;
-                let tot = (curO==='annuel') ? (m*12).toFixed(2) : m.toFixed(2);
-                html += `
-                <div class="glass p-12 text-center relative overflow-hidden">
-                    <span class="text-blue-500 font-900 text-[11px] uppercase tracking-[0.3em] mb-8 block italic italic">${p}</span>
-                    <div class="text-7xl font-900 mb-2 tracking-tighter">${m.toFixed(2)}€</div>
-                    <span class="text-white/20 text-[10px] font-900 uppercase mb-10">${DICT[curL]['per']}</span>
-                    <div class="bg-blue-600/10 rounded-3xl p-6 border border-blue-500/20 mb-10">
-                        <p class="text-[9px] font-900 uppercase opacity-40 mb-2">Total Cash</p>
-                        <p class="text-3xl font-900 tracking-tight">${tot}€</p>
-                    </div>
-                    <p class="text-[18px] font-900 uppercase border-b border-blue-600 pb-3 mb-10">${d.vids[i]} VIDÉOS</p>
-                    <button class="w-full py-5 rounded-2xl border border-white/10 font-900 text-[11px] uppercase tracking-widest hover:bg-white hover:text-black transition duration-500">${DICT[curL]['get']}</button>
-                </div>`;
-            });
-            grid.innerHTML = html;
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // --- STUDIO ANALYSIS ---
-        document.getElementById('f-input').addEventListener('change', function() {
-            if(this.files[0]) {
-                document.getElementById('import-txt').classList.add('hidden');
-                document.getElementById('analysing').classList.remove('hidden');
-                let bar = document.getElementById('anal-bar');
-                setTimeout(() => bar.style.width = "100%", 500);
+        function handleFile(input) {
+            if(input.files[0]) {
+                const btn = document.getElementById('run-btn');
+                btn.innerText = "SCANNING...";
+                setTimeout(() => { btn.innerText = "READY"; }, 1500);
             }
-        });
+        }
 
-        function executeAI() {
-            const btn = document.getElementById('gen-btn');
-            btn.innerText = "LINKING GPU NODES...";
-            btn.classList.add('animate-pulse');
-            setTimeout(() => { alert("PROTOCOL V87 : Rendu démarré sur serveurs Fal.ai"); location.reload(); }, 2500);
+        function executeAI() { 
+            alert("SYSTÈME V92 : Serveurs Synchronisés."); 
         }
 
         updateUI();
