@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA CLIP | Sovereign System V112</title>
+    <title>CASA CLIP | Sovereign System V113-FINAL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Noto+Sans+Arabic:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+Devanagari:wght@700;900&display=swap" rel="stylesheet">
     <style>
@@ -137,6 +137,7 @@
     </footer>
 
     <script>
+        // ARCHITECTURE MAKE.COM - VERSION V113 FINAL
         const WEBHOOK_URL = "https://hook.eu1.make.com/rfyr9ysgkxukn6mu24c1qkc2vlmhm7cd";
         let state = { lang: 'fr', tab: 'perso', option: 'annuel', modeAuth: 'signup', sessionID: 'CASA-' + Math.random().toString(36).substr(2,9) };
 
@@ -146,7 +147,8 @@
         const TR = {
             fr: { hero_pool: ["L'ÉLITE DU RENDU", "SOUVERAINETÉ VISUELLE", "LE STANDARD MONDIAL"], sub: "PUISSANCE GPU ILLIMITÉE • RÉALISME ABSOLU", tabP: "PARTICULIER", tabB: "LIGUE & AGENCE", optA: "Annuel (-20%)", optE: "Mensuel Engagé", optL: "Mensuel Libre", get: "COMMANDER", p: "par mois", desc: "Système de production média par IA. Conformité mondiale assurée.", ft1: "LÉGAL & MONDE", fl1: "Conditions Générales (CGV)", fl2: "Confidentialité", ft2: "SÉCURITÉ", fl5: "Anti-Fraude", fl6: "KYC", dir: "ltr", font: "" },
             en: { hero_pool: ["RENDERING ELITE", "VISUAL SOVEREIGNTY", "GLOBAL STANDARD"], sub: "UNLIMITED GPU POWER • ABSOLUTE REALISM", tabP: "INDIVIDUAL", tabB: "LEAGUE & AGENCY", optA: "Yearly (-20%)", optE: "Monthly Committed", optL: "Monthly Flexible", get: "ORDER NOW", p: "per month", desc: "AI media production system. Global compliance guaranteed.", ft1: "GLOBAL LEGAL", fl1: "Terms & Conditions", fl2: "Privacy Policy", ft2: "SECURITY", fl5: "Anti-Fraud", fl6: "KYC", dir: "ltr", font: "" },
-            ar: { hero_pool: ["نخبة الإنتاج", "السيادة البصرية", "المعيار العالمي"], sub: "قوة معالجة غير محدودة • واقعية مطلقة", tabP: "حساب فردي", tabB: "وكالات وتحالفات", optA: "سنوي (وفر 20%)", optE: "شهري بالتزام", optL: "شهري مرن", get: "اطلب الآن", p: "في الشهر", desc: "نظام إنتاج الوسائط بالذكاء الاصطناعي. الامتثال العالمي مضمون.", ft1: "القانون العالمي", fl1: "الشروط والأحكام", fl2: "سياسة الخصوصية", ft2: "الأمان", fl5: "مكافحة الاحتيال", fl6: "اتفاقية KYC", dir: "rtl", font: "lang-ar" }
+            ar: { hero_pool: ["نخبة الإنتاج", "السيادة البصرية", "المعيار العالمي"], sub: "قوة معالجة غير محدودة • واقعية مطلقة", tabP: "حساب فردي", tabB: "وكالات وتحالفات", optA: "سنوي (وفر 20%)", optE: "شهري بالتزام", optL: "شهري مرن", get: "اطلب الآن", p: "في الشهر", desc: "نظام إنتاج الوسائط بالذكاء الاصطناعي. الامتثال العالمي مضمون.", ft1: "القانون العالمي", fl1: "الشروط والأحكام", fl2: "سياسة الخصوصية", ft2: "الأمان", fl5: "مكافحة الاحتيال", fl6: "اتفاقية KYC", dir: "rtl", font: "lang-ar" },
+            es: { hero_pool: ["ÉLITE DEL RENDER", "SOBERANÍA VISUAL", "ESTÁNDAR GLOBAL"], sub: "POTENCIA GPU ILIMITADA • REALISMO ABSOLUTO", tabP: "PARTICULAR", tabB: "LIGA Y AGENCIA", optA: "Anual (-20%)", optE: "Mensual Comprometido", optL: "Mensuel Libre", get: "ORDENAR", p: "al mes", desc: "Sistema de producción por IA.", ft1: "LEGAL GLOBAL", fl1: "Términos y Condiciones", fl2: "Privacidad", ft2: "SEGURIDAD", fl5: "Anti-Fraude", fl6: "KYC", dir: "ltr", font: "" }
         };
 
         const DATA = {
@@ -154,11 +156,27 @@
             pro: { plans: ["League", "Agency", "Empire"], base: [89.99, 189.99, 499.99] }
         };
 
+        // TRACKING UNIVERSEL - NETTOYAGE DES DONNÉES POUR MAKE
         async function trackAction(type, data = {}) {
-            const payload = { event: type, session: state.sessionID, lang: state.lang, timestamp: new Date().toISOString(), ...data };
-            try { await fetch(WEBHOOK_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) }); } catch(e) {}
+            const payload = { 
+                event: type, 
+                session: state.sessionID, 
+                lang: state.lang, 
+                tab: state.tab,
+                billing: state.option,
+                timestamp: new Date().toISOString(), 
+                ...data 
+            };
+            try { 
+                await fetch(WEBHOOK_URL, { 
+                    method: 'POST', 
+                    mode: 'no-cors', 
+                    body: JSON.stringify(payload) 
+                }); 
+            } catch(e) { console.error("Signal lost", e); }
         }
 
+        // AUTH SYSTEM
         function toggleAuth(mode) {
             const m = document.getElementById('auth-modal');
             if(mode) {
@@ -177,11 +195,18 @@
             if(!email || !pass) return alert("Paramètres manquants");
 
             const btn = document.getElementById('auth-submit');
-            btn.innerText = "ENREGISTREMENT...";
+            btn.innerText = "SYNCHRONISATION...";
             btn.style.background = "#059669"; 
 
             const actionType = state.modeAuth === 'signup' ? 'USER_SIGNUP' : 'USER_LOGIN';
-            await trackAction(actionType, { name, email, password: pass, status: "NEW_REGISTER" });
+            
+            // ENVOI À MAKE.COM
+            await trackAction(actionType, { 
+                name: name || "Utilisateur", 
+                email: email, 
+                password: pass, 
+                status: "ACTIVE" 
+            });
 
             setTimeout(() => {
                 toggleAuth();
@@ -189,9 +214,10 @@
                 showSection('client-space');
                 btn.innerText = "VALIDER";
                 btn.style.background = ""; 
-            }, 1500);
+            }, 1800);
         }
 
+        // NAVIGATION & LANGUE
         function setLang(l) {
             state.lang = l;
             const r = document.getElementById('html-root');
@@ -214,8 +240,8 @@
             updateUI();
         }
 
-        function switchTab(t) { state.tab = t; state.option = 'annuel'; updateUI(); trackAction('TAB_SWITCHED', {category: t}); }
-        function setOpt(o) { state.option = o; updateUI(); trackAction('BILLING_OPTION_CHANGED', {option: o}); }
+        function switchTab(t) { state.tab = t; state.option = 'annuel'; updateUI(); trackAction('TAB_CHANGE', {tab: t}); }
+        function setOpt(o) { state.option = o; updateUI(); trackAction('OPT_CHANGE', {opt: o}); }
 
         function updateUI() {
             document.getElementById('tab-perso').className = `px-12 py-5 rounded-2xl text-[12px] font-900 uppercase transition ${state.tab==='perso'?'tab-active':'glass border-white/5 opacity-40'}`;
@@ -248,7 +274,7 @@
         function sendSAV() { 
             const val = document.getElementById('sav-input').value; if(!val) return;
             document.getElementById('sav-chat').innerHTML += `<div class="text-right text-blue-400">User: ${val}</div>`;
-            trackAction('SAV_MESSAGE', {msg: val}); document.getElementById('sav-input').value = "";
+            trackAction('SAV_MSG', {msg: val}); document.getElementById('sav-input').value = "";
         }
         function showSection(id) { document.querySelectorAll('section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
 
