@@ -3,38 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA CLIP | Global AI Sovereign V92</title>
+    <title>CASA CLIP | Global AI Sovereign V93</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Noto+Sans+Arabic:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root { --blue: #3b82f6; --accent: #1d4ed8; --success: #10b981; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: #fff; overflow-x: hidden; scroll-behavior: smooth; }
         .arabic { font-family: 'Noto Sans Arabic', sans-serif; }
-        
-        /* Ultra-Glassmorphism V92 */
         .glass { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.07); border-radius: 28px; backdrop-filter: blur(15px); }
-        .glass-premium { background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%); border: 1px solid rgba(59,130,246,0.2); }
-        
-        /* Interactions Dynamiques */
         .tab-btn { transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); border: 1px solid transparent; }
         .tab-active { background: var(--blue) !important; color: white !important; box-shadow: 0 15px 35px rgba(59,130,246,0.4); transform: translateY(-3px); }
-        
         .btn-master { background: linear-gradient(135deg, var(--blue), var(--accent)); transition: 0.4s; font-weight: 900; letter-spacing: 0.1em; }
         .btn-master:hover { transform: scale(1.03); box-shadow: 0 25px 50px rgba(59,130,246,0.5); }
-
         .lang-btn { opacity: 0.2; cursor: pointer; font-size: 10px; font-weight: 900; padding: 8px 12px; border-radius: 10px; transition: 0.3s; }
         .lang-btn.active { opacity: 1; background: rgba(59,130,246,0.15); border: 1px solid var(--blue); color: var(--blue); }
-
         section { display: none; }
         section.active { display: block; animation: ultraFade 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes ultraFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
         [dir="rtl"] { text-align: right; }
     </style>
 </head>
 <body class="p-4 md:p-10">
 
-    <nav class="max-w-7xl mx-auto mb-16 flex flex-col lg:flex-row justify-between items-center gap-8 p-8 glass border-white/10">
+    <nav class="max-w-7xl mx-auto mb-16 flex flex-col lg:flex-row justify-between items-center gap-8 p-8 glass">
         <div class="flex items-center gap-3 cursor-pointer group" onclick="showSection('landing')">
             <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center font-900 italic text-xl shadow-lg">CC</div>
             <h1 class="text-3xl font-900 tracking-tighter uppercase italic">CASA<span class="text-blue-500">CLIP</span></h1>
@@ -50,71 +41,63 @@
             <span onclick="setLang('pt')" id="l-pt" class="lang-btn">PT</span>
         </div>
 
-        <button onclick="showSection('login')" class="btn-master px-10 py-5 rounded-2xl text-[11px] uppercase">Studio Dashboard</button>
+        <button onclick="showSection('login')" data-t="n-studio" class="btn-master px-10 py-5 rounded-2xl text-[11px] uppercase">Studio AI</button>
     </nav>
 
     <section id="landing" class="active">
         <div class="text-center mb-20">
-            <h2 id="h-title" class="text-6xl md:text-9xl font-900 tracking-tighter mb-6 uppercase italic">DOMINATION IA</h2>
-            <p id="h-sub" class="text-white/30 font-bold uppercase tracking-[0.5em] text-[10px]">7 Languages • Neural Engine V92 • 0% Latency</p>
+            <h2 id="h-title" data-t="h-title" class="text-6xl md:text-9xl font-900 tracking-tighter mb-6 uppercase italic">DOMINATION IA</h2>
+            <p id="h-sub" data-t="h-sub" class="text-white/30 font-bold uppercase tracking-[0.5em] text-[10px]">7 LANGUES • NO-ROLLOVER • RENTABILITÉ IA</p>
         </div>
 
         <div class="flex flex-col items-center gap-8 mb-24">
             <div class="glass p-2.5 flex gap-2 border-white/10 shadow-2xl">
-                <button id="nav-perso" onclick="switchTab('perso')" class="tab-btn px-12 py-5 rounded-2xl text-[12px] font-900 uppercase tab-active">Particulier</button>
-                <button id="nav-pro" onclick="switchTab('pro')" class="tab-btn px-12 py-5 rounded-2xl text-[12px] font-900 uppercase">Ligue & Agence</button>
+                <button id="nav-perso" onclick="switchTab('perso')" data-t="t-perso" class="tab-btn px-12 py-5 rounded-2xl text-[12px] font-900 uppercase tab-active">Particulier</button>
+                <button id="nav-pro" onclick="switchTab('pro')" data-t="t-pro" class="tab-btn px-12 py-5 rounded-2xl text-[12px] font-900 uppercase">Ligue & Agence</button>
             </div>
-            <div class="flex gap-4">
-                <button id="opt-annuel" onclick="setOpt('annuel')" class="tab-btn px-10 py-4 glass text-[11px] font-900 uppercase tab-active border-blue-500/30">Annuel (-20%)</button>
-                <button id="opt-mensuel" onclick="setOpt('mensuel')" class="tab-btn px-10 py-4 glass text-[11px] font-900 uppercase">Mensuel Libre</button>
-            </div>
+            <div id="option-container" class="flex gap-4">
+                </div>
         </div>
 
         <div id="pricing-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto mb-32"></div>
     </section>
 
     <section id="login" class="max-w-md mx-auto py-24">
-        <div class="glass p-14 space-y-8 border-blue-500/20 shadow-2xl relative overflow-hidden">
-            <div class="text-center">
-                <h3 class="text-2xl font-900 uppercase italic mb-2 tracking-tighter">Accès Privé</h3>
-                <p class="text-[9px] text-white/20 uppercase font-bold tracking-widest">Sovereign Protocol Active</p>
-            </div>
+        <div class="glass p-14 space-y-8 border-blue-500/20 shadow-2xl">
+            <h3 data-t="auth-title" class="text-2xl font-900 uppercase italic mb-2 tracking-tighter text-center">Accès Privé</h3>
             <div class="space-y-4">
                 <input type="email" id="email-in" placeholder="MAIL" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 transition font-bold text-sm tracking-widest">
                 <input type="password" id="pass-in" placeholder="PASSWORD" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 transition font-bold text-sm tracking-widest">
             </div>
-            <button onclick="checkAuth()" class="w-full py-6 btn-master rounded-2xl font-900 uppercase tracking-widest text-xs">Ouvrir le Système</button>
-            <p id="auth-err" class="hidden text-red-500 text-[10px] font-900 text-center uppercase">Refusé : Identifiants non valides</p>
+            <button onclick="checkAuth()" data-t="auth-btn" class="w-full py-6 btn-master rounded-2xl font-900 uppercase tracking-widest text-xs">Ouvrir</button>
         </div>
     </section>
 
     <section id="app" class="max-w-7xl mx-auto mb-32">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div class="glass p-12 space-y-12 border-blue-500/10">
+            <div class="glass p-10 space-y-10 border-blue-500/10 h-fit">
                 <div>
-                    <p class="text-[11px] font-900 uppercase opacity-30 tracking-[0.2em] mb-6">Capacité CPU/GPU</p>
-                    <div class="text-8xl font-900 tracking-tighter text-white"><span id="c-used">0</span><span class="text-3xl opacity-10">/</span><span id="c-max" class="text-3xl opacity-10">120</span></div>
-                    <div class="w-full bg-white/5 h-1.5 rounded-full mt-10 overflow-hidden"><div id="c-bar" class="bg-blue-600 h-full w-0 transition-all duration-1000"></div></div>
-                    <p id="admin-badge" class="hidden text-green-500 text-[10px] font-900 uppercase mt-8 flex items-center gap-3">
-                        <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-ping"></span> 
-                        ADMINISTRATEUR : MODE ILLIMITÉ
-                    </p>
+                    <p data-t="d-cred" class="text-[11px] font-900 uppercase opacity-30 tracking-[0.2em] mb-6">Crédits</p>
+                    <div class="text-7xl font-900 tracking-tighter text-white"><span id="c-used">0</span><span class="text-2xl opacity-10">/120</span></div>
+                    <p id="admin-badge" class="hidden text-green-500 text-[10px] font-900 uppercase mt-4">● ILLIMITÉ</p>
                 </div>
-                <div class="p-6 bg-red-500/5 border border-red-500/10 rounded-2xl">
-                    <p class="text-[10px] font-900 text-red-400 uppercase italic leading-relaxed">No-Rollover Policy Strict.</p>
+                <div class="p-6 bg-white/5 border border-white/10 rounded-2xl">
+                    <p data-t="sav-title" class="text-[11px] font-900 uppercase text-blue-500 mb-4 tracking-widest">SAV AI 24/7</p>
+                    <div id="sav-box" class="h-32 overflow-y-auto text-[10px] space-y-2 mb-4 pr-2 font-bold opacity-50">
+                        <p data-t="sav-init">Comment puis-je vous aider ?</p>
+                    </div>
+                    <input type="text" id="sav-in" class="w-full bg-black/40 border border-white/5 p-3 rounded-xl text-[10px] outline-none" placeholder="Question...">
                 </div>
             </div>
 
-            <div class="lg:col-span-2 glass glass-premium p-14 relative">
-                <h3 class="text-4xl font-900 uppercase italic mb-12">Neural <span class="text-blue-500">Studio</span></h3>
-                <div id="drop-zone" class="border-2 border-dashed border-blue-500/20 rounded-[40px] p-24 text-center hover:border-blue-500/50 hover:bg-blue-500/5 transition-all cursor-pointer group relative overflow-hidden">
-                    <input type="file" id="f-input" class="hidden" onchange="handleFile(this)">
-                    <div onclick="document.getElementById('f-input').click()" class="relative z-10">
-                        <p class="text-xl font-900 uppercase tracking-[0.2em] group-hover:text-blue-400 transition-colors">Déposer le Média</p>
-                    </div>
+            <div class="lg:col-span-2 glass p-14 relative">
+                <h3 data-t="s-title" class="text-4xl font-900 uppercase italic mb-12">Neural <span class="text-blue-500">Studio</span></h3>
+                <div onclick="document.getElementById('f-input').click()" class="border-2 border-dashed border-blue-500/20 rounded-[40px] p-24 text-center hover:border-blue-500/50 transition-all cursor-pointer">
+                    <input type="file" id="f-input" class="hidden">
+                    <p data-t="s-drop" class="text-xl font-900 uppercase tracking-[0.2em]">Déposer le Média</p>
                 </div>
-                <textarea id="ai-inst" class="w-full bg-white/5 border border-white/10 rounded-3xl p-8 mt-10 h-40 outline-none focus:border-blue-500 transition font-bold text-lg" placeholder="Directives neuronales..."></textarea>
-                <button onclick="executeAI()" id="run-btn" class="w-full py-8 btn-master rounded-3xl font-900 uppercase mt-10 tracking-[0.4em] text-sm">Lancer l'Exécution IA</button>
+                <textarea class="w-full bg-white/5 border border-white/10 rounded-3xl p-8 mt-10 h-40 outline-none focus:border-blue-500 font-bold" placeholder="Instructions..."></textarea>
+                <button onclick="executeAI()" data-t="s-gen" class="w-full py-8 btn-master rounded-3xl font-900 uppercase mt-10 tracking-[0.4em]">Lancer le Rendu</button>
             </div>
         </div>
     </section>
@@ -124,94 +107,82 @@
         const MASTER_PASS = "Prissoulia.13";
 
         const DICT = {
-            fr: { title: "DOMINATION IA", get: "Prendre l'Offre", per: "par mois", dir: "ltr" },
-            en: { title: "AI DOMINATION", get: "Get Started", per: "per month", dir: "ltr" },
-            ar: { title: "السيطرة الكاملة", get: "اطلب الآن", per: "في الشهر", dir: "rtl" },
-            es: { title: "DOMINACIÓN IA", get: "Empezar", per: "por mes", dir: "ltr" },
-            de: { title: "KI DOMINATION", get: "Wählen", per: "pro Monat", dir: "ltr" },
-            it: { title: "DOMINAZIONE IA", get: "Scegli", per: "al mese", dir: "ltr" },
-            pt: { title: "DOMINAÇÃO IA", get: "Começar", per: "por mês", dir: "ltr" }
+            fr: { "h-title": "DOMINATION IA", "h-sub": "7 LANGUES • NO-ROLLOVER • RENTABILITÉ IA", "n-studio": "Studio AI", "t-perso": "Particulier", "t-pro": "Ligue & Agence", "o-ann": "Annuel (-20%)", "o-eng": "Mensuel Engagé", "o-lib": "Mensuel Libre", "get": "Commander", "per": "par mois", "tot": "Total à payer", "sav-title": "SAV AI 24/7", "sav-init": "Comment puis-je vous aider ?", "s-title": "Studio IA", "s-drop": "Déposer le Média", "s-gen": "Lancer le Rendu", "auth-title": "Accès Privé", "auth-btn": "Ouvrir", "d-cred": "Crédits", dir: "ltr" },
+            en: { "h-title": "AI DOMINATION", "h-sub": "7 LANGUAGES • NO-ROLLOVER • AI PROFIT", "n-studio": "AI Studio", "t-perso": "Individual", "t-pro": "League & Agency", "o-ann": "Annual (-20%)", "o-eng": "Monthly (1yr)", "o-lib": "Monthly Free", "get": "Order Now", "per": "per month", "tot": "Total to pay", "sav-title": "AI SUPPORT 24/7", "sav-init": "How can I help you?", "s-title": "AI Studio", "s-drop": "Drop Media", "s-gen": "Launch Render", "auth-title": "Private Access", "auth-btn": "Open", "d-cred": "Credits", dir: "ltr" },
+            ar: { "h-title": "السيطرة الكاملة", "h-sub": "7 لغات • لا ترحيل للرصيد • ربحية الذكاء الاصطناعي", "n-studio": "استوديو الذكاء الاصطناعي", "t-perso": "فردي", "t-pro": "رابطة ووكالة", "o-ann": "سنوي (-20%)", "o-eng": "شهري (التزام سنة)", "o-lib": "شهري حر", "get": "اطلب الآن", "per": "في الشهر", "tot": "إجمالي الدفع", "sav-title": "الدعم الذكي 24/7", "sav-init": "كيف يمكنني مساعدتك؟", "s-title": "استوديو الذكاء الاصطناعي", "s-drop": "أدرج الوسائط", "s-gen": "بدء الرندر", "auth-title": "دخول خاص", "auth-btn": "فتح", "d-cred": "الرصيد", dir: "rtl" },
+            es: { "h-title": "DOMINACIÓN IA", "h-sub": "7 IDIOMAS • NO-ROLLOVER • RENTABILIDAD IA", "n-studio": "Estudio IA", "t-perso": "Particular", "t-pro": "Liga y Agencia", "o-ann": "Anual (-20%)", "o-eng": "Mensual (1 año)", "o-lib": "Mensual Libre", "get": "Pedir Ahora", "per": "por mes", "tot": "Total a pagar", "sav-title": "SOPORTE IA 24/7", "sav-init": "¿Cómo puedo ayudarte?", "s-title": "Estudio IA", "s-drop": "Soltar Medio", "s-gen": "Lanzar Render", "auth-title": "Acceso Privado", "auth-btn": "Abrir", "d-cred": "Créditos", dir: "ltr" },
+            de: { "h-title": "KI DOMINATION", "h-sub": "7 SPRACHEN • NO-ROLLOVER • KI RENTABILITÄT", "n-studio": "KI Studio", "t-perso": "Privat", "t-pro": "Liga & Agentur", "o-ann": "Jährlich (-20%)", "o-eng": "Monatlich (1 J.)", "o-lib": "Monatlich Frei", "get": "Bestellen", "per": "pro Monat", "tot": "Gesamtpreis", "sav-title": "KI-SUPPORT 24/7", "sav-init": "Wie kann ich helfen?", "s-title": "KI Studio", "s-drop": "Medium ablegen", "s-gen": "Render starten", "auth-title": "Privater Zugang", "auth-btn": "Öffnen", "d-cred": "Guthaben", dir: "ltr" },
+            it: { "h-title": "DOMINAZIONE IA", "h-sub": "7 LINGUE • NO-ROLLOVER • RENDITA IA", "n-studio": "Studio IA", "t-perso": "Privato", "t-pro": "Lega & Agenzia", "o-ann": "Annuale (-20%)", "o-eng": "Mensile (1 anno)", "o-lib": "Mensile Libero", "get": "Ordina", "per": "al mese", "tot": "Totale da pagare", "sav-title": "SUPPORTO IA 24/7", "sav-init": "Come posso aiutarti?", "s-title": "Studio IA", "s-drop": "Rilascia Media", "s-gen": "Avvia Render", "auth-title": "Accesso Privato", "auth-btn": "Apri", "d-cred": "Crediti", dir: "ltr" },
+            pt: { "h-title": "DOMINAÇÃO IA", "h-sub": "7 IDIOMAS • NO-ROLLOVER • LUCRO IA", "n-studio": "Estúdio IA", "t-perso": "Particular", "t-pro": "Liga & Agência", "o-ann": "Anual (-20%)", "o-eng": "Mensal (1 ano)", "o-lib": "Mensal Livre", "get": "Pedir", "per": "por mês", "tot": "Total a pagar", "sav-title": "SUPORTE IA 24/7", "sav-init": "Como posso ajudar?", "s-title": "Estúdio IA", "s-drop": "Soltar Mídia", "s-gen": "Iniciar Render", "auth-title": "Acesso Privado", "auth-btn": "Abrir", "d-cred": "Créditos", dir: "ltr" }
         };
 
-        let curL = 'fr'; let curT = 'perso'; let curO = 'annuel';
+        let curL = 'fr', curT = 'perso', curO = 'annuel';
         const DATA = {
             perso: { plans: ["Starter", "Elite", "Master"], base: [14.99, 34.99, 69.99], vids: [10, 30, 75] },
             pro: { plans: ["League", "Agency", "Empire AI"], base: [89.99, 189.99, 499.99], vids: [120, 350, 1200] }
         };
 
         function setLang(l) {
-            curL = l;
-            const root = document.getElementById('html-root');
-            root.setAttribute('dir', DICT[l].dir);
+            curL = l; document.getElementById('html-root').setAttribute('dir', DICT[l].dir);
             document.body.classList.toggle('arabic', l === 'ar');
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.id === 'l-'+l));
-            document.getElementById('h-title').innerText = DICT[l].title;
-            updateUI();
+            document.querySelectorAll('[data-t]').forEach(el => el.innerText = DICT[l][el.getAttribute('data-t')]);
+            updateOptions(); updateUI();
         }
 
-        function switchTab(t) { 
-            curT = t; 
-            document.getElementById('nav-perso').classList.toggle('tab-active', t === 'perso');
-            document.getElementById('nav-pro').classList.toggle('tab-active', t === 'pro');
-            updateUI(); 
-        }
+        function switchTab(t) { curT = t; curO = 'annuel'; updateOptions(); updateUI(); }
+        function setOpt(o) { curO = o; updateUI(); }
 
-        function setOpt(o) { 
-            curO = o; 
-            document.getElementById('opt-annuel').classList.toggle('tab-active', o === 'annuel');
-            document.getElementById('opt-mensuel').classList.toggle('tab-active', o === 'mensuel');
-            updateUI(); 
+        function updateOptions() {
+            const container = document.getElementById('option-container');
+            let html = `<button id="opt-annuel" onclick="setOpt('annuel')" class="tab-btn px-8 py-4 glass text-[10px] font-900 uppercase ${curO==='annuel'?'tab-active':''}">${DICT[curL]['o-ann']}</button>
+                        <button id="opt-eng" onclick="setOpt('eng')" class="tab-btn px-8 py-4 glass text-[10px] font-900 uppercase ${curO==='eng'?'tab-active':''}">${DICT[curL]['o-eng']}</button>`;
+            if(curT === 'perso') {
+                html += `<button id="opt-lib" onclick="setOpt('lib')" class="tab-btn px-8 py-4 glass text-[10px] font-900 uppercase ${curO==='lib'?'tab-active':''}">${DICT[curL]['o-lib']}</button>`;
+            }
+            container.innerHTML = html;
         }
 
         function updateUI() {
             const grid = document.getElementById('pricing-grid');
             const d = DATA[curT]; let html = "";
             d.plans.forEach((p, i) => {
-                let price = (curO === 'annuel') ? d.base[i] * 0.8 : d.base[i];
+                let monthlyPrice = d.base[i];
+                if(curO === 'annuel') monthlyPrice *= 0.8;
+                if(curO === 'lib') monthlyPrice += 5;
+                
                 html += `
-                <div class="glass glass-premium p-14 text-center hover:scale-[1.03] transition-all duration-500 group">
-                    <span class="text-blue-500 font-900 text-[11px] mb-8 block uppercase tracking-[0.4em] italic">${p}</span>
-                    <div class="text-7xl font-900 mb-2 tracking-tighter group-hover:text-blue-400 transition-colors">${price.toFixed(2)}€</div>
-                    <span class="text-white/20 text-[10px] uppercase block mb-12 font-bold tracking-widest">${DICT[curL].per}</span>
-                    <p class="text-2xl font-900 uppercase pb-12 tracking-tighter">${d.vids[i]} VIDÉOS / MOIS</p>
-                    <button class="w-full py-6 rounded-2xl border border-white/10 font-900 text-[11px] uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 shadow-xl">${DICT[curL].get}</button>
+                <div class="glass p-12 text-center border-white/10 shadow-2xl">
+                    <span class="text-blue-500 font-900 text-[11px] mb-6 block uppercase italic">${p}</span>
+                    <div class="text-6xl font-900 mb-2 tracking-tighter">${monthlyPrice.toFixed(2)}€</div>
+                    <span class="text-white/20 text-[10px] uppercase block mb-2 font-bold">${DICT[curL].per}</span>
+                    ${curO === 'annuel' ? `<span class="text-white/40 text-[9px] uppercase block mb-10 font-bold italic">${DICT[curL].tot}: ${(monthlyPrice*12).toFixed(2)}€</span>` : `<div class="mb-10"></div>`}
+                    <p class="text-xl font-900 uppercase pb-10 tracking-tighter">${d.vids[i]} VIDÉOS</p>
+                    <button class="w-full py-5 rounded-2xl border border-white/10 font-900 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 shadow-xl">${DICT[curL].get}</button>
                 </div>`;
             });
             grid.innerHTML = html;
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                if(b.id === 'nav-'+curT || b.id === 'opt-'+curO) b.classList.add('tab-active');
+                else b.classList.remove('tab-active');
+            });
         }
 
         function checkAuth() {
             if(document.getElementById('email-in').value === MASTER_MAIL && document.getElementById('pass-in').value === MASTER_PASS) {
-                showSection('app');
-                document.getElementById('c-used').innerText = "∞";
-                document.getElementById('admin-badge').classList.remove('hidden');
-                document.getElementById('c-bar').style.width = "100%";
-                document.getElementById('c-bar').style.background = "var(--success)";
-            } else {
-                document.getElementById('auth-err').classList.remove('hidden');
-                setTimeout(() => document.getElementById('auth-err').classList.add('hidden'), 3000);
+                showSection('app'); document.getElementById('admin-badge').classList.remove('hidden');
             }
         }
 
         function showSection(id) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        function handleFile(input) {
-            if(input.files[0]) {
-                const btn = document.getElementById('run-btn');
-                btn.innerText = "SCANNING...";
-                setTimeout(() => { btn.innerText = "READY"; }, 1500);
-            }
-        }
-
-        function executeAI() { 
-            alert("SYSTÈME V92 : Serveurs Synchronisés."); 
-        }
-
-        updateUI();
+        function executeAI() { alert("RENDU DÉMARRÉ"); }
+        
+        // Init
+        setLang('fr');
     </script>
 </body>
 </html>
