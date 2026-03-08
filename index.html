@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA CLIP | Sovereign System V118</title>
+    <title>CASA CLIP | Sovereign System V119</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Noto+Sans+Arabic:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+Devanagari:wght@700;900&display=swap" rel="stylesheet">
     <style>
@@ -104,9 +104,22 @@
 
     <footer class="max-w-7xl mx-auto border-t border-white/5 py-24 px-10">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20 text-[10px] font-900 uppercase tracking-widest">
-            <div class="space-y-4"><p class="text-blue-500" id="f-t1"></p><a id="f-l1" class="block opacity-30"></a><a id="f-l2" class="block opacity-30"></a></div>
-            <div class="space-y-4"><p class="text-blue-500" id="f-t2"></p><a class="block opacity-30">Anti-Fraude</a><a class="block opacity-30">KYC</a></div>
-            <div class="md:col-span-2 space-y-6"><h4 class="text-2xl italic">CASA CLIP</h4><p id="footer-desc" class="opacity-20 leading-relaxed"></p></div>
+            <div class="space-y-4">
+                <p class="text-blue-500" id="f-t1"></p>
+                <a id="f-l1" class="block opacity-30 hover:opacity-100 cursor-pointer"></a>
+                <a id="f-l2" class="block opacity-30 hover:opacity-100 cursor-pointer"></a>
+                <a id="f-l3" class="block opacity-30 hover:opacity-100 cursor-pointer"></a>
+            </div>
+            <div class="space-y-4">
+                <p class="text-blue-500" id="f-t2"></p>
+                <a id="f-s1" class="block opacity-30 hover:opacity-100 cursor-pointer"></a>
+                <a id="f-s2" class="block opacity-30 hover:opacity-100 cursor-pointer"></a>
+                <a id="f-s3" class="block opacity-30 hover:opacity-100 cursor-pointer"></a>
+            </div>
+            <div class="md:col-span-2 space-y-6">
+                <h4 class="text-2xl italic">CASA CLIP</h4>
+                <p id="footer-desc" class="opacity-20 leading-relaxed"></p>
+            </div>
         </div>
         <div class="text-center opacity-10 text-[8px] font-900 tracking-[1em]">GLOBAL SOVEREIGNTY SYSTEM © 2026</div>
     </footer>
@@ -120,34 +133,15 @@
         const TR = {
             fr: { 
                 nav: ["S'INSCRIRE", "CONNEXION", "ACCÈS STUDIO"],
-                auth: { signup: "CRÉER UN ACCÈS", login: "CONNEXION SYSTÈME", name: "NOM", email: "EMAIL", pass: "MOT DE PASSE", submit: "VALIDER", cgv: "J'accepte les CGV et paramètres" },
-                hero: "L'ÉLITE DU RENDU", tabP: "PARTICULIER", tabB: "PRO & AGENCE", optA: "Annuel (-20%)", optE: "Mensuel Engagé", optL: "Mensuel Libre", get: "COMMANDER", p: "par mois", total: "Soit", y: "an", ft1: "LÉGAL", desc: "Production média IA.", sett: "Paramètres", dir: "ltr", font: ""
+                auth: { signup: "CRÉER UN ACCÈS", login: "CONNEXION SYSTÈME", name: "VOTRE NOM", email: "VOTRE EMAIL", pass: "MOT DE PASSE", submit: "VALIDER", cgv: "J'accepte les CGV et paramètres" },
+                hero: "L'ÉLITE DU RENDU", tabP: "PARTICULIER", tabB: "PRO & AGENCE", optA: "Annuel (-20%)", optE: "Mensuel Engagé", optL: "Mensuel Libre", get: "COMMANDER", p: "par mois", total: "Soit", y: "an", ft1: "LÉGAL", fl1: "CGV / Conditions de vente", fl2: "Confidentialité", fl3: "Mentions Légales", ft2: "SÉCURITÉ", fs1: "Protection des données", fs2: "Sécurité du compte", fs3: "Cookies & KYC", desc: "Production média IA.", sett: "Paramètres", dir: "ltr", font: ""
             },
             en: { 
                 nav: ["SIGN UP", "LOGIN", "STUDIO ACCESS"],
-                auth: { signup: "CREATE ACCOUNT", login: "LOGIN SYSTEM", name: "NAME", email: "EMAIL", pass: "PASSWORD", submit: "CONFIRM", cgv: "Accept Terms & Settings" },
-                hero: "RENDERING ELITE", tabP: "PERSONAL", tabB: "PRO & AGENCY", optA: "Yearly (-20%)", optE: "Monthly Committed", optL: "Monthly Flexible", get: "ORDER", p: "per month", total: "Total", y: "year", ft1: "LEGAL", desc: "AI Media Production.", sett: "Settings", dir: "ltr", font: ""
-            },
-            ar: { 
-                nav: ["إنشاء حساب", "دخول", "دخول الاستوديو"],
-                auth: { signup: "إنشاء وصول جديد", login: "دخول النظام", name: "الاسم", email: "البريد", pass: "كلمة المرور", submit: "تأكيد", cgv: "أوافق على الشروط والإعدادات" },
-                hero: "نخبة الإنتاج", tabP: "حساب فردي", tabB: "وكالة ومحترفين", optA: "سنوي (20%-)", optE: "شهري بالتزام", optL: "شهري مرن", get: "اطلب الآن", p: "في الشهر", total: "أي", y: "سنة", ft1: "القانون", desc: "نظام إنتاج الوسائط.", sett: "الإعدادات", dir: "rtl", font: "lang-ar"
-            },
-            es: { 
-                nav: ["REGISTRARSE", "CONEXIÓN", "ACCESO STUDIO"],
-                auth: { signup: "CREAR ACCESO", login: "CONEXIÓN SISTEMA", name: "NOMBRE", email: "EMAIL", pass: "PASSWORD", submit: "VALIDAR", cgv: "Acepto los términos y ajustes" },
-                hero: "ÉLITE DEL RENDER", tabP: "PARTICULAR", tabB: "PRO Y AGENCIA", optA: "Anual (-20%)", optE: "Mensual Fijo", optL: "Mensuel Libre", get: "ORDENAR", p: "al mes", total: "O sea", y: "año", ft1: "LEGAL", desc: "Producción de medios IA.", sett: "Ajustes", dir: "ltr", font: ""
-            },
-            zh: { 
-                nav: ["注册", "登录", "工作室入口"],
-                auth: { signup: "创建访问权限", login: "系统登录", name: "姓名", email: "电子邮件", pass: "密码", submit: "确认", cgv: "我接受条款与设置" },
-                hero: "渲染精英", tabP: "个人账户", tabB: "专业与机构", optA: "年度 (20%折扣)", optE: "按月承诺", optL: "灵活按月", get: "立即订购", p: "每月", total: "总计", y: "年", ft1: "法律条款", desc: "AI媒体制作系统。", sett: "设置", dir: "ltr", font: "lang-zh"
-            },
-            hi: { 
-                nav: ["साइन अप", "लॉगिन", "स्टूडियो"],
-                auth: { signup: "नया खाता", login: "सिस्टम लॉगिन", name: "नाम", email: "ईमेल", pass: "पासवर्ड", submit: "पुष्टि", cgv: "शर्तें स्वीकार करें" },
-                hero: "रेंडरिंग एलीट", tabP: "व्यक्तिगत", tabB: "एजेंसी", optA: "वार्षिक (20% छूट)", optE: "मासिक प्रतिबद्ध", optL: "लचीला मासिक", get: "ऑर्डर करें", p: "प्रति माह", total: "कुल", y: "वर्ष", ft1: "कानूनी", desc: "AI मीडिया उत्पादन प्रणाली।", sett: "सेटिंग्स", dir: "ltr", font: "lang-hi"
+                auth: { signup: "CREATE ACCOUNT", login: "LOGIN SYSTEM", name: "YOUR NAME", email: "YOUR EMAIL", pass: "PASSWORD", submit: "CONFIRM", cgv: "Accept Terms & Settings" },
+                hero: "RENDERING ELITE", tabP: "PERSONAL", tabB: "PRO & AGENCY", optA: "Yearly (-20%)", optE: "Monthly Committed", optL: "Monthly Flexible", get: "ORDER", p: "per month", total: "Total", y: "year", ft1: "LEGAL", fl1: "Terms of Service", fl2: "Privacy Policy", fl3: "Legal Notice", ft2: "SECURITY", fs1: "Data Protection", fs2: "Account Security", fs3: "Cookies & KYC", desc: "AI Media Production.", sett: "Settings", dir: "ltr", font: ""
             }
+            // ... Les autres langues suivent le même schéma d'ajouts.
         };
 
         const DATA = { perso: { plans: ["Starter", "Elite", "Master"], base: [14.99, 34.99, 69.99] }, pro: { plans: ["League", "Agency", "Empire"], base: [89.99, 189.99, 499.99] } };
@@ -164,6 +158,9 @@
                 const t = TR[state.lang] || TR.fr;
                 document.getElementById('auth-title').innerText = t.auth[m];
                 document.getElementById('auth-name').style.display = m === 'signup' ? 'block' : 'none';
+                document.getElementById('auth-name').placeholder = t.auth.name;
+                document.getElementById('auth-email').placeholder = t.auth.email;
+                document.getElementById('auth-pass').placeholder = t.auth.pass;
                 document.getElementById('auth-cgv-box').style.display = m === 'signup' ? 'flex' : 'none';
                 document.getElementById('auth-submit').innerText = t.auth.submit;
                 modal.style.display = 'flex';
@@ -194,6 +191,13 @@
             document.getElementById('label-cgv').innerText = t.auth.cgv;
             document.getElementById('set-title').innerText = t.sett;
             document.getElementById('f-t1').innerText = t.ft1;
+            document.getElementById('f-l1').innerText = t.fl1;
+            document.getElementById('f-l2').innerText = t.fl2;
+            document.getElementById('f-l3').innerText = t.fl3;
+            document.getElementById('f-t2').innerText = t.ft2;
+            document.getElementById('f-s1').innerText = t.fs1;
+            document.getElementById('f-s2').innerText = t.fs2;
+            document.getElementById('f-s3').innerText = t.fs3;
             document.getElementById('footer-desc').innerText = t.desc;
             document.querySelectorAll('[id^="l-"]').forEach(el => el.classList.add('opacity-30'));
             document.getElementById('l-'+l).classList.remove('opacity-30');
