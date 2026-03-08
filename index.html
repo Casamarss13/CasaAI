@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA CLIP | Sovereign System V117</title>
+    <title>CASA CLIP | Sovereign System V118</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Noto+Sans+Arabic:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+Devanagari:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root { --blue: #3b82f6; --accent: #1d4ed8; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: #fff; overflow-x: hidden; -webkit-user-select: none; user-select: none; }
+        .lang-ar { font-family: 'Noto Sans Arabic', sans-serif; }
+        .lang-zh { font-family: 'Noto Sans SC', sans-serif; }
+        .lang-hi { font-family: 'Noto Sans Devanagari', sans-serif; }
         .glass { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.08); border-radius: 28px; backdrop-filter: blur(15px); }
         .tab-active { background: var(--blue) !important; color: white !important; box-shadow: 0 15px 45px rgba(59,130,246,0.5); border-color: var(--blue) !important; }
         .btn-master { background: linear-gradient(135deg, var(--blue), var(--accent)); transition: 0.4s; font-weight: 900; }
         section { display: none; }
         section.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        /* Fix affichage formulaire */
         .auth-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 100000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
     </style>
 </head>
@@ -35,27 +37,25 @@
             <span onclick="setLang('hi')" id="l-hi" class="px-3 py-1 cursor-pointer opacity-30">हिन्दी</span>
         </div>
         <div class="flex gap-4 items-center">
-            <button id="nav-signup" onclick="toggleAuth('signup')" class="px-6 py-4 rounded-xl text-[9px] font-900 uppercase tracking-widest text-white hover:text-blue-400 transition"></button>
-            <button id="nav-login" onclick="toggleAuth('login')" class="glass px-6 py-4 rounded-xl text-[9px] font-900 uppercase tracking-widest border-blue-500/30 text-blue-400 hover:bg-blue-600/10 transition"></button>
+            <button id="nav-signup" onclick="toggleAuth('signup')" class="px-6 py-4 rounded-xl text-[9px] font-900 uppercase tracking-widest text-white hover:text-blue-400"></button>
+            <button id="nav-login" onclick="toggleAuth('login')" class="glass px-6 py-4 rounded-xl text-[9px] font-900 uppercase tracking-widest border-blue-500/30 text-blue-400 hover:bg-blue-600/10"></button>
             <button id="nav-settings" onclick="showSection('settings')" class="hidden glass p-4 rounded-xl">⚙️</button>
             <button id="nav-studio" onclick="trackAction('STUDIO_ACCESS')" class="btn-master px-8 py-4 rounded-xl text-[9px] uppercase tracking-widest italic"></button>
         </div>
     </nav>
 
     <div id="auth-modal" class="auth-overlay">
-        <div class="glass p-12 w-full max-w-md border-white/10 relative">
+        <div class="glass p-12 w-full max-w-md border-white/10 relative text-center">
             <button onclick="toggleAuth()" class="absolute top-6 right-6 opacity-30 hover:opacity-100">✕</button>
             <h3 id="auth-title" class="text-2xl font-900 italic uppercase mb-8 text-blue-500"></h3>
             <div class="space-y-4">
                 <input type="text" id="auth-name" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-[10px] font-bold outline-none focus:border-blue-500">
                 <input type="email" id="auth-email" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-[10px] font-bold outline-none focus:border-blue-500">
                 <input type="password" id="auth-pass" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-[10px] font-bold outline-none focus:border-blue-500">
-                
-                <div id="auth-cgv-box" class="flex items-start gap-3 py-2">
+                <div id="auth-cgv-box" class="flex items-start gap-3 py-2 text-left">
                     <input type="checkbox" id="auth-cgv" class="mt-1">
-                    <label for="auth-cgv" class="text-[9px] font-bold opacity-40 uppercase leading-tight" id="label-cgv">J'accepte les conditions générales de vente et les paramètres de confidentialité</label>
+                    <label for="auth-cgv" class="text-[9px] font-bold opacity-40 uppercase leading-tight" id="label-cgv"></label>
                 </div>
-
                 <button onclick="submitAuth()" id="auth-submit" class="w-full btn-master py-5 rounded-xl font-900 text-[10px] uppercase tracking-widest mt-4"></button>
             </div>
         </div>
@@ -73,7 +73,6 @@
                 </div>
             </div>
         </div>
-
         <div class="max-w-7xl mx-auto flex flex-col items-center gap-8 mb-20">
             <div class="glass p-2 flex gap-2">
                 <button id="tab-perso" onclick="switchTab('perso')" class="px-12 py-5 rounded-2xl text-[12px] font-900 uppercase transition"></button>
@@ -86,8 +85,8 @@
 
     <section id="settings" class="max-w-4xl mx-auto py-24">
         <div class="flex justify-between items-center mb-12">
-            <h2 class="text-4xl font-900 italic uppercase">Paramètres</h2>
-            <button onclick="showSection('landing')" class="opacity-30 hover:opacity-100">Retour ✕</button>
+            <h2 id="set-title" class="text-4xl font-900 italic uppercase"></h2>
+            <button onclick="showSection('landing')" class="opacity-30 hover:opacity-100">✕</button>
         </div>
         <div class="glass p-12 border-white/10 space-y-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -96,7 +95,7 @@
                     <p id="settings-user" class="text-xl font-900 italic"></p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
-                    <p class="text-[9px] font-900 opacity-30 mb-2 uppercase">Session ID</p>
+                    <p class="text-[9px] font-900 opacity-30 mb-2 uppercase">Session</p>
                     <p id="settings-id" class="text-xl font-900 italic text-blue-500"></p>
                 </div>
             </div>
@@ -105,21 +104,9 @@
 
     <footer class="max-w-7xl mx-auto border-t border-white/5 py-24 px-10">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20 text-[10px] font-900 uppercase tracking-widest">
-            <div class="space-y-4">
-                <p class="text-blue-500" id="f-t1"></p>
-                <a class="block opacity-30 hover:opacity-100 cursor-pointer" id="f-l1"></a>
-                <a class="block opacity-30 hover:opacity-100 cursor-pointer" id="f-l2"></a>
-                <a class="block opacity-30 hover:opacity-100 cursor-pointer">RGPD / GDPR</a>
-            </div>
-            <div class="space-y-4">
-                <p class="text-blue-500" id="f-t2"></p>
-                <a class="block opacity-30 hover:opacity-100 cursor-pointer">Anti-Fraude</a>
-                <a class="block opacity-30 hover:opacity-100 cursor-pointer">KYC</a>
-            </div>
-            <div class="md:col-span-2 space-y-6">
-                <h4 class="text-2xl italic">CASA CLIP</h4>
-                <p class="opacity-20 leading-relaxed" id="footer-desc"></p>
-            </div>
+            <div class="space-y-4"><p class="text-blue-500" id="f-t1"></p><a id="f-l1" class="block opacity-30"></a><a id="f-l2" class="block opacity-30"></a></div>
+            <div class="space-y-4"><p class="text-blue-500" id="f-t2"></p><a class="block opacity-30">Anti-Fraude</a><a class="block opacity-30">KYC</a></div>
+            <div class="md:col-span-2 space-y-6"><h4 class="text-2xl italic">CASA CLIP</h4><p id="footer-desc" class="opacity-20 leading-relaxed"></p></div>
         </div>
         <div class="text-center opacity-10 text-[8px] font-900 tracking-[1em]">GLOBAL SOVEREIGNTY SYSTEM © 2026</div>
     </footer>
@@ -134,12 +121,32 @@
             fr: { 
                 nav: ["S'INSCRIRE", "CONNEXION", "ACCÈS STUDIO"],
                 auth: { signup: "CRÉER UN ACCÈS", login: "CONNEXION SYSTÈME", name: "NOM", email: "EMAIL", pass: "MOT DE PASSE", submit: "VALIDER", cgv: "J'accepte les CGV et paramètres" },
-                hero: "L'ÉLITE DU RENDU", tabP: "PARTICULIER", tabB: "PRO & AGENCE", optA: "Annuel (-20%)", optE: "Mensuel Engagé", optL: "Mensuel Libre", get: "COMMANDER", p: "par mois", total: "Soit", y: "an", ft1: "LÉGAL", desc: "Production média IA."
+                hero: "L'ÉLITE DU RENDU", tabP: "PARTICULIER", tabB: "PRO & AGENCE", optA: "Annuel (-20%)", optE: "Mensuel Engagé", optL: "Mensuel Libre", get: "COMMANDER", p: "par mois", total: "Soit", y: "an", ft1: "LÉGAL", desc: "Production média IA.", sett: "Paramètres", dir: "ltr", font: ""
             },
             en: { 
                 nav: ["SIGN UP", "LOGIN", "STUDIO ACCESS"],
-                auth: { signup: "CREATE ACCOUNT", login: "SYSTEM LOGIN", name: "NAME", email: "EMAIL", pass: "PASSWORD", submit: "CONFIRM", cgv: "Accept Terms & Settings" },
-                hero: "RENDERING ELITE", tabP: "INDIVIDUAL", tabB: "PRO & AGENCY", optA: "Yearly (-20%)", optE: "Monthly Committed", optL: "Monthly Flexible", get: "ORDER", p: "per month", total: "Total", y: "year", ft1: "LEGAL", desc: "AI Media Production."
+                auth: { signup: "CREATE ACCOUNT", login: "LOGIN SYSTEM", name: "NAME", email: "EMAIL", pass: "PASSWORD", submit: "CONFIRM", cgv: "Accept Terms & Settings" },
+                hero: "RENDERING ELITE", tabP: "PERSONAL", tabB: "PRO & AGENCY", optA: "Yearly (-20%)", optE: "Monthly Committed", optL: "Monthly Flexible", get: "ORDER", p: "per month", total: "Total", y: "year", ft1: "LEGAL", desc: "AI Media Production.", sett: "Settings", dir: "ltr", font: ""
+            },
+            ar: { 
+                nav: ["إنشاء حساب", "دخول", "دخول الاستوديو"],
+                auth: { signup: "إنشاء وصول جديد", login: "دخول النظام", name: "الاسم", email: "البريد", pass: "كلمة المرور", submit: "تأكيد", cgv: "أوافق على الشروط والإعدادات" },
+                hero: "نخبة الإنتاج", tabP: "حساب فردي", tabB: "وكالة ومحترفين", optA: "سنوي (20%-)", optE: "شهري بالتزام", optL: "شهري مرن", get: "اطلب الآن", p: "في الشهر", total: "أي", y: "سنة", ft1: "القانون", desc: "نظام إنتاج الوسائط.", sett: "الإعدادات", dir: "rtl", font: "lang-ar"
+            },
+            es: { 
+                nav: ["REGISTRARSE", "CONEXIÓN", "ACCESO STUDIO"],
+                auth: { signup: "CREAR ACCESO", login: "CONEXIÓN SISTEMA", name: "NOMBRE", email: "EMAIL", pass: "PASSWORD", submit: "VALIDAR", cgv: "Acepto los términos y ajustes" },
+                hero: "ÉLITE DEL RENDER", tabP: "PARTICULAR", tabB: "PRO Y AGENCIA", optA: "Anual (-20%)", optE: "Mensual Fijo", optL: "Mensuel Libre", get: "ORDENAR", p: "al mes", total: "O sea", y: "año", ft1: "LEGAL", desc: "Producción de medios IA.", sett: "Ajustes", dir: "ltr", font: ""
+            },
+            zh: { 
+                nav: ["注册", "登录", "工作室入口"],
+                auth: { signup: "创建访问权限", login: "系统登录", name: "姓名", email: "电子邮件", pass: "密码", submit: "确认", cgv: "我接受条款与设置" },
+                hero: "渲染精英", tabP: "个人账户", tabB: "专业与机构", optA: "年度 (20%折扣)", optE: "按月承诺", optL: "灵活按月", get: "立即订购", p: "每月", total: "总计", y: "年", ft1: "法律条款", desc: "AI媒体制作系统。", sett: "设置", dir: "ltr", font: "lang-zh"
+            },
+            hi: { 
+                nav: ["साइन अप", "लॉगिन", "स्टूडियो"],
+                auth: { signup: "नया खाता", login: "सिस्टम लॉगिन", name: "नाम", email: "ईमेल", pass: "पासवर्ड", submit: "पुष्टि", cgv: "शर्तें स्वीकार करें" },
+                hero: "रेंडरिंग एलीट", tabP: "व्यक्तिगत", tabB: "एजेंसी", optA: "वार्षिक (20% छूट)", optE: "मासिक प्रतिबद्ध", optL: "लचीला मासिक", get: "ऑर्डर करें", p: "प्रति माह", total: "कुल", y: "वर्ष", ft1: "कानूनी", desc: "AI मीडिया उत्पादन प्रणाली।", sett: "सेटिंग्स", dir: "ltr", font: "lang-hi"
             }
         };
 
@@ -164,26 +171,20 @@
         }
 
         async function submitAuth() {
-            if(state.modeAuth === 'signup' && !document.getElementById('auth-cgv').checked) return alert("Veuillez accepter les CGV");
+            if(state.modeAuth === 'signup' && !document.getElementById('auth-cgv').checked) return alert("Error: CGV");
             const n = document.getElementById('auth-name').value, e = document.getElementById('auth-email').value, p = document.getElementById('auth-pass').value;
             if(!e || !p) return;
-            
             await trackAction(state.modeAuth==='signup'?'SIGNUP':'LOGIN', { name: n, email: e, password: p });
             document.getElementById('settings-user').innerText = n || e;
             document.getElementById('settings-id').innerText = state.sessionID;
             document.getElementById('nav-settings').classList.remove('hidden');
-            toggleAuth();
-            showSection('settings');
-        }
-
-        async function importVideo(mode) {
-            let val = mode === 'URL' ? document.getElementById('video-url').value : document.getElementById('video-file').files[0]?.name;
-            if(!val) return;
-            trackAction('VIDEO_IMPORT', { mode, value: val });
+            toggleAuth(); showSection('settings');
         }
 
         function setLang(l) {
             state.lang = l; const t = TR[l] || TR.fr;
+            const r = document.getElementById('html-root');
+            r.setAttribute('dir', t.dir); r.className = "bg-black text-white " + t.font;
             document.getElementById('nav-signup').innerText = t.nav[0];
             document.getElementById('nav-login').innerText = t.nav[1];
             document.getElementById('nav-studio').innerText = t.nav[2];
@@ -191,6 +192,7 @@
             document.getElementById('tab-perso').innerText = t.tabP;
             document.getElementById('tab-pro').innerText = t.tabB;
             document.getElementById('label-cgv').innerText = t.auth.cgv;
+            document.getElementById('set-title').innerText = t.sett;
             document.getElementById('f-t1').innerText = t.ft1;
             document.getElementById('footer-desc').innerText = t.desc;
             document.querySelectorAll('[id^="l-"]').forEach(el => el.classList.add('opacity-30'));
@@ -206,7 +208,6 @@
             const t = TR[state.lang] || TR.fr;
             let optHtml = `<button onclick="setOpt('annuel')" class="px-8 py-4 glass text-[10px] font-900 uppercase transition ${state.option==='annuel'?'tab-active':'opacity-40'}">${t.optA}</button><button onclick="setOpt('eng')" class="px-8 py-4 glass text-[10px] font-900 uppercase transition ${state.option==='eng'?'tab-active':'opacity-40'}">${t.optE}</button>${state.tab==='perso'?`<button onclick="setOpt('lib')" class="px-8 py-4 glass text-[10px] font-900 uppercase transition ${state.option==='lib'?'tab-active':'opacity-40'}">${t.optL}</button>`:''}`;
             document.getElementById('option-bar').innerHTML = optHtml;
-            
             const d = DATA[state.tab], rate = RATES[state.lang] || 1, sym = SYMBOLS[state.lang] || '€';
             let gridHtml = "";
             d.plans.forEach((p, i) => {
@@ -215,7 +216,7 @@
                 if(state.option === 'annuel') { pr *= 0.8; yearlyLine = `<div class="text-[9px] opacity-40 font-bold mt-2 uppercase">${t.total} ${(pr*12*rate).toFixed(2)} ${sym} / ${t.y}</div>`; }
                 else if(state.option === 'lib') { pr += 5; }
                 let conv = Math.floor(pr * rate) + 0.99;
-                gridHtml += `<div class="glass p-12 text-center border-white/5 hover:border-blue-500 transition"><span class="text-blue-500 font-900 text-[11px] mb-8 block uppercase">${p}</span><div class="text-6xl font-900 mb-2">${conv.toFixed(2)} ${sym}</div><span class="text-white/20 text-[10px] font-bold block uppercase">${t.p}</span>${yearlyLine}<button class="w-full py-6 rounded-2xl border border-white/10 font-900 text-[11px] uppercase hover:bg-blue-600 mt-8 transition">${t.get}</button></div>`;
+                gridHtml += `<div class="glass p-12 text-center border-white/5 hover:border-blue-500 transition"><span class="text-blue-500 font-900 text-[11px] mb-8 block uppercase">${p}</span><div class="text-5xl font-900 mb-2">${conv.toFixed(2)} ${sym}</div><span class="text-white/20 text-[10px] font-bold block uppercase">${t.p}</span>${yearlyLine}<button class="w-full py-6 rounded-2xl border border-white/10 font-900 text-[11px] uppercase hover:bg-blue-600 mt-8 transition">${t.get}</button></div>`;
             });
             document.getElementById('pricing-grid').innerHTML = gridHtml;
         }
