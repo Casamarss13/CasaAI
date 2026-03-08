@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA CLIP | Sovereign System V120</title>
+    <title>CASA CLIP | Sovereign System V121</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Noto+Sans+Arabic:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+Devanagari:wght@700;900&display=swap" rel="stylesheet">
     <style>
@@ -231,6 +231,11 @@
 
         function updateUI() {
             const t = TR[state.lang] || TR.fr;
+            
+            // Mise à jour de l'état actif des onglets Particulier / Pro
+            document.getElementById('tab-perso').className = `px-12 py-5 rounded-2xl text-[12px] font-900 uppercase transition ${state.tab==='perso'?'tab-active':'opacity-40'}`;
+            document.getElementById('tab-pro').className = `px-12 py-5 rounded-2xl text-[12px] font-900 uppercase transition ${state.tab==='pro'?'tab-active':'opacity-40'}`;
+
             let optHtml = `<button onclick="setOpt('annuel')" class="px-8 py-4 glass text-[10px] font-900 uppercase transition ${state.option==='annuel'?'tab-active':'opacity-40'}">${t.optA}</button><button onclick="setOpt('eng')" class="px-8 py-4 glass text-[10px] font-900 uppercase transition ${state.option==='eng'?'tab-active':'opacity-40'}">${t.optE}</button>${state.tab==='perso'?`<button onclick="setOpt('lib')" class="px-8 py-4 glass text-[10px] font-900 uppercase transition ${state.option==='lib'?'tab-active':'opacity-40'}">${t.optL}</button>`:''}`;
             document.getElementById('option-bar').innerHTML = optHtml;
             const d = DATA[state.tab], rate = RATES[state.lang] || 1, sym = SYMBOLS[state.lang] || '€';
