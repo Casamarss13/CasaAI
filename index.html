@@ -3,24 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA CLIP | Sovereign System V114.2</title>
+    <title>CASA CLIP | Sovereign System V117</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Noto+Sans+Arabic:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+Devanagari:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root { --blue: #3b82f6; --accent: #1d4ed8; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: #fff; overflow-x: hidden; -webkit-user-select: none; user-select: none; }
-        .lang-ar { font-family: 'Noto Sans Arabic', sans-serif; }
-        .lang-zh { font-family: 'Noto Sans SC', sans-serif; }
-        .lang-hi { font-family: 'Noto Sans Devanagari', sans-serif; }
         .glass { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.08); border-radius: 28px; backdrop-filter: blur(15px); }
-        .tab-active { background: var(--blue) !important; color: white !important; box-shadow: 0 15px 45px rgba(59,130,246,0.5); transform: translateY(-2px); border-color: var(--blue) !important; opacity: 1 !important; }
+        .tab-active { background: var(--blue) !important; color: white !important; box-shadow: 0 15px 45px rgba(59,130,246,0.5); border-color: var(--blue) !important; }
         .btn-master { background: linear-gradient(135deg, var(--blue), var(--accent)); transition: 0.4s; font-weight: 900; }
         section { display: none; }
-        section.active { display: block; animation: fadeIn 0.6s ease; }
+        section.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .auth-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .pay-grid img { height: 20px; filter: grayscale(1) brightness(2); opacity: 0.3; transition: 0.3s; }
-        .pay-grid img:hover { filter: grayscale(0) brightness(1); opacity: 1; }
+        /* Fix affichage formulaire */
+        .auth-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 100000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
     </style>
 </head>
 <body oncontextmenu="return false" class="p-4 md:p-8">
@@ -30,48 +26,51 @@
             <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-900 italic text-xl">CC</div>
             <h1 class="text-2xl font-900 tracking-tighter uppercase italic">CASA<span class="text-blue-500">CLIP</span></h1>
         </div>
-        <div class="flex flex-wrap justify-center gap-2 bg-white/5 p-1.5 rounded-2xl border border-white/5">
-            <span onclick="setLang('fr')" id="l-fr" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-30">FR</span>
-            <span onclick="setLang('en')" id="l-en" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-30">EN</span>
-            <span onclick="setLang('ar')" id="l-ar" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-30">AR</span>
-            <span onclick="setLang('es')" id="l-es" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-30">ES</span>
-            <span onclick="setLang('zh')" id="l-zh" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-30">中文</span>
-            <span onclick="setLang('hi')" id="l-hi" class="px-3 py-1 text-[10px] cursor-pointer font-900 opacity-30">हिन्दी</span>
+        <div class="flex flex-wrap justify-center gap-2 bg-white/5 p-1.5 rounded-2xl border border-white/5 text-[10px] font-900">
+            <span onclick="setLang('fr')" id="l-fr" class="px-3 py-1 cursor-pointer opacity-30">FR</span>
+            <span onclick="setLang('en')" id="l-en" class="px-3 py-1 cursor-pointer opacity-30">EN</span>
+            <span onclick="setLang('ar')" id="l-ar" class="px-3 py-1 cursor-pointer opacity-30">AR</span>
+            <span onclick="setLang('es')" id="l-es" class="px-3 py-1 cursor-pointer opacity-30">ES</span>
+            <span onclick="setLang('zh')" id="l-zh" class="px-3 py-1 cursor-pointer opacity-30">中文</span>
+            <span onclick="setLang('hi')" id="l-hi" class="px-3 py-1 cursor-pointer opacity-30">हिन्दी</span>
         </div>
-        <div class="flex gap-4">
-            <button id="nav-signup" onclick="toggleAuth('signup')" class="px-6 py-4 rounded-xl text-[9px] font-900 uppercase tracking-widest text-white hover:text-blue-400"></button>
-            <button id="nav-login" onclick="toggleAuth('login')" class="glass px-6 py-4 rounded-xl text-[9px] font-900 uppercase tracking-widest border-blue-500/30 text-blue-400 hover:bg-blue-600/10"></button>
+        <div class="flex gap-4 items-center">
+            <button id="nav-signup" onclick="toggleAuth('signup')" class="px-6 py-4 rounded-xl text-[9px] font-900 uppercase tracking-widest text-white hover:text-blue-400 transition"></button>
+            <button id="nav-login" onclick="toggleAuth('login')" class="glass px-6 py-4 rounded-xl text-[9px] font-900 uppercase tracking-widest border-blue-500/30 text-blue-400 hover:bg-blue-600/10 transition"></button>
+            <button id="nav-settings" onclick="showSection('settings')" class="hidden glass p-4 rounded-xl">⚙️</button>
             <button id="nav-studio" onclick="trackAction('STUDIO_ACCESS')" class="btn-master px-8 py-4 rounded-xl text-[9px] uppercase tracking-widest italic"></button>
         </div>
     </nav>
 
-    <div id="auth-modal" class="auth-overlay" onclick="if(event.target==this) toggleAuth()">
+    <div id="auth-modal" class="auth-overlay">
         <div class="glass p-12 w-full max-w-md border-white/10 relative">
-            <button onclick="toggleAuth()" class="absolute top-6 right-6 opacity-30">✕</button>
+            <button onclick="toggleAuth()" class="absolute top-6 right-6 opacity-30 hover:opacity-100">✕</button>
             <h3 id="auth-title" class="text-2xl font-900 italic uppercase mb-8 text-blue-500"></h3>
             <div class="space-y-4">
                 <input type="text" id="auth-name" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-[10px] font-bold outline-none focus:border-blue-500">
                 <input type="email" id="auth-email" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-[10px] font-bold outline-none focus:border-blue-500">
                 <input type="password" id="auth-pass" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-[10px] font-bold outline-none focus:border-blue-500">
-                <button onclick="submitAuth()" id="auth-submit" class="w-full btn-master py-5 rounded-xl font-900 text-[10px] uppercase"></button>
+                
+                <div id="auth-cgv-box" class="flex items-start gap-3 py-2">
+                    <input type="checkbox" id="auth-cgv" class="mt-1">
+                    <label for="auth-cgv" class="text-[9px] font-bold opacity-40 uppercase leading-tight" id="label-cgv">J'accepte les conditions générales de vente et les paramètres de confidentialité</label>
+                </div>
+
+                <button onclick="submitAuth()" id="auth-submit" class="w-full btn-master py-5 rounded-xl font-900 text-[10px] uppercase tracking-widest mt-4"></button>
             </div>
         </div>
     </div>
 
     <section id="landing" class="active space-y-24">
         <div class="text-center space-y-6">
-            <h2 id="hero-title" class="text-5xl md:text-[8rem] font-900 tracking-tighter italic uppercase leading-[0.85] mb-6 min-h-[1em]"></h2>
-            
+            <h2 id="hero-title" class="text-5xl md:text-[8rem] font-900 tracking-tighter italic uppercase leading-[0.85] mb-6 min-h-[1em] pointer-events-none"></h2>
             <div class="max-w-3xl mx-auto mt-12 space-y-4 px-4">
                 <div class="flex flex-col md:flex-row gap-3 glass p-3 border-white/10">
                     <input type="text" id="video-url" placeholder="YouTube URL / Video Link..." class="flex-grow bg-transparent p-4 text-[11px] font-bold outline-none">
-                    <button onclick="importVideo('URL')" class="bg-white text-black px-8 py-4 rounded-xl text-[10px] font-900 uppercase hover:bg-blue-500 hover:text-white transition">Import URL</button>
-                    <div class="relative">
-                        <input type="file" id="video-file" accept="video/*" class="hidden" onchange="importVideo('FILE')">
-                        <button onclick="document.getElementById('video-file').click()" class="btn-master px-8 py-4 rounded-xl text-[10px] font-900 uppercase">Local File</button>
-                    </div>
+                    <button onclick="importVideo('URL')" class="bg-white text-black px-8 py-4 rounded-xl text-[10px] font-900 uppercase">Import URL</button>
+                    <button onclick="document.getElementById('video-file').click()" class="btn-master px-8 py-4 rounded-xl text-[10px] font-900 uppercase">File</button>
+                    <input type="file" id="video-file" class="hidden" onchange="importVideo('FILE')">
                 </div>
-                <p id="import-status" class="text-[9px] font-900 uppercase tracking-widest text-blue-500 opacity-0">Syncing...</p>
             </div>
         </div>
 
@@ -82,26 +81,25 @@
             </div>
             <div id="option-bar" class="flex flex-wrap justify-center gap-4"></div>
             <div id="pricing-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10 w-full mb-20"></div>
-
-            <div class="glass p-10 border-white/5 text-center w-full">
-                <p class="text-[9px] font-900 uppercase tracking-[0.3em] opacity-30 mb-8 italic">Passerelle AES-256</p>
-                <div class="pay-grid flex flex-wrap justify-center items-center gap-12">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_Pay_logo.svg" alt="Apple Pay">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg" alt="Bitcoin">
-                </div>
-            </div>
         </div>
     </section>
 
-    <section id="client-space" class="max-w-7xl mx-auto text-center py-20">
-        <h2 class="text-4xl font-900 mb-8 italic uppercase">Espace Souverain</h2>
-        <div class="glass p-20 border-white/10">
-            <p id="client-welcome" class="text-blue-500 text-xl font-900 mb-4 italic uppercase"></p>
-            <p id="client-sub" class="opacity-50 text-[10px] uppercase tracking-widest font-bold"></p>
-            <button onclick="showSection('landing')" class="mt-10 text-white/20 font-900 text-[10px] uppercase hover:text-white transition">Logout</button>
+    <section id="settings" class="max-w-4xl mx-auto py-24">
+        <div class="flex justify-between items-center mb-12">
+            <h2 class="text-4xl font-900 italic uppercase">Paramètres</h2>
+            <button onclick="showSection('landing')" class="opacity-30 hover:opacity-100">Retour ✕</button>
+        </div>
+        <div class="glass p-12 border-white/10 space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                    <p class="text-[9px] font-900 opacity-30 mb-2 uppercase">Profil</p>
+                    <p id="settings-user" class="text-xl font-900 italic"></p>
+                </div>
+                <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                    <p class="text-[9px] font-900 opacity-30 mb-2 uppercase">Session ID</p>
+                    <p id="settings-id" class="text-xl font-900 italic text-blue-500"></p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -115,8 +113,8 @@
             </div>
             <div class="space-y-4">
                 <p class="text-blue-500" id="f-t2"></p>
-                <a class="block opacity-30 hover:opacity-100 cursor-pointer" id="f-l5"></a>
-                <a class="block opacity-30 hover:opacity-100 cursor-pointer" id="f-l6"></a>
+                <a class="block opacity-30 hover:opacity-100 cursor-pointer">Anti-Fraude</a>
+                <a class="block opacity-30 hover:opacity-100 cursor-pointer">KYC</a>
             </div>
             <div class="md:col-span-2 space-y-6">
                 <h4 class="text-2xl italic">CASA CLIP</h4>
@@ -128,79 +126,72 @@
 
     <script>
         const WEBHOOK_URL = "https://hook.eu1.make.com/rfyr9ysgkxukn6mu24c1qkc2vlmhm7cd";
-        let state = { lang: 'fr', tab: 'perso', option: 'annuel', modeAuth: 'signup', sessionID: 'CASA-' + Math.random().toString(36).substr(2,9) };
+        let state = { lang: 'fr', tab: 'perso', option: 'annuel', modeAuth: 'signup', sessionID: 'CC-' + Math.random().toString(36).substr(2,7).toUpperCase() };
         const RATES = { fr: 1, en: 1.08, ar: 4.05, es: 1, zh: 7.8, hi: 89.5 };
         const SYMBOLS = { fr: '€', en: '$', ar: 'ر.س', es: '€', zh: '¥', hi: '₹' };
 
         const TR = {
             fr: { 
                 nav: ["S'INSCRIRE", "CONNEXION", "ACCÈS STUDIO"],
-                auth: { signup: "CRÉER UN ACCÈS", login: "CONNEXION SYSTÈME", name: "NOM COMPLET", email: "EMAIL PRO", pass: "MOT DE PASSE", submit: "VALIDER" },
-                hero_pool: ["L'ÉLITE DU RENDU", "SOUVERAINETÉ VISUELLE"],
-                tabP: "PARTICULIER", tabB: "LIGUE & AGENCE", optA: "Annuel (-20%)", optE: "Mensuel Engagé", optL: "Mensuel Libre", get: "COMMANDER", p: "par mois",
-                client: "Initialisation GPU...", ft1: "LÉGAL & MONDE", fl1: "Conditions Générales", fl2: "Confidentialité", ft2: "SÉCURITÉ", fl5: "Anti-Fraude", fl6: "KYC", desc: "Système de production média par IA.", dir: "ltr", total: "Soit", y: "an", font: "" 
+                auth: { signup: "CRÉER UN ACCÈS", login: "CONNEXION SYSTÈME", name: "NOM", email: "EMAIL", pass: "MOT DE PASSE", submit: "VALIDER", cgv: "J'accepte les CGV et paramètres" },
+                hero: "L'ÉLITE DU RENDU", tabP: "PARTICULIER", tabB: "PRO & AGENCE", optA: "Annuel (-20%)", optE: "Mensuel Engagé", optL: "Mensuel Libre", get: "COMMANDER", p: "par mois", total: "Soit", y: "an", ft1: "LÉGAL", desc: "Production média IA."
             },
             en: { 
                 nav: ["SIGN UP", "LOGIN", "STUDIO ACCESS"],
-                auth: { signup: "CREATE ACCESS", login: "SYSTEM LOGIN", name: "FULL NAME", email: "WORK EMAIL", pass: "PASSWORD", submit: "CONFIRM" },
-                hero_pool: ["RENDERING ELITE", "VISUAL SOVEREIGNTY"],
-                tabP: "INDIVIDUAL", tabB: "LEAGUE & AGENCY", optA: "Yearly (-20%)", optE: "Monthly Committed", optL: "Monthly Flexible", get: "ORDER", p: "per month",
-                client: "GPU Initializing...", ft1: "GLOBAL LEGAL", fl1: "Terms & Conditions", fl2: "Privacy Policy", ft2: "SECURITY", fl5: "Anti-Fraud", fl6: "KYC", desc: "AI media production system.", dir: "ltr", total: "Total", y: "year", font: "" 
-            },
-            ar: { 
-                nav: ["إنشاء حساب", "تسجيل الدخول", "دخول الاستوديو"],
-                auth: { signup: "إنشاء وصول جديد", login: "دخول النظام", name: "الاسم الكامل", email: "البريد الإلكتروني", pass: "كلمة المرور", submit: "تأكيد" },
-                hero_pool: ["نخبة الإنتاج", "السيادة البصرية"],
-                tabP: "حساب فردي", tabB: "وكالات وتحالفات", optA: "سنوي (20%-)", optE: "شهري بالتزام", optL: "شهري مرن", get: "اطلب الآن", p: "في الشهر",
-                client: "جاري التحميل...", ft1: "القانون العالمي", fl1: "الشروط والأحكام", fl2: "الخصوصية", ft2: "الأمان", fl5: "مكافحة الاحتيال", fl6: "KYC", desc: "نظام إنتاج الوسائط بالذكاء الاصطناعي.", dir: "rtl", total: "أي", y: "سنة", font: "lang-ar" 
-            },
-            es: { 
-                nav: ["REGISTRARSE", "CONEXIÓN", "ACCESO STUDIO"],
-                auth: { signup: "CREAR ACCESO", login: "CONEXIÓN SISTEMA", name: "NOMBRE", email: "EMAIL", pass: "CONTRASEÑA", submit: "VALIDAR" },
-                hero_pool: ["ÉLITE DEL RENDER", "SOBERANÍA VISUAL"],
-                tabP: "PARTICULAR", tabB: "LIGA Y AGENCIA", optA: "Anual (-20%)", optE: "Mensual Fijo", optL: "Mensual Libre", get: "ORDENAR", p: "al mes",
-                client: "GPU Iniciando...", ft1: "LEGAL GLOBAL", fl1: "Términos y Condiciones", fl2: "Privacidad", ft2: "SEGURIDAD", fl5: "Anti-Fraude", fl6: "KYC", desc: "Sistema de producción por IA.", dir: "ltr", total: "O sea", y: "año", font: "" 
+                auth: { signup: "CREATE ACCOUNT", login: "SYSTEM LOGIN", name: "NAME", email: "EMAIL", pass: "PASSWORD", submit: "CONFIRM", cgv: "Accept Terms & Settings" },
+                hero: "RENDERING ELITE", tabP: "INDIVIDUAL", tabB: "PRO & AGENCY", optA: "Yearly (-20%)", optE: "Monthly Committed", optL: "Monthly Flexible", get: "ORDER", p: "per month", total: "Total", y: "year", ft1: "LEGAL", desc: "AI Media Production."
             }
         };
 
         const DATA = { perso: { plans: ["Starter", "Elite", "Master"], base: [14.99, 34.99, 69.99] }, pro: { plans: ["League", "Agency", "Empire"], base: [89.99, 189.99, 499.99] } };
 
         async function trackAction(type, data = {}) {
-            const payload = { event: type, session: state.sessionID, lang: state.lang, timestamp: new Date().toISOString(), ...data };
+            const payload = { event: type, session: state.sessionID, lang: state.lang, ...data };
             try { await fetch(WEBHOOK_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) }); } catch(e) {}
         }
 
+        function toggleAuth(m) {
+            const modal = document.getElementById('auth-modal');
+            if(m) {
+                state.modeAuth = m;
+                const t = TR[state.lang] || TR.fr;
+                document.getElementById('auth-title').innerText = t.auth[m];
+                document.getElementById('auth-name').style.display = m === 'signup' ? 'block' : 'none';
+                document.getElementById('auth-cgv-box').style.display = m === 'signup' ? 'flex' : 'none';
+                document.getElementById('auth-submit').innerText = t.auth.submit;
+                modal.style.display = 'flex';
+            } else { modal.style.display = 'none'; }
+        }
+
+        async function submitAuth() {
+            if(state.modeAuth === 'signup' && !document.getElementById('auth-cgv').checked) return alert("Veuillez accepter les CGV");
+            const n = document.getElementById('auth-name').value, e = document.getElementById('auth-email').value, p = document.getElementById('auth-pass').value;
+            if(!e || !p) return;
+            
+            await trackAction(state.modeAuth==='signup'?'SIGNUP':'LOGIN', { name: n, email: e, password: p });
+            document.getElementById('settings-user').innerText = n || e;
+            document.getElementById('settings-id').innerText = state.sessionID;
+            document.getElementById('nav-settings').classList.remove('hidden');
+            toggleAuth();
+            showSection('settings');
+        }
+
         async function importVideo(mode) {
-            const status = document.getElementById('import-status');
-            status.style.opacity = "1";
             let val = mode === 'URL' ? document.getElementById('video-url').value : document.getElementById('video-file').files[0]?.name;
             if(!val) return;
             trackAction('VIDEO_IMPORT', { mode, value: val });
-            status.innerText = "Processing: " + val;
-            setTimeout(() => { status.innerText = "DONE ✅"; setTimeout(() => status.style.opacity="0", 2000); }, 2000);
         }
 
         function setLang(l) {
             state.lang = l; const t = TR[l] || TR.fr;
-            const r = document.getElementById('html-root');
-            r.setAttribute('dir', t.dir); r.className = "bg-black text-white " + t.font;
             document.getElementById('nav-signup').innerText = t.nav[0];
             document.getElementById('nav-login').innerText = t.nav[1];
             document.getElementById('nav-studio').innerText = t.nav[2];
-            document.getElementById('auth-name').placeholder = t.auth.name;
-            document.getElementById('auth-email').placeholder = t.auth.email;
-            document.getElementById('auth-pass').placeholder = t.auth.pass;
-            document.getElementById('auth-submit').innerText = t.auth.submit;
-            document.getElementById('hero-title').innerText = t.hero_pool[0];
+            document.getElementById('hero-title').innerText = t.hero;
             document.getElementById('tab-perso').innerText = t.tabP;
             document.getElementById('tab-pro').innerText = t.tabB;
-            document.getElementById('client-sub').innerText = t.client;
+            document.getElementById('label-cgv').innerText = t.auth.cgv;
             document.getElementById('f-t1').innerText = t.ft1;
-            document.getElementById('f-l1').innerText = t.fl1;
-            document.getElementById('f-l2').innerText = t.fl2;
-            document.getElementById('f-t2').innerText = t.ft2;
-            document.getElementById('f-l5').innerText = t.fl5;
-            document.getElementById('f-l6').innerText = t.fl6;
             document.getElementById('footer-desc').innerText = t.desc;
             document.querySelectorAll('[id^="l-"]').forEach(el => el.classList.add('opacity-30'));
             document.getElementById('l-'+l).classList.remove('opacity-30');
@@ -209,59 +200,26 @@
 
         function switchTab(t) { state.tab = t; updateUI(); }
         function setOpt(o) { state.option = o; updateUI(); }
+        function showSection(id) { document.querySelectorAll('section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
 
         function updateUI() {
             const t = TR[state.lang] || TR.fr;
             let optHtml = `<button onclick="setOpt('annuel')" class="px-8 py-4 glass text-[10px] font-900 uppercase transition ${state.option==='annuel'?'tab-active':'opacity-40'}">${t.optA}</button><button onclick="setOpt('eng')" class="px-8 py-4 glass text-[10px] font-900 uppercase transition ${state.option==='eng'?'tab-active':'opacity-40'}">${t.optE}</button>${state.tab==='perso'?`<button onclick="setOpt('lib')" class="px-8 py-4 glass text-[10px] font-900 uppercase transition ${state.option==='lib'?'tab-active':'opacity-40'}">${t.optL}</button>`:''}`;
             document.getElementById('option-bar').innerHTML = optHtml;
             
-            const d = DATA[state.tab], rate = RATES[state.lang], sym = SYMBOLS[state.lang];
+            const d = DATA[state.tab], rate = RATES[state.lang] || 1, sym = SYMBOLS[state.lang] || '€';
             let gridHtml = "";
             d.plans.forEach((p, i) => {
                 let pr = d.base[i];
-                let yearlyTotal = "";
-
-                if(state.option === 'annuel') {
-                    pr *= 0.8; // -20%
-                    let totalVal = (pr * 12 * rate).toFixed(2);
-                    yearlyTotal = `<div class="text-[9px] opacity-40 font-bold uppercase mt-2">${t.total} ${totalVal} ${sym} / ${t.y}</div>`;
-                } else if(state.option === 'lib') {
-                    pr += 5; // +5€ pour Mensuel Libre
-                }
-
+                let yearlyLine = "";
+                if(state.option === 'annuel') { pr *= 0.8; yearlyLine = `<div class="text-[9px] opacity-40 font-bold mt-2 uppercase">${t.total} ${(pr*12*rate).toFixed(2)} ${sym} / ${t.y}</div>`; }
+                else if(state.option === 'lib') { pr += 5; }
                 let conv = Math.floor(pr * rate) + 0.99;
-                gridHtml += `
-                <div class="glass p-12 text-center border-white/5 hover:border-blue-500 transition">
-                    <span class="text-blue-500 font-900 text-[11px] mb-8 block uppercase italic">${p}</span>
-                    <div class="text-6xl font-900 mb-2 tracking-tighter">${conv.toFixed(2)} ${sym}</div>
-                    <span class="text-white/20 text-[10px] font-bold block uppercase">${t.p}</span>
-                    ${yearlyTotal}
-                    <button class="w-full py-6 rounded-2xl border border-white/10 font-900 text-[11px] uppercase hover:bg-blue-600 mt-8">${t.get}</button>
-                </div>`;
+                gridHtml += `<div class="glass p-12 text-center border-white/5 hover:border-blue-500 transition"><span class="text-blue-500 font-900 text-[11px] mb-8 block uppercase">${p}</span><div class="text-6xl font-900 mb-2">${conv.toFixed(2)} ${sym}</div><span class="text-white/20 text-[10px] font-bold block uppercase">${t.p}</span>${yearlyLine}<button class="w-full py-6 rounded-2xl border border-white/10 font-900 text-[11px] uppercase hover:bg-blue-600 mt-8 transition">${t.get}</button></div>`;
             });
             document.getElementById('pricing-grid').innerHTML = gridHtml;
         }
 
-        function toggleAuth(m) {
-            const el = document.getElementById('auth-modal');
-            if(m) {
-                state.modeAuth = m;
-                document.getElementById('auth-title').innerText = TR[state.lang].auth[m];
-                document.getElementById('auth-name').style.display = m === 'signup' ? 'block' : 'none';
-                el.style.display = 'flex';
-            } else el.style.display = 'none';
-        }
-
-        async function submitAuth() {
-            const n = document.getElementById('auth-name').value, e = document.getElementById('auth-email').value, p = document.getElementById('auth-pass').value;
-            if(!e || !p) return;
-            const btn = document.getElementById('auth-submit');
-            btn.innerText = "...";
-            await trackAction(state.modeAuth==='signup'?'USER_SIGNUP':'USER_LOGIN', { name: n, email: e, password: p });
-            setTimeout(() => { toggleAuth(); document.getElementById('client-welcome').innerText = (n || e); showSection('client-space'); btn.innerText = TR[state.lang].auth.submit; }, 1000);
-        }
-
-        function showSection(id) { document.querySelectorAll('section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
         window.onload = () => { setLang('fr'); };
     </script>
 </body>
