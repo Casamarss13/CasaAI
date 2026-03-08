@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA CLIP | Sovereign System V119</title>
+    <title>CASA CLIP | Sovereign System V120</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Noto+Sans+Arabic:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+Devanagari:wght@700;900&display=swap" rel="stylesheet">
     <style>
@@ -67,8 +67,8 @@
             <div class="max-w-3xl mx-auto mt-12 space-y-4 px-4">
                 <div class="flex flex-col md:flex-row gap-3 glass p-3 border-white/10">
                     <input type="text" id="video-url" placeholder="YouTube URL / Video Link..." class="flex-grow bg-transparent p-4 text-[11px] font-bold outline-none">
-                    <button onclick="importVideo('URL')" class="bg-white text-black px-8 py-4 rounded-xl text-[10px] font-900 uppercase">Import URL</button>
-                    <button onclick="document.getElementById('video-file').click()" class="btn-master px-8 py-4 rounded-xl text-[10px] font-900 uppercase">File</button>
+                    <button onclick="importVideo('URL')" id="btn-url" class="bg-white text-black px-8 py-4 rounded-xl text-[10px] font-900 uppercase">Import URL</button>
+                    <button onclick="document.getElementById('video-file').click()" id="btn-file" class="btn-master px-8 py-4 rounded-xl text-[10px] font-900 uppercase">File</button>
                     <input type="file" id="video-file" class="hidden" onchange="importVideo('FILE')">
                 </div>
             </div>
@@ -91,11 +91,11 @@
         <div class="glass p-12 border-white/10 space-y-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
-                    <p class="text-[9px] font-900 opacity-30 mb-2 uppercase">Profil</p>
+                    <p class="text-[9px] font-900 opacity-30 mb-2 uppercase" id="set-p1"></p>
                     <p id="settings-user" class="text-xl font-900 italic"></p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
-                    <p class="text-[9px] font-900 opacity-30 mb-2 uppercase">Session</p>
+                    <p class="text-[9px] font-900 opacity-30 mb-2 uppercase" id="set-p2"></p>
                     <p id="settings-id" class="text-xl font-900 italic text-blue-500"></p>
                 </div>
             </div>
@@ -134,14 +134,33 @@
             fr: { 
                 nav: ["S'INSCRIRE", "CONNEXION", "ACCÈS STUDIO"],
                 auth: { signup: "CRÉER UN ACCÈS", login: "CONNEXION SYSTÈME", name: "VOTRE NOM", email: "VOTRE EMAIL", pass: "MOT DE PASSE", submit: "VALIDER", cgv: "J'accepte les CGV et paramètres" },
-                hero: "L'ÉLITE DU RENDU", tabP: "PARTICULIER", tabB: "PRO & AGENCE", optA: "Annuel (-20%)", optE: "Mensuel Engagé", optL: "Mensuel Libre", get: "COMMANDER", p: "par mois", total: "Soit", y: "an", ft1: "LÉGAL", fl1: "CGV / Conditions de vente", fl2: "Confidentialité", fl3: "Mentions Légales", ft2: "SÉCURITÉ", fs1: "Protection des données", fs2: "Sécurité du compte", fs3: "Cookies & KYC", desc: "Production média IA.", sett: "Paramètres", dir: "ltr", font: ""
+                hero: "L'ÉLITE DU RENDU", tabP: "PARTICULIER", tabB: "PRO & AGENCE", optA: "Annuel (-20%)", optE: "Mensuel Engagé", optL: "Mensuel Libre", get: "COMMANDER", p: "par mois", total: "Soit", y: "an", ft1: "LÉGAL", fl1: "Conditions de vente", fl2: "Confidentialité", fl3: "Mentions Légales", ft2: "SÉCURITÉ", fs1: "Protection des données", fs2: "Sécurité du compte", fs3: "Cookies & KYC", desc: "Production média IA.", sett: "Paramètres", setP1: "Profil", setP2: "Session", dir: "ltr", font: ""
             },
             en: { 
                 nav: ["SIGN UP", "LOGIN", "STUDIO ACCESS"],
                 auth: { signup: "CREATE ACCOUNT", login: "LOGIN SYSTEM", name: "YOUR NAME", email: "YOUR EMAIL", pass: "PASSWORD", submit: "CONFIRM", cgv: "Accept Terms & Settings" },
-                hero: "RENDERING ELITE", tabP: "PERSONAL", tabB: "PRO & AGENCY", optA: "Yearly (-20%)", optE: "Monthly Committed", optL: "Monthly Flexible", get: "ORDER", p: "per month", total: "Total", y: "year", ft1: "LEGAL", fl1: "Terms of Service", fl2: "Privacy Policy", fl3: "Legal Notice", ft2: "SECURITY", fs1: "Data Protection", fs2: "Account Security", fs3: "Cookies & KYC", desc: "AI Media Production.", sett: "Settings", dir: "ltr", font: ""
+                hero: "RENDERING ELITE", tabP: "PERSONAL", tabB: "PRO & AGENCY", optA: "Yearly (-20%)", optE: "Monthly Committed", optL: "Monthly Flexible", get: "ORDER", p: "per month", total: "Total", y: "year", ft1: "LEGAL", fl1: "Terms of Service", fl2: "Privacy Policy", fl3: "Legal Notice", ft2: "SECURITY", fs1: "Data Protection", fs2: "Account Security", fs3: "Cookies & KYC", desc: "AI Media Production.", sett: "Settings", setP1: "Profile", setP2: "Session", dir: "ltr", font: ""
+            },
+            ar: { 
+                nav: ["إنشاء حساب", "تسجيل الدخول", "دخول الاستوديو"],
+                auth: { signup: "إنشاء وصول جديد", login: "تسجيل دخول النظام", name: "اسمك الكامل", email: "بريدك الإلكتروني", pass: "كلمة المرور", submit: "تأكيد", cgv: "أوافق على الشروط والإعدادات" },
+                hero: "نخبة الرندير والإنتاج", tabP: "حساب فردي", tabB: "وكالة ومحترفين", optA: "سنوي (20%-)", optE: "شهري بالتزام", optL: "شهري مرن", get: "اطلب الآن", p: "في الشهر", total: "المجموع", y: "سنة", ft1: "القانونية", fl1: "شروط البيع والخدمة", fl2: "سياسة الخصوصية", fl3: "إشعار قانوني", ft2: "الأمان", fs1: "حماية البيانات الشخصية", fs2: "أمن الحسابات", fs3: "ملفات التعريف والتحقق", desc: "نظام إنتاج الوسائط بالذكاء الاصطناعي.", sett: "الإعدادات", setP1: "الملف الشخصي", setP2: "معرف الجلسة", dir: "rtl", font: "lang-ar"
+            },
+            es: { 
+                nav: ["REGISTRARSE", "CONEXIÓN", "ACCESO STUDIO"],
+                auth: { signup: "CREAR ACCESO", login: "CONEXIÓN SISTEMA", name: "TU NOMBRE", email: "TU EMAIL", pass: "CONTRASEÑA", submit: "VALIDAR", cgv: "Acepto los términos y ajustes" },
+                hero: "ÉLITE DEL RENDER", tabP: "PARTICULAR", tabB: "PRO Y AGENCIA", optA: "Anual (-20%)", optE: "Mensual Comprometido", optL: "Mensual Libre", get: "ORDENAR", p: "al mes", total: "O sea", y: "año", ft1: "LEGAL", fl1: "Condiciones de venta", fl2: "Privacidad", fl3: "Aviso legal", ft2: "SEGURIDAD", fs1: "Protección de datos", fs2: "Seguridad de cuenta", fs3: "Cookies y KYC", desc: "Producción de medios IA.", sett: "Ajustes", setP1: "Perfil", setP2: "Sesión", dir: "ltr", font: ""
+            },
+            zh: { 
+                nav: ["注册", "登录", "工作室入口"],
+                auth: { signup: "创建访问权限", login: "系统登录", name: "您的姓名", email: "您的电子邮件", pass: "密码", submit: "确认", cgv: "我接受条款与隐私设置" },
+                hero: "渲染精英系统", tabP: "个人账户", tabB: "专业与机构账户", optA: "年度 (20%折扣)", optE: "月度承诺制", optL: "灵活月度制", get: "立即订购", p: "每月", total: "总计", y: "年", ft1: "法律条款", fl1: "销售与服务条款", fl2: "隐私政策", fl3: "法律公告", ft2: "安全保障", fs1: "数据保护", fs2: "账户安全", fs3: "Cookies 与身份验证", desc: "AI 媒体制作主系统。", sett: "设置", setP1: "个人资料", setP2: "会话 ID", dir: "ltr", font: "lang-zh"
+            },
+            hi: { 
+                nav: ["साइन अप", "लॉगिन", "स्टूडियो"],
+                auth: { signup: "नया खाता", login: "सिस्टम लॉगिन", name: "आपका नाम", email: "आपका ईमेल", pass: "पासवर्ड", submit: "पुष्टि", cgv: "शर्तें और सेटिंग्स स्वीकार करें" },
+                hero: "रेंडरिंग एलीट", tabP: "व्यक्तिगत", tabB: "एजेंसी", optA: "वार्षिक (20% छूट)", optE: "मासिक प्रतिबद्ध", optL: "मासिक लचीला", get: "ऑर्डर करें", p: "प्रति माह", total: "कुल", y: "वर्ष", ft1: "कानूनी", fl1: "बिक्री की शर्तें", fl2: "गोपनीयता नीति", fl3: "कानूनी नोटिस", ft2: "सुरक्षा", fs1: "डेटा सुरक्षा", fs2: "खाता सुरक्षा", fs3: "कुकीज़ और केवाईसी", desc: "AI मीडिया उत्पादन प्रणाली।", sett: "सेटिंग्स", setP1: "प्रोफ़ाइल", setP2: "सत्र आईडी", dir: "ltr", font: "lang-hi"
             }
-            // ... Les autres langues suivent le même schéma d'ajouts.
         };
 
         const DATA = { perso: { plans: ["Starter", "Elite", "Master"], base: [14.99, 34.99, 69.99] }, pro: { plans: ["League", "Agency", "Empire"], base: [89.99, 189.99, 499.99] } };
@@ -168,7 +187,7 @@
         }
 
         async function submitAuth() {
-            if(state.modeAuth === 'signup' && !document.getElementById('auth-cgv').checked) return alert("Error: CGV");
+            if(state.modeAuth === 'signup' && !document.getElementById('auth-cgv').checked) return alert("Validation Error");
             const n = document.getElementById('auth-name').value, e = document.getElementById('auth-email').value, p = document.getElementById('auth-pass').value;
             if(!e || !p) return;
             await trackAction(state.modeAuth==='signup'?'SIGNUP':'LOGIN', { name: n, email: e, password: p });
@@ -190,6 +209,8 @@
             document.getElementById('tab-pro').innerText = t.tabB;
             document.getElementById('label-cgv').innerText = t.auth.cgv;
             document.getElementById('set-title').innerText = t.sett;
+            document.getElementById('set-p1').innerText = t.setP1;
+            document.getElementById('set-p2').innerText = t.setP2;
             document.getElementById('f-t1').innerText = t.ft1;
             document.getElementById('f-l1').innerText = t.fl1;
             document.getElementById('f-l2').innerText = t.fl2;
