@@ -1,162 +1,324 @@
 <!DOCTYPE html>
-<html lang="fr" class="bg-black text-white">
+<html lang="fr" class="bg-black text-white selection:bg-blue-500/30">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA CLIP | Global Sovereign V1.51</title>
+    <title>CASA CLIP | Sovereign AI Infrastructure</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { --blue: #3b82f6; --surface: rgba(255,255,255,0.02); }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; overflow-x: hidden; }
-        .glass { background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 32px; backdrop-filter: blur(40px); }
-        .btn-elite { background: linear-gradient(135deg, var(--blue), #1d4ed8); font-weight: 800; border-radius: 20px; transition: 0.4s; }
-        .tab-btn { transition: 0.3s; color: rgba(255,255,255,0.4); border-radius: 12px; cursor: pointer; }
-        .tab-btn.active { background: var(--blue); color: white; box-shadow: 0 0 25px rgba(59,130,246,0.6); opacity: 1; }
-        .promo-banner { background: linear-gradient(90deg, #1e3a8a, #3b82f6, #1e3a8a); background-size: 200% auto; animation: wave 5s infinite linear; }
+        :root { --blue: #3b82f6; --glass: rgba(255, 255, 255, 0.02); --border: rgba(255, 255, 255, 0.1); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; overflow-x: hidden; scroll-behavior: smooth; }
+        
+        /* Design System Elite */
+        .glass { background: var(--glass); border: 1px solid var(--border); backdrop-filter: blur(30px); border-radius: 32px; transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .glass:hover { border-color: rgba(59, 130, 246, 0.3); background: rgba(255, 255, 255, 0.04); }
+        .active-blue { background: var(--blue) !important; color: white !important; box-shadow: 0 0 50px rgba(59, 130, 246, 0.6); transform: scale(1.05); }
+        .btn-elite { background: #fff; color: #000; font-weight: 800; border-radius: 100px; transition: 0.4s; cursor: pointer; border: none; position: relative; overflow: hidden; }
+        .btn-elite:hover { transform: translateY(-5px); box-shadow: 0 25px 50px rgba(255, 255, 255, 0.15); }
+        
+        /* Bandeau Scarcity */
+        .promo-banner { background: linear-gradient(90deg, #0f172a, #1e40af, #3b82f6, #1e40af, #0f172a); background-size: 200% auto; animation: wave 6s linear infinite; }
         @keyframes wave { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
-        section { display: none; opacity: 0; }
-        section.active { display: block; animation: fadeIn 0.5s forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        /* Support pour l'écriture Arabe */
-        .rtl { direction: rtl; font-family: sans-serif; }
+        
+        /* Layout Sections */
+        section { display: none; min-height: 100vh; padding: 180px 5% 100px 5%; opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        section.active { display: flex; flex-direction: column; align-items: center; opacity: 1; transform: translateY(0); }
+        .text-glow { background: linear-gradient(135deg, #fff 40%, var(--blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
+        .rtl { direction: rtl; }
+
+        /* Studio Components */
+        .drop-zone { width: 100%; max-width: 900px; border: 2px dashed var(--border); border-radius: 40px; padding: 60px; transition: 0.3s; background: rgba(255,255,255,0.01); }
+        .drop-zone.dragover { border-color: var(--blue); background: rgba(59, 130, 246, 0.05); }
+        .input-studio { background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 16px; padding: 16px 24px; width: 100%; outline: none; transition: 0.3s; }
+        .input-studio:focus { border-color: var(--blue); background: rgba(255,255,255,0.08); }
+        
+        /* Toast System */
+        #toast { position: fixed; bottom: 40px; right: 40px; padding: 20px 40px; border-radius: 24px; background: #fff; color: #000; font-weight: 900; z-index: 1000; transform: translateX(250%); transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1); font-size: 12px; }
+        #toast.show { transform: translateX(0); }
     </style>
 </head>
-<body class="p-4 md:p-10">
+<body>
 
-<div class="fixed top-0 left-0 w-full z-[100] promo-banner py-3 text-center text-[10px] font-900 uppercase tracking-widest shadow-2xl">
-    <span id="txt-promo">Offre Limitée</span> — <span id="spots">42</span> <span id="txt-spots">places restantes</span>
+<div id="toast" class="shadow-2xl uppercase italic tracking-widest">Processus Initialisé</div>
+
+<div class="fixed top-0 left-0 w-full z-[110] promo-banner py-3.5 text-center text-[10px] font-900 uppercase tracking-[0.5em] shadow-2xl">
+    <span id="promo-txt">OFFRE LIMITÉE</span> — <span id="spots">42</span> <span id="left-txt">PLACES RESTANTES</span>
 </div>
 
-<nav class="max-w-[1500px] mx-auto flex justify-between items-center p-8 glass mt-12 mb-20 gap-6 border-white/10">
-    <div class="flex items-center gap-4 cursor-pointer" onclick="App.view('landing')">
-        <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-900 italic shadow-lg shadow-blue-500/20">CC</div>
-        <h1 class="text-xl font-900 italic uppercase tracking-tighter">CASA CLIP</h1>
+<nav class="fixed top-14 left-1/2 -translate-x-1/2 w-[92%] max-w-[1400px] z-[100] flex justify-between items-center p-5 glass">
+    <div class="flex items-center gap-4 px-6 cursor-pointer group" onclick="App.view('hero')">
+        <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center font-900 italic shadow-[0_0_30px_rgba(59,130,246,0.4)] text-2xl group-hover:scale-110 transition">CC</div>
+        <div>
+            <h1 class="text-xl font-900 italic uppercase tracking-tighter leading-none">CASA CLIP</h1>
+            <span class="text-[8px] font-bold opacity-30 tracking-[0.3em] uppercase">Sovereign Cluster 2026</span>
+        </div>
     </div>
     
-    <div class="flex items-center gap-4">
-        <select id="lang-switch" onchange="App.refresh()" class="bg-white/5 text-[9px] font-900 p-2 rounded-lg outline-none border border-white/5">
-            <option value="zh">ZH 🇨🇳</option>
-            <option value="hi">HI 🇮🇳</option>
-            <option value="es">ES 🇪🇸</option>
-            <option value="ar">AR 🇸🇦</option>
-            <option value="fr">FR 🇫🇷</option>
-            <option value="en">EN 🇺🇸</option>
+    <div class="hidden lg:flex gap-12 text-[10px] font-900 uppercase tracking-[0.25em] opacity-40">
+        <a href="javascript:void(0)" onclick="App.view('hero')" class="hover:opacity-100 hover:text-blue-400 transition">Vision</a>
+        <a href="javascript:void(0)" onclick="App.view('pricing')" class="hover:opacity-100 hover:text-blue-400 transition">Forfaits</a>
+        <a href="javascript:void(0)" onclick="App.view('studio')" class="hover:opacity-100 hover:text-blue-400 transition">Studio</a>
+    </div>
+
+    <div class="flex items-center gap-6">
+        <select id="lang" onchange="App.run()" class="bg-transparent text-[11px] font-900 outline-none uppercase cursor-pointer border-r border-white/10 pr-5">
+            <option value="fr" selected>FR 🇫🇷</option><option value="en">EN 🇺🇸</option>
+            <option value="zh">ZH 🇨🇳</option><option value="hi">HI 🇮🇳</option>
+            <option value="es">ES 🇪🇸</option><option value="ar">AR 🇸🇦</option>
         </select>
-        <select id="curr-switch" onchange="App.refresh()" class="bg-white/5 text-[9px] font-900 p-2 rounded-lg outline-none border border-white/5">
-            <option value="EUR">€ EUR</option>
-            <option value="USD">$ USD</option>
-        </select>
+        <button id="n-log" onclick="App.notify('Accès sécurisé')" class="text-[10px] font-900 uppercase opacity-40 hover:opacity-100 transition">Connexion</button>
+        <button id="n-sig" onclick="App.view('pricing')" class="btn-elite px-10 py-4 text-[10px] uppercase italic">Inscription</button>
     </div>
 </nav>
 
-<section id="pricing" class="active max-w-6xl mx-auto text-center pb-20">
-    <h2 class="text-6xl font-900 italic uppercase mb-12" id="txt-title">Tarifs Elite</h2>
-    
-    <div class="flex justify-center mb-16">
-        <div class="glass p-2 flex gap-2 rounded-2xl border-white/10 shadow-inner">
-            <button onclick="App.setMode('libre')" id="btn-libre" class="tab-btn px-8 py-4 text-[10px] font-900 uppercase">Libre</button>
-            <button onclick="App.setMode('fidélité')" id="btn-fid" class="tab-btn active px-8 py-4 text-[10px] font-900 uppercase">Engagement</button>
-            <button onclick="App.setMode('annuel')" id="btn-ann" class="tab-btn px-8 py-4 text-[10px] font-900 uppercase">Annuel</button>
+<section id="hero" class="active justify-center text-center">
+    <div class="inline-block px-8 py-2.5 glass mb-14 text-blue-400 text-[10px] font-900 uppercase tracking-[0.5em] border-blue-500/20 shadow-xl">
+        Infrastructure Sovereign V4.0
+    </div>
+    <h1 id="h-title" class="text-6xl md:text-[120px] leading-[0.8] font-900 italic uppercase tracking-tighter mb-14">
+        Vision <span class="text-glow">Souveraine.</span>
+    </h1>
+    <p id="h-desc" class="max-w-3xl text-xl md:text-2xl opacity-40 leading-relaxed mb-16 italic font-medium tracking-tight">
+        L'infrastructure GPU ultime conçue pour les créateurs qui exigent la perfection technique.
+    </p>
+    <div class="flex flex-col md:flex-row gap-8 scale-110">
+        <button onclick="App.view('pricing')" id="h-btn" class="btn-elite px-16 py-7 text-[11px] uppercase italic">Commencer</button>
+        <button onclick="App.view('studio')" class="glass px-16 py-7 text-[11px] font-900 uppercase italic">Accès Studio</button>
+    </div>
+</section>
+
+<section id="pricing" class="max-w-[1400px] mx-auto">
+    <div class="text-center mb-24">
+        <h2 id="p-title" class="text-6xl md:text-8xl font-900 uppercase italic tracking-tighter mb-10">Elite Pricing</h2>
+        <div class="flex justify-center">
+            <div class="bg-white/5 p-2 rounded-full flex gap-2 border border-white/10 shadow-2xl scale-110">
+                <button onclick="App.setMode('libre')" id="m-libre" class="px-12 py-5 text-[10px] font-900 uppercase rounded-full transition-all">Libre</button>
+                <button onclick="App.setMode('fidel')" id="m-fidel" class="px-12 py-5 text-[10px] font-900 uppercase rounded-full transition-all active-blue">Engagement</button>
+                <button onclick="App.setMode('annue')" id="m-annue" class="px-12 py-5 text-[10px] font-900 uppercase rounded-full transition-all">Annuel</button>
+            </div>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="glass p-10 border-white/5 hover:border-blue-500/20 transition duration-500">
-            <p class="text-[10px] font-900 text-blue-500 mb-6 uppercase tracking-widest">Essential</p>
-            <div id="p-ess" class="text-6xl font-900 mb-4 italic">14.90€</div>
-            <p id="l-ess" class="text-[9px] opacity-40 font-bold uppercase mb-10">Engagement 12 mois</p>
-            <button class="w-full btn-elite py-5 text-[10px] uppercase italic">Select Plan</button>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 w-full px-6">
+        <div class="glass p-16 flex flex-col justify-between group">
+            <div>
+                <span class="text-[11px] font-900 text-blue-500 uppercase tracking-widest block mb-12 italic opacity-60">Tier 01 // Basic</span>
+                <div id="pr-1" class="text-8xl font-900 mb-6 italic tracking-tighter">14€</div>
+                <p id="lg-1" class="text-[11px] opacity-30 uppercase mb-14 italic font-bold tracking-[0.2em]">Contrat 12 mois</p>
+                <div class="space-y-6 text-[12px] opacity-40 font-bold mb-16">
+                    <p>✓ RENDU GPU 4K SOUVERAIN</p><p>✓ 500GB CLOUD ELITE</p><p>✓ SUPPORT STANDARD 24/7</p>
+                </div>
+            </div>
+            <button class="btn-elite w-full py-7 text-[10px] uppercase sub-txt italic">S'abonner</button>
         </div>
-        <div class="glass p-10 border-blue-500/40 scale-105 bg-white/[0.01] shadow-2xl">
-            <p class="text-[10px] font-900 text-blue-500 mb-6 uppercase tracking-widest">Creator Pro</p>
-            <div id="p-cre" class="text-6xl font-900 mb-4 italic">29.00€</div>
-            <p id="l-cre" class="text-[9px] opacity-40 font-bold uppercase mb-10">Engagement 12 mois</p>
-            <button class="w-full bg-white text-black py-5 rounded-2xl font-900 text-[10px] uppercase hover:bg-blue-600 hover:text-white transition">Select Plan</button>
+
+        <div class="glass p-16 border-blue-500/40 bg-blue-500/[0.03] scale-105 shadow-[0_0_80px_rgba(59,130,246,0.2)] relative flex flex-col justify-between">
+            <div class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-900 px-10 py-4 uppercase italic tracking-tighter shadow-xl">Top Recommendation</div>
+            <div>
+                <span class="text-[11px] font-900 text-blue-500 uppercase tracking-widest block mb-12 italic">Tier 02 // Creator Pro</span>
+                <div id="pr-2" class="text-8xl font-900 mb-6 text-glow italic tracking-tighter">29€</div>
+                <p id="lg-2" class="text-[11px] opacity-30 uppercase mb-14 italic font-bold tracking-[0.2em]">Contrat 12 mois</p>
+                <div class="space-y-6 text-[12px] opacity-80 font-bold mb-16">
+                    <p>✓ RENDU 8K MULTI-NODE</p><p>✓ ASSETS IA ILLIMITÉS</p><p>✓ CLUSTERS PRIORITAIRES</p>
+                </div>
+            </div>
+            <button class="btn-elite w-full py-7 text-[10px] uppercase sub-txt italic">S'abonner</button>
         </div>
-        <div class="glass p-10 border-white/5 opacity-60">
-            <p class="text-[10px] font-900 text-blue-500 mb-6 uppercase tracking-widest">Power User</p>
-            <div id="p-pow" class="text-6xl font-900 mb-4 italic">49.00€</div>
-            <p id="l-pow" class="text-[9px] opacity-40 font-bold uppercase mb-10">Engagement 12 mois</p>
-            <button class="w-full border border-white/10 py-5 rounded-2xl font-900 text-[10px] uppercase hover:bg-white/5 transition">Select Plan</button>
+
+        <div class="glass p-16 opacity-40 hover:opacity-100 transition-all flex flex-col justify-between">
+            <div>
+                <span class="text-[11px] font-900 text-blue-500 uppercase tracking-widest block mb-12 italic opacity-60">Tier 03 // Power User</span>
+                <div id="pr-3" class="text-8xl font-900 mb-6 italic tracking-tighter">49€</div>
+                <p id="lg-3" class="text-[11px] opacity-30 uppercase mb-14 italic font-bold tracking-[0.2em]">Contrat 12 mois</p>
+                <div class="space-y-6 text-[12px] opacity-40 font-bold mb-16">
+                    <p>✓ GPU CORE DÉDIÉ (H100)</p><p>✓ RENDU TEMPS RÉEL</p><p>✓ ACCÈS API SOUVERAINE</p>
+                </div>
+            </div>
+            <button class="btn-elite w-full py-7 text-[10px] uppercase sub-txt italic">S'abonner</button>
         </div>
     </div>
 </section>
 
-<footer class="max-w-[1500px] mx-auto mt-20 pt-10 border-t border-white/5 px-10">
-    <div class="flex flex-col md:flex-row justify-between items-center gap-10 opacity-30 text-[9px] font-900 uppercase tracking-[0.3em]">
-        <div class="flex items-center gap-4">
-            <div class="w-6 h-6 bg-white/10 rounded-md"></div>
-            <span>© 2026 Casa Clip Sovereign Elite</span>
+<section id="studio" class="max-w-6xl mx-auto">
+    <h2 class="text-6xl font-900 mb-10 uppercase italic text-center tracking-tighter">Sovereign Studio</h2>
+    <p class="opacity-40 mb-20 text-center uppercase font-bold tracking-[0.5em] italic text-[11px]">Traitement neural en temps réel</p>
+    
+    <div class="drop-zone flex flex-col items-center gap-10">
+        <div class="w-24 h-24 bg-white/5 rounded-3xl flex items-center justify-center text-4xl italic animate-pulse shadow-xl border border-white/5">↑</div>
+        <div class="text-center">
+            <p class="text-2xl font-900 italic uppercase mb-2 tracking-tighter">Importer vos fichiers</p>
+            <p class="text-[10px] opacity-30 uppercase font-bold tracking-[0.3em]">Formats : MP4, EXR, RAW (Max 50GB)</p>
         </div>
-        <div class="flex gap-10">
-            <span class="text-blue-500 cursor-pointer">CGV / Rupture Contractuelle</span>
-            <span class="cursor-pointer">Privacy Policy</span>
-            <span class="cursor-pointer">GPU Status</span>
+        
+        <div class="w-full max-w-lg flex flex-col gap-6">
+            <input type="text" id="url-studio" placeholder="Coller une URL Cloud (S3, Dropbox, GDrive)" class="input-studio font-bold text-xs">
+            <div class="flex gap-4">
+                <button onclick="App.triggerUpload()" class="btn-elite flex-1 py-5 text-[10px] uppercase italic">Choisir Fichier</button>
+                <button onclick="App.launchAction()" class="active-blue flex-1 py-5 text-[10px] uppercase italic rounded-full font-900">Lancer Rendu</button>
+            </div>
+        </div>
+        <input type="file" id="file-input" class="hidden" onchange="App.notify('Fichier chargé')">
+    </div>
+</section>
+
+<footer class="mt-40 p-24 border-t border-white/5 bg-black">
+    <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-20">
+        <div class="col-span-2">
+            <h4 class="font-900 italic text-4xl mb-8 text-glow">CASA CLIP</h4>
+            <p class="text-sm opacity-30 leading-relaxed italic max-w-sm mb-10 uppercase tracking-tighter font-bold">La première infrastructure souveraine de calcul GPU pour l'intelligence artificielle générative et le rendu cinématique haut de gamme.</p>
+            <div class="flex gap-6 opacity-40 text-[10px] font-900">
+                <span>STATUS: OPTIMAL</span><span>•</span><span>VERSION: 4.0.2</span>
+            </div>
+        </div>
+        <div class="flex flex-col gap-6">
+            <span class="text-[11px] font-900 uppercase tracking-[0.3em] text-blue-500 mb-4">Navigation</span>
+            <a href="#" onclick="App.view('hero')" class="text-[11px] font-bold opacity-40 hover:opacity-100 transition">VISION</a>
+            <a href="#" onclick="App.view('pricing')" class="text-[11px] font-bold opacity-40 hover:opacity-100 transition">FORFAITS ELITE</a>
+            <a href="#" onclick="App.view('studio')" class="text-[11px] font-bold opacity-40 hover:opacity-100 transition">STUDIO DASHBOARD</a>
+        </div>
+        <div class="flex flex-col gap-6">
+            <span class="text-[11px] font-900 uppercase tracking-[0.3em] text-blue-500 mb-4">Légal</span>
+            <a href="#" class="text-[11px] font-bold opacity-40 hover:opacity-100 transition">CGV / RUPTURE</a>
+            <a href="#" class="text-[11px] font-bold opacity-40 hover:opacity-100 transition">CONFIDENTIALITÉ</a>
+            <span class="text-[10px] font-bold opacity-20 uppercase mt-10 tracking-widest">© 2026 Sovereign Elite Systems</span>
         </div>
     </div>
 </footer>
 
 <script>
+/** * CASA CLIP SYSTEM V4.0
+ * ARCHITECTURE "MON CODE" - MIN 300 LINES
+ */
 const App = {
-    mode: 'fidélité',
-    prices: {
-        libre: [19.90, 39.00, 59.00],
-        fidélité: [14.90, 29.00, 49.00],
-        annuel: [149.00, 290.00, 490.00]
+    state: { mode: 'fidel', lang: 'fr', spots: 42 },
+    rates: { fr: 1, en: 1.08, zh: 7.72, hi: 89.9, es: 1, ar: 4.05 },
+    syms: { fr: '€', en: '$', zh: '¥', hi: '₹', es: '€', ar: '﷼' },
+    base: { libre: [19.9, 39.9, 59.9], fidel: [14.9, 29.9, 49.9], annue: [149, 290, 490] },
+    
+    data: {
+        fr: {
+            promo: "OFFRE LIMITÉE", left: "PLACES RESTANTES", t: "Tarifs Elite",
+            b1: "Libre", b2: "Engagement", b3: "Annuel",
+            leg1: "Contrat 12 mois", leg2: "Sans engagement", leg3: "Paiement annuel",
+            sub: "S'abonner", ht: "Vision Souveraine", 
+            hd: "L'infrastructure GPU ultime conçue pour les créateurs mondiaux.",
+            log: "Connexion", sig: "Inscription", btn: "Commencer"
+        },
+        en: {
+            promo: "LIMITED OFFER", left: "SPOTS LEFT", t: "Elite Pricing",
+            b1: "Flexible", b2: "Commitment", b3: "Yearly",
+            leg1: "12 Months Contract", leg2: "No Commitment", leg3: "Annual Payment",
+            sub: "Subscribe", ht: "Sovereign Vision", 
+            hd: "The ultimate GPU infrastructure built for world creators.",
+            log: "Login", sig: "Sign Up", btn: "Get Started"
+        },
+        zh: {
+            promo: "限时优惠", left: "剩余名额", t: "精英定价",
+            b1: "灵活", b2: "合约计划", b3: "年度套餐",
+            leg1: "12个月合约", leg2: "无长期约束", leg3: "年度支付计划",
+            sub: "立即订阅", ht: "主权愿景", 
+            hd: "为要求技术完美的创作者打造的终极 GPU 基础设施。",
+            log: "登录", sig: "注册", btn: "立即开始"
+        },
+        hi: {
+            promo: "सीमित प्रस्ताव", left: "स्थान शेष", t: "एलीट मूल्य",
+            b1: "लचीला", b2: "प्रतिबद्धता", b3: "वार्षिक",
+            leg1: "12 महीने का अनुबंध", leg2: "कोई प्रतिबद्धता नहीं", leg3: "वार्षिक भुगतान",
+            sub: "सब्सक्राइब", ht: "संप्रभु दृष्टि", 
+            hd: "तकनीकी पूर्णता की मांग करने वाले रचनाकारों के लिए बनाया गया अंतिम बुनियादी ढांचा।",
+            log: "लॉगिन", sig: "साइन अप", btn: "अभी शुरू करें"
+        },
+        es: {
+            promo: "OFERTA LIMITADA", left: "PLAZAS RESTANTES", t: "Precios Elite",
+            b1: "Libre", b2: "Compromiso", b3: "Anual",
+            leg1: "Contrato 12 meses", leg2: "Sin compromiso", leg3: "Pago anual",
+            sub: "Suscribirse", ht: "Visión Soberana", 
+            hd: "La infraestructura GPU definitiva para creadores mundiales.",
+            log: "Entrar", sig: "Registro", btn: "Empezar"
+        },
+        ar: {
+            promo: "عرض محدود", left: "أماكن متبقية", t: "أسعار النخبة",
+            b1: "مرن", b2: "التزام", b3: "سنوي",
+            leg1: "عقد 12 شهر", leg2: "بدون التزام", leg3: "دفع سنوي",
+            sub: "اشتراك الآن", ht: "رؤية سيادية", 
+            hd: "البنية التحتية النهائية لوحدات معالجة الرسومات المصممة للمبدعين.",
+            log: "دخول", sig: "تسجيل", btn: "ابدأ الآن"
+        }
     },
-    trans: {
-        zh: { title: "精英定价", libre: "灵活模式", fid: "12个月签约", ann: "年度支付", leg: "12个月合同", leg_free: "无约束", leg_ann: "一次性付款" },
-        hi: { title: "एलीट मूल्य निर्धारण", libre: "लचीला", fid: "मासिक (1 वर्ष)", ann: "वार्षिक", leg: "12 महीने का अनुबंध", leg_free: "कोई प्रतिबद्धता नहीं", leg_ann: "एक बार भुगतान" },
-        es: { title: "Precios Elite", libre: "Flexible", fid: "Mensual (1añ)", ann: "Anual", leg: "Contrato 12 meses", leg_free: "Sin Compromiso", leg_ann: "Pago único" },
-        ar: { title: "تسعير النخبة", libre: "مرن", fid: "شهري (سنة)", ann: "سنوي", leg: "عقد 12 شهراً", leg_free: "بدون التزام", leg_ann: "دفع لمرة واحدة" },
-        fr: { title: "Tarifs Elite", libre: "Option Libre", fid: "Mensuel (1an)", ann: "Annuel", leg: "Engagé 12 mois", leg_free: "Sans Engagement", leg_ann: "Paiement Unique" },
-        en: { title: "Elite Pricing", libre: "Flexible", fid: "Monthly (1yr)", ann: "Yearly", leg: "12 Months Contract", leg_free: "No Commitment", leg_ann: "One-time Payment" }
-    },
-    setMode(m) {
-        this.mode = m;
-        // Reset and Apply Active Class
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        const activeBtn = document.getElementById('btn-' + m.substring(0,3));
-        if(activeBtn) activeBtn.classList.add('active');
-        this.refresh();
-    },
-    refresh() {
-        const lang = document.getElementById('lang-switch').value;
-        const curr = document.getElementById('curr-switch').value;
-        const rate = (curr === 'USD') ? 1.10 : 1.0;
-        const sym = (curr === 'USD') ? '$' : '€';
 
-        // RTL Support for Arabic
-        document.body.classList.toggle('rtl', lang === 'ar');
-
-        // Update Title and Tabs
-        document.getElementById('txt-title').innerText = this.trans[lang].title;
-        document.getElementById('btn-lib').innerText = this.trans[lang].libre;
-        document.getElementById('btn-fid').innerText = this.trans[lang].fid;
-        document.getElementById('btn-ann').innerText = this.trans[lang].ann;
-
-        // Prices & Legends
-        const ids = ['p-ess', 'p-cre', 'p-pow'];
-        const lids = ['l-ess', 'l-cre', 'l-pow'];
-        const legKey = (this.mode === 'libre') ? 'leg_free' : (this.mode === 'annuel' ? 'leg_ann' : 'leg');
-
-        ids.forEach((id, i) => {
-            document.getElementById(id).innerText = (this.prices[this.mode][i] * rate).toFixed(2) + sym;
-        });
-        lids.forEach(id => {
-            document.getElementById(id).innerText = this.trans[lang][legKey];
-        });
-    },
     view(id) {
         document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+        this.notify("Vue : " + id.toUpperCase());
+    },
+
+    setMode(m) {
+        this.state.mode = m;
+        document.querySelectorAll('#m-libre, #m-fidel, #m-annue').forEach(b => b.classList.remove('active-blue'));
+        document.getElementById('m-' + m).classList.add('active-blue');
+        this.run();
+    },
+
+    notify(msg) {
+        const t = document.getElementById('toast');
+        t.innerText = msg; t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3500);
+    },
+
+    triggerUpload() { document.getElementById('file-input').click(); },
+
+    launchAction() {
+        const url = document.getElementById('url-studio').value;
+        if(url) this.notify("INITIALISATION URL : " + url.substring(0, 15) + "...");
+        else this.notify("LANCEMENT DU RENDU GPU...");
+    },
+
+    run() {
+        const l = document.getElementById('lang').value;
+        const d = this.data[l];
+        document.body.classList.toggle('rtl', l === 'ar');
+        
+        // Trads Header & Banner
+        document.getElementById('promo-txt').innerText = d.promo;
+        document.getElementById('left-txt').innerText = d.left;
+        document.getElementById('n-log').innerText = d.log;
+        document.getElementById('n-sig').innerText = d.sig;
+        
+        // Hero & Pricing Titles
+        const hTitle = document.getElementById('h-title');
+        hTitle.innerHTML = d.ht.split(' ')[0] + ' <span class="text-glow">' + d.ht.split(' ')[1] + '</span>';
+        document.getElementById('h-desc').innerText = d.hd;
+        document.getElementById('h-btn').innerText = d.btn;
+        document.getElementById('p-title').innerText = d.t;
+        
+        // Modes Buttons
+        document.getElementById('m-libre').innerText = d.b1;
+        document.getElementById('m-fidel').innerText = d.b2;
+        document.getElementById('m-annue').innerText = d.b3;
+        
+        const legText = (this.state.mode === 'libre') ? d.leg2 : (this.state.mode === 'annue' ? d.leg3 : d.leg1);
+        
+        [1, 2, 3].forEach(i => {
+            const p = (this.base[this.state.mode][i-1] * this.rates[l]).toFixed(0);
+            document.getElementById('pr-' + i).innerText = p + this.syms[l];
+            document.getElementById('lg-' + i).innerText = legText;
+        });
+        
+        document.querySelectorAll('.sub-txt').forEach(b => b.innerText = d.sub);
     }
 };
-// Correction ID alias pour le switcher
-document.getElementById('btn-lib').id = 'btn-lib'; // Alias interne
 
-App.refresh();
+window.onload = () => {
+    App.run();
+    setInterval(() => {
+        if(App.state.spots > 4) {
+            App.state.spots -= Math.floor(Math.random() * 2);
+            document.getElementById('spots').innerText = App.state.spots;
+        }
+    }, 12000);
+};
 </script>
 </body>
 </html>
