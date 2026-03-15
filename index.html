@@ -1,286 +1,1369 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="bg-neutral-950 text-white">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CASA CLIP | Sovereign GPU Elite</title>
+  <meta name="description" content="CASA CLIP — plateforme premium de rendu GPU, traitement vidéo et production créative haute performance." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    :root{
+      --gold:#d4af37;
+      --gold-soft:#f2de88;
+      --gold-border:rgba(212,175,55,.38);
+      --bg:#0a0a0a;
+      --bg-soft:#111111;
+      --panel:rgba(255,255,255,.035);
+      --panel-2:rgba(255,255,255,.055);
+      --border:rgba(255,255,255,.09);
+      --text:#f8f6f0;
+      --muted:rgba(255,255,255,.65);
+      --muted-2:rgba(255,255,255,.38);
+      --danger:#ef4444;
+      --success:#22c55e;
+      --shadow-gold:0 18px 60px rgba(212,175,55,.14);
+    }
 
-<title>CASA CLIP — Sovereign GPU</title>
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(255,255,255,.028), transparent 24%),
+        radial-gradient(circle at 82% 24%, rgba(255,255,255,.018), transparent 22%),
+        radial-gradient(circle at 60% 78%, rgba(212,175,55,.06), transparent 26%),
+        linear-gradient(180deg, #080808 0%, #0b0b0b 48%, #090909 100%);
+      color:var(--text);
+      font-family:'Plus Jakarta Sans',sans-serif;
+      overflow-x:hidden;
+    }
 
-<script src="https://cdn.tailwindcss.com"></script>
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.18;
+      background-image:
+        linear-gradient(115deg, transparent 0%, rgba(255,255,255,.03) 18%, transparent 36%),
+        linear-gradient(205deg, transparent 0%, rgba(255,255,255,.02) 22%, transparent 42%),
+        linear-gradient(160deg, transparent 0%, rgba(212,175,55,.03) 16%, transparent 38%);
+      mix-blend-mode:screen;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;900&display=swap" rel="stylesheet">
+    .glass{
+      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      box-shadow:0 10px 40px rgba(0,0,0,.28);
+    }
 
-<style>
+    .gold-line{
+      border:1px solid var(--gold-border);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.05), var(--shadow-gold);
+    }
 
-body{
-font-family:'Plus Jakarta Sans',sans-serif;
-background:#0a0a0a;
-color:#f5f5f5;
-margin:0;
-}
+    .gold-text{
+      background:linear-gradient(135deg, #fff5c8 0%, #f0d46d 35%, #c89b22 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
 
-/* marbre */
+    .btn-gold{
+      border:none;
+      color:#120d00;
+      background:linear-gradient(135deg, #f5e7a6 0%, #e0bb52 55%, #c9971a 100%);
+      font-weight:800;
+      border-radius:999px;
+      transition:.28s ease;
+      box-shadow:0 12px 34px rgba(212,175,55,.18);
+    }
 
-.marble{
-background-image:
-radial-gradient(circle at 20% 20%,rgba(255,255,255,0.03),transparent 60%),
-radial-gradient(circle at 80% 40%,rgba(255,255,255,0.02),transparent 60%),
-linear-gradient(#0a0a0a,#0a0a0a);
-}
+    .btn-gold:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 40px rgba(212,175,55,.25);
+    }
 
-/* gold */
+    .btn-ghost{
+      border:1px solid rgba(255,255,255,.13);
+      color:#fff;
+      background:rgba(255,255,255,.03);
+      border-radius:999px;
+      transition:.28s ease;
+    }
 
-.gold{
-color:#d4af37;
-}
+    .btn-ghost:hover{
+      transform:translateY(-2px);
+      border-color:rgba(212,175,55,.35);
+      color:#fff8de;
+    }
 
-.gold-border{
-border:1px solid #d4af37;
-}
+    .promo-banner{
+      background:
+        linear-gradient(90deg, rgba(16,16,16,.95), rgba(212,175,55,.16), rgba(16,16,16,.95));
+      border-bottom:1px solid rgba(212,175,55,.22);
+      box-shadow:0 10px 30px rgba(0,0,0,.22);
+    }
 
-.gold-btn{
-background:linear-gradient(135deg,#d4af37,#f6e27a);
-color:black;
-font-weight:800;
-border-radius:50px;
-padding:16px 36px;
-transition:.3s;
-}
+    .nav-shell{
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(12,12,12,.72);
+    }
 
-.gold-btn:hover{
-transform:translateY(-3px);
-box-shadow:0 10px 40px rgba(212,175,55,0.3);
-}
+    .section{
+      min-height:100vh;
+      padding:148px 5% 72px;
+      display:none;
+      opacity:0;
+      transform:translateY(10px);
+    }
 
-/* cards */
+    .section.active{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      opacity:1;
+      transform:translateY(0);
+      animation:fadeIn .45s ease forwards;
+    }
 
-.card{
-background:rgba(255,255,255,0.03);
-border:1px solid rgba(255,255,255,0.06);
-border-radius:24px;
-padding:40px;
-backdrop-filter:blur(10px);
-}
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
+    }
 
-.card-premium{
-border:1px solid #d4af37;
-background:linear-gradient(180deg,rgba(212,175,55,0.05),rgba(0,0,0,0.4));
-}
+    .stats-card,
+    .plan-card,
+    .feature-card,
+    .studio-card{
+      border-radius:28px;
+    }
 
-/* sections */
+    .stats-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.026));
+      border:1px solid rgba(255,255,255,.07);
+    }
 
-section{
-padding:140px 5%;
-min-height:100vh;
-}
+    .feature-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.022));
+      border:1px solid rgba(255,255,255,.07);
+    }
 
-</style>
+    .plan-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.022));
+      border:1px solid rgba(255,255,255,.08);
+      transition:.28s ease;
+    }
 
+    .plan-card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(212,175,55,.25);
+    }
+
+    .plan-card.featured{
+      border:1px solid rgba(212,175,55,.38);
+      background:linear-gradient(180deg, rgba(212,175,55,.10), rgba(255,255,255,.03));
+      box-shadow:var(--shadow-gold);
+    }
+
+    .chip{
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+    }
+
+    .active-tab{
+      background:linear-gradient(135deg, #f3df92 0%, #d6ab35 100%) !important;
+      color:#120d00 !important;
+      box-shadow:var(--shadow-gold);
+    }
+
+    .input-dark{
+      width:100%;
+      color:#fff;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      padding:14px 16px;
+      outline:none;
+    }
+
+    .input-dark:focus{
+      border-color:rgba(212,175,55,.38);
+      box-shadow:0 0 0 4px rgba(212,175,55,.08);
+    }
+
+    .drop-zone{
+      border:1px dashed rgba(212,175,55,.35);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      border-radius:32px;
+    }
+
+    .toast{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      z-index:300;
+      transform:translateY(120%);
+      transition:.32s ease;
+      background:#fff4d1;
+      color:#161002;
+      border-radius:16px;
+      box-shadow:0 18px 42px rgba(0,0,0,.24);
+    }
+
+    .toast.show{transform:translateY(0)}
+
+    .video-stage{
+      position:relative;
+      overflow:hidden;
+      border-radius:28px;
+      background:#000;
+      border:1px solid rgba(255,255,255,.08);
+      min-height:280px;
+    }
+
+    .video-stage video{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+      max-height:520px;
+      background:#000;
+    }
+
+    .watermark{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+      font-size:clamp(42px,8vw,130px);
+      line-height:.9;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.20);
+      text-shadow:0 0 40px rgba(0,0,0,.48);
+      transform:rotate(-18deg);
+      user-select:none;
+      white-space:nowrap;
+    }
+
+    .rtl{direction:rtl}
+    .rtl .ltr-only{direction:ltr}
+    .rtl .nav-start{flex-direction:row-reverse}
+    .rtl .hero-cta{flex-direction:row-reverse}
+    .rtl .footer-links{flex-direction:row-reverse}
+    .rtl .price-modes{flex-direction:row-reverse}
+    .rtl .lang-row{flex-direction:row-reverse}
+
+    .muted{color:var(--muted)}
+    .muted-2{color:var(--muted-2)}
+
+    @media (max-width: 1024px){
+      .section{padding-top:168px}
+    }
+
+    @media (max-width: 768px){
+      .section{padding-top:182px}
+      .nav-shell{
+        width:96%;
+        padding:12px 14px !important;
+      }
+      .promo-banner{
+        font-size:10px;
+      }
+      .watermark{
+        font-size:clamp(34px,13vw,88px);
+      }
+    }
+  </style>
 </head>
-
-<body class="marble">
-
-
-<!-- NAV -->
-
-<nav class="fixed top-0 left-0 w-full p-6 flex justify-between items-center bg-black/40 backdrop-blur">
-
-<div class="text-xl font-black gold">
-CASA CLIP
-</div>
-
-<div class="flex gap-4">
-
-<select id="lang" class="bg-black border border-white/10 p-2 rounded">
-<option value="fr">FR</option>
-<option value="en">EN</option>
-<option value="es">ES</option>
-<option value="ar">AR</option>
-<option value="zh">ZH</option>
-<option value="hi">HI</option>
-</select>
-
-<select id="currency" class="bg-black border border-white/10 p-2 rounded">
-<option value="EUR">€</option>
-<option value="USD">$</option>
-<option value="GBP">£</option>
-<option value="SAR">SAR</option>
-<option value="AED">AED</option>
-<option value="JPY">JPY</option>
-<option value="CNY">¥</option>
-<option value="INR">₹</option>
-</select>
-
-</div>
-
-</nav>
-
-
-<!-- HERO -->
-
-<section class="flex flex-col items-center justify-center text-center">
-
-<h1 class="text-6xl md:text-8xl font-black mb-6">
-
-Sovereign
-<span class="gold">GPU</span>
-
-</h1>
-
-<p class="max-w-xl opacity-60 text-lg mb-10">
-
-Infrastructure GPU souveraine pour créateurs, IA et rendu haute performance.
-
-</p>
-
-<button class="gold-btn">
-
-Commencer
-
-</button>
-
-</section>
-
-
-<!-- PRICING -->
-
-<section>
-
-<h2 class="text-5xl font-black text-center mb-16 gold">
-
-Elite Pricing
-
-</h2>
-
-<div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-
-
-<div class="card text-center">
-
-<h3 class="text-xl mb-6 gold">
-
-Essential
-
-</h3>
-
-<p class="text-5xl font-black mb-6" id="p1">
-
-14€
-
-</p>
-
-<ul class="opacity-60 mb-8 space-y-2">
-
-<li>GPU Render 4K</li>
-<li>500GB Storage</li>
-<li>Standard Support</li>
-
-</ul>
-
-<button class="gold-btn w-full">
-
-Subscribe
-
-</button>
-
-</div>
-
-
-<div class="card card-premium text-center scale-105">
-
-<h3 class="text-xl mb-6 gold">
-
-Creator Pro
-
-</h3>
-
-<p class="text-5xl font-black mb-6" id="p2">
-
-29€
-
-</p>
-
-<ul class="opacity-60 mb-8 space-y-2">
-
-<li>8K Multi Node</li>
-<li>AI Assets</li>
-<li>Priority Support</li>
-
-</ul>
-
-<button class="gold-btn w-full">
-
-Subscribe
-
-</button>
-
-</div>
-
-
-<div class="card text-center">
-
-<h3 class="text-xl mb-6 gold">
-
-Power
-
-</h3>
-
-<p class="text-5xl font-black mb-6" id="p3">
-
-49€
-
-</p>
-
-<ul class="opacity-60 mb-8 space-y-2">
-
-<li>Unlimited GPU</li>
-<li>Cluster Access</li>
-<li>Enterprise API</li>
-
-</ul>
-
-<button class="gold-btn w-full">
-
-Contact
-
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<script>
-
-const prices=[14.9,29.9,49.9]
-
-const rates={
-EUR:1,
-USD:1.08,
-GBP:0.86,
-SAR:4.05,
-AED:3.97,
-JPY:161,
-CNY:7.7,
-INR:89.9
-}
-
-const symbols={
-EUR:"€",
-USD:"$",
-GBP:"£",
-SAR:"ر.س",
-AED:"د.إ",
-JPY:"¥",
-CNY:"¥",
-INR:"₹"
-}
-
-function updatePrices(){
-
-const currency=document.getElementById("currency").value
-
-const rate=rates[currency
+<body>
+
+  <div id="toast" class="toast px-5 py-4 text-[12px] font-extrabold uppercase tracking-[0.18em]">
+    Action validée
+  </div>
+
+  <div class="promo-banner fixed top-0 left-0 w-full z-[130] py-2.5 px-4 text-center text-[10px] font-extrabold uppercase tracking-[0.34em]">
+    <span id="promo-txt">OFFRE LIMITÉE</span>
+    —
+    <span id="spots">42</span>
+    <span id="left-txt">PLACES RESTANTES</span>
+  </div>
+
+  <nav class="fixed top-10 left-1/2 -translate-x-1/2 w-[95%] max-w-[1280px] z-[120] nav-shell glass rounded-[28px] p-4">
+    <div class="flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 nav-start cursor-pointer" onclick="App.view('hero')" aria-label="CASA CLIP Home">
+        <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-black text-lg gold-line bg-[rgba(212,175,55,.12)] text-[#f5df97]">
+          CC
+        </div>
+        <div>
+          <div class="text-sm font-black uppercase tracking-[0.22em]">CASA CLIP</div>
+          <div id="brand-sub" class="text-[10px] uppercase tracking-[0.35em] muted-2">SOVEREIGN GPU ELITE</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 lang-row">
+        <select id="lang" class="input-dark !w-auto !py-3 !px-4 text-[12px] font-bold uppercase ltr-only" aria-label="Language">
+          <option value="fr">FR</option>
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+          <option value="ar">AR</option>
+          <option value="zh">ZH</option>
+          <option value="hi">HI</option>
+        </select>
+
+        <select id="currency" class="input-dark !w-auto !py-3 !px-4 text-[12px] font-bold uppercase ltr-only" aria-label="Currency">
+          <option value="EUR">EUR €</option>
+          <option value="USD">USD $</option>
+          <option value="GBP">GBP £</option>
+          <option value="CHF">CHF Fr</option>
+          <option value="CAD">CAD $</option>
+          <option value="AUD">AUD $</option>
+          <option value="SGD">SGD $</option>
+          <option value="SAR">SAR ر.س</option>
+          <option value="AED">AED د.إ</option>
+          <option value="QAR">QAR ر.ق</option>
+          <option value="KWD">KWD د.ك</option>
+          <option value="BHD">BHD د.ب</option>
+          <option value="OMR">OMR ر.ع.</option>
+          <option value="MAD">MAD د.م.</option>
+          <option value="DZD">DZD د.ج</option>
+          <option value="TND">TND د.ت</option>
+          <option value="EGP">EGP ج.م</option>
+          <option value="TRY">TRY ₺</option>
+          <option value="CNY">CNY ¥</option>
+          <option value="JPY">JPY ¥</option>
+          <option value="INR">INR ₹</option>
+        </select>
+
+        <button id="n-log" onclick="App.notify(App.t('loginLocked'))" class="btn-ghost px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]">
+          Connexion
+        </button>
+
+        <button id="n-sig" onclick="App.view('pricing')" class="btn-gold px-6 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]">
+          Inscription
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section id="hero" class="section active justify-center text-center">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 w-full max-w-5xl">
+      <div class="stats-card p-5">
+        <p id="s1-label" class="text-[10px] uppercase tracking-[0.24em] muted-2">GPU LOAD</p>
+        <p class="mt-2 text-[28px] md:text-[34px] font-black gold-text">98.2%</p>
+      </div>
+      <div class="stats-card p-5">
+        <p id="s2-label" class="text-[10px] uppercase tracking-[0.24em] muted-2">NODES ACTIVE</p>
+        <p class="mt-2 text-[28px] md:text-[34px] font-black gold-text">1,024</p>
+      </div>
+      <div class="stats-card p-5">
+        <p id="s3-label" class="text-[10px] uppercase tracking-[0.24em] muted-2">LATENCY</p>
+        <p class="mt-2 text-[28px] md:text-[34px] font-black gold-text">0.4ms</p>
+      </div>
+      <div class="stats-card p-5">
+        <p id="s4-label" class="text-[10px] uppercase tracking-[0.24em] muted-2">ENGINE</p>
+        <p class="mt-2 text-[28px] md:text-[34px] font-black gold-text">v5.0</p>
+      </div>
+    </div>
+
+    <div class="max-w-5xl">
+      <div id="eyebrow" class="mb-5 text-[11px] font-extrabold uppercase tracking-[0.55em] muted-2">SOVEREIGN INFRASTRUCTURE</div>
+
+      <h1 id="h-title" class="text-[52px] sm:text-[66px] md:text-[92px] lg:text-[116px] leading-[0.88] font-black uppercase tracking-[-0.05em]">
+        Vision <span class="gold-text">Souveraine</span>
+      </h1>
+
+      <p id="h-desc" class="mx-auto mt-7 max-w-3xl text-[16px] md:text-[19px] leading-relaxed muted">
+        L’infrastructure GPU premium conçue pour les créateurs exigeants, les studios vidéo et les flux de rendu haute performance.
+      </p>
+
+      <div class="hero-cta mt-10 flex flex-wrap items-center justify-center gap-4">
+        <button id="h-btn" onclick="App.view('pricing')" class="btn-gold px-8 py-4 text-[12px] font-black uppercase tracking-[0.20em]">
+          Commencer
+        </button>
+
+        <button id="h-test" onclick="App.view('studio')" class="btn-ghost px-8 py-4 text-[12px] font-black uppercase tracking-[0.20em]">
+          Tester
+        </button>
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
+        <div class="feature-card p-6">
+          <p id="f1-title" class="text-[13px] font-black uppercase tracking-[0.2em]">Rendu accéléré</p>
+          <p id="f1-desc" class="mt-3 text-[14px] leading-7 muted">
+            Rendement optimisé pour la vidéo, l’IA créative et les pipelines de production intensifs.
+          </p>
+        </div>
+
+        <div class="feature-card p-6">
+          <p id="f2-title" class="text-[13px] font-black uppercase tracking-[0.2em]">Workflow studio</p>
+          <p id="f2-desc" class="mt-3 text-[14px] leading-7 muted">
+            Import, test, traitement et livraison dans une interface pensée pour la rapidité et la clarté.
+          </p>
+        </div>
+
+        <div class="feature-card p-6">
+          <p id="f3-title" class="text-[13px] font-black uppercase tracking-[0.2em]">Priorité premium</p>
+          <p id="f3-desc" class="mt-3 text-[14px] leading-7 muted">
+            Accès prioritaire, performance stable et environnement calibré pour les créateurs professionnels.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="section w-full max-w-[1360px] mx-auto">
+    <div class="w-full text-center">
+      <div id="p-overline" class="text-[11px] uppercase tracking-[0.55em] font-extrabold muted-2">PREMIUM ACCESS</div>
+      <h2 id="p-title" class="mt-4 text-[42px] md:text-[62px] font-black uppercase tracking-[-0.04em]">Tarifs Elite</h2>
+      <p id="p-desc" class="mt-4 mx-auto max-w-2xl text-[16px] leading-7 muted">
+        Choisissez la formule adaptée à votre niveau d’exigence, à votre fréquence d’utilisation et à votre volume de production.
+      </p>
+    </div>
+
+    <div class="price-modes mt-12 flex justify-center">
+      <div class="glass rounded-full p-1.5 flex gap-1 border border-white/10">
+        <button id="m-libre" onclick="App.setMode('libre')" class="chip px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white">
+          Libre
+        </button>
+        <button id="m-fidel" onclick="App.setMode('fidel')" class="chip active-tab px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em]">
+          Engagement
+        </button>
+        <button id="m-annue" onclick="App.setMode('annue')" class="chip px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white">
+          Annuel
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-14 grid grid-cols-1 lg:grid-cols-3 gap-7 w-full">
+      <article class="plan-card p-8 lg:p-10 flex flex-col justify-between">
+        <div>
+          <div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]" id="tier1-tag">TIER 01</div>
+          <h3 id="tier1-name" class="mt-4 text-[28px] font-black">Essential</h3>
+          <div id="pr-1" class="mt-6 text-[52px] leading-none font-black tracking-[-0.05em] gold-text">14,99 €</div>
+          <p id="lg-1" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">Contrat 12 mois</p>
+
+          <div class="mt-8 space-y-4 text-[14px] leading-7">
+            <p id="t1-f1">✓ Rendu GPU 4K</p>
+            <p id="t1-f2">✓ 500 GB de stockage cloud</p>
+            <p id="t1-f3">✓ Support standard</p>
+            <p id="t1-f4">✓ File d’attente prioritaire niveau 1</p>
+          </div>
+        </div>
+
+        <button class="btn-ghost mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em] sub-txt">
+          S’abonner
+        </button>
+      </article>
+
+      <article class="plan-card featured p-8 lg:p-10 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-4">
+            <div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]" id="tier2-tag">TIER 02</div>
+            <div id="popular-chip" class="chip px-4 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#f7dfa0] border-[rgba(212,175,55,.35)] bg-[rgba(212,175,55,.10)]">
+              Le plus choisi
+            </div>
+          </div>
+
+          <h3 id="tier2-name" class="mt-4 text-[28px] font-black">Creator Pro</h3>
+          <div id="pr-2" class="mt-6 text-[58px] leading-none font-black tracking-[-0.05em] gold-text">29,99 €</div>
+          <p id="lg-2" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">Contrat 12 mois</p>
+
+          <div class="mt-8 space-y-4 text-[14px] leading-7">
+            <p id="t2-f1">✓ Rendu 8K multi-node</p>
+            <p id="t2-f2">✓ Assets IA illimités</p>
+            <p id="t2-f3">✓ Accès prioritaire</p>
+            <p id="t2-f4">✓ File d’attente premium et traitement renforcé</p>
+          </div>
+        </div>
+
+        <button class="btn-gold mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em] sub-txt">
+          S’abonner
+        </button>
+      </article>
+
+      <article class="plan-card p-8 lg:p-10 flex flex-col justify-between">
+        <div>
+          <div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]" id="tier3-tag">TIER 03</div>
+          <h3 id="tier3-name" class="mt-4 text-[28px] font-black">Power</h3>
+          <div id="pr-3" class="mt-6 text-[52px] leading-none font-black tracking-[-0.05em] gold-text">49,99 €</div>
+          <p id="lg-3" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">Contrat 12 mois</p>
+
+          <div class="mt-8 space-y-4 text-[14px] leading-7">
+            <p id="t3-f1">✓ Traitement GPU intensif</p>
+            <p id="t3-f2">✓ Accès cluster avancé</p>
+            <p id="t3-f3">✓ API entreprise</p>
+            <p id="t3-f4">✓ Support dédié et files de rendu renforcées</p>
+          </div>
+        </div>
+
+        <button id="contact-btn" class="btn-ghost mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em]">
+          Contacter
+        </button>
+      </article>
+    </div>
+  </section>
+
+  <section id="studio" class="section w-full max-w-[1260px] mx-auto">
+    <div class="w-full text-center">
+      <div id="studio-overline" class="text-[11px] uppercase tracking-[0.55em] font-extrabold muted-2">TEST STUDIO</div>
+      <h2 id="studio-title" class="mt-4 text-[42px] md:text-[62px] font-black uppercase tracking-[-0.04em]">
+        Tester votre vidéo
+      </h2>
+      <p id="studio-desc" class="mt-4 mx-auto max-w-3xl text-[16px] leading-7 muted">
+        Chargez un extrait vidéo pour prévisualiser le rendu avec un marquage CASA CLIP visible sur le résultat de test.
+      </p>
+    </div>
+
+    <div class="studio-card mt-12 glass p-6 md:p-8 w-full rounded-[32px]">
+      <div class="grid grid-cols-1 xl:grid-cols-[1.05fr_.95fr] gap-8 items-start">
+        <div>
+          <div class="drop-zone p-6 md:p-8">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div>
+                <div id="drop-title" class="text-[18px] font-black">Importer une vidéo de test</div>
+                <p id="drop-desc" class="mt-2 text-[14px] leading-7 muted">
+                  Formats conseillés : MP4, MOV, WEBM. Le résultat de test affiche un marquage CASA CLIP au centre.
+                </p>
+              </div>
+              <button id="pick-video" onclick="document.getElementById('video-file').click()" class="btn-gold px-6 py-3 text-[12px] font-black uppercase tracking-[0.18em]">
+                Choisir une vidéo
+              </button>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label id="source-url-label" for="url-studio" class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">
+                  URL source optionnelle
+                </label>
+                <input id="url-studio" class="input-dark" type="text" placeholder="https://..." />
+              </div>
+              <div>
+                <label id="test-note-label" for="test-note" class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">
+                  Nom du test
+                </label>
+                <input id="test-note" class="input-dark" type="text" placeholder="Mon rendu d’essai" />
+              </div>
+            </div>
+
+            <input type="file" id="video-file" class="hidden" accept="video/mp4,video/quicktime,video/webm" />
+
+            <div class="mt-6 flex flex-wrap gap-3">
+              <button id="launch-test" onclick="App.launchTest()" class="btn-gold px-7 py-4 text-[12px] font-black uppercase tracking-[0.18em]">
+                Lancer le test
+              </button>
+              <button id="clear-test" onclick="App.clearVideo()" class="btn-ghost px-7 py-4 text-[12px] font-black uppercase tracking-[0.18em]">
+                Réinitialiser
+              </button>
+            </div>
+
+            <p id="studio-footnote" class="mt-5 text-[12px] leading-6 muted-2">
+              Le test affiché ici est une prévisualisation. Le watermark CASA CLIP protège le résultat d’essai.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <div class="video-stage">
+            <video id="video-preview" controls playsinline preload="metadata"></video>
+            <div id="video-placeholder" class="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
+              <div class="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-black gold-line bg-[rgba(212,175,55,.10)] text-[#f5df97]">▶</div>
+              <p id="preview-title" class="mt-5 text-[18px] font-black">Prévisualisation de test</p>
+              <p id="preview-desc" class="mt-3 max-w-md text-[14px] leading-7 muted">
+                Votre vidéo apparaîtra ici avec le marquage CASA CLIP visible en grand sur le résultat.
+              </p>
+            </div>
+            <div id="watermark" class="watermark">CASA CLIP</div>
+          </div>
+
+          <div class="mt-5 grid grid-cols-2 gap-4">
+            <div class="feature-card p-5">
+              <p id="meta-1-label" class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Mode</p>
+              <p id="meta-1-value" class="mt-2 text-[15px] font-bold">Test sécurisé</p>
+            </div>
+            <div class="feature-card p-5">
+              <p id="meta-2-label" class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Watermark</p>
+              <p id="meta-2-value" class="mt-2 text-[15px] font-bold">CASA CLIP</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="mt-10 border-t border-white/5 bg-black/40 backdrop-blur px-[5%] py-10">
+    <div class="max-w-[1320px] mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+      <div>
+        <div class="text-[24px] font-black uppercase tracking-[0.18em] gold-text">CASA CLIP</div>
+        <p id="footer-copy" class="mt-3 text-[13px] leading-7 muted max-w-xl">
+          Plateforme premium de rendu GPU, de test vidéo et de production créative conçue pour les utilisateurs exigeants.
+        </p>
+      </div>
+
+      <div class="footer-links flex flex-wrap items-center gap-6 text-[11px] font-extrabold uppercase tracking-[0.18em] muted">
+        <a id="footer-link-1" href="#" class="hover:text-[#f4df97] transition">Conditions</a>
+        <a id="footer-link-2" href="#" class="hover:text-[#f4df97] transition">Confidentialité</a>
+        <a id="footer-link-3" href="#" class="hover:text-[#f4df97] transition">Infrastructure</a>
+        <a id="footer-link-4" href="#" class="hover:text-[#f4df97] transition">Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const App = {
+      state: {
+        mode: 'fidel',
+        lang: 'fr',
+        spots: 42,
+        videoUrl: null
+      },
+
+      basePricesEUR: {
+        libre: [19, 39, 59],
+        fidel: [14, 29, 49],
+        annue: [149, 290, 490]
+      },
+
+      // Taux de démonstration fixes pour l’interface.
+      // Pour une production réelle : remplacer par une API de change côté serveur.
+      currencyConfig: {
+        EUR: { rate: 1.00, locale: 'fr-FR', symbol: '€', position: 'after', space: true },
+        USD: { rate: 1.08, locale: 'en-US', symbol: '$', position: 'before', space: false },
+        GBP: { rate: 0.86, locale: 'en-GB', symbol: '£', position: 'before', space: false },
+        CHF: { rate: 0.95, locale: 'de-CH', symbol: 'CHF', position: 'after', space: true },
+        CAD: { rate: 1.46, locale: 'en-CA', symbol: 'CAD$', position: 'before', space: false },
+        AUD: { rate: 1.66, locale: 'en-AU', symbol: 'A$', position: 'before', space: false },
+        SGD: { rate: 1.45, locale: 'en-SG', symbol: 'S$', position: 'before', space: false },
+        SAR: { rate: 4.05, locale: 'ar-SA', symbol: 'ر.س', position: 'after', space: true },
+        AED: { rate: 3.97, locale: 'ar-AE', symbol: 'د.إ', position: 'after', space: true },
+        QAR: { rate: 3.93, locale: 'ar-QA', symbol: 'ر.ق', position: 'after', space: true },
+        KWD: { rate: 0.33, locale: 'ar-KW', symbol: 'د.ك', position: 'after', space: true },
+        BHD: { rate: 0.41, locale: 'ar-BH', symbol: 'د.ب', position: 'after', space: true },
+        OMR: { rate: 0.42, locale: 'ar-OM', symbol: 'ر.ع.', position: 'after', space: true },
+        MAD: { rate: 10.86, locale: 'fr-MA', symbol: 'د.م.', position: 'after', space: true },
+        DZD: { rate: 144.50, locale: 'ar-DZ', symbol: 'د.ج', position: 'after', space: true },
+        TND: { rate: 3.39, locale: 'fr-TN', symbol: 'د.ت', position: 'after', space: true },
+        EGP: { rate: 53.50, locale: 'ar-EG', symbol: 'ج.م', position: 'after', space: true },
+        TRY: { rate: 37.90, locale: 'tr-TR', symbol: '₺', position: 'before', space: false },
+        CNY: { rate: 7.80, locale: 'zh-CN', symbol: '¥', position: 'before', space: false },
+        JPY: { rate: 161.00, locale: 'ja-JP', symbol: '¥', position: 'before', space: false },
+        INR: { rate: 90.20, locale: 'hi-IN', symbol: '₹', position: 'before', space: false }
+      },
+
+      translations: {
+        fr: {
+          htmlLang: 'fr',
+          dir: 'ltr',
+          promo: 'OFFRE LIMITÉE',
+          left: 'PLACES RESTANTES',
+          brandSub: 'SOVEREIGN GPU ELITE',
+          login: 'Connexion',
+          signup: 'Inscription',
+          loginLocked: 'Accès restreint',
+          stats: ['Charge GPU', 'Nœuds actifs', 'Latence', 'Moteur'],
+          eyebrow: 'INFRASTRUCTURE SOUVERAINE',
+          heroTitleA: 'Vision',
+          heroTitleB: 'Souveraine',
+          heroDesc: 'L’infrastructure GPU premium conçue pour les créateurs exigeants, les studios vidéo et les flux de rendu haute performance.',
+          heroStart: 'Commencer',
+          heroTest: 'Tester',
+          features: [
+            ['Rendu accéléré', 'Rendement optimisé pour la vidéo, l’IA créative et les pipelines de production intensifs.'],
+            ['Workflow studio', 'Import, test, traitement et livraison dans une interface pensée pour la rapidité et la clarté.'],
+            ['Priorité premium', 'Accès prioritaire, performance stable et environnement calibré pour les créateurs professionnels.']
+          ],
+          pricingOverline: 'ACCÈS PREMIUM',
+          pricingTitle: 'Tarifs Elite',
+          pricingDesc: 'Choisissez la formule adaptée à votre niveau d’exigence, à votre fréquence d’utilisation et à votre volume de production.',
+          modeLibre: 'Libre',
+          modeFidel: 'Engagement',
+          modeAnnue: 'Annuel',
+          popular: 'Le plus choisi',
+          tierTag1: 'TIER 01',
+          tierTag2: 'TIER 02',
+          tierTag3: 'TIER 03',
+          tier1: 'Essential',
+          tier2: 'Creator Pro',
+          tier3: 'Power',
+          leg1: 'Sans engagement',
+          leg2: 'Contrat 12 mois',
+          leg3: 'Paiement annuel',
+          sub: 'S’abonner',
+          contact: 'Contacter',
+          plans: {
+            t1: ['✓ Rendu GPU 4K', '✓ 500 GB de stockage cloud', '✓ Support standard', '✓ File d’attente prioritaire niveau 1'],
+            t2: ['✓ Rendu 8K multi-node', '✓ Assets IA illimités', '✓ Accès prioritaire', '✓ File d’attente premium et traitement renforcé'],
+            t3: ['✓ Traitement GPU intensif', '✓ Accès cluster avancé', '✓ API entreprise', '✓ Support dédié et files de rendu renforcées']
+          },
+          studioOverline: 'TEST STUDIO',
+          studioTitle: 'Tester votre vidéo',
+          studioDesc: 'Chargez un extrait vidéo pour prévisualiser le rendu avec un marquage CASA CLIP visible sur le résultat de test.',
+          dropTitle: 'Importer une vidéo de test',
+          dropDesc: 'Formats conseillés : MP4, MOV, WEBM. Le résultat de test affiche un marquage CASA CLIP au centre.',
+          pickVideo: 'Choisir une vidéo',
+          sourceUrl: 'URL source optionnelle',
+          testName: 'Nom du test',
+          testPlaceholder: 'Mon rendu d’essai',
+          launchTest: 'Lancer le test',
+          clearTest: 'Réinitialiser',
+          studioFootnote: 'Le test affiché ici est une prévisualisation. Le watermark CASA CLIP protège le résultat d’essai.',
+          previewTitle: 'Prévisualisation de test',
+          previewDesc: 'Votre vidéo apparaîtra ici avec le marquage CASA CLIP visible en grand sur le résultat.',
+          metaMode: 'Mode',
+          metaModeValue: 'Test sécurisé',
+          metaWatermark: 'Watermark',
+          metaWatermarkValue: 'CASA CLIP',
+          footerCopy: 'Plateforme premium de rendu GPU, de test vidéo et de production créative conçue pour les utilisateurs exigeants.',
+          footerLinks: ['Conditions', 'Confidentialité', 'Infrastructure', 'Support'],
+          toasts: {
+            view: 'Navigation',
+            pick: 'Vidéo chargée',
+            noVideo: 'Ajoutez une vidéo pour lancer le test',
+            launched: 'Prévisualisation de test prête',
+            cleared: 'Prévisualisation réinitialisée',
+            contact: 'Contact commercial',
+            subscribe: 'Redirection abonnement'
+          }
+        },
+
+        en: {
+          htmlLang: 'en',
+          dir: 'ltr',
+          promo: 'LIMITED OFFER',
+          left: 'SPOTS LEFT',
+          brandSub: 'SOVEREIGN GPU ELITE',
+          login: 'Login',
+          signup: 'Sign Up',
+          loginLocked: 'Restricted access',
+          stats: ['GPU Load', 'Active Nodes', 'Latency', 'Engine'],
+          eyebrow: 'SOVEREIGN INFRASTRUCTURE',
+          heroTitleA: 'Sovereign',
+          heroTitleB: 'Vision',
+          heroDesc: 'Premium GPU infrastructure built for demanding creators, video studios and high-performance rendering workflows.',
+          heroStart: 'Get Started',
+          heroTest: 'Test',
+          features: [
+            ['Accelerated rendering', 'Optimized output for video, creative AI and intensive production pipelines.'],
+            ['Studio workflow', 'Import, test, process and deliver through an interface designed for speed and clarity.'],
+            ['Premium priority', 'Priority access, stable performance and an environment tuned for professional creators.']
+          ],
+          pricingOverline: 'PREMIUM ACCESS',
+          pricingTitle: 'Elite Pricing',
+          pricingDesc: 'Choose the plan that matches your level of demand, usage frequency and production volume.',
+          modeLibre: 'Flexible',
+          modeFidel: 'Commitment',
+          modeAnnue: 'Yearly',
+          popular: 'Most selected',
+          tierTag1: 'TIER 01',
+          tierTag2: 'TIER 02',
+          tierTag3: 'TIER 03',
+          tier1: 'Essential',
+          tier2: 'Creator Pro',
+          tier3: 'Power',
+          leg1: 'No commitment',
+          leg2: '12-month contract',
+          leg3: 'Annual payment',
+          sub: 'Subscribe',
+          contact: 'Contact',
+          plans: {
+            t1: ['✓ 4K GPU rendering', '✓ 500 GB cloud storage', '✓ Standard support', '✓ Priority queue level 1'],
+            t2: ['✓ 8K multi-node rendering', '✓ Unlimited AI assets', '✓ Priority access', '✓ Premium queue and reinforced processing'],
+            t3: ['✓ Intensive GPU processing', '✓ Advanced cluster access', '✓ Enterprise API', '✓ Dedicated support and reinforced render queues']
+          },
+          studioOverline: 'STUDIO TEST',
+          studioTitle: 'Test your video',
+          studioDesc: 'Upload a video sample to preview the result with a large CASA CLIP watermark displayed on the test output.',
+          dropTitle: 'Upload a test video',
+          dropDesc: 'Recommended formats: MP4, MOV, WEBM. The test result displays a centered CASA CLIP watermark.',
+          pickVideo: 'Choose a video',
+          sourceUrl: 'Optional source URL',
+          testName: 'Test name',
+          testPlaceholder: 'My test render',
+          launchTest: 'Launch test',
+          clearTest: 'Reset',
+          studioFootnote: 'The result shown here is a preview. The CASA CLIP watermark protects the test output.',
+          previewTitle: 'Test preview',
+          previewDesc: 'Your video will appear here with a large CASA CLIP mark visible on the result.',
+          metaMode: 'Mode',
+          metaModeValue: 'Protected test',
+          metaWatermark: 'Watermark',
+          metaWatermarkValue: 'CASA CLIP',
+          footerCopy: 'Premium GPU rendering, video testing and creative production platform designed for demanding users.',
+          footerLinks: ['Terms', 'Privacy', 'Infrastructure', 'Support'],
+          toasts: {
+            view: 'Navigation',
+            pick: 'Video loaded',
+            noVideo: 'Add a video before launching the test',
+            launched: 'Test preview ready',
+            cleared: 'Preview reset',
+            contact: 'Sales contact',
+            subscribe: 'Subscription redirect'
+          }
+        },
+
+        es: {
+          htmlLang: 'es',
+          dir: 'ltr',
+          promo: 'OFERTA LIMITADA',
+          left: 'PLAZAS DISPONIBLES',
+          brandSub: 'GPU SOBERANA ELITE',
+          login: 'Acceso',
+          signup: 'Registro',
+          loginLocked: 'Acceso restringido',
+          stats: ['Carga GPU', 'Nodos activos', 'Latencia', 'Motor'],
+          eyebrow: 'INFRAESTRUCTURA SOBERANA',
+          heroTitleA: 'Visión',
+          heroTitleB: 'Soberana',
+          heroDesc: 'Infraestructura GPU premium creada para creadores exigentes, estudios de vídeo y flujos de renderizado de alto rendimiento.',
+          heroStart: 'Empezar',
+          heroTest: 'Probar',
+          features: [
+            ['Renderizado acelerado', 'Rendimiento optimizado para vídeo, IA creativa y flujos de producción intensivos.'],
+            ['Flujo de estudio', 'Importa, prueba, procesa y entrega desde una interfaz pensada para la rapidez y la claridad.'],
+            ['Prioridad premium', 'Acceso prioritario, rendimiento estable y un entorno calibrado para creadores profesionales.']
+          ],
+          pricingOverline: 'ACCESO PREMIUM',
+          pricingTitle: 'Precios Elite',
+          pricingDesc: 'Elige la fórmula adaptada a tu nivel de exigencia, a tu frecuencia de uso y a tu volumen de producción.',
+          modeLibre: 'Flexible',
+          modeFidel: 'Compromiso',
+          modeAnnue: 'Anual',
+          popular: 'Más elegido',
+          tierTag1: 'TIER 01',
+          tierTag2: 'TIER 02',
+          tierTag3: 'TIER 03',
+          tier1: 'Essential',
+          tier2: 'Creator Pro',
+          tier3: 'Power',
+          leg1: 'Sin compromiso',
+          leg2: 'Contrato de 12 meses',
+          leg3: 'Pago anual',
+          sub: 'Suscribirse',
+          contact: 'Contactar',
+          plans: {
+            t1: ['✓ Renderizado GPU 4K', '✓ 500 GB de almacenamiento en la nube', '✓ Soporte estándar', '✓ Cola prioritaria nivel 1'],
+            t2: ['✓ Renderizado 8K multi-nodo', '✓ Recursos de IA ilimitados', '✓ Acceso prioritario', '✓ Cola premium y procesamiento reforzado'],
+            t3: ['✓ Procesamiento GPU intensivo', '✓ Acceso avanzado al clúster', '✓ API empresarial', '✓ Soporte dedicado y colas de render reforzadas']
+          },
+          studioOverline: 'PRUEBA DE ESTUDIO',
+          studioTitle: 'Probar tu vídeo',
+          studioDesc: 'Carga un fragmento de vídeo para previsualizar el resultado con una marca CASA CLIP visible sobre la salida de prueba.',
+          dropTitle: 'Importar un vídeo de prueba',
+          dropDesc: 'Formatos recomendados: MP4, MOV, WEBM. El resultado de prueba muestra una marca CASA CLIP centrada.',
+          pickVideo: 'Elegir vídeo',
+          sourceUrl: 'URL de origen opcional',
+          testName: 'Nombre de la prueba',
+          testPlaceholder: 'Mi render de prueba',
+          launchTest: 'Lanzar prueba',
+          clearTest: 'Reiniciar',
+          studioFootnote: 'El resultado mostrado aquí es una previsualización. La marca CASA CLIP protege la salida de prueba.',
+          previewTitle: 'Previsualización de prueba',
+          previewDesc: 'Tu vídeo aparecerá aquí con la marca CASA CLIP visible en grande sobre el resultado.',
+          metaMode: 'Modo',
+          metaModeValue: 'Prueba protegida',
+          metaWatermark: 'Marca',
+          metaWatermarkValue: 'CASA CLIP',
+          footerCopy: 'Plataforma premium de renderizado GPU, prueba de vídeo y producción creativa diseñada para usuarios exigentes.',
+          footerLinks: ['Condiciones', 'Privacidad', 'Infraestructura', 'Soporte'],
+          toasts: {
+            view: 'Navegación',
+            pick: 'Vídeo cargado',
+            noVideo: 'Añade un vídeo antes de lanzar la prueba',
+            launched: 'Previsualización lista',
+            cleared: 'Previsualización reiniciada',
+            contact: 'Contacto comercial',
+            subscribe: 'Redirección de suscripción'
+          }
+        },
+
+        ar: {
+          htmlLang: 'ar',
+          dir: 'rtl',
+          promo: 'عرض محدود',
+          left: 'أماكن متبقية',
+          brandSub: 'منصة GPU سيادية فاخرة',
+          login: 'تسجيل الدخول',
+          signup: 'إنشاء حساب',
+          loginLocked: 'وصول مقيّد',
+          stats: ['حمل المعالجة', 'العُقد النشطة', 'زمن الاستجابة', 'المحرك'],
+          eyebrow: 'بنية سيادية متقدمة',
+          heroTitleA: 'رؤية',
+          heroTitleB: 'سيادية',
+          heroDesc: 'بنية GPU فاخرة صُمّمت للمبدعين المحترفين، واستوديوهات الفيديو، ومسارات الرندر عالية الأداء.',
+          heroStart: 'ابدأ',
+          heroTest: 'جرّب',
+          features: [
+            ['رندر مُسرّع', 'أداء محسّن للفيديو والذكاء الاصطناعي الإبداعي ومسارات الإنتاج المكثفة.'],
+            ['سير عمل الاستوديو', 'استيراد وتجربة ومعالجة وتسليم داخل واجهة مصممة للسرعة والوضوح.'],
+            ['أولوية فاخرة', 'وصول ذو أولوية، أداء ثابت، وبيئة مهيأة للمبدعين المحترفين.']
+          ],
+          pricingOverline: 'وصول فاخر',
+          pricingTitle: 'الأسعار المميزة',
+          pricingDesc: 'اختر الباقة المناسبة لمستوى احتياجك، وتكرار استخدامك، وحجم إنتاجك.',
+          modeLibre: 'مرن',
+          modeFidel: 'التزام',
+          modeAnnue: 'سنوي',
+          popular: 'الأكثر اختياراً',
+          tierTag1: 'الفئة 01',
+          tierTag2: 'الفئة 02',
+          tierTag3: 'الفئة 03',
+          tier1: 'Essential',
+          tier2: 'Creator Pro',
+          tier3: 'Power',
+          leg1: 'بدون التزام',
+          leg2: 'عقد لمدة 12 شهراً',
+          leg3: 'دفع سنوي',
+          sub: 'اشترك',
+          contact: 'تواصل',
+          plans: {
+            t1: ['✓ رندر GPU بدقة 4K', '✓ سعة تخزين سحابي 500 جيجابايت', '✓ دعم قياسي', '✓ أولوية انتظار من المستوى الأول'],
+            t2: ['✓ رندر 8K متعدد العُقد', '✓ موارد ذكاء اصطناعي غير محدودة', '✓ وصول ذو أولوية', '✓ قائمة معالجة مميزة ومعالجة معززة'],
+            t3: ['✓ معالجة GPU مكثفة', '✓ وصول متقدم إلى الكلاستر', '✓ واجهة API للشركات', '✓ دعم مخصص وقوائم رندر معززة']
+          },
+          studioOverline: 'اختبار الاستوديو',
+          studioTitle: 'جرّب الفيديو الخاص بك',
+          studioDesc: 'ارفع مقطع فيديو تجريبياً لمعاينة النتيجة مع علامة CASA CLIP كبيرة وواضحة على مخرجات الاختبار.',
+          dropTitle: 'رفع فيديو تجريبي',
+          dropDesc: 'الصيغ الموصى بها: MP4 و MOV و WEBM. تُعرض علامة CASA CLIP في وسط نتيجة الاختبار.',
+          pickVideo: 'اختر فيديو',
+          sourceUrl: 'رابط مصدر اختياري',
+          testName: 'اسم الاختبار',
+          testPlaceholder: 'الرندر التجريبي الخاص بي',
+          launchTest: 'تشغيل الاختبار',
+          clearTest: 'إعادة التهيئة',
+          studioFootnote: 'النتيجة المعروضة هنا هي معاينة فقط. علامة CASA CLIP تحمي المخرجات التجريبية.',
+          previewTitle: 'معاينة الاختبار',
+          previewDesc: 'سيظهر الفيديو هنا مع علامة CASA CLIP كبيرة وواضحة فوق النتيجة.',
+          metaMode: 'الوضع',
+          metaModeValue: 'اختبار محمي',
+          metaWatermark: 'العلامة',
+          metaWatermarkValue: 'CASA CLIP',
+          footerCopy: 'منصة فاخرة للرندر عبر GPU واختبار الفيديو والإنتاج الإبداعي صُمّمت للمستخدمين أصحاب المتطلبات العالية.',
+          footerLinks: ['الشروط', 'الخصوصية', 'البنية التحتية', 'الدعم'],
+          toasts: {
+            view: 'تنقّل',
+            pick: 'تم تحميل الفيديو',
+            noVideo: 'أضف فيديو قبل تشغيل الاختبار',
+            launched: 'المعاينة جاهزة',
+            cleared: 'تمت إعادة تعيين المعاينة',
+            contact: 'التواصل التجاري',
+            subscribe: 'التحويل إلى الاشتراك'
+          }
+        },
+
+        zh: {
+          htmlLang: 'zh-CN',
+          dir: 'ltr',
+          promo: '限时优惠',
+          left: '剩余名额',
+          brandSub: '高端主权 GPU 平台',
+          login: '登录',
+          signup: '注册',
+          loginLocked: '访问受限',
+          stats: ['GPU 负载', '活跃节点', '延迟', '引擎'],
+          eyebrow: '主权级基础设施',
+          heroTitleA: '主权',
+          heroTitleB: '愿景',
+          heroDesc: '专为高要求创作者、视频工作室和高性能渲染流程打造的高端 GPU 基础设施。',
+          heroStart: '开始',
+          heroTest: '测试',
+          features: [
+            ['加速渲染', '为视频、创意 AI 和高强度制作流程提供优化性能。'],
+            ['工作室流程', '在强调速度与清晰度的界面中完成导入、测试、处理与交付。'],
+            ['高优先级', '提供优先访问、稳定性能以及面向专业创作者优化的环境。']
+          ],
+          pricingOverline: '高级访问',
+          pricingTitle: '精英定价',
+          pricingDesc: '根据你的要求等级、使用频率和制作规模，选择最适合你的方案。',
+          modeLibre: '灵活',
+          modeFidel: '合约',
+          modeAnnue: '年度',
+          popular: '最受欢迎',
+          tierTag1: '等级 01',
+          tierTag2: '等级 02',
+          tierTag3: '等级 03',
+          tier1: 'Essential',
+          tier2: 'Creator Pro',
+          tier3: 'Power',
+          leg1: '无绑定',
+          leg2: '12 个月合约',
+          leg3: '年度付款',
+          sub: '订阅',
+          contact: '联系',
+          plans: {
+            t1: ['✓ 4K GPU 渲染', '✓ 500 GB 云存储', '✓ 标准支持', '✓ 一级优先队列'],
+            t2: ['✓ 8K 多节点渲染', '✓ 无限 AI 资源', '✓ 优先访问', '✓ 高级队列与增强处理'],
+            t3: ['✓ 高强度 GPU 处理', '✓ 高级集群访问', '✓ 企业 API', '✓ 专属支持与增强渲染队列']
+          },
+          studioOverline: '工作室测试',
+          studioTitle: '测试你的视频',
+          studioDesc: '上传一段视频样本，预览带有大号 CASA CLIP 水印的测试结果。',
+          dropTitle: '上传测试视频',
+          dropDesc: '推荐格式：MP4、MOV、WEBM。测试结果会在中心显示 CASA CLIP 水印。',
+          pickVideo: '选择视频',
+          sourceUrl: '可选源地址',
+          testName: '测试名称',
+          testPlaceholder: '我的测试渲染',
+          launchTest: '开始测试',
+          clearTest: '重置',
+          studioFootnote: '此处显示的是预览结果。CASA CLIP 水印用于保护测试输出。',
+          previewTitle: '测试预览',
+          previewDesc: '你的视频将显示在这里，并带有明显的 CASA CLIP 大水印。',
+          metaMode: '模式',
+          metaModeValue: '受保护测试',
+          metaWatermark: '水印',
+          metaWatermarkValue: 'CASA CLIP',
+          footerCopy: '为高要求用户打造的高端 GPU 渲染、视频测试与创意制作平台。',
+          footerLinks: ['条款', '隐私', '基础设施', '支持'],
+          toasts: {
+            view: '导航',
+            pick: '视频已加载',
+            noVideo: '请先添加视频再启动测试',
+            launched: '测试预览已准备好',
+            cleared: '预览已重置',
+            contact: '商务联系',
+            subscribe: '跳转到订阅'
+          }
+        },
+
+        hi: {
+          htmlLang: 'hi',
+          dir: 'ltr',
+          promo: 'सीमित ऑफ़र',
+          left: 'शेष स्थान',
+          brandSub: 'प्रीमियम संप्रभु GPU प्लेटफ़ॉर्म',
+          login: 'लॉगिन',
+          signup: 'साइन अप',
+          loginLocked: 'सीमित पहुँच',
+          stats: ['GPU लोड', 'सक्रिय नोड', 'लेटेंसी', 'इंजन'],
+          eyebrow: 'संप्रभु अवसंरचना',
+          heroTitleA: 'संप्रभु',
+          heroTitleB: 'दृष्टि',
+          heroDesc: 'उच्च अपेक्षाओं वाले क्रिएटर्स, वीडियो स्टूडियो और हाई-परफॉर्मेंस रेंडरिंग वर्कफ़्लो के लिए बनाई गई प्रीमियम GPU अवसंरचना।',
+          heroStart: 'शुरू करें',
+          heroTest: 'टेस्ट',
+          features: [
+            ['तेज़ रेंडरिंग', 'वीडियो, क्रिएटिव AI और भारी उत्पादन वर्कफ़्लो के लिए अनुकूलित प्रदर्शन।'],
+            ['स्टूडियो वर्कफ़्लो', 'आयात, परीक्षण, प्रोसेसिंग और डिलीवरी के लिए तेज़ और स्पष्ट इंटरफ़ेस।'],
+            ['प्रीमियम प्राथमिकता', 'प्राथमिक पहुँच, स्थिर प्रदर्शन और पेशेवर क्रिएटर्स के लिए अनुकूलित वातावरण।']
+          ],
+          pricingOverline: 'प्रीमियम एक्सेस',
+          pricingTitle: 'एलीट प्राइसिंग',
+          pricingDesc: 'अपनी ज़रूरत, उपयोग की आवृत्ति और प्रोडक्शन वॉल्यूम के अनुसार सही योजना चुनें।',
+          modeLibre: 'लचीला',
+          modeFidel: 'प्रतिबद्धता',
+          modeAnnue: 'वार्षिक',
+          popular: 'सबसे अधिक चुना गया',
+          tierTag1: 'टियर 01',
+          tierTag2: 'टियर 02',
+          tierTag3: 'टियर 03',
+          tier1: 'Essential',
+          tier2: 'Creator Pro',
+          tier3: 'Power',
+          leg1: 'कोई प्रतिबद्धता नहीं',
+          leg2: '12 महीने का अनुबंध',
+          leg3: 'वार्षिक भुगतान',
+          sub: 'सब्सक्राइब',
+          contact: 'संपर्क करें',
+          plans: {
+            t1: ['✓ 4K GPU रेंडरिंग', '✓ 500 GB क्लाउड स्टोरेज', '✓ मानक सपोर्ट', '✓ प्राथमिकता कतार स्तर 1'],
+            t2: ['✓ 8K मल्टी-नोड रेंडरिंग', '✓ असीमित AI एसेट्स', '✓ प्राथमिक पहुँच', '✓ प्रीमियम कतार और मजबूत प्रोसेसिंग'],
+            t3: ['✓ गहन GPU प्रोसेसिंग', '✓ उन्नत क्लस्टर एक्सेस', '✓ एंटरप्राइज़ API', '✓ समर्पित सपोर्ट और उन्नत रेंडर कतारें']
+          },
+          studioOverline: 'स्टूडियो टेस्ट',
+          studioTitle: 'अपना वीडियो टेस्ट करें',
+          studioDesc: 'एक वीडियो नमूना अपलोड करें और बड़े CASA CLIP वॉटरमार्क के साथ परीक्षण परिणाम की प्रीव्यू देखें।',
+          dropTitle: 'टेस्ट वीडियो अपलोड करें',
+          dropDesc: 'अनुशंसित फ़ॉर्मेट: MP4, MOV, WEBM। टेस्ट परिणाम के केंद्र में CASA CLIP वॉटरमार्क दिखाई देगा।',
+          pickVideo: 'वीडियो चुनें',
+          sourceUrl: 'वैकल्पिक स्रोत URL',
+          testName: 'टेस्ट का नाम',
+          testPlaceholder: 'मेरा टेस्ट रेंडर',
+          launchTest: 'टेस्ट शुरू करें',
+          clearTest: 'रीसेट',
+          studioFootnote: 'यहाँ दिखाया गया परिणाम एक प्रीव्यू है। CASA CLIP वॉटरमार्क टेस्ट आउटपुट की सुरक्षा करता है।',
+          previewTitle: 'टेस्ट प्रीव्यू',
+          previewDesc: 'आपका वीडियो यहाँ दिखाई देगा और परिणाम पर बड़ा CASA CLIP चिन्ह दिखेगा।',
+          metaMode: 'मोड',
+          metaModeValue: 'सुरक्षित टेस्ट',
+          metaWatermark: 'वॉटरमार्क',
+          metaWatermarkValue: 'CASA CLIP',
+          footerCopy: 'उच्च अपेक्षाओं वाले उपयोगकर्ताओं के लिए बनाई गई प्रीमियम GPU रेंडरिंग, वीडियो टेस्टिंग और क्रिएटिव प्रोडक्शन प्लेटफ़ॉर्म।',
+          footerLinks: ['शर्तें', 'गोपनीयता', 'इन्फ्रास्ट्रक्चर', 'सपोर्ट'],
+          toasts: {
+            view: 'नेविगेशन',
+            pick: 'वीडियो लोड हो गया',
+            noVideo: 'टेस्ट शुरू करने से पहले वीडियो जोड़ें',
+            launched: 'टेस्ट प्रीव्यू तैयार है',
+            cleared: 'प्रीव्यू रीसेट हो गया',
+            contact: 'वाणिज्यिक संपर्क',
+            subscribe: 'सब्सक्रिप्शन रीडायरेक्ट'
+          }
+        }
+      },
+
+      q(id){
+        return document.getElementById(id);
+      },
+
+      t(key){
+        return this.translations[this.state.lang][key];
+      },
+
+      view(id){
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        const target = this.q(id);
+        if(target) target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        this.notify(`${this.t('toasts').view} : ${id.toUpperCase()}`);
+      },
+
+      setMode(mode){
+        this.state.mode = mode;
+        ['m-libre','m-fidel','m-annue'].forEach(id => this.q(id).classList.remove('active-tab'));
+        this.q(`m-${mode}`).classList.add('active-tab');
+        this.renderPrices();
+      },
+
+      notify(msg){
+        const toast = this.q('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(this.toastTimer);
+        this.toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+      },
+
+      getCurrentCurrency(){
+        return this.q('currency').value;
+      },
+
+      formatPrice(baseEuro){
+        const currency = this.getCurrentCurrency();
+        const cfg = this.currencyConfig[currency] || this.currencyConfig.EUR;
+
+        const converted = baseEuro * cfg.rate;
+        const integerPart = Math.max(0, Math.round(converted));
+        const valueEnding99 = integerPart + 0.99;
+
+        const number = new Intl.NumberFormat(cfg.locale, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(valueEnding99);
+
+        const space = cfg.space ? ' ' : '';
+        return cfg.position === 'before'
+          ? `${cfg.symbol}${space}${number}`
+          : `${number}${space}${cfg.symbol}`;
+      },
+
+      renderPrices(){
+        const mode = this.state.mode;
+        const base = this.basePricesEUR[mode];
+        const tr = this.translations[this.state.lang];
+
+        this.q('pr-1').textContent = this.formatPrice(base[0]);
+        this.q('pr-2').textContent = this.formatPrice(base[1]);
+        this.q('pr-3').textContent = this.formatPrice(base[2]);
+
+        const leg = mode === 'libre' ? tr.leg1 : mode === 'annue' ? tr.leg3 : tr.leg2;
+        this.q('lg-1').textContent = leg;
+        this.q('lg-2').textContent = leg;
+        this.q('lg-3').textContent = leg;
+      },
+
+      applyText(){
+        const tr = this.translations[this.state.lang];
+
+        document.documentElement.lang = tr.htmlLang;
+        document.body.classList.toggle('rtl', tr.dir === 'rtl');
+
+        this.q('promo-txt').textContent = tr.promo;
+        this.q('left-txt').textContent = tr.left;
+        this.q('brand-sub').textContent = tr.brandSub;
+        this.q('n-log').textContent = tr.login;
+        this.q('n-sig').textContent = tr.signup;
+
+        this.q('s1-label').textContent = tr.stats[0];
+        this.q('s2-label').textContent = tr.stats[1];
+        this.q('s3-label').textContent = tr.stats[2];
+        this.q('s4-label').textContent = tr.stats[3];
+
+        this.q('eyebrow').textContent = tr.eyebrow;
+        this.q('h-title').innerHTML = `${tr.heroTitleA} <span class="gold-text">${tr.heroTitleB}</span>`;
+        this.q('h-desc').textContent = tr.heroDesc;
+        this.q('h-btn').textContent = tr.heroStart;
+        this.q('h-test').textContent = tr.heroTest;
+
+        this.q('f1-title').textContent = tr.features[0][0];
+        this.q('f1-desc').textContent = tr.features[0][1];
+        this.q('f2-title').textContent = tr.features[1][0];
+        this.q('f2-desc').textContent = tr.features[1][1];
+        this.q('f3-title').textContent = tr.features[2][0];
+        this.q('f3-desc').textContent = tr.features[2][1];
+
+        this.q('p-overline').textContent = tr.pricingOverline;
+        this.q('p-title').textContent = tr.pricingTitle;
+        this.q('p-desc').textContent = tr.pricingDesc;
+
+        this.q('m-libre').textContent = tr.modeLibre;
+        this.q('m-fidel').textContent = tr.modeFidel;
+        this.q('m-annue').textContent = tr.modeAnnue;
+
+        this.q('popular-chip').textContent = tr.popular;
+
+        this.q('tier1-tag').textContent = tr.tierTag1;
+        this.q('tier2-tag').textContent = tr.tierTag2;
+        this.q('tier3-tag').textContent = tr.tierTag3;
+
+        this.q('tier1-name').textContent = tr.tier1;
+        this.q('tier2-name').textContent = tr.tier2;
+        this.q('tier3-name').textContent = tr.tier3;
+
+        this.q('t1-f1').textContent = tr.plans.t1[0];
+        this.q('t1-f2').textContent = tr.plans.t1[1];
+        this.q('t1-f3').textContent = tr.plans.t1[2];
+        this.q('t1-f4').textContent = tr.plans.t1[3];
+
+        this.q('t2-f1').textContent = tr.plans.t2[0];
+        this.q('t2-f2').textContent = tr.plans.t2[1];
+        this.q('t2-f3').textContent = tr.plans.t2[2];
+        this.q('t2-f4').textContent = tr.plans.t2[3];
+
+        this.q('t3-f1').textContent = tr.plans.t3[0];
+        this.q('t3-f2').textContent = tr.plans.t3[1];
+        this.q('t3-f3').textContent = tr.plans.t3[2];
+        this.q('t3-f4').textContent = tr.plans.t3[3];
+
+        document.querySelectorAll('.sub-txt').forEach(el => el.textContent = tr.sub);
+        this.q('contact-btn').textContent = tr.contact;
+
+        this.q('studio-overline').textContent = tr.studioOverline;
+        this.q('studio-title').textContent = tr.studioTitle;
+        this.q('studio-desc').textContent = tr.studioDesc;
+        this.q('drop-title').textContent = tr.dropTitle;
+        this.q('drop-desc').textContent = tr.dropDesc;
+        this.q('pick-video').textContent = tr.pickVideo;
+        this.q('source-url-label').textContent = tr.sourceUrl;
+        this.q('test-note-label').textContent = tr.testName;
+        this.q('test-note').placeholder = tr.testPlaceholder;
+        this.q('launch-test').textContent = tr.launchTest;
+        this.q('clear-test').textContent = tr.clearTest;
+        this.q('studio-footnote').textContent = tr.studioFootnote;
+        this.q('preview-title').textContent = tr.previewTitle;
+        this.q('preview-desc').textContent = tr.previewDesc;
+        this.q('meta-1-label').textContent = tr.metaMode;
+        this.q('meta-1-value').textContent = tr.metaModeValue;
+        this.q('meta-2-label').textContent = tr.metaWatermark;
+        this.q('meta-2-value').textContent = tr.metaWatermarkValue;
+
+        this.q('footer-copy').textContent = tr.footerCopy;
+        this.q('footer-link-1').textContent = tr.footerLinks[0];
+        this.q('footer-link-2').textContent = tr.footerLinks[1];
+        this.q('footer-link-3').textContent = tr.footerLinks[2];
+        this.q('footer-link-4').textContent = tr.footerLinks[3];
+
+        this.q('url-studio').placeholder = 'https://...';
+      },
+
+      run(){
+        this.state.lang = this.q('lang').value;
+        this.applyText();
+        this.renderPrices();
+      },
+
+      handleFile(file){
+        if(!file) return;
+        if(this.state.videoUrl){
+          URL.revokeObjectURL(this.state.videoUrl);
+        }
+
+        const preview = this.q('video-preview');
+        const placeholder = this.q('video-placeholder');
+        const url = URL.createObjectURL(file);
+
+        this.state.videoUrl = url;
+        preview.src = url;
+        preview.load();
+        placeholder.classList.add('hidden');
+
+        this.notify(this.t('toasts').pick);
+      },
+
+      launchTest(){
+        const preview = this.q('video-preview');
+        const hasVideo = !!preview.src;
+
+        if(!hasVideo){
+          this.notify(this.t('toasts').noVideo);
+          return;
+        }
+
+        this.view('studio');
+        preview.play().catch(() => {});
+        this.notify(this.t('toasts').launched);
+      },
+
+      clearVideo(){
+        const preview = this.q('video-preview');
+        const placeholder = this.q('video-placeholder');
+        preview.pause();
+        preview.removeAttribute('src');
+        preview.load();
+
+        if(this.state.videoUrl){
+          URL.revokeObjectURL(this.state.videoUrl);
+          this.state.videoUrl = null;
+        }
+
+        this.q('video-file').value = '';
+        placeholder.classList.remove('hidden');
+        this.notify(this.t('toasts').cleared);
+      },
+
+      startSpotsTicker(){
+        setInterval(() => {
+          if(this.state.spots > 5){
+            this.state.spots -= Math.random() < 0.55 ? 1 : 0;
+            this.q('spots').textContent = this.state.spots;
+          }
+        }, 12000);
+      },
+
+      bindEvents(){
+        this.q('lang').addEventListener('change', () => this.run());
+        this.q('currency').addEventListener('change', () => this.renderPrices());
+
+        this.q('video-file').addEventListener('change', (e) => {
+          this.handleFile(e.target.files?.[0]);
+        });
+
+        document.querySelectorAll('.sub-txt').forEach(btn => {
+          btn.addEventListener('click', () => this.notify(this.t('toasts').subscribe));
+        });
+
+        this.q('contact-btn').addEventListener('click', () => this.notify(this.t('toasts').contact));
+      },
+
+      init(){
+        this.bindEvents();
+        this.run();
+        this.startSpotsTicker();
+      }
+    };
+
+    window.addEventListener('load', () => App.init());
+  </script>
+</body>
+  </html>
