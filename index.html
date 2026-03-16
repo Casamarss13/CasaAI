@@ -1,1973 +1,445 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html><html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CASA CLIP | AI Shorts Studio 1080p</title>
-  <meta name="description" content="CASA CLIP — plateforme premium de création de shorts 1080p à partir de vidéos longues." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>CASA CLIP | Backend Ready Frontend</title>
+  <meta name="description" content="CASA CLIP — frontend HTML orienté backend, paiements, auth, projets, rendus et support." />
+  <meta name="theme-color" content="#0b0b0b" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
   <style>
     :root{
-      --gold:#d4af37;
-      --gold-soft:#f5df97;
-      --gold-border:rgba(212,175,55,.34);
-      --bg:#090909;
-      --panel:rgba(255,255,255,.04);
-      --panel-2:rgba(255,255,255,.055);
-      --border:rgba(255,255,255,.09);
-      --text:#f7f5ef;
-      --muted:rgba(255,255,255,.66);
-      --muted-2:rgba(255,255,255,.38);
-      --green:#22c55e;
-      --red:#ef4444;
-      --blue:#60a5fa;
-      --shadow-gold:0 18px 60px rgba(212,175,55,.14);
-      --shadow-dark:0 28px 80px rgba(0,0,0,.34);
+      --gold:#d4af37;--gold-border:rgba(212,175,55,.34);--text:#f7f5ef;--muted:rgba(255,255,255,.66);--muted-2:rgba(255,255,255,.38);--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--blue:#60a5fa;--shadow-gold:0 18px 60px rgba(212,175,55,.14);--shadow-dark:0 28px 80px rgba(0,0,0,.34);--touch:48px;--radius-xl:28px;--nav-offset:176px;
     }
-
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:'Plus Jakarta Sans',sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at 12% 18%, rgba(255,255,255,.028), transparent 24%),
-        radial-gradient(circle at 82% 24%, rgba(255,255,255,.018), transparent 22%),
-        radial-gradient(circle at 60% 78%, rgba(212,175,55,.06), transparent 26%),
-        linear-gradient(180deg, #070707 0%, #0b0b0b 48%, #090909 100%);
-      overflow-x:hidden;
-    }
-
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      opacity:.16;
-      background-image:
-        linear-gradient(115deg, transparent 0%, rgba(255,255,255,.03) 18%, transparent 36%),
-        linear-gradient(205deg, transparent 0%, rgba(255,255,255,.02) 22%, transparent 42%),
-        linear-gradient(160deg, transparent 0%, rgba(212,175,55,.03) 16%, transparent 38%);
-      mix-blend-mode:screen;
-    }
-
-    .glass{
-      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.025));
-      border:1px solid var(--border);
-      backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
-      box-shadow:var(--shadow-dark);
-    }
-
-    .gold-text{
-      background:linear-gradient(135deg, #fff7cf 0%, #f0d46d 35%, #c89b22 100%);
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-    }
-
-    .gold-line{
-      border:1px solid var(--gold-border);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.05), var(--shadow-gold);
-    }
-
-    .btn-gold{
-      border:none;
-      color:#140f02;
-      background:linear-gradient(135deg, #f5e7a6 0%, #e0bb52 55%, #c9971a 100%);
-      font-weight:800;
-      border-radius:999px;
-      transition:.25s ease;
-      box-shadow:0 12px 34px rgba(212,175,55,.18);
-      cursor:pointer;
-    }
-
-    .btn-gold:hover{
-      transform:translateY(-2px);
-      box-shadow:0 18px 40px rgba(212,175,55,.25);
-    }
-
-    .btn-ghost{
-      border:1px solid rgba(255,255,255,.13);
-      color:#fff;
-      background:rgba(255,255,255,.03);
-      border-radius:999px;
-      transition:.25s ease;
-      cursor:pointer;
-    }
-
-    .btn-ghost:hover{
-      transform:translateY(-2px);
-      border-color:rgba(212,175,55,.35);
-      color:#fff8de;
-    }
-
-    .promo-banner{
-      background:linear-gradient(90deg, rgba(16,16,16,.95), rgba(212,175,55,.16), rgba(16,16,16,.95));
-      border-bottom:1px solid rgba(212,175,55,.22);
-      box-shadow:0 10px 30px rgba(0,0,0,.22);
-    }
-
-    .nav-shell{
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(12,12,12,.72);
-    }
-
-    .section{
-      min-height:100vh;
-      padding:148px 5% 72px;
-      display:none;
-      opacity:0;
-      transform:translateY(10px);
-    }
-
-    .section.active{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      opacity:1;
-      transform:translateY(0);
-      animation:fadeIn .45s ease forwards;
-    }
-
-    @keyframes fadeIn{
-      from{opacity:0;transform:translateY(10px)}
-      to{opacity:1;transform:translateY(0)}
-    }
-
-    .card,.panel,.stat,.plan,.feature,.help,.queue-item,.faq-item,.pay-item,.metric,.editor-panel,.template-card,.notification-card{
-      border-radius:28px;
-      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.025));
-      border:1px solid rgba(255,255,255,.08);
-      box-shadow:var(--shadow-dark);
-    }
-
-    .plan.featured{
-      border-color:rgba(212,175,55,.36);
-      background:linear-gradient(180deg, rgba(212,175,55,.10), rgba(255,255,255,.03));
-      box-shadow:var(--shadow-gold),var(--shadow-dark);
-    }
-
-    .chip{
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.04);
-    }
-
-    .active-tab{
-      background:linear-gradient(135deg, #f3df92 0%, #d6ab35 100%) !important;
-      color:#120d00 !important;
-      box-shadow:var(--shadow-gold);
-    }
-
-    .input-dark,.textarea-dark,.select-dark{
-      width:100%;
-      color:#fff;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:16px;
-      padding:14px 16px;
-      outline:none;
-    }
-
-    .textarea-dark{
-      min-height:120px;
-      resize:vertical;
-    }
-
-    .input-dark:focus,.textarea-dark:focus,.select-dark:focus{
-      border-color:rgba(212,175,55,.38);
-      box-shadow:0 0 0 4px rgba(212,175,55,.08);
-    }
-
-    .drop-zone{
-      border:1px dashed rgba(212,175,55,.35);
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
-      border-radius:32px;
-    }
-
-    .toast{
-      position:fixed;
-      right:20px;
-      bottom:20px;
-      z-index:400;
-      transform:translateY(120%);
-      transition:.32s ease;
-      background:#fff4d1;
-      color:#161002;
-      border-radius:16px;
-      box-shadow:0 18px 42px rgba(0,0,0,.24);
-    }
-
-    .toast.show{transform:translateY(0)}
-
-    .video-stage{
-      position:relative;
-      overflow:hidden;
-      border-radius:28px;
-      background:#000;
-      border:1px solid rgba(255,255,255,.08);
-      min-height:280px;
-    }
-
-    .video-stage video{
-      width:100%;
-      height:100%;
-      display:block;
-      object-fit:cover;
-      max-height:520px;
-      background:#000;
-    }
-
-    .watermark{
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      pointer-events:none;
-      font-size:clamp(42px,8vw,130px);
-      line-height:.9;
-      font-weight:900;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.20);
-      text-shadow:0 0 40px rgba(0,0,0,.48);
-      transform:rotate(-18deg);
-      user-select:none;
-      white-space:nowrap;
-    }
-
-    .status-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 14px;
-      border-radius:999px;
-      background:rgba(34,197,94,.10);
-      border:1px solid rgba(34,197,94,.26);
-      color:#ccf7da;
-      font-size:12px;
-      font-weight:800;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-
-    .dot{
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:#22c55e;
-      box-shadow:0 0 14px rgba(34,197,94,.8);
-    }
-
-    .progress{
-      height:10px;
-      border-radius:999px;
-      background:rgba(255,255,255,.08);
-      overflow:hidden;
-    }
-
-    .progress > div{
-      height:100%;
-      border-radius:999px;
-      background:linear-gradient(90deg, #f4df97, #d4af37);
-    }
-
-    .faq-item{
-      overflow:hidden;
-      border-radius:20px;
-    }
-
-    .faq-btn{
-      width:100%;
-      text-align:left;
-      background:transparent;
-      border:none;
-      color:#fff;
-      padding:18px 20px;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      font-weight:800;
-      font-size:14px;
-      letter-spacing:.05em;
-      text-transform:uppercase;
-    }
-
-    .faq-answer{
-      max-height:0;
-      overflow:hidden;
-      transition:max-height .3s ease, opacity .3s ease;
-      opacity:0;
-      padding:0 20px;
-    }
-
-    .faq-item.open .faq-answer{
-      max-height:220px;
-      opacity:1;
-      padding:0 20px 18px;
-    }
-
-    .faq-icon{
-      transition:transform .25s ease;
-      color:#f0d46d;
-      font-weight:900;
-      font-size:20px;
-    }
-
-    .faq-item.open .faq-icon{transform:rotate(45deg)}
-
-    .bot-launcher{
-      position:fixed;
-      left:20px;
-      bottom:20px;
-      z-index:390;
-      width:64px;
-      height:64px;
-      border-radius:999px;
-      border:none;
-      cursor:pointer;
-      font-weight:900;
-      font-size:12px;
-      background:linear-gradient(135deg, #f5e7a6 0%, #e0bb52 55%, #c9971a 100%);
-      color:#120d00;
-      box-shadow:0 20px 50px rgba(212,175,55,.28);
-    }
-
-    .bot-panel{
-      position:fixed;
-      left:20px;
-      bottom:96px;
-      width:min(390px,calc(100vw - 40px));
-      height:560px;
-      z-index:395;
-      display:none;
-      flex-direction:column;
-      overflow:hidden;
-      border-radius:28px;
-      border:1px solid rgba(212,175,55,.26);
-      background:linear-gradient(180deg, rgba(22,22,22,.96), rgba(10,10,10,.98));
-      box-shadow:0 30px 80px rgba(0,0,0,.45);
-    }
-
-    .bot-panel.open{display:flex}
-
-    .bot-head{
-      padding:18px 18px 14px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      background:linear-gradient(180deg, rgba(212,175,55,.12), rgba(255,255,255,.02));
-    }
-
-    .bot-messages{
-      flex:1;
-      overflow:auto;
-      padding:16px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
-    .msg{
-      max-width:86%;
-      padding:12px 14px;
-      border-radius:16px;
-      line-height:1.6;
-      font-size:14px;
-      white-space:pre-wrap;
-    }
-
-    .msg.bot{
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.06);
-      align-self:flex-start;
-    }
-
-    .msg.user{
-      background:rgba(212,175,55,.14);
-      border:1px solid rgba(212,175,55,.28);
-      align-self:flex-end;
-    }
-
-    .bot-quick{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      padding:0 16px 12px;
-      border-top:1px solid rgba(255,255,255,.05);
-    }
-
-    .bot-chip{
-      padding:10px 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      color:white;
-      font-size:11px;
-      font-weight:800;
-      text-transform:uppercase;
-      cursor:pointer;
-    }
-
-    .bot-foot{
-      padding:12px 14px 14px;
-      border-top:1px solid rgba(255,255,255,.08);
-      display:flex;
-      gap:10px;
-      align-items:center;
-    }
-
-    .side-tab{
-      cursor:pointer;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03);
-      transition:.22s ease;
-    }
-
-    .side-tab:hover,.side-tab.active{
-      border-color:rgba(212,175,55,.32);
-      color:#fff6d1;
-      background:rgba(212,175,55,.08);
-    }
-
-    .metric-pill{
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03);
-      border-radius:18px;
-    }
-
-    .trial-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid rgba(96,165,250,.28);
-      background:rgba(96,165,250,.10);
-      color:#dbeafe;
-      font-size:12px;
-      font-weight:800;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-
-    .muted{color:var(--muted)}
-    .muted-2{color:var(--muted-2)}
-    .rtl{direction:rtl}
-    .rtl .ltr-only{direction:ltr}
-    .rtl .nav-start{flex-direction:row-reverse}
-    .rtl .hero-cta{flex-direction:row-reverse}
-    .rtl .footer-links{flex-direction:row-reverse}
-    .rtl .price-modes{flex-direction:row-reverse}
-    .rtl .lang-row{flex-direction:row-reverse}
-    .rtl .faq-btn{text-align:right}
-    .rtl .bot-panel{left:auto;right:20px}
-    .rtl .bot-launcher{left:auto;right:20px}
-    .rtl .bot-foot{flex-direction:row-reverse}
-    .rtl .sidebar-tabs{flex-direction:row-reverse}
-
-    @media (max-width: 1024px){
-      .section{padding-top:168px}
-    }
-
-    @media (max-width: 768px){
-      .section{padding-top:182px}
-      .nav-shell{width:96%;padding:12px 14px !important}
-      .watermark{font-size:clamp(34px,13vw,88px)}
-      .bot-panel{height:74vh}
-    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:radial-gradient(circle at 12% 18%, rgba(255,255,255,.028), transparent 24%),radial-gradient(circle at 82% 24%, rgba(255,255,255,.018), transparent 22%),radial-gradient(circle at 60% 78%, rgba(212,175,55,.06), transparent 26%),linear-gradient(180deg, #070707 0%, #0b0b0b 48%, #090909 100%);overflow-x:hidden;min-width:320px}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(115deg, transparent 0%, rgba(255,255,255,.03) 18%, transparent 36%),linear-gradient(205deg, transparent 0%, rgba(255,255,255,.02) 22%, transparent 42%),linear-gradient(160deg, transparent 0%, rgba(212,175,55,.03) 16%, transparent 38%);mix-blend-mode:screen}
+    [hidden]{display:none!important}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:var(--shadow-dark)}
+    .panel,.card,.stat,.plan,.feature,.help,.queue-item,.faq-item,.metric,.api-card{border-radius:var(--radius-xl);background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow-dark);width:100%;min-width:0}
+    .gold-text{background:linear-gradient(135deg,#fff7cf 0%,#f0d46d 35%,#c89b22 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .gold-line{border:1px solid var(--gold-border);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),var(--shadow-gold)}
+    .chip{border-radius:999px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04)}
+    .btn-gold,.btn-ghost,.side-tab,.nav-link,.pay-method{min-height:var(--touch);touch-action:manipulation}
+    .btn-gold{border:none;color:#140f02;background:linear-gradient(135deg,#f5e7a6 0%,#e0bb52 55%,#c9971a 100%);font-weight:800;border-radius:999px;transition:.25s ease;box-shadow:0 12px 34px rgba(212,175,55,.18);cursor:pointer}
+    .btn-gold:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(212,175,55,.25)}
+    .btn-ghost,.nav-link,.pay-method{border:1px solid rgba(255,255,255,.13);color:#fff;background:rgba(255,255,255,.03);border-radius:999px;transition:.25s ease;cursor:pointer}
+    .btn-ghost:hover,.nav-link:hover,.pay-method:hover{transform:translateY(-2px);border-color:rgba(212,175,55,.35);color:#fff8de}
+    .nav-link{display:flex;align-items:center;justify-content:center;padding:10px 14px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.16em}
+    .active-tab,.pay-method.active{background:linear-gradient(135deg,#f3df92 0%,#d6ab35 100%)!important;color:#120d00!important;box-shadow:var(--shadow-gold)}
+    .promo-banner{background:linear-gradient(90deg, rgba(16,16,16,.95), rgba(212,175,55,.16), rgba(16,16,16,.95));border-bottom:1px solid rgba(212,175,55,.22);box-shadow:0 10px 30px rgba(0,0,0,.22)}
+    .nav-shell{border:1px solid rgba(255,255,255,.08);background:rgba(12,12,12,.72);width:min(1380px,95%)}
+    .container-max{width:min(1480px,100%);margin-inline:auto}
+    .section{min-height:100vh;padding:var(--nav-offset) 5% 72px;display:none;opacity:0;transform:translateY(10px)}
+    .section.active{display:flex;flex-direction:column;align-items:center;opacity:1;transform:translateY(0);animation:fadeIn .45s ease forwards}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .input-dark,.textarea-dark,.select-dark{width:100%;color:#fff;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:16px;padding:14px 16px;outline:none;min-height:var(--touch)}
+    .textarea-dark{min-height:120px;resize:vertical}
+    .input-dark:focus,.textarea-dark:focus,.select-dark:focus{border-color:rgba(212,175,55,.38);box-shadow:0 0 0 4px rgba(212,175,55,.08)}
+    .status-pill{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.26);color:#ccf7da;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;flex-wrap:wrap;justify-content:center}
+    .status-pill.warn{background:rgba(245,158,11,.10);border-color:rgba(245,158,11,.28);color:#fde7ba}
+    .status-pill.err{background:rgba(239,68,68,.10);border-color:rgba(239,68,68,.26);color:#fecaca}
+    .dot{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 14px rgba(34,197,94,.8)} .dot.warn{background:#f59e0b;box-shadow:0 0 14px rgba(245,158,11,.8)} .dot.err{background:#ef4444;box-shadow:0 0 14px rgba(239,68,68,.8)}
+    .progress{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;width:100%} .progress>div{height:100%;border-radius:999px;background:linear-gradient(90deg,#f4df97,#d4af37)}
+    .drawer{position:fixed;inset:0;z-index:470;pointer-events:none;opacity:0;transition:.25s ease} .drawer.open{pointer-events:auto;opacity:1}
+    .drawer-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.58)}
+    .drawer-panel{position:absolute;top:0;right:0;width:min(420px,100%);height:100%;transform:translateX(100%);transition:.28s ease;padding:18px;display:flex;flex-direction:column;gap:14px;border-left:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg, rgba(13,13,13,.98), rgba(8,8,8,.99));box-shadow:-24px 0 80px rgba(0,0,0,.38);overflow:auto}
+    .drawer.open .drawer-panel{transform:translateX(0)}
+    .hamburger{display:none;align-items:center;justify-content:center;width:52px;height:52px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;font-size:20px;font-weight:900}
+    .faq-item{overflow:hidden;border-radius:20px} .faq-btn{width:100%;text-align:left;background:transparent;border:none;color:#fff;padding:18px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;font-weight:800;font-size:14px;letter-spacing:.05em;text-transform:uppercase} .faq-answer{max-height:0;overflow:hidden;transition:max-height .3s ease,opacity .3s ease;opacity:0;padding:0 20px} .faq-item.open .faq-answer{max-height:260px;opacity:1;padding:0 20px 18px}
+    .bot-launcher{position:fixed;left:16px;bottom:16px;z-index:490;width:60px;height:60px;border-radius:999px;border:none;cursor:pointer;font-weight:900;font-size:12px;background:linear-gradient(135deg,#f5e7a6 0%,#e0bb52 55%,#c9971a 100%);color:#120d00;box-shadow:0 20px 50px rgba(212,175,55,.28)}
+    .bot-panel{position:fixed;left:16px;bottom:86px;width:min(390px,calc(100vw - 32px));height:min(560px,74vh);z-index:495;display:none;flex-direction:column;overflow:hidden;border-radius:28px;border:1px solid rgba(212,175,55,.26);background:linear-gradient(180deg, rgba(22,22,22,.96), rgba(10,10,10,.98));box-shadow:0 30px 80px rgba(0,0,0,.45)} .bot-panel.open{display:flex}
+    .bot-head{padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg, rgba(212,175,55,.12), rgba(255,255,255,.02))}
+    .bot-messages{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px} .msg{max-width:86%;padding:12px 14px;border-radius:16px;line-height:1.6;font-size:14px;white-space:pre-wrap;word-wrap:break-word} .msg.bot{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);align-self:flex-start} .msg.user{background:rgba(212,175,55,.14);border:1px solid rgba(212,175,55,.28);align-self:flex-end}
+    .bot-quick{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 12px;border-top:1px solid rgba(255,255,255,.05)} .bot-chip{padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:white;font-size:11px;font-weight:800;text-transform:uppercase;cursor:pointer}
+    .bot-foot{padding:12px 14px 14px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:10px;align-items:center}
+    .muted{color:var(--muted)} .muted-2{color:var(--muted-2)} .dash-view{width:100%}
+    .rtl{direction:rtl}.rtl .hero-cta{flex-direction:row-reverse}.rtl .footer-links{flex-direction:row-reverse}.rtl .price-modes{flex-direction:row-reverse}.rtl .drawer-panel{right:auto;left:0;transform:translateX(-100%);border-left:none;border-right:1px solid rgba(255,255,255,.08)} .rtl .drawer.open .drawer-panel{transform:translateX(0)} .rtl .bot-panel{left:auto;right:16px}.rtl .bot-launcher{left:auto;right:16px}
+    @media (max-width:1279px){.nav-shell{width:96%}.section{padding-top:180px}}
+    @media (max-width:1024px){.section{padding-top:190px;padding-left:4%;padding-right:4%}.desktop-nav{display:none!important}.hamburger{display:flex}}
+    @media (max-width:900px){.lang-row{display:none!important}.section{padding-top:176px}}
+    @media (max-width:768px){.section{padding-top:176px;padding-bottom:56px}.nav-shell{width:96%;padding:12px 14px!important;border-radius:24px}.promo-banner{font-size:9px;letter-spacing:.18em}.bot-panel{height:min(72vh,620px)}.bot-foot{flex-direction:column;align-items:stretch}.bot-foot>*{width:100%}}
+    @media (max-width:640px){.hero-cta>*{width:100%}.btn-gold,.btn-ghost{width:100%}.panel,.feature,.plan,.queue-item,.help,.metric,.api-card{border-radius:22px}.bot-launcher{width:56px;height:56px;bottom:12px;left:12px}.bot-panel{bottom:76px;left:12px;width:calc(100vw - 24px)}}
   </style>
 </head>
 <body>
-
-  <div id="toast" class="toast px-5 py-4 text-[12px] font-extrabold uppercase tracking-[0.18em]">Action validée</div>
-
-  <div class="promo-banner fixed top-0 left-0 w-full z-[130] py-2.5 px-4 text-center text-[10px] font-extrabold uppercase tracking-[0.34em]">
+  <script id="app-config" type="application/json">
+  {
+    "appName": "CASA CLIP",
+    "version": "2.0.0-backend-ready",
+    "environment": "staging",
+    "apiBaseUrl": "https://api.casaclip.local/v1",
+    "frontendBaseUrl": "https://app.casaclip.local",
+    "auth": {
+      "strategy": "cookie-session",
+      "csrfHeader": "X-CSRF-Token",
+      "refreshPath": "/auth/refresh",
+      "mePath": "/auth/me"
+    },
+    "gateways": {
+      "stripe": { "enabled": true, "publishableKey": "pk_test_replace_me" },
+      "paypal": { "enabled": false, "clientId": "replace_me" }
+    },
+    "storage": {
+      "signedUploadPath": "/uploads/sign",
+      "maxVideoMb": 2048,
+      "allowedMimeTypes": ["video/mp4", "video/quicktime", "video/webm"]
+    },
+    "rendering": {
+      "provider": "renderly",
+      "createRenderPath": "/renders",
+      "queueStatusPath": "/renders/{id}",
+      "defaultResolution": "1080p"
+    },
+    "features": {
+      "trial": true,
+      "watermarkPreview": true,
+      "billing": true,
+      "supportTickets": true,
+      "auditLogs": true,
+      "webhooks": true
+    },
+    "routes": {
+      "register": "/auth/register",
+      "login": "/auth/login",
+      "logout": "/auth/logout",
+      "plans": "/plans",
+      "projects": "/projects",
+      "billingCheckout": "/billing/create-checkout",
+      "billingInvoices": "/billing/invoices",
+      "usage": "/usage",
+      "tickets": "/tickets",
+      "health": "/health"
+    }
+  }
+  </script>  <div id="toast" class="toast px-5 py-4 text-[12px] font-extrabold uppercase tracking-[0.18em] hidden"></div>  <div class="promo-banner fixed top-0 left-0 w-full z-[130] py-2.5 px-4 text-center text-[10px] font-extrabold uppercase tracking-[0.34em]">
     <span id="promo-txt">OFFRE LIMITÉE</span> — <span id="spots">42</span> <span id="left-txt">PLACES RESTANTES</span>
-  </div>
-
-  <nav class="fixed top-10 left-1/2 -translate-x-1/2 w-[95%] max-w-[1380px] z-[120] nav-shell glass rounded-[28px] p-4">
+  </div>  <nav class="fixed top-10 left-1/2 -translate-x-1/2 z-[120] nav-shell glass p-4">
     <div class="flex items-center justify-between gap-4">
-      <div class="flex items-center gap-3 nav-start cursor-pointer" onclick="App.view('hero')">
-        <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-black text-lg gold-line bg-[rgba(212,175,55,.12)] text-[#f5df97]">CC</div>
-        <div>
-          <div class="text-sm font-black uppercase tracking-[0.22em]">CASA CLIP</div>
-          <div id="brand-sub" class="text-[10px] uppercase tracking-[0.35em] muted-2">AI SHORTS ELITE</div>
+      <div class="flex items-center gap-3 cursor-pointer min-w-0" onclick="App.view('hero')">
+        <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-black text-lg gold-line bg-[rgba(212,175,55,.12)] text-[#f5df97] shrink-0">CC</div>
+        <div class="min-w-0">
+          <div class="text-sm font-black uppercase tracking-[0.22em] truncate">CASA CLIP</div>
+          <div id="brand-sub" class="text-[10px] uppercase tracking-[0.28em] muted-2 truncate">AI SHORTS ELITE</div>
         </div>
       </div>
-
-      <div class="flex items-center gap-3 lang-row">
-        <select id="lang" class="input-dark !w-auto !py-3 !px-4 text-[12px] font-bold uppercase ltr-only">
-          <option value="fr">FR</option>
-          <option value="en">EN</option>
-          <option value="es">ES</option>
-          <option value="ar">AR</option>
-          <option value="zh">ZH</option>
-          <option value="hi">HI</option>
-        </select>
-
-        <select id="currency" class="input-dark !w-auto !py-3 !px-4 text-[12px] font-bold uppercase ltr-only">
-          <option value="EUR">EUR €</option>
-          <option value="USD">USD $</option>
-          <option value="GBP">GBP £</option>
-          <option value="CHF">CHF Fr</option>
-          <option value="CAD">CAD $</option>
-          <option value="AUD">AUD $</option>
-          <option value="SGD">SGD $</option>
-          <option value="SAR">SAR ر.س</option>
-          <option value="AED">AED د.إ</option>
-          <option value="QAR">QAR ر.ق</option>
-          <option value="KWD">KWD د.ك</option>
-          <option value="BHD">BHD د.ب</option>
-          <option value="OMR">OMR ر.ع.</option>
-          <option value="MAD">MAD د.م.</option>
-          <option value="DZD">DZD د.ج</option>
-          <option value="TND">TND د.ت</option>
-          <option value="EGP">EGP ج.م</option>
-          <option value="TRY">TRY ₺</option>
-          <option value="CNY">CNY ¥</option>
-          <option value="JPY">JPY ¥</option>
-          <option value="INR">INR ₹</option>
-        </select>
-
-        <button id="n-log" onclick="App.notify(App.t('loginLocked'))" class="btn-ghost px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]">Connexion</button>
-        <button id="n-sig" onclick="App.view('pricing')" class="btn-gold px-6 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]">Inscription</button>
-        <button id="n-dash" onclick="App.view('dashboard')" class="btn-ghost px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]">Dashboard</button>
+      <div class="desktop-nav flex items-center gap-3">
+        <button class="nav-link" onclick="App.view('hero')">Home</button>
+        <button class="nav-link" onclick="App.view('pricing')">Pricing</button>
+        <button class="nav-link" onclick="App.view('studio')">Studio</button>
+        <button class="nav-link" onclick="App.view('dashboard')">Dashboard</button>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="lang-row flex items-center gap-3">
+          <select id="lang" class="input-dark !w-auto !py-3 !px-4 text-[12px] font-bold uppercase"><option value="fr">FR</option><option value="en">EN</option></select>
+          <select id="currency" class="input-dark !w-auto !py-3 !px-4 text-[12px] font-bold uppercase"><option value="EUR">EUR €</option><option value="USD">USD $</option><option value="GBP">GBP £</option><option value="MAD">MAD د.م.</option><option value="SAR">SAR ر.س</option><option value="AED">AED د.إ</option></select>
+          <button id="n-log" class="btn-ghost px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]" data-action="open-auth-login">Connexion</button>
+          <button id="n-sig" class="btn-gold px-6 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]" data-action="open-auth-register">Inscription</button>
+        </div>
+        <button id="hamburger" class="hamburger" aria-label="Menu">☰</button>
       </div>
     </div>
-  </nav>
-
-  <section id="hero" class="section active justify-center text-center">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 w-full max-w-5xl">
-      <div class="stat p-5">
-        <p class="text-[10px] uppercase tracking-[0.24em] muted-2">RENDER SUCCESS</p>
-        <p class="mt-2 text-[28px] md:text-[34px] font-black gold-text">99.2%</p>
-      </div>
-      <div class="stat p-5">
-        <p class="text-[10px] uppercase tracking-[0.24em] muted-2">1080P OUTPUT</p>
-        <p class="mt-2 text-[28px] md:text-[34px] font-black gold-text">FULL HD</p>
-      </div>
-      <div class="stat p-5">
-        <p class="text-[10px] uppercase tracking-[0.24em] muted-2">AVERAGE SHORTS</p>
-        <p class="mt-2 text-[28px] md:text-[34px] font-black gold-text">3 / VIDEO</p>
-      </div>
-      <div class="stat p-5">
-        <p class="text-[10px] uppercase tracking-[0.24em] muted-2">ENGINE</p>
-        <p class="mt-2 text-[28px] md:text-[34px] font-black gold-text">RENDERLY</p>
-      </div>
-    </div>
-
-    <div class="max-w-6xl">
-      <div class="mb-5 text-[11px] font-extrabold uppercase tracking-[0.55em] muted-2">AI SHORTS INFRASTRUCTURE</div>
-
-      <div class="flex flex-wrap justify-center gap-3 mb-6">
-        <div id="trial-pill-1" class="trial-pill">3 vidéos test offertes</div>
-        <div id="trial-pill-2" class="trial-pill">Test watermark inclus</div>
-        <div id="trial-pill-3" class="trial-pill">1080p minimum</div>
-      </div>
-
-      <h1 id="h-title" class="text-[52px] sm:text-[66px] md:text-[92px] lg:text-[116px] leading-[0.88] font-black uppercase tracking-[-0.05em]">
-        Shorts <span class="gold-text">Souverains</span>
-      </h1>
-
-      <p id="h-desc" class="mx-auto mt-7 max-w-4xl text-[16px] md:text-[19px] leading-relaxed muted">
-        Transformez vos vidéos longues en shorts 1080p avec détection des meilleurs moments, sous-titres, templates, branding et workflow studio premium.
-      </p>
-
-      <div class="hero-cta mt-10 flex flex-wrap items-center justify-center gap-4">
-        <button id="h-btn" onclick="App.view('pricing')" class="btn-gold px-8 py-4 text-[12px] font-black uppercase tracking-[0.20em]">Commencer</button>
-        <button id="h-test" onclick="App.view('studio')" class="btn-ghost px-8 py-4 text-[12px] font-black uppercase tracking-[0.20em]">Tester</button>
-        <button id="h-demo" onclick="App.view('dashboard')" class="btn-ghost px-8 py-4 text-[12px] font-black uppercase tracking-[0.20em]">Voir le dashboard</button>
-      </div>
-
-      <div class="mt-12 grid grid-cols-1 md:grid-cols-4 gap-5 text-left">
-        <div class="feature p-6">
-          <p class="text-[13px] font-black uppercase tracking-[0.2em]">Détection IA</p>
-          <p class="mt-3 text-[14px] leading-7 muted">Repérage automatique des moments les plus forts pour générer des shorts plus engageants.</p>
-        </div>
-        <div class="feature p-6">
-          <p class="text-[13px] font-black uppercase tracking-[0.2em]">1080p minimum</p>
-          <p class="mt-3 text-[14px] leading-7 muted">Export Full HD sur tous les forfaits, avec estimation coût / quota avant rendu.</p>
-        </div>
-        <div class="feature p-6">
-          <p class="text-[13px] font-black uppercase tracking-[0.2em]">Templates & brand</p>
-          <p class="mt-3 text-[14px] leading-7 muted">Styles, couleurs, polices, sous-titres et identité visuelle centralisés dans le brand kit.</p>
-        </div>
-        <div class="feature p-6">
-          <p class="text-[13px] font-black uppercase tracking-[0.2em]">Workflow studio</p>
-          <p class="mt-3 text-[14px] leading-7 muted">Upload, queue, preview, historique, facturation, support et dashboard unifiés.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="pricing" class="section w-full max-w-[1440px] mx-auto">
-    <div class="w-full text-center">
-      <div class="text-[11px] uppercase tracking-[0.55em] font-extrabold muted-2">PLANS & QUOTAS</div>
-      <h2 id="p-title" class="mt-4 text-[42px] md:text-[62px] font-black uppercase tracking-[-0.04em]">Tarifs</h2>
-      <p id="p-desc" class="mt-4 mx-auto max-w-3xl text-[16px] leading-7 muted">
-        Forfaits calculés pour rester cohérents avec le coût de rendu 1080p, le stockage, la livraison et le support.
-      </p>
-    </div>
-
-    <div class="price-modes mt-12 flex justify-center">
-      <div class="glass rounded-full p-1.5 flex gap-1 border border-white/10 items-center">
-        <button id="m-month" onclick="App.setBilling('monthly')" class="chip active-tab px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em]">Mensuel</button>
-        <button id="m-year" onclick="App.setBilling('yearly')" class="chip px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white">Annuel</button>
-        <div id="year-badge" class="chip px-4 py-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#f7dfa0] border-[rgba(212,175,55,.35)] bg-[rgba(212,175,55,.10)]">-25%</div>
-      </div>
-    </div>
-
-    <div class="mt-5 text-center">
-      <p id="pricing-note" class="text-[14px] muted">Mensuel sans engagement. Annuel avec 12 mois d’engagement et réduction.</p>
-    </div>
-
-    <div class="mt-14 grid grid-cols-1 xl:grid-cols-4 gap-7 w-full">
-      <article class="plan p-8 lg:p-10 flex flex-col justify-between">
-        <div>
-          <div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]">PLAN 01</div>
-          <h3 class="mt-4 text-[28px] font-black">Starter</h3>
-          <div id="pr-1" class="mt-6 text-[52px] leading-none font-black tracking-[-0.05em] gold-text">19,99 €</div>
-          <p id="lg-1" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">10 vidéos / mois</p>
-          <div class="mt-8 space-y-4 text-[14px] leading-7">
-            <p>✓ 10 vidéos source / mois</p>
-            <p>✓ Jusqu’à 30 shorts / mois</p>
-            <p>✓ Export 1080p</p>
-            <p>✓ Templates essentiels</p>
-            <p>✓ Test watermarked</p>
-          </div>
-        </div>
-        <button class="btn-ghost mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em] sub-txt">Choisir</button>
-      </article>
-
-      <article class="plan featured p-8 lg:p-10 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between gap-4">
-            <div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]">PLAN 02</div>
-            <div id="popular-chip" class="chip px-4 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#f7dfa0] border-[rgba(212,175,55,.35)] bg-[rgba(212,175,55,.10)]">Le plus choisi</div>
-          </div>
-          <h3 class="mt-4 text-[28px] font-black">Creator</h3>
-          <div id="pr-2" class="mt-6 text-[58px] leading-none font-black tracking-[-0.05em] gold-text">39,99 €</div>
-          <p id="lg-2" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">25 vidéos / mois</p>
-          <div class="mt-8 space-y-4 text-[14px] leading-7">
-            <p>✓ 25 vidéos source / mois</p>
-            <p>✓ Jusqu’à 75 shorts / mois</p>
-            <p>✓ Export 1080p</p>
-            <p>✓ Brand kit + templates premium</p>
-            <p>✓ Queue prioritaire légère</p>
-          </div>
-        </div>
-        <button class="btn-gold mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em] sub-txt">Choisir</button>
-      </article>
-
-      <article class="plan p-8 lg:p-10 flex flex-col justify-between">
-        <div>
-          <div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]">PLAN 03</div>
-          <h3 class="mt-4 text-[28px] font-black">Studio</h3>
-          <div id="pr-3" class="mt-6 text-[52px] leading-none font-black tracking-[-0.05em] gold-text">79,99 €</div>
-          <p id="lg-3" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">60 vidéos / mois</p>
-          <div class="mt-8 space-y-4 text-[14px] leading-7">
-            <p>✓ 60 vidéos source / mois</p>
-            <p>✓ Jusqu’à 180 shorts / mois</p>
-            <p>✓ Multi-projects & batch export</p>
-            <p>✓ Files prioritaires</p>
-            <p>✓ Historique étendu</p>
-          </div>
-        </div>
-        <button class="btn-ghost mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em] sub-txt">Choisir</button>
-      </article>
-
-      <article class="plan p-8 lg:p-10 flex flex-col justify-between">
-        <div>
-          <div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]">PLAN 04</div>
-          <h3 class="mt-4 text-[28px] font-black">Agency</h3>
-          <div id="pr-4" class="mt-6 text-[52px] leading-none font-black tracking-[-0.05em] gold-text">149,99 €</div>
-          <p id="lg-4" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">140 vidéos / mois</p>
-          <div class="mt-8 space-y-4 text-[14px] leading-7">
-            <p>✓ 140 vidéos source / mois</p>
-            <p>✓ Jusqu’à 420 shorts / mois</p>
-            <p>✓ Multi-brand</p>
-            <p>✓ Team workspace</p>
-            <p>✓ Support prioritaire</p>
-          </div>
-        </div>
-        <button class="btn-ghost mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em] sub-txt">Choisir</button>
-      </article>
-    </div>
-
-    <div class="mt-12 grid grid-cols-1 lg:grid-cols-[.95fr_1.05fr] gap-7 w-full">
-      <div class="panel p-6 md:p-8">
-        <div class="text-[24px] font-black">Simulateur de coût & quota</div>
-        <p class="mt-3 text-[14px] leading-7 muted">Estimez le nombre de vidéos, de shorts et le coût interne mensuel pour mieux choisir un plan.</p>
-
-        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Vidéos source / mois</label>
-            <input id="calc-videos" class="input-dark" type="range" min="1" max="200" value="25" />
-            <div class="mt-2 text-[14px] font-bold"><span id="calc-videos-value">25</span></div>
-          </div>
-          <div>
-            <label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Shorts par vidéo</label>
-            <input id="calc-shorts" class="input-dark" type="range" min="1" max="6" value="3" />
-            <div class="mt-2 text-[14px] font-bold"><span id="calc-shorts-value">3</span></div>
-          </div>
-        </div>
-
-        <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div class="metric-pill p-5">
-            <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">COÛT INTERNE</p>
-            <p class="mt-2 text-[18px] font-black gold-text" id="calc-cost">17.99 €</p>
-          </div>
-          <div class="metric-pill p-5">
-            <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">SHORTS / MOIS</p>
-            <p class="mt-2 text-[18px] font-black" id="calc-total-shorts">75</p>
-          </div>
-          <div class="metric-pill p-5">
-            <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">PLAN CONSEILLÉ</p>
-            <p class="mt-2 text-[18px] font-black" id="calc-plan">Creator</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel p-6 md:p-8">
-        <div class="text-[24px] font-black">Comparateur rapide</div>
-        <p class="mt-3 text-[14px] leading-7 muted">Visualisez les écarts de capacité entre les plans.</p>
-
-        <div class="mt-6 space-y-5">
-          <div>
-            <div class="flex justify-between text-[13px] mb-2"><span>Starter</span><span>10 vidéos</span></div>
-            <div class="progress"><div style="width:7%"></div></div>
-          </div>
-          <div>
-            <div class="flex justify-between text-[13px] mb-2"><span>Creator</span><span>25 vidéos</span></div>
-            <div class="progress"><div style="width:18%"></div></div>
-          </div>
-          <div>
-            <div class="flex justify-between text-[13px] mb-2"><span>Studio</span><span>60 vidéos</span></div>
-            <div class="progress"><div style="width:43%"></div></div>
-          </div>
-          <div>
-            <div class="flex justify-between text-[13px] mb-2"><span>Agency</span><span>140 vidéos</span></div>
-            <div class="progress"><div style="width:100%"></div></div>
-          </div>
-        </div>
-
-        <div class="mt-6 p-5 rounded-[22px] border border-white/10 bg-white/5">
-          <p class="text-[14px] leading-7 muted">
-            Tous les plans incluent le 1080p minimum. Les écarts portent surtout sur le quota de vidéos source, le nombre de shorts mensuels, la priorité de file et les outils avancés.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="studio" class="section w-full max-w-[1420px] mx-auto">
-    <div class="w-full text-center">
-      <div class="text-[11px] uppercase tracking-[0.55em] font-extrabold muted-2">STUDIO</div>
-      <h2 class="mt-4 text-[42px] md:text-[62px] font-black uppercase tracking-[-0.04em]">Créer des shorts</h2>
-      <p class="mt-4 mx-auto max-w-3xl text-[16px] leading-7 muted">
-        Importez une vidéo, configurez le rendu, choisissez un template et simulez un export avec watermark CASA CLIP.
-      </p>
-    </div>
-
-    <div class="mt-12 grid grid-cols-1 xl:grid-cols-[1.05fr_.95fr] gap-8 w-full">
-      <div class="panel p-6 md:p-8">
-        <div class="drop-zone p-6 md:p-8">
-          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div>
-              <div class="text-[18px] font-black">Importer une vidéo</div>
-              <p class="mt-2 text-[14px] leading-7 muted">Formats conseillés : MP4, MOV, WEBM. Le test affiche un watermark CASA CLIP sur la prévisualisation.</p>
-            </div>
-            <button onclick="document.getElementById('video-file').click()" class="btn-gold px-6 py-3 text-[12px] font-black uppercase tracking-[0.18em]">Choisir une vidéo</button>
-          </div>
-
-          <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">URL source</label>
-              <input id="url-studio" class="input-dark" type="text" placeholder="https://..." />
-            </div>
-            <div>
-              <label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Nom du projet</label>
-              <input id="project-name" class="input-dark" type="text" placeholder="Podcast épisode 07" />
-            </div>
-            <div>
-              <label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Shorts visés</label>
-              <select id="target-shorts" class="select-dark">
-                <option value="2">2 shorts</option>
-                <option value="3" selected>3 shorts</option>
-                <option value="4">4 shorts</option>
-                <option value="5">5 shorts</option>
-              </select>
-            </div>
-            <div>
-              <label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Style de sous-titres</label>
-              <select id="style-mode" class="select-dark">
-                <option value="bold">Bold</option>
-                <option value="cinema">Cinema</option>
-                <option value="creator">Creator</option>
-                <option value="clean">Clean</option>
-              </select>
-            </div>
-            <div>
-              <label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Plateforme</label>
-              <select id="platform-mode" class="select-dark">
-                <option>TikTok</option>
-                <option>YouTube Shorts</option>
-                <option>Instagram Reels</option>
-                <option>Snapchat Spotlight</option>
-              </select>
-            </div>
-            <div>
-              <label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Template</label>
-              <select id="template-mode" class="select-dark">
-                <option>Impact Gold</option>
-                <option>Creator Black</option>
-                <option>Minimal White</option>
-                <option>Bold Neon</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="metric-pill p-5">
-              <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">RÉSOLUTION</p>
-              <p class="mt-2 text-[16px] font-bold">1080p</p>
-            </div>
-            <div class="metric-pill p-5">
-              <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">MOTEUR</p>
-              <p class="mt-2 text-[16px] font-bold">Renderly API</p>
-            </div>
-            <div class="metric-pill p-5">
-              <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">ESTIMATION</p>
-              <p class="mt-2 text-[16px] font-bold" id="estimate-videos">3 shorts / 1 vidéo</p>
-            </div>
-          </div>
-
-          <div class="mt-6 p-5 rounded-[22px] border border-white/10 bg-white/5">
-            <div class="flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <div class="text-[16px] font-black">Estimation avant lancement</div>
-                <p class="mt-2 text-[14px] leading-7 muted">Prévisualisation du quota consommé et du coût interne estimatif côté service.</p>
-              </div>
-              <div class="status-pill"><span class="dot"></span><span>Contrôle quota actif</span></div>
-            </div>
-
-            <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div class="metric-pill p-5">
-                <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">VIDÉOS DÉDUITES</p>
-                <p class="mt-2 text-[18px] font-black" id="quota-deduct">1</p>
-              </div>
-              <div class="metric-pill p-5">
-                <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">SHORTS VISÉS</p>
-                <p class="mt-2 text-[18px] font-black" id="target-count">3</p>
-              </div>
-              <div class="metric-pill p-5">
-                <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">COÛT INTERNE</p>
-                <p class="mt-2 text-[18px] font-black gold-text" id="internal-cost">0,99 €</p>
-              </div>
-            </div>
-          </div>
-
-          <input type="file" id="video-file" class="hidden" accept="video/mp4,video/quicktime,video/webm" />
-
-          <div class="mt-6 flex flex-wrap gap-3">
-            <button onclick="App.launchTest()" class="btn-gold px-7 py-4 text-[12px] font-black uppercase tracking-[0.18em]">Lancer le test</button>
-            <button onclick="App.addQueueItem()" class="btn-ghost px-7 py-4 text-[12px] font-black uppercase tracking-[0.18em]">Envoyer dans la file</button>
-            <button onclick="App.clearVideo()" class="btn-ghost px-7 py-4 text-[12px] font-black uppercase tracking-[0.18em]">Réinitialiser</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="space-y-8">
-        <div class="video-stage">
-          <video id="video-preview" controls playsinline preload="metadata"></video>
-          <div id="video-placeholder" class="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
-            <div class="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-black gold-line bg-[rgba(212,175,55,.10)] text-[#f5df97]">▶</div>
-            <p class="mt-5 text-[18px] font-black">Prévisualisation</p>
-            <p class="mt-3 max-w-md text-[14px] leading-7 muted">Votre vidéo apparaîtra ici avec le marquage CASA CLIP visible en grand sur le résultat.</p>
-          </div>
-          <div class="watermark">CASA CLIP</div>
-        </div>
-
-        <div class="panel p-6">
-          <div class="text-[20px] font-black">File de rendu</div>
-          <p class="mt-2 text-[14px] leading-7 muted">Simulation frontend de la queue, des statuts et des retry.</p>
-          <div id="queue-list" class="mt-5 space-y-4"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="dashboard" class="section w-full max-w-[1480px] mx-auto">
-    <div class="w-full text-center">
-      <div class="text-[11px] uppercase tracking-[0.55em] font-extrabold muted-2">DASHBOARD</div>
-      <h2 class="mt-4 text-[42px] md:text-[62px] font-black uppercase tracking-[-0.04em]">Espace client</h2>
-      <p class="mt-4 mx-auto max-w-3xl text-[16px] leading-7 muted">
-        Vue d’ensemble du produit : projets, shorts, templates, brand kit, facturation, usage, notifications et support.
-      </p>
-    </div>
-
-    <div class="mt-12 grid grid-cols-1 xl:grid-cols-[260px_1fr] gap-8 w-full">
-      <aside class="panel p-4 h-fit">
-        <div class="sidebar-tabs flex flex-col gap-3">
-          <button class="side-tab active rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('overview',this)">Vue d’ensemble</button>
-          <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('projects',this)">Projets</button>
-          <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('shorts',this)">Shorts générés</button>
-          <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('templates',this)">Templates</button>
-          <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('brandkit',this)">Brand kit</button>
-          <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('billing',this)">Facturation</button>
-          <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('usage',this)">Usage & quota</button>
-          <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('notifications',this)">Notifications</button>
-          <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('trust',this)">Trust & sécurité</button>
-          <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('support',this)">SAV & FAQ</button>
-        </div>
-      </aside>
-
-      <div>
-        <div id="dash-overview" class="dash-view">
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
-            <div class="metric p-6">
-              <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">PLAN ACTIF</p>
-              <p class="mt-2 text-[22px] font-black gold-text">Creator</p>
-            </div>
-            <div class="metric p-6">
-              <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">VIDÉOS CE MOIS</p>
-              <p class="mt-2 text-[22px] font-black">11 / 25</p>
-            </div>
-            <div class="metric p-6">
-              <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">SHORTS GÉNÉRÉS</p>
-              <p class="mt-2 text-[22px] font-black">34 / 75</p>
-            </div>
-            <div class="metric p-6">
-              <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">RENDU MOYEN</p>
-              <p class="mt-2 text-[22px] font-black">1080p</p>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_.9fr] gap-7 mt-7">
-            <div class="panel p-6">
-              <div class="text-[24px] font-black">Pipeline type</div>
-              <p class="mt-3 text-[14px] leading-7 muted">Import → détection → clipping → sous-titres → template → preview → export → historique.</p>
-
-              <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="help p-5">
-                  <p class="text-[13px] font-black uppercase tracking-[0.18em]">Upload & analyse</p>
-                  <p class="mt-3 text-[14px] leading-7 muted">Validation du fichier, nom de projet, estimation de quota et simulation d’envoi moteur.</p>
-                </div>
-                <div class="help p-5">
-                  <p class="text-[13px] font-black uppercase tracking-[0.18em]">Clipping IA</p>
-                  <p class="mt-3 text-[14px] leading-7 muted">Suggestion de moments forts, score de viralité et nombre de shorts visés.</p>
-                </div>
-                <div class="help p-5">
-                  <p class="text-[13px] font-black uppercase tracking-[0.18em]">Styling</p>
-                  <p class="mt-3 text-[14px] leading-7 muted">Template, couleurs, police, brand kit, plateforme cible et preview watermarked.</p>
-                </div>
-                <div class="help p-5">
-                  <p class="text-[13px] font-black uppercase tracking-[0.18em]">Delivery</p>
-                  <p class="mt-3 text-[14px] leading-7 muted">Queue de rendu, statut, historique, facturation, support et logs frontend.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="panel p-6">
-              <div class="text-[24px] font-black">Actions rapides</div>
-              <div class="mt-5 flex flex-col gap-3">
-                <button class="btn-gold py-4 text-[12px] font-black uppercase tracking-[0.18em]" onclick="App.view('studio')">Nouveau projet</button>
-                <button class="btn-ghost py-4 text-[12px] font-black uppercase tracking-[0.18em]" onclick="App.switchDash('templates')">Explorer les templates</button>
-                <button class="btn-ghost py-4 text-[12px] font-black uppercase tracking-[0.18em]" onclick="App.switchDash('billing')">Voir ma facturation</button>
-                <button class="btn-ghost py-4 text-[12px] font-black uppercase tracking-[0.18em]" onclick="App.switchDash('support')">Ouvrir le support</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="dash-projects" class="dash-view hidden">
-          <div class="panel p-6">
-            <div class="text-[24px] font-black">Mes projets</div>
-            <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-5">
-              <div class="queue-item p-5">
-                <div class="flex items-center justify-between gap-4"><div class="font-black">Podcast #07</div><div class="status-pill"><span class="dot"></span><span>Ready</span></div></div>
-                <p class="mt-3 text-[14px] muted">3 shorts • TikTok • Creator Black • 1080p</p>
-              </div>
-              <div class="queue-item p-5">
-                <div class="flex items-center justify-between gap-4"><div class="font-black">Interview Client</div><div class="status-pill"><span class="dot"></span><span>Rendering</span></div></div>
-                <p class="mt-3 text-[14px] muted">4 shorts • Reels • Impact Gold • 1080p</p>
-                <div class="mt-4 progress"><div style="width:64%"></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="dash-shorts" class="dash-view hidden">
-          <div class="panel p-6">
-            <div class="text-[24px] font-black">Shorts générés</div>
-            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-              <div class="template-card p-5">
-                <div class="aspect-[9/16] rounded-[20px] bg-white/5 border border-white/10 flex items-center justify-center font-black gold-text">SHORT 01</div>
-                <p class="mt-4 font-black">Hook rapide — TikTok</p>
-                <p class="mt-2 text-[14px] muted">00:42 • 1080p • subtitles bold</p>
-              </div>
-              <div class="template-card p-5">
-                <div class="aspect-[9/16] rounded-[20px] bg-white/5 border border-white/10 flex items-center justify-center font-black gold-text">SHORT 02</div>
-                <p class="mt-4 font-black">Best quote — Reels</p>
-                <p class="mt-2 text-[14px] muted">00:37 • 1080p • creator black</p>
-              </div>
-              <div class="template-card p-5">
-                <div class="aspect-[9/16] rounded-[20px] bg-white/5 border border-white/10 flex items-center justify-center font-black gold-text">SHORT 03</div>
-                <p class="mt-4 font-black">CTA clip — Shorts</p>
-                <p class="mt-2 text-[14px] muted">00:45 • 1080p • impact gold</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="dash-templates" class="dash-view hidden">
-          <div class="panel p-6">
-            <div class="text-[24px] font-black">Templates</div>
-            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
-              <div class="template-card p-5"><div class="h-40 rounded-[18px] bg-gradient-to-br from-yellow-300/30 to-black border border-white/10"></div><p class="mt-4 font-black">Impact Gold</p></div>
-              <div class="template-card p-5"><div class="h-40 rounded-[18px] bg-gradient-to-br from-white/10 to-black border border-white/10"></div><p class="mt-4 font-black">Creator Black</p></div>
-              <div class="template-card p-5"><div class="h-40 rounded-[18px] bg-gradient-to-br from-white/50 to-neutral-700 border border-white/10"></div><p class="mt-4 font-black">Minimal White</p></div>
-              <div class="template-card p-5"><div class="h-40 rounded-[18px] bg-gradient-to-br from-blue-500/30 to-pink-500/20 border border-white/10"></div><p class="mt-4 font-black">Bold Neon</p></div>
-            </div>
-          </div>
-        </div>
-
-        <div id="dash-brandkit" class="dash-view hidden">
-          <div class="panel p-6">
-            <div class="text-[24px] font-black">Brand kit</div>
-            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div class="editor-panel p-5">
-                <label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Logo</label>
-                <div class="h-24 rounded-[18px] border border-white/10 bg-white/5 flex items-center justify-center font-black gold-text">CASA CLIP</div>
-              </div>
-              <div class="editor-panel p-5">
-                <label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Palette</label>
-                <div class="flex gap-3">
-                  <div class="w-12 h-12 rounded-full border border-white/10 bg-[#0a0a0a]"></div>
-                  <div class="w-12 h-12 rounded-full border border-white/10 bg-[#d4af37]"></div>
-                  <div class="w-12 h-12 rounded-full border border-white/10 bg-[#ffffff]"></div>
-                  <div class="w-12 h-12 rounded-full border border-white/10 bg-[#111827]"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="dash-billing" class="dash-view hidden">
-          <div class="panel p-6">
-            <div class="text-[24px] font-black">Facturation</div>
-            <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-5">
-              <div class="editor-panel p-5">
-                <p class="text-[13px] font-black uppercase tracking-[0.18em]">Plan actuel</p>
-                <p class="mt-3 text-[28px] font-black gold-text" id="billing-plan-card">Creator</p>
-                <p class="mt-2 text-[14px] muted">Renouvellement le 15 avril • Carte terminant par 4242</p>
-              </div>
-              <div class="editor-panel p-5">
-                <p class="text-[13px] font-black uppercase tracking-[0.18em]">Dernières factures</p>
-                <div class="mt-4 space-y-3 text-[14px]">
-                  <div class="flex justify-between"><span>INV-2026-031</span><span class="font-black" id="invoice-1">39,99 €</span></div>
-                  <div class="flex justify-between"><span>INV-2026-030</span><span class="font-black" id="invoice-2">39,99 €</span></div>
-                  <div class="flex justify-between"><span>INV-2026-029</span><span class="font-black" id="invoice-3">39,99 €</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="dash-usage" class="dash-view hidden">
-          <div class="panel p-6">
-            <div class="text-[24px] font-black">Usage & quota</div>
-            <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-5">
-              <div class="metric p-5">
-                <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">VIDÉOS</p>
-                <p class="mt-2 text-[22px] font-black">11 / 25</p>
-                <div class="mt-4 progress"><div style="width:44%"></div></div>
-              </div>
-              <div class="metric p-5">
-                <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">SHORTS</p>
-                <p class="mt-2 text-[22px] font-black">34 / 75</p>
-                <div class="mt-4 progress"><div style="width:45%"></div></div>
-              </div>
-              <div class="metric p-5">
-                <p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">ESTIMATION COÛT</p>
-                <p class="mt-2 text-[22px] font-black gold-text">7,99 €</p>
-                <div class="mt-4 text-[13px] muted">Coût interne estimé sur les vidéos déjà traitées.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="dash-notifications" class="dash-view hidden">
-          <div class="panel p-6">
-            <div class="text-[24px] font-black">Notifications</div>
-            <div class="mt-6 space-y-4">
-              <div class="notification-card p-5"><div class="font-black">Rendu terminé — Podcast #07</div><p class="mt-2 text-[14px] muted">3 shorts prêts pour export.</p></div>
-              <div class="notification-card p-5"><div class="font-black">Quota à 44%</div><p class="mt-2 text-[14px] muted">Votre consommation mensuelle reste sous contrôle.</p></div>
-              <div class="notification-card p-5"><div class="font-black">3 vidéos de test restantes</div><p class="mt-2 text-[14px] muted">Le mode essai gratuit watermark est encore disponible.</p></div>
-            </div>
-          </div>
-        </div>
-
-        <div id="dash-trust" class="dash-view hidden">
-          <div class="panel p-6">
-            <div class="text-[24px] font-black">Trust & sécurité</div>
-            <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-5">
-              <div class="help p-5"><p class="text-[13px] font-black uppercase tracking-[0.18em]">Contrôle d’accès</p><p class="mt-3 text-[14px] leading-7 muted">Sessions, séparation logique des espaces sensibles et statut de contrôle.</p></div>
-              <div class="help p-5"><p class="text-[13px] font-black uppercase tracking-[0.18em]">Paiement</p><p class="mt-3 text-[14px] leading-7 muted">Cartes, wallets, SEPA, upgrade / downgrade et vue factures.</p></div>
-              <div class="help p-5"><p class="text-[13px] font-black uppercase tracking-[0.18em]">Données</p><p class="mt-3 text-[14px] leading-7 muted">Historique, suppression, export et transparence UI sur l’usage.</p></div>
-            </div>
-          </div>
-        </div>
-
-        <div id="dash-support" class="dash-view hidden">
-          <div class="panel p-6">
-            <div id="support-title" class="text-[24px] font-black">SAV & FAQ</div>
-            <p class="mt-3 text-[14px] leading-7 muted">Formulaire de ticket, FAQ et bot d’assistance.</p>
-
-            <div class="mt-6 grid grid-cols-1 xl:grid-cols-[.9fr_1.1fr] gap-6">
-              <div class="space-y-6">
-                <div class="help p-5">
-                  <label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Nom</label>
-                  <input id="ticket-name" class="input-dark" placeholder="Jérémy" />
-                  <label class="mt-4 mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Email</label>
-                  <input id="ticket-email" class="input-dark" placeholder="contact@casaclip.io" />
-                  <label class="mt-4 mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Message</label>
-                  <textarea id="ticket-message" class="textarea-dark" placeholder="Décrivez votre besoin..."></textarea>
-                  <div class="mt-4 flex gap-3 flex-wrap">
-                    <button onclick="App.submitTicket()" class="btn-gold px-6 py-4 text-[12px] font-black uppercase">Envoyer le ticket</button>
-                    <button onclick="App.toggleBot(true)" class="btn-ghost px-6 py-4 text-[12px] font-black uppercase">Demander au bot</button>
-                  </div>
-                </div>
-                <div class="help p-5">
-                  <p class="text-[13px] font-black uppercase tracking-[0.18em]">Dernier ticket généré</p>
-                  <p id="ticket-last" data-empty="1" class="mt-3 text-[14px] leading-7 muted">Aucun ticket pour le moment.</p>
-                </div>
-              </div>
-
-              <div class="space-y-4">
-                <div class="faq-item">
-                  <button class="faq-btn"><span id="faq-q1">Comment fonctionne le test vidéo ?</span><span class="faq-icon">+</span></button>
-                  <div class="faq-answer"><p id="faq-a1" class="text-[14px] leading-7 muted">Le test charge une vidéo locale et affiche une preview watermarked.</p></div>
-                </div>
-                <div class="faq-item">
-                  <button class="faq-btn"><span id="faq-q2">Le 1080p est-il inclus ?</span><span class="faq-icon">+</span></button>
-                  <div class="faq-answer"><p id="faq-a2" class="text-[14px] leading-7 muted">Oui, 1080p minimum sur tous les forfaits.</p></div>
-                </div>
-                <div class="faq-item">
-                  <button class="faq-btn"><span id="faq-q3">Comment est calculé le quota ?</span><span class="faq-icon">+</span></button>
-                  <div class="faq-answer"><p id="faq-a3" class="text-[14px] leading-7 muted">Le quota principal est basé sur le nombre de vidéos source mensuelles.</p></div>
-                </div>
-                <div class="faq-item">
-                  <button class="faq-btn"><span id="faq-q4">Puis-je changer de plan ?</span><span class="faq-icon">+</span></button>
-                  <div class="faq-answer"><p id="faq-a4" class="text-[14px] leading-7 muted">Oui, l’interface prévoit upgrade et downgrade.</p></div>
-                </div>
-                <div class="faq-item">
-                  <button class="faq-btn"><span id="faq-q5">Le backend est-il inclus ?</span><span class="faq-icon">+</span></button>
-                  <div class="faq-answer"><p id="faq-a5" class="text-[14px] leading-7 muted">Non, ce fichier couvre le frontend complet.</p></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <footer class="mt-10 border-t border-white/5 bg-black/40 backdrop-blur px-[5%] py-10">
-    <div class="max-w-[1380px] mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-      <div>
-        <div class="text-[24px] font-black uppercase tracking-[0.18em] gold-text">CASA CLIP</div>
-        <p id="footer-copy" class="mt-3 text-[13px] leading-7 muted max-w-xl">Plateforme premium de création de shorts 1080p, de workflow studio et de gestion SaaS frontend.</p>
-      </div>
-
-      <div class="footer-links flex flex-wrap items-center gap-6 text-[11px] font-extrabold uppercase tracking-[0.18em] muted">
-        <a id="footer-link-1" href="#" class="hover:text-[#f4df97] transition">Conditions</a>
-        <a id="footer-link-2" href="#" class="hover:text-[#f4df97] transition">Confidentialité</a>
-        <a id="footer-link-3" href="#" class="hover:text-[#f4df97] transition">Infrastructure</a>
-        <a id="footer-link-4" href="#" class="hover:text-[#f4df97] transition">Support</a>
-      </div>
-    </div>
-  </footer>
-
-  <button id="bot-launcher" class="bot-launcher" aria-label="Open support bot">BOT</button>
-
-  <div id="bot-panel" class="bot-panel">
-    <div class="bot-head">
+  </nav>  <div id="drawer" class="drawer">
+    <div class="drawer-backdrop"></div>
+    <div class="drawer-panel">
       <div class="flex items-center justify-between gap-3">
-        <div>
-          <div id="bot-title" class="text-[15px] font-black uppercase tracking-[0.18em]">CASA CLIP BOT</div>
-          <div id="bot-subtitle" class="mt-1 text-[12px] muted">Assistance automatique, support et FAQ</div>
+        <div><div class="text-sm font-black uppercase tracking-[0.22em]">CASA CLIP</div><div class="text-[10px] uppercase tracking-[0.28em] muted-2">MOBILE MENU</div></div>
+        <button id="drawer-close" class="btn-ghost px-4 py-3 text-[11px] font-black uppercase">Close</button>
+      </div>
+      <div class="grid grid-cols-1 gap-3">
+        <button class="nav-link !justify-start" onclick="App.viewAndClose('hero')">Home</button>
+        <button class="nav-link !justify-start" onclick="App.viewAndClose('pricing')">Pricing</button>
+        <button class="nav-link !justify-start" onclick="App.viewAndClose('studio')">Studio</button>
+        <button class="nav-link !justify-start" onclick="App.viewAndClose('dashboard')">Dashboard</button>
+      </div>
+      <div class="panel p-4">
+        <div class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2 mb-2">Language</div>
+        <select id="lang-mobile" class="input-dark text-[12px] font-bold uppercase"><option value="fr">FR</option><option value="en">EN</option></select>
+        <div class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2 mt-4 mb-2">Currency</div>
+        <select id="currency-mobile" class="input-dark text-[12px] font-bold uppercase"><option value="EUR">EUR €</option><option value="USD">USD $</option><option value="GBP">GBP £</option><option value="MAD">MAD د.م.</option><option value="SAR">SAR ر.س</option><option value="AED">AED د.إ</option></select>
+      </div>
+      <button id="n-log-mobile" class="btn-ghost px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]" data-action="open-auth-login">Connexion</button>
+      <button id="n-sig-mobile" class="btn-gold px-6 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]" data-action="open-auth-register">Inscription</button>
+    </div>
+  </div>  <section id="hero" class="section active justify-center text-center">
+    <div class="container-max">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 w-full max-w-5xl mx-auto">
+        <div class="stat p-5"><p class="text-[10px] uppercase tracking-[0.24em] muted-2">RENDER SUCCESS</p><p class="mt-2 text-[24px] sm:text-[28px] md:text-[34px] font-black gold-text">99.2%</p></div>
+        <div class="stat p-5"><p class="text-[10px] uppercase tracking-[0.24em] muted-2">1080P OUTPUT</p><p class="mt-2 text-[24px] sm:text-[28px] md:text-[34px] font-black gold-text">FULL HD</p></div>
+        <div class="stat p-5"><p class="text-[10px] uppercase tracking-[0.24em] muted-2">AVERAGE SHORTS</p><p class="mt-2 text-[24px] sm:text-[28px] md:text-[34px] font-black gold-text">3 / VIDEO</p></div>
+        <div class="stat p-5"><p class="text-[10px] uppercase tracking-[0.24em] muted-2">BACKEND STATUS</p><p class="mt-2 text-[24px] sm:text-[28px] md:text-[34px] font-black gold-text">READY</p></div>
+      </div>
+      <div class="max-w-6xl mx-auto">
+        <div class="mb-5 text-[11px] font-extrabold uppercase tracking-[0.4em] sm:tracking-[0.55em] muted-2">FRONTEND ORIENTÉ BACKEND</div>
+        <h1 class="text-[40px] sm:text-[52px] md:text-[76px] lg:text-[110px] leading-[0.92] font-black uppercase tracking-[-0.05em]">CASA CLIP <span class="gold-text">Backend Ready</span></h1>
+        <p class="mx-auto mt-7 max-w-4xl text-[15px] sm:text-[16px] md:text-[19px] leading-relaxed muted">Le HTML inclut maintenant des contrats de données, endpoints, payloads, formulaires structurés, placeholders de sécurité, et des composants pensés pour être branchés directement sur le backend.</p>
+        <div class="hero-cta mt-10 flex flex-wrap items-center justify-center gap-4">
+          <button class="btn-gold px-8 py-4 text-[12px] font-black uppercase tracking-[0.20em]" onclick="App.view('dashboard')">Voir backend ready</button>
+          <button class="btn-ghost px-8 py-4 text-[12px] font-black uppercase tracking-[0.20em]" onclick="App.view('studio')">Tester studio</button>
         </div>
-        <button id="bot-close" class="btn-ghost px-4 py-2 text-[10px] font-black uppercase tracking-[0.18em]">Fermer</button>
       </div>
     </div>
+  </section>  <section id="pricing" class="section">
+    <div class="container-max">
+      <div class="w-full text-center">
+        <div class="text-[11px] uppercase tracking-[0.55em] font-extrabold muted-2">PLANS & QUOTAS</div>
+        <h2 class="mt-4 text-[34px] sm:text-[42px] md:text-[62px] font-black uppercase tracking-[-0.04em]">Tarifs</h2>
+        <p class="mt-4 mx-auto max-w-3xl text-[15px] md:text-[16px] leading-7 muted">Chaque plan possède déjà ses identifiants internes, ses quotas et ses montants prêts pour le backend.</p>
+      </div>
+      <div class="price-modes mt-12 flex justify-center">
+        <div class="glass rounded-full p-1.5 flex flex-wrap justify-center gap-1 border border-white/10 items-center">
+          <button id="m-month" onclick="App.setBilling('monthly')" class="chip active-tab px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em]">Mensuel</button>
+          <button id="m-year" onclick="App.setBilling('yearly')" class="chip px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white">Annuel</button>
+          <div class="chip px-4 py-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#f7dfa0] border-[rgba(212,175,55,.35)] bg-[rgba(212,175,55,.10)]">-25%</div>
+        </div>
+      </div>
+      <div class="mt-14 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-7 w-full">
+        <article class="plan p-8 flex flex-col justify-between" data-plan-code="starter" data-plan-videos="10" data-plan-shorts="30"><div><div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]">PLAN 01</div><h3 class="mt-4 text-[28px] font-black">Starter</h3><div id="pr-1" class="mt-6 text-[42px] md:text-[52px] leading-none font-black tracking-[-0.05em] gold-text">19,99 €</div><p id="lg-1" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">10 vidéos / mois</p></div><button class="btn-ghost mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em]" data-subscribe-plan="starter">Choisir</button></article>
+        <article class="plan p-8 flex flex-col justify-between" data-plan-code="creator" data-plan-videos="25" data-plan-shorts="75"><div><div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]">PLAN 02</div><h3 class="mt-4 text-[28px] font-black">Creator</h3><div id="pr-2" class="mt-6 text-[46px] md:text-[58px] leading-none font-black tracking-[-0.05em] gold-text">39,99 €</div><p id="lg-2" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">25 vidéos / mois</p></div><button class="btn-gold mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em]" data-subscribe-plan="creator">Choisir</button></article>
+        <article class="plan p-8 flex flex-col justify-between" data-plan-code="studio" data-plan-videos="60" data-plan-shorts="180"><div><div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]">PLAN 03</div><h3 class="mt-4 text-[28px] font-black">Studio</h3><div id="pr-3" class="mt-6 text-[42px] md:text-[52px] leading-none font-black tracking-[-0.05em] gold-text">79,99 €</div><p id="lg-3" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">60 vidéos / mois</p></div><button class="btn-ghost mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em]" data-subscribe-plan="studio">Choisir</button></article>
+        <article class="plan p-8 flex flex-col justify-between" data-plan-code="agency" data-plan-videos="140" data-plan-shorts="420"><div><div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]">PLAN 04</div><h3 class="mt-4 text-[28px] font-black">Agency</h3><div id="pr-4" class="mt-6 text-[42px] md:text-[52px] leading-none font-black tracking-[-0.05em] gold-text">149,99 €</div><p id="lg-4" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">140 vidéos / mois</p></div><button class="btn-ghost mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em]" data-subscribe-plan="agency">Choisir</button></article>
+      </div>
+    </div>
+  </section>  <section id="studio" class="section">
+    <div class="container-max">
+      <div class="w-full text-center">
+        <div class="text-[11px] uppercase tracking-[0.55em] font-extrabold muted-2">STUDIO</div>
+        <h2 class="mt-4 text-[34px] sm:text-[42px] md:text-[62px] font-black uppercase tracking-[-0.04em]">Créer des shorts</h2>
+        <p class="mt-4 mx-auto max-w-3xl text-[15px] md:text-[16px] leading-7 muted">Le studio contient déjà les champs, IDs et payloads pour upload signé, création de projet et démarrage de rendu.</p>
+      </div>
+      <div class="mt-12 grid grid-cols-1 xl:grid-cols-[1.05fr_.95fr] gap-8 w-full">
+        <div class="panel p-4 sm:p-6 md:p-8">
+          <form id="project-form" class="grid grid-cols-1 gap-6" data-endpoint="projects" data-method="POST">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div><label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Nom du projet</label><input id="project-name" name="name" class="input-dark" type="text" placeholder="Podcast épisode 07" required /></div>
+              <div><label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">URL source</label><input id="url-studio" name="sourceUrl" class="input-dark" type="url" placeholder="https://..." /></div>
+              <div><label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Template</label><select id="template-mode" name="template" class="select-dark"><option>Impact Gold</option><option>Creator Black</option><option>Minimal White</option><option>Bold Neon</option></select></div>
+              <div><label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Plateforme</label><select id="platform-mode" name="platform" class="select-dark"><option>TikTok</option><option>YouTube Shorts</option><option>Instagram Reels</option><option>Snapchat Spotlight</option></select></div>
+              <div><label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Style sous-titres</label><select id="style-mode" name="subtitleStyle" class="select-dark"><option value="bold">Bold</option><option value="cinema">Cinema</option><option value="creator">Creator</option><option value="clean">Clean</option></select></div>
+              <div><label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Shorts visés</label><select id="target-shorts" name="targetShorts" class="select-dark"><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="metric p-5"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">PAYLOAD PROJECT</p><p class="mt-2 text-[16px] font-bold">/projects</p></div>
+              <div class="metric p-5"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">PAYLOAD UPLOAD</p><p class="mt-2 text-[16px] font-bold">/uploads/sign</p></div>
+              <div class="metric p-5"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">PAYLOAD RENDER</p><p class="mt-2 text-[16px] font-bold">/renders</p></div>
+            </div>
+            <input type="file" id="video-file" class="hidden" accept="video/mp4,video/quicktime,video/webm" />
+            <div class="flex flex-wrap gap-3">
+              <button type="button" id="btn-pick-video" class="btn-gold px-6 py-4 text-[12px] font-black uppercase">Choisir une vidéo</button>
+              <button type="button" id="btn-build-project-payload" class="btn-ghost px-6 py-4 text-[12px] font-black uppercase">Voir payload projet</button>
+              <button type="button" id="btn-build-render-payload" class="btn-ghost px-6 py-4 text-[12px] font-black uppercase">Voir payload render</button>
+            </div>
+          </form>
+          <div class="mt-6 grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <div class="api-card p-5">
+              <div class="text-[15px] font-black uppercase tracking-[0.18em]">Payload projet</div>
+              <pre id="project-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre>
+            </div>
+            <div class="api-card p-5">
+              <div class="text-[15px] font-black uppercase tracking-[0.18em]">Payload render</div>
+              <pre id="render-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-8">
+          <div class="api-card p-5">
+            <div class="text-[15px] font-black uppercase tracking-[0.18em]">Upload signé attendu</div>
+            <pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">POST /uploads/sign
+{
+  "filename": "episode-07.mp4",
+  "mimeType": "video/mp4",
+  "size": 845663211,
+  "projectName": "Podcast épisode 07"
+}Response { "uploadUrl": "https://storage...signed", "publicUrl": "https://cdn.../episode-07.mp4", "fileKey": "projects/123/source/episode-07.mp4", "expiresAt": "2026-03-16T12:00:00Z" }</pre> </div> <div class="api-card p-5"> <div class="text-[15px] font-black uppercase tracking-[0.18em]">Queue render attendue</div> <div id="queue-list" class="mt-4 space-y-4"></div> </div> </div> </div> </div>
 
-    <div id="bot-messages" class="bot-messages"></div>
+  </section>  <section id="dashboard" class="section">
+    <div class="container-max">
+      <div class="w-full text-center">
+        <div class="text-[11px] uppercase tracking-[0.55em] font-extrabold muted-2">BACKEND READY</div>
+        <h2 class="mt-4 text-[34px] sm:text-[42px] md:text-[62px] font-black uppercase tracking-[-0.04em]">Tableau de branchement backend</h2>
+        <p class="mt-4 mx-auto max-w-3xl text-[15px] md:text-[16px] leading-7 muted">Tout ce qui suit sert à faciliter le backend : endpoints, objets, schémas, formulaires, sécurité, paiements, auth et contrats d’API.</p>
+      </div>
+      <div class="mt-12 grid grid-cols-1 xl:grid-cols-[260px_1fr] gap-8 w-full">
+        <aside class="panel p-4 h-fit">
+          <div class="sidebar-tabs flex flex-col gap-3">
+            <button class="side-tab active rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('overview',this)">Vue d’ensemble</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('auth',this)">Auth</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('billing',this)">Paiements</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('projects',this)">Projects</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('renders',this)">Renders</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('support',this)">Tickets</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('security',this)">Sécurité</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('api',this)">API map</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('state',this)">Frontend state</button>
+          </div>
+        </aside>
+        <div class="min-w-0">
+          <div id="dash-overview" class="dash-view">
+            <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-5">
+              <div class="metric p-6"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">AUTH STRATEGY</p><p class="mt-2 text-[22px] font-black gold-text">COOKIE</p></div>
+              <div class="metric p-6"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">BILLING</p><p class="mt-2 text-[22px] font-black">STRIPE READY</p></div>
+              <div class="metric p-6"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">UPLOAD</p><p class="mt-2 text-[22px] font-black">SIGNED URL</p></div>
+              <div class="metric p-6"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">RENDER ENGINE</p><p class="mt-2 text-[22px] font-black">RENDERLY</p></div>
+            </div>
+            <div class="mt-7 grid grid-cols-1 xl:grid-cols-2 gap-6">
+              <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Routes minimales</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">POST /auth/register
+POST /auth/login
+POST /auth/logout
+GET  /auth/me
+POST /billing/create-checkout
+POST /billing/webhook/stripe
+GET  /billing/invoices
+POST /uploads/sign
+POST /projects
+GET  /projects
+POST /renders
+GET  /renders/:id
+POST /tickets
+GET  /usage
+GET  /health</pre></div>
+              <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Tables backend minimales</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">users
+sessions
+subscriptions
+plans
+projects
+project_assets
+renders
+render_outputs
+usage_monthly
+tickets
+invoices
+audit_logs
+webhook_events</pre></div>
+            </div>
+          </div><div id="dash-auth" class="dash-view hidden">
+        <div class="grid grid-cols-1 xl:grid-cols-[.95fr_1.05fr] gap-6">
+          <div class="api-card p-5">
+            <div class="text-[15px] font-black uppercase tracking-[0.18em]">Formulaire auth</div>
+            <form id="auth-form" class="mt-4 grid grid-cols-1 gap-4" data-endpoint="auth/login" data-method="POST">
+              <select id="auth-mode" class="select-dark"><option value="login">Login</option><option value="register">Register</option></select>
+              <input id="auth-name" class="input-dark" placeholder="Nom complet" />
+              <input id="auth-email" class="input-dark" type="email" placeholder="email@casaclip.io" />
+              <input id="auth-password" class="input-dark" type="password" placeholder="Mot de passe" />
+              <div class="flex flex-wrap gap-3"><button type="button" id="btn-build-auth-payload" class="btn-gold px-6 py-4 text-[12px] font-black uppercase">Voir payload auth</button><button type="button" class="btn-ghost px-6 py-4 text-[12px] font-black uppercase">Brancher backend</button></div>
+            </form>
+          </div>
+          <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Payload auth</div><pre id="auth-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre><div class="mt-5 status-pill warn"><span class="dot warn"></span><span>Prévu pour cookie httpOnly + CSRF header</span></div></div>
+        </div>
+      </div>
 
-    <div class="bot-quick">
-      <button class="bot-chip" data-bot="pricing" id="bot-chip-1">Tarifs</button>
-      <button class="bot-chip" data-bot="quota" id="bot-chip-2">Quota</button>
-      <button class="bot-chip" data-bot="payment" id="bot-chip-3">Paiement</button>
-      <button class="bot-chip" data-bot="ticket" id="bot-chip-4">Ticket</button>
-      <button class="bot-chip" data-bot="security" id="bot-chip-5">Sécurité</button>
+      <div id="dash-billing" class="dash-view hidden">
+        <div class="grid grid-cols-1 xl:grid-cols-[1fr_1fr] gap-6">
+          <div class="api-card p-5">
+            <div class="text-[15px] font-black uppercase tracking-[0.18em]">Checkout</div>
+            <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <button class="pay-method active" data-gateway="stripe">Stripe</button>
+              <button class="pay-method" data-gateway="paypal">PayPal</button>
+              <button class="pay-method" data-gateway="wallet">Wallet</button>
+            </div>
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input id="billing-name" class="input-dark" placeholder="Nom affiché" />
+              <input id="billing-email" class="input-dark" type="email" placeholder="Email de facturation" />
+              <select id="checkout-plan" class="select-dark"><option value="starter">Starter</option><option value="creator" selected>Creator</option><option value="studio">Studio</option><option value="agency">Agency</option></select>
+              <select id="checkout-billing" class="select-dark"><option value="monthly">Mensuel</option><option value="yearly">Annuel</option></select>
+            </div>
+            <div class="mt-5 flex flex-wrap gap-3"><button type="button" id="btn-build-checkout-payload" class="btn-gold px-6 py-4 text-[12px] font-black uppercase">Voir payload checkout</button><button type="button" class="btn-ghost px-6 py-4 text-[12px] font-black uppercase">Créer checkout</button></div>
+          </div>
+          <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Payload checkout</div><pre id="checkout-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre></div>
+        </div>
+      </div>
+
+      <div id="dash-projects" class="dash-view hidden">
+        <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">DTO Project</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">type CreateProjectDto = {
+
+name: string; sourceUrl?: string; sourceFileKey?: string; platform: 'TikTok' | 'YouTube Shorts' | 'Instagram Reels' | 'Snapchat Spotlight'; template: string; subtitleStyle: 'bold' | 'cinema' | 'creator' | 'clean'; targetShorts: number; resolution: '1080p'; };</pre></div> </div>
+
+<div id="dash-renders" class="dash-view hidden">
+        <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">DTO Render</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">type CreateRenderDto = {
+
+projectId: string; provider: 'renderly'; targetShorts: number; subtitleStyle: string; platform: string; template: string; outputResolution: '1080p'; watermarkPreview: boolean; };</pre></div> </div>
+
+<div id="dash-support" class="dash-view hidden">
+        <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">DTO Ticket</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">type CreateTicketDto = {
+
+name: string; email: string; subject?: string; message: string; projectId?: string; renderId?: string; category?: 'billing' | 'render' | 'technical' | 'account'; };</pre></div> </div>
+
+<div id="dash-security" class="dash-view hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Checklist sécurité backend</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">- Cookies httpOnly Secure SameSite=Lax/Strict
+
+CSRF token sur mutations
+
+Rate limiting auth + webhooks + uploads
+
+Validation Zod/Joi de tous les DTO
+
+Vérification webhook Stripe signature
+
+Idempotency key sur checkout
+
+URL signées courtes pour upload
+
+Contrôle MIME et taille serveur
+
+RBAC admin / client / support
+
+Audit logs pour billing et auth</pre></div> <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">En-têtes frontend préparés</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">X-CSRF-Token X-Request-Id X-Client-Version Authorization: Bearer ... (si nécessaire) Idempotency-Key X-Timezone X-Locale X-Currency</pre></div> </div> </div>
+
+<div id="dash-api" class="dash-view hidden">
+      <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Map d’API générée depuis le HTML</div><pre id="api-map" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre></div>
     </div>
 
-    <div class="bot-foot">
-      <input id="bot-input" class="input-dark" type="text" placeholder="Posez votre question..." />
-      <button id="bot-send" class="btn-gold px-5 py-3 text-[11px] font-black uppercase tracking-[0.18em]">Envoyer</button>
+    <div id="dash-state" class="dash-view hidden">
+      <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">State frontend prêt pour backend</div><pre id="frontend-state" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre></div>
     </div>
   </div>
-
-  <script>
-    const App = {
-      state: {
-        lang: 'fr',
-        currency: 'EUR',
-        billing: 'monthly',
-        spots: 42,
-        videoUrl: null,
-        internalCostPerVideoEUR: 0.70
-      },
-
-      plans: {
-        starter: { monthly: 19.99, yearly: 14.99, videos: 10, shorts: 30 },
-        creator: { monthly: 39.99, yearly: 29.99, videos: 25, shorts: 75 },
-        studio:  { monthly: 79.99, yearly: 59.99, videos: 60, shorts: 180 },
-        agency:  { monthly: 149.99, yearly: 119.99, videos: 140, shorts: 420 }
-      },
-
-      currencyConfig: {
-        EUR: { rate: 1.00, locale: 'fr-FR', symbol: '€', position: 'after', space: true },
-        USD: { rate: 1.08, locale: 'en-US', symbol: '$', position: 'before', space: false },
-        GBP: { rate: 0.86, locale: 'en-GB', symbol: '£', position: 'before', space: false },
-        CHF: { rate: 0.95, locale: 'de-CH', symbol: 'CHF', position: 'after', space: true },
-        CAD: { rate: 1.46, locale: 'en-CA', symbol: 'CAD$', position: 'before', space: false },
-        AUD: { rate: 1.66, locale: 'en-AU', symbol: 'A$', position: 'before', space: false },
-        SGD: { rate: 1.45, locale: 'en-SG', symbol: 'S$', position: 'before', space: false },
-        SAR: { rate: 4.05, locale: 'ar-SA', symbol: 'ر.س', position: 'after', space: true },
-        AED: { rate: 3.97, locale: 'ar-AE', symbol: 'د.إ', position: 'after', space: true },
-        QAR: { rate: 3.93, locale: 'ar-QA', symbol: 'ر.ق', position: 'after', space: true },
-        KWD: { rate: 0.33, locale: 'ar-KW', symbol: 'د.ك', position: 'after', space: true },
-        BHD: { rate: 0.41, locale: 'ar-BH', symbol: 'د.ب', position: 'after', space: true },
-        OMR: { rate: 0.42, locale: 'ar-OM', symbol: 'ر.ع.', position: 'after', space: true },
-        MAD: { rate: 10.86, locale: 'fr-MA', symbol: 'د.م.', position: 'after', space: true },
-        DZD: { rate: 144.50, locale: 'ar-DZ', symbol: 'د.ج', position: 'after', space: true },
-        TND: { rate: 3.39, locale: 'fr-TN', symbol: 'د.ت', position: 'after', space: true },
-        EGP: { rate: 53.50, locale: 'ar-EG', symbol: 'ج.م', position: 'after', space: true },
-        TRY: { rate: 37.90, locale: 'tr-TR', symbol: '₺', position: 'before', space: false },
-        CNY: { rate: 7.80, locale: 'zh-CN', symbol: '¥', position: 'before', space: false },
-        JPY: { rate: 161.00, locale: 'ja-JP', symbol: '¥', position: 'before', space: false },
-        INR: { rate: 90.20, locale: 'hi-IN', symbol: '₹', position: 'before', space: false }
-      },
-
-      translations: {
-        fr: {
-          htmlLang:'fr', dir:'ltr',
-          promo:'OFFRE LIMITÉE', left:'PLACES RESTANTES', brandSub:'AI SHORTS ELITE',
-          login:'Connexion', signup:'Inscription', loginLocked:'Accès restreint', dashboard:'Dashboard',
-          heroA:'Shorts', heroB:'Souverains',
-          heroDesc:'Transformez vos vidéos longues en shorts 1080p avec détection des meilleurs moments, sous-titres, templates, branding et workflow studio premium.',
-          start:'Commencer', test:'Tester', seeDash:'Voir le dashboard',
-          plansTitle:'Tarifs', plansDesc:'Forfaits calculés pour rester cohérents avec le coût de rendu 1080p, le stockage, la livraison et le support.',
-          monthly:'Mensuel', yearly:'Annuel', annualNote:'Mensuel sans engagement. Annuel avec 12 mois d’engagement et réduction.',
-          choose:'Choisir', popular:'Le plus choisi',
-          trial:['3 vidéos test offertes','Test watermark inclus','1080p minimum'],
-          footer:'Plateforme premium de création de shorts 1080p, de workflow studio et de gestion SaaS frontend.',
-          footerLinks:['Conditions','Confidentialité','Infrastructure','Support'],
-          botTitle:'CASA CLIP BOT',
-          botSubtitle:'Assistance automatique, support et FAQ',
-          botClose:'Fermer',
-          botInput:'Posez votre question...',
-          botSend:'Envoyer',
-          botChips:['Tarifs','Quota','Paiement','Ticket','Sécurité'],
-          faq:[
-            ['Comment fonctionne le test vidéo ?','Le test charge une vidéo locale et affiche une preview watermarked.'],
-            ['Le 1080p est-il inclus ?','Oui, 1080p minimum sur tous les forfaits.'],
-            ['Comment est calculé le quota ?','Le quota principal est basé sur le nombre de vidéos source mensuelles.'],
-            ['Puis-je changer de plan ?','Oui, l’interface prévoit upgrade et downgrade.'],
-            ['Le backend est-il inclus ?','Non, ce fichier couvre le frontend complet.']
-          ],
-          botReplies:{
-            welcome:'Bonjour. Je peux répondre sur les tarifs, le quota, le paiement, le support et la sécurité.',
-            pricing:'Mensuel sans engagement ou annuel avec 12 mois d’engagement et réduction. Les plans sont limités par nombre de vidéos source mensuelles.',
-            quota:'Le quota principal est calculé par vidéo source. Chaque vidéo peut produire plusieurs shorts selon le réglage choisi.',
-            payment:'Le frontend inclut la facturation, les cartes, les factures, l’upgrade et le downgrade. Le paiement réel viendra avec le backend.',
-            ticket:'Vous pouvez créer un ticket dans la section SAV & FAQ ou utiliser ce bot pour un premier tri.',
-            security:'Le frontend affiche les espaces trust, usage, facturation et support. Le chiffrement et l’authentification réels viendront côté backend.',
-            fallback:'Je peux vous aider sur les tarifs, le quota, le paiement, le support et la sécurité.'
-          },
-          toasts:{
-            view:'Navigation',
-            pick:'Vidéo chargée',
-            noVideo:'Ajoutez une vidéo pour lancer le test',
-            launched:'Prévisualisation de test prête',
-            cleared:'Prévisualisation réinitialisée',
-            queue:'Projet ajouté à la file',
-            ticket:'Ticket généré',
-            botOpen:'Bot d’assistance ouvert',
-            subscribe:'Redirection abonnement'
-          }
-        },
-
-        en: {
-          htmlLang:'en', dir:'ltr',
-          promo:'LIMITED OFFER', left:'SPOTS LEFT', brandSub:'AI SHORTS ELITE',
-          login:'Login', signup:'Sign up', loginLocked:'Restricted access', dashboard:'Dashboard',
-          heroA:'Sovereign', heroB:'Shorts',
-          heroDesc:'Turn long videos into 1080p shorts with best-moment detection, subtitles, templates, branding and a premium studio workflow.',
-          start:'Get started', test:'Test', seeDash:'View dashboard',
-          plansTitle:'Pricing', plansDesc:'Plans sized to stay consistent with 1080p render cost, storage, delivery and support.',
-          monthly:'Monthly', yearly:'Yearly', annualNote:'Monthly with no commitment. Yearly with a 12-month commitment and discount.',
-          choose:'Choose', popular:'Most selected',
-          trial:['3 free test videos','Watermark test included','1080p minimum'],
-          footer:'Premium 1080p shorts platform with studio workflow and complete SaaS frontend.',
-          footerLinks:['Terms','Privacy','Infrastructure','Support'],
-          botTitle:'CASA CLIP BOT',
-          botSubtitle:'Automated assistance, support and FAQ',
-          botClose:'Close',
-          botInput:'Ask your question...',
-          botSend:'Send',
-          botChips:['Pricing','Quota','Payment','Ticket','Security'],
-          faq:[
-            ['How does the video test work?','The test loads a local video and shows a watermarked preview.'],
-            ['Is 1080p included?','Yes, 1080p minimum on all plans.'],
-            ['How is quota calculated?','The main quota is based on monthly source videos.'],
-            ['Can I change plan?','Yes, the interface supports upgrade and downgrade.'],
-            ['Is backend included?','No, this file covers the full frontend only.']
-          ],
-          botReplies:{
-            welcome:'Hello. I can answer questions about pricing, quota, payment, support and security.',
-            pricing:'Monthly with no commitment or yearly with a 12-month commitment and discount. Plans are limited by monthly source videos.',
-            quota:'The main quota is calculated per source video. Each source video can generate multiple shorts.',
-            payment:'The frontend includes billing views, cards, invoices, upgrades and downgrades. Real payments come later in the backend.',
-            ticket:'You can create a ticket in the Support & FAQ area or use this bot for first-level help.',
-            security:'The frontend includes trust, usage, billing and support spaces. Real encryption and authentication will come in the backend.',
-            fallback:'I can help with pricing, quota, payment, support and security.'
-          },
-          toasts:{
-            view:'Navigation',
-            pick:'Video loaded',
-            noVideo:'Add a video before launching the test',
-            launched:'Test preview ready',
-            cleared:'Preview reset',
-            queue:'Project added to queue',
-            ticket:'Ticket generated',
-            botOpen:'Support bot opened',
-            subscribe:'Subscription redirect'
-          }
-        },
-
-        es: {
-          htmlLang:'es', dir:'ltr',
-          promo:'OFERTA LIMITADA', left:'PLAZAS DISPONIBLES', brandSub:'AI SHORTS ELITE',
-          login:'Acceso', signup:'Registro', loginLocked:'Acceso restringido', dashboard:'Panel',
-          heroA:'Shorts', heroB:'Soberanos',
-          heroDesc:'Convierte vídeos largos en shorts 1080p con detección de mejores momentos, subtítulos, plantillas, branding y flujo de estudio premium.',
-          start:'Empezar', test:'Probar', seeDash:'Ver panel',
-          plansTitle:'Precios', plansDesc:'Planes ajustados para seguir siendo coherentes con el coste de render 1080p, almacenamiento, entrega y soporte.',
-          monthly:'Mensual', yearly:'Anual', annualNote:'Mensual sin compromiso. Anual con compromiso de 12 meses y descuento.',
-          choose:'Elegir', popular:'Más elegido',
-          trial:['3 vídeos de prueba gratis','Prueba con marca de agua','1080p mínimo'],
-          footer:'Plataforma premium de shorts 1080p con flujo de estudio y frontend SaaS completo.',
-          footerLinks:['Condiciones','Privacidad','Infraestructura','Soporte'],
-          botTitle:'BOT CASA CLIP',
-          botSubtitle:'Asistencia automática, soporte y FAQ',
-          botClose:'Cerrar',
-          botInput:'Haz tu pregunta...',
-          botSend:'Enviar',
-          botChips:['Precios','Cuota','Pago','Ticket','Seguridad'],
-          faq:[
-            ['¿Cómo funciona la prueba de vídeo?','La prueba carga un vídeo local y muestra una vista previa con marca de agua.'],
-            ['¿1080p está incluido?','Sí, 1080p mínimo en todos los planes.'],
-            ['¿Cómo se calcula la cuota?','La cuota principal se basa en vídeos fuente mensuales.'],
-            ['¿Puedo cambiar de plan?','Sí, la interfaz prevé subida y bajada de plan.'],
-            ['¿El backend está incluido?','No, este archivo cubre únicamente el frontend completo.']
-          ],
-          botReplies:{
-            welcome:'Hola. Puedo responder sobre precios, cuota, pago, soporte y seguridad.',
-            pricing:'Mensual sin compromiso o anual con compromiso de 12 meses y descuento. Los planes se limitan por vídeos fuente mensuales.',
-            quota:'La cuota principal se calcula por vídeo fuente. Cada vídeo puede generar varios shorts.',
-            payment:'El frontend incluye facturación, tarjetas, facturas, upgrade y downgrade. El pago real llegará con el backend.',
-            ticket:'Puedes crear un ticket en la zona de Soporte y FAQ o usar este bot como primer nivel.',
-            security:'El frontend incluye espacios de confianza, uso, facturación y soporte. El cifrado y la autenticación reales llegarán en el backend.',
-            fallback:'Puedo ayudar con precios, cuota, pago, soporte y seguridad.'
-          },
-          toasts:{
-            view:'Navegación',
-            pick:'Vídeo cargado',
-            noVideo:'Añade un vídeo antes de lanzar la prueba',
-            launched:'Vista previa lista',
-            cleared:'Vista previa reiniciada',
-            queue:'Proyecto añadido a la cola',
-            ticket:'Ticket generado',
-            botOpen:'Bot de soporte abierto',
-            subscribe:'Redirección de suscripción'
-          }
-        },
-
-        ar: {
-          htmlLang:'ar', dir:'rtl',
-          promo:'عرض محدود', left:'أماكن متبقية', brandSub:'منصة SHORTS فاخرة',
-          login:'تسجيل الدخول', signup:'إنشاء حساب', loginLocked:'وصول مقيّد', dashboard:'لوحة التحكم',
-          heroA:'مقاطع', heroB:'سيادية',
-          heroDesc:'حوّل الفيديوهات الطويلة إلى shorts بدقة 1080p مع كشف أفضل اللحظات والترجمة والقوالب والهوية البصرية وسير عمل استوديو فاخر.',
-          start:'ابدأ', test:'جرّب', seeDash:'عرض اللوحة',
-          plansTitle:'الأسعار', plansDesc:'باقات محسوبة لتبقى منطقية مع تكلفة الرندر 1080p والتخزين والتسليم والدعم.',
-          monthly:'شهري', yearly:'سنوي', annualNote:'الخطة الشهرية بدون التزام. الخطة السنوية مع التزام 12 شهراً وخصم.',
-          choose:'اختر', popular:'الأكثر اختياراً',
-          trial:['3 فيديوهات تجريبية مجانية','اختبار بعلامة مائية','حد أدنى 1080p'],
-          footer:'منصة فاخرة لصناعة shorts بدقة 1080p مع سير عمل استوديو وواجهة SaaS كاملة.',
-          footerLinks:['الشروط','الخصوصية','البنية التحتية','الدعم'],
-          botTitle:'بوت CASA CLIP',
-          botSubtitle:'مساعدة تلقائية ودعم وأسئلة شائعة',
-          botClose:'إغلاق',
-          botInput:'اكتب سؤالك...',
-          botSend:'إرسال',
-          botChips:['الأسعار','الحصة','الدفع','تذكرة','الأمان'],
-          faq:[
-            ['كيف يعمل اختبار الفيديو؟','يقوم الاختبار بتحميل فيديو محلي وعرض معاينة بعلامة مائية.'],
-            ['هل 1080p مشمول؟','نعم، 1080p حد أدنى في جميع الباقات.'],
-            ['كيف تُحسب الحصة؟','الحصة الأساسية تعتمد على عدد الفيديوهات المصدرية شهرياً.'],
-            ['هل يمكن تغيير الخطة؟','نعم، الواجهة تدعم الترقية أو التخفيض.'],
-            ['هل الـ backend مشمول؟','لا، هذا الملف يغطي الواجهة الأمامية فقط.']
-          ],
-          botReplies:{
-            welcome:'مرحباً. أستطيع الإجابة عن الأسعار والحصة والدفع والدعم والأمان.',
-            pricing:'شهري بدون التزام أو سنوي مع التزام 12 شهراً وخصم. الباقات محددة بعدد الفيديوهات المصدرية الشهرية.',
-            quota:'الحصة الأساسية تُحسب لكل فيديو مصدري. ويمكن لكل فيديو إنتاج عدة shorts.',
-            payment:'الواجهة تشمل الفواتير والبطاقات والفواتير الشهرية والترقية والتخفيض. الدفع الحقيقي يأتي لاحقاً مع الـ backend.',
-            ticket:'يمكنك إنشاء تذكرة في قسم الدعم والأسئلة الشائعة أو استخدام هذا البوت كمرحلة أولى.',
-            security:'الواجهة تعرض الثقة والاستخدام والفوترة والدعم. أما التشفير والمصادقة الحقيقيان فسيأتيان في الـ backend.',
-            fallback:'أستطيع المساعدة في الأسعار والحصة والدفع والدعم والأمان.'
-          },
-          toasts:{
-            view:'تنقّل',
-            pick:'تم تحميل الفيديو',
-            noVideo:'أضف فيديو قبل تشغيل الاختبار',
-            launched:'المعاينة جاهزة',
-            cleared:'تمت إعادة التهيئة',
-            queue:'تمت إضافة المشروع إلى الطابور',
-            ticket:'تم إنشاء التذكرة',
-            botOpen:'تم فتح بوت الدعم',
-            subscribe:'التحويل إلى الاشتراك'
-          }
-        },
-
-        zh: {
-          htmlLang:'zh-CN', dir:'ltr',
-          promo:'限时优惠', left:'剩余名额', brandSub:'AI SHORTS ELITE',
-          login:'登录', signup:'注册', loginLocked:'访问受限', dashboard:'仪表板',
-          heroA:'主权', heroB:'短视频',
-          heroDesc:'将长视频转换为 1080p 短视频，支持最佳片段检测、字幕、模板、品牌化和高级工作流。',
-          start:'开始', test:'测试', seeDash:'查看仪表板',
-          plansTitle:'价格', plansDesc:'这些套餐按照 1080p 渲染、存储、分发和支持成本进行控制。',
-          monthly:'月付', yearly:'年付', annualNote:'月付无承诺。年付含 12 个月承诺并享受折扣。',
-          choose:'选择', popular:'最受欢迎',
-          trial:['3 个免费测试视频','含水印测试','最低 1080p'],
-          footer:'高级 1080p 短视频平台，带完整工作流与 SaaS 前端。',
-          footerLinks:['条款','隐私','基础设施','支持'],
-          botTitle:'CASA CLIP 机器人',
-          botSubtitle:'自动帮助、支持与 FAQ',
-          botClose:'关闭',
-          botInput:'请输入你的问题...',
-          botSend:'发送',
-          botChips:['价格','配额','支付','工单','安全'],
-          faq:[
-            ['视频测试如何工作？','测试会加载本地视频并显示带水印的预览。'],
-            ['1080p 是否包含？','是的，所有套餐最低都是 1080p。'],
-            ['配额如何计算？','主要配额按每月源视频数量计算。'],
-            ['可以更换套餐吗？','可以，界面支持升级和降级。'],
-            ['是否包含后端？','不，这个文件只包含完整前端。']
-          ],
-          botReplies:{
-            welcome:'你好。我可以回答有关价格、配额、支付、支持和安全的问题。',
-            pricing:'月付无承诺，年付含 12 个月承诺并享折扣。套餐按每月源视频数量限制。',
-            quota:'主要配额按源视频计算。每个源视频可以生成多个短视频。',
-            payment:'前端包含账单、卡片、发票、升级和降级。真实支付将在后端实现。',
-            ticket:'你可以在支持与 FAQ 区创建工单，或先使用此机器人。',
-            security:'前端包含 trust、usage、billing 和 support。真实加密和身份验证将在后端提供。',
-            fallback:'我可以帮助你了解价格、配额、支付、支持和安全。'
-          },
-          toasts:{
-            view:'导航',
-            pick:'视频已加载',
-            noVideo:'请先添加视频再启动测试',
-            launched:'测试预览已准备好',
-            cleared:'预览已重置',
-            queue:'项目已加入队列',
-            ticket:'工单已生成',
-            botOpen:'支持机器人已打开',
-            subscribe:'跳转订阅'
-          }
-        },
-
-        hi: {
-          htmlLang:'hi', dir:'ltr',
-          promo:'सीमित ऑफ़र', left:'शेष स्थान', brandSub:'AI SHORTS ELITE',
-          login:'लॉगिन', signup:'साइन अप', loginLocked:'सीमित पहुँच', dashboard:'डैशबोर्ड',
-          heroA:'संप्रभु', heroB:'शॉर्ट्स',
-          heroDesc:'लंबे वीडियो को 1080p shorts में बदलें, best moment detection, subtitles, templates, branding और premium workflow के साथ.',
-          start:'शुरू करें', test:'टेस्ट', seeDash:'डैशबोर्ड देखें',
-          plansTitle:'प्राइसिंग', plansDesc:'ये प्लान 1080p render cost, storage, delivery और support को ध्यान में रखकर बनाए गए हैं.',
-          monthly:'मासिक', yearly:'वार्षिक', annualNote:'मासिक बिना प्रतिबद्धता। वार्षिक में 12 महीने की प्रतिबद्धता और छूट शामिल है.',
-          choose:'चुनें', popular:'सबसे अधिक चुना गया',
-          trial:['3 मुफ्त टेस्ट वीडियो','वॉटरमार्क टेस्ट शामिल','कम से कम 1080p'],
-          footer:'प्रीमियम 1080p shorts प्लेटफ़ॉर्म, स्टूडियो workflow और पूर्ण SaaS frontend के साथ.',
-          footerLinks:['शर्तें','गोपनीयता','इन्फ्रास्ट्रक्चर','सपोर्ट'],
-          botTitle:'CASA CLIP BOT',
-          botSubtitle:'स्वचालित सहायता, सपोर्ट और FAQ',
-          botClose:'बंद करें',
-          botInput:'अपना प्रश्न लिखें...',
-          botSend:'भेजें',
-          botChips:['प्राइसिंग','कोटा','पेमेंट','टिकट','सुरक्षा'],
-          faq:[
-            ['वीडियो टेस्ट कैसे काम करता है?','टेस्ट लोकल वीडियो लोड करता है और watermarked preview दिखाता है।'],
-            ['क्या 1080p शामिल है?','हाँ, सभी प्लान में minimum 1080p शामिल है।'],
-            ['कोटा कैसे calculate होता है?','मुख्य कोटा monthly source videos पर आधारित है।'],
-            ['क्या मैं plan बदल सकता हूँ?','हाँ, interface upgrade और downgrade दोनों support करता है।'],
-            ['क्या backend शामिल है?','नहीं, यह फ़ाइल केवल पूर्ण frontend कवर करती है।']
-          ],
-          botReplies:{
-            welcome:'नमस्ते। मैं pricing, quota, payment, support और security पर मदद कर सकता हूँ।',
-            pricing:'मासिक बिना प्रतिबद्धता या वार्षिक 12 महीने की प्रतिबद्धता और छूट के साथ। प्लान monthly source videos के अनुसार सीमित हैं।',
-            quota:'मुख्य quota source video पर आधारित है। हर source video कई shorts बना सकती है।',
-            payment:'Frontend में billing, cards, invoices, upgrade और downgrade शामिल हैं। असली payment बाद में backend में आएगा।',
-            ticket:'आप Support & FAQ सेक्शन में टिकट बना सकते हैं या पहले इस bot का उपयोग कर सकते हैं।',
-            security:'Frontend में trust, usage, billing और support spaces हैं। वास्तविक encryption और authentication backend में आएंगे।',
-            fallback:'मैं pricing, quota, payment, support और security पर मदद कर सकता हूँ।'
-          },
-          toasts:{
-            view:'नेविगेशन',
-            pick:'वीडियो लोड हो गया',
-            noVideo:'टेस्ट शुरू करने से पहले वीडियो जोड़ें',
-            launched:'टेस्ट preview तैयार है',
-            cleared:'Preview reset हो गया',
-            queue:'प्रोजेक्ट queue में जोड़ दिया गया',
-            ticket:'टिकट बना दिया गया',
-            botOpen:'सपोर्ट bot खुल गया',
-            subscribe:'सब्सक्रिप्शन redirect'
-          }
-        }
-      },
-
-      q(id){ return document.getElementById(id); },
-
-      t(key){
-        return this.translations[this.state.lang][key];
-      },
-
-      view(id){
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        const target = this.q(id);
-        if(target) target.classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        this.notify(`${this.t('toasts').view} : ${id.toUpperCase()}`);
-      },
-
-      switchDash(view, btn = null){
-        document.querySelectorAll('.dash-view').forEach(v => v.classList.add('hidden'));
-        const target = this.q(`dash-${view}`);
-        if(target) target.classList.remove('hidden');
-        document.querySelectorAll('.side-tab').forEach(b => b.classList.remove('active'));
-        if(btn) btn.classList.add('active');
-      },
-
-      setBilling(mode){
-        this.state.billing = mode;
-        this.q('m-month').classList.toggle('active-tab', mode === 'monthly');
-        this.q('m-year').classList.toggle('active-tab', mode === 'yearly');
-        this.renderPrices();
-      },
-
-      notify(msg){
-        const toast = this.q('toast');
-        toast.textContent = msg;
-        toast.classList.add('show');
-        clearTimeout(this.toastTimer);
-        this.toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
-      },
-
-      formatConverted99(baseEuro){
-        const cfg = this.currencyConfig[this.state.currency];
-        const raw = baseEuro * cfg.rate;
-        const floorVal = Math.floor(raw);
-        const value = floorVal + 0.99;
-
-        const number = new Intl.NumberFormat(cfg.locale, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        }).format(value);
-
-        const space = cfg.space ? ' ' : '';
-        return cfg.position === 'before'
-          ? `${cfg.symbol}${space}${number}`
-          : `${number}${space}${cfg.symbol}`;
-      },
-
-      renderPrices(){
-        const mode = this.state.billing;
-
-        this.q('pr-1').textContent = this.formatConverted99(this.plans.starter[mode]);
-        this.q('pr-2').textContent = this.formatConverted99(this.plans.creator[mode]);
-        this.q('pr-3').textContent = this.formatConverted99(this.plans.studio[mode]);
-        this.q('pr-4').textContent = this.formatConverted99(this.plans.agency[mode]);
-
-        const labels = {
-          fr: [
-            `${this.plans.starter.videos} vidéos / mois`,
-            `${this.plans.creator.videos} vidéos / mois`,
-            `${this.plans.studio.videos} vidéos / mois`,
-            `${this.plans.agency.videos} vidéos / mois`
-          ],
-          en: [
-            `${this.plans.starter.videos} videos / month`,
-            `${this.plans.creator.videos} videos / month`,
-            `${this.plans.studio.videos} videos / month`,
-            `${this.plans.agency.videos} videos / month`
-          ],
-          es: [
-            `${this.plans.starter.videos} vídeos / mes`,
-            `${this.plans.creator.videos} vídeos / mes`,
-            `${this.plans.studio.videos} vídeos / mes`,
-            `${this.plans.agency.videos} vídeos / mes`
-          ],
-          ar: [
-            `${this.plans.starter.videos} فيديو / شهر`,
-            `${this.plans.creator.videos} فيديو / شهر`,
-            `${this.plans.studio.videos} فيديو / شهر`,
-            `${this.plans.agency.videos} فيديو / شهر`
-          ],
-          zh: [
-            `${this.plans.starter.videos} 视频 / 月`,
-            `${this.plans.creator.videos} 视频 / 月`,
-            `${this.plans.studio.videos} 视频 / 月`,
-            `${this.plans.agency.videos} 视频 / 月`
-          ],
-          hi: [
-            `${this.plans.starter.videos} वीडियो / माह`,
-            `${this.plans.creator.videos} वीडियो / माह`,
-            `${this.plans.studio.videos} वीडियो / माह`,
-            `${this.plans.agency.videos} वीडियो / माह`
-          ]
-        };
-
-        this.q('lg-1').textContent = labels[this.state.lang][0];
-        this.q('lg-2').textContent = labels[this.state.lang][1];
-        this.q('lg-3').textContent = labels[this.state.lang][2];
-        this.q('lg-4').textContent = labels[this.state.lang][3];
-
-        this.q('billing-plan-card').textContent = `Creator — ${this.formatConverted99(this.plans.creator[mode])}`;
-        this.q('invoice-1').textContent = this.formatConverted99(this.plans.creator[mode]);
-        this.q('invoice-2').textContent = this.formatConverted99(this.plans.creator[mode]);
-        this.q('invoice-3').textContent = this.formatConverted99(this.plans.creator[mode]);
-
-        this.updateCalculator();
-        this.updateStudioEstimate();
-      },
-
-      updateCalculator(){
-        const videos = Number(this.q('calc-videos').value);
-        const shorts = Number(this.q('calc-shorts').value);
-        const internal = Math.max(1, videos * this.state.internalCostPerVideoEUR);
-        const totalShorts = videos * shorts;
-
-        this.q('calc-videos-value').textContent = videos;
-        this.q('calc-shorts-value').textContent = shorts;
-        this.q('calc-cost').textContent = this.formatConverted99(internal);
-        this.q('calc-total-shorts').textContent = totalShorts;
-
-        let plan = 'Agency';
-        if(videos <= this.plans.starter.videos) plan = 'Starter';
-        else if(videos <= this.plans.creator.videos) plan = 'Creator';
-        else if(videos <= this.plans.studio.videos) plan = 'Studio';
-
-        this.q('calc-plan').textContent = plan;
-      },
-
-      updateStudioEstimate(){
-        const shorts = Number(this.q('target-shorts').value);
-        this.q('target-count').textContent = shorts;
-        this.q('estimate-videos').textContent = `${shorts} shorts / 1 vidéo`;
-        this.q('internal-cost').textContent = this.formatConverted99(Math.max(1, this.state.internalCostPerVideoEUR));
-      },
-
-      handleFile(file){
-        if(!file) return;
-        if(this.state.videoUrl) URL.revokeObjectURL(this.state.videoUrl);
-
-        const preview = this.q('video-preview');
-        const placeholder = this.q('video-placeholder');
-        const url = URL.createObjectURL(file);
-
-        this.state.videoUrl = url;
-        preview.src = url;
-        preview.load();
-        placeholder.classList.add('hidden');
-        this.notify(this.t('toasts').pick);
-      },
-
-      launchTest(){
-        const preview = this.q('video-preview');
-        const hasVideo = !!preview.src;
-        if(!hasVideo){
-          this.notify(this.t('toasts').noVideo);
-          return;
-        }
-        preview.play().catch(() => {});
-        this.notify(this.t('toasts').launched);
-      },
-
-      clearVideo(){
-        const preview = this.q('video-preview');
-        const placeholder = this.q('video-placeholder');
-        preview.pause();
-        preview.removeAttribute('src');
-        preview.load();
-
-        if(this.state.videoUrl){
-          URL.revokeObjectURL(this.state.videoUrl);
-          this.state.videoUrl = null;
-        }
-
-        this.q('video-file').value = '';
-        placeholder.classList.remove('hidden');
-        this.notify(this.t('toasts').cleared);
-      },
-
-      addQueueItem(){
-        const list = this.q('queue-list');
-        const name = this.q('project-name').value.trim() || 'Projet sans titre';
-        const shorts = this.q('target-shorts').value;
-
-        const node = document.createElement('div');
-        node.className = 'queue-item p-5';
-        node.innerHTML = `
-          <div class="flex items-center justify-between gap-4">
-            <div class="font-black">${name}</div>
-            <div class="chip px-4 py-2 text-[10px] uppercase font-black">Queued</div>
-          </div>
-          <p class="mt-3 text-[14px] muted">${shorts} shorts • 1080p • ${this.q('template-mode').value}</p>
-          <div class="mt-4 progress"><div style="width:18%"></div></div>
-          <div class="mt-4 flex gap-3 flex-wrap">
-            <button class="btn-ghost px-4 py-3 text-[11px] font-black uppercase">Retry</button>
-            <button class="btn-ghost px-4 py-3 text-[11px] font-black uppercase">Pause</button>
-            <button class="btn-ghost px-4 py-3 text-[11px] font-black uppercase">Logs</button>
-          </div>
-        `;
-        list.prepend(node);
-        this.notify(this.t('toasts').queue);
-      },
-
-      submitTicket(){
-        const name = this.q('ticket-name').value.trim();
-        const email = this.q('ticket-email').value.trim();
-        const message = this.q('ticket-message').value.trim();
-
-        if(!name || !email || !message){
-          this.notify('Formulaire incomplet');
-          return;
-        }
-
-        const ticketId = `CC-${Math.floor(100000 + Math.random() * 900000)}`;
-        const last = this.q('ticket-last');
-        last.textContent = `${ticketId}\n${name}\n${email}\n${message}`;
-        last.dataset.empty = '0';
-
-        this.q('ticket-name').value = '';
-        this.q('ticket-email').value = '';
-        this.q('ticket-message').value = '';
-
-        this.notify(`${this.t('toasts').ticket} : ${ticketId}`);
-        this.addBotMessage('bot', `${this.t('botReplies').ticket}\nID : ${ticketId}`);
-      },
-
-      toggleBot(force = null){
-        const panel = this.q('bot-panel');
-        const shouldOpen = force === null ? !panel.classList.contains('open') : force;
-        panel.classList.toggle('open', shouldOpen);
-
-        if(shouldOpen){
-          this.notify(this.t('toasts').botOpen);
-          this.q('bot-input').focus();
-        }
-      },
-
-      addBotMessage(type, text){
-        const wrap = document.createElement('div');
-        wrap.className = `msg ${type}`;
-        wrap.textContent = text;
-        this.q('bot-messages').appendChild(wrap);
-        this.q('bot-messages').scrollTop = this.q('bot-messages').scrollHeight;
-      },
-
-      resetBot(){
-        const box = this.q('bot-messages');
-        box.innerHTML = '';
-        this.addBotMessage('bot', this.t('botReplies').welcome);
-      },
-
-      getBotReply(message){
-        const m = message.toLowerCase();
-        const tr = this.t('botReplies');
-
-        if(/price|pricing|prix|tarif|plan|precio|السعر|价格|प्राइस/.test(m)) return tr.pricing;
-        if(/quota|usage|حصة|配额|कोटा/.test(m)) return tr.quota;
-        if(/payment|pay|paiement|billing|facture|pago|دفع|支付|पेमेंट/.test(m)) return tr.payment;
-        if(/ticket|support|sav|help|assistance|soporte|دعم|工单|टिकट/.test(m)) return tr.ticket;
-        if(/security|secur|sécur|safe|trust|conf|أمان|安全|सुरक्षा/.test(m)) return tr.security;
-
-        return tr.fallback;
-      },
-
-      sendBotMessage(text = null){
-        const input = this.q('bot-input');
-        const content = (text ?? input.value).trim();
-        if(!content) return;
-
-        this.addBotMessage('user', content);
-        if(text === null) input.value = '';
-
-        setTimeout(() => {
-          this.addBotMessage('bot', this.getBotReply(content));
-        }, 280);
-      },
-
-      applyTranslations(){
-        const tr = this.translations[this.state.lang];
-
-        document.documentElement.lang = tr.htmlLang;
-        document.body.classList.toggle('rtl', tr.dir === 'rtl');
-
-        this.q('promo-txt').textContent = tr.promo;
-        this.q('left-txt').textContent = tr.left;
-        this.q('brand-sub').textContent = tr.brandSub;
-        this.q('n-log').textContent = tr.login;
-        this.q('n-sig').textContent = tr.signup;
-        this.q('n-dash').textContent = tr.dashboard;
-
-        this.q('h-title').innerHTML = `${tr.heroA} <span class="gold-text">${tr.heroB}</span>`;
-        this.q('h-desc').textContent = tr.heroDesc;
-        this.q('h-btn').textContent = tr.start;
-        this.q('h-test').textContent = tr.test;
-        this.q('h-demo').textContent = tr.seeDash;
-
-        this.q('p-title').textContent = tr.plansTitle;
-        this.q('p-desc').textContent = tr.plansDesc;
-        this.q('m-month').textContent = tr.monthly;
-        this.q('m-year').textContent = tr.yearly;
-        this.q('pricing-note').textContent = tr.annualNote;
-        this.q('popular-chip').textContent = tr.popular;
-
-        this.q('trial-pill-1').textContent = tr.trial[0];
-        this.q('trial-pill-2').textContent = tr.trial[1];
-        this.q('trial-pill-3').textContent = tr.trial[2];
-
-        document.querySelectorAll('.sub-txt').forEach(el => el.textContent = tr.choose);
-
-        this.q('support-title').textContent = tr.support;
-        this.q('footer-copy').textContent = tr.footer;
-        this.q('footer-link-1').textContent = tr.footerLinks[0];
-        this.q('footer-link-2').textContent = tr.footerLinks[1];
-        this.q('footer-link-3').textContent = tr.footerLinks[2];
-        this.q('footer-link-4').textContent = tr.footerLinks[3];
-
-        this.q('bot-title').textContent = tr.botTitle;
-        this.q('bot-subtitle').textContent = tr.botSubtitle;
-        this.q('bot-close').textContent = tr.botClose;
-        this.q('bot-input').placeholder = tr.botInput;
-        this.q('bot-send').textContent = tr.botSend;
-        this.q('bot-chip-1').textContent = tr.botChips[0];
-        this.q('bot-chip-2').textContent = tr.botChips[1];
-        this.q('bot-chip-3').textContent = tr.botChips[2];
-        this.q('bot-chip-4').textContent = tr.botChips[3];
-        this.q('bot-chip-5').textContent = tr.botChips[4];
-
-        this.q('faq-q1').textContent = tr.faq[0][0];
-        this.q('faq-a1').textContent = tr.faq[0][1];
-        this.q('faq-q2').textContent = tr.faq[1][0];
-        this.q('faq-a2').textContent = tr.faq[1][1];
-        this.q('faq-q3').textContent = tr.faq[2][0];
-        this.q('faq-a3').textContent = tr.faq[2][1];
-        this.q('faq-q4').textContent = tr.faq[3][0];
-        this.q('faq-a4').textContent = tr.faq[3][1];
-        this.q('faq-q5').textContent = tr.faq[4][0];
-        this.q('faq-a5').textContent = tr.faq[4][1];
-
-        this.resetBot();
-      },
-
-      startSpotsTicker(){
-        setInterval(() => {
-          if(this.state.spots > 5){
-            this.state.spots -= Math.random() < 0.55 ? 1 : 0;
-            this.q('spots').textContent = this.state.spots;
-          }
-        }, 12000);
-      },
-
-      initFaq(){
-        document.querySelectorAll('.faq-item').forEach(item => {
-          const btn = item.querySelector('.faq-btn');
-          btn.addEventListener('click', () => item.classList.toggle('open'));
-        });
-      },
-
-      bindEvents(){
-        this.q('lang').addEventListener('change', e => {
-          this.state.lang = e.target.value;
-          this.applyTranslations();
-          this.renderPrices();
-        });
-
-        this.q('currency').addEventListener('change', e => {
-          this.state.currency = e.target.value;
-          this.renderPrices();
-        });
-
-        this.q('calc-videos').addEventListener('input', () => this.updateCalculator());
-        this.q('calc-shorts').addEventListener('input', () => this.updateCalculator());
-        this.q('target-shorts').addEventListener('change', () => this.updateStudioEstimate());
-
-        this.q('video-file').addEventListener('change', e => this.handleFile(e.target.files?.[0]));
-
-        document.querySelectorAll('.sub-txt').forEach(btn => {
-          btn.addEventListener('click', () => this.notify(this.t('toasts').subscribe));
-        });
-
-        this.q('bot-launcher').addEventListener('click', () => this.toggleBot());
-        this.q('bot-close').addEventListener('click', () => this.toggleBot(false));
-        this.q('bot-send').addEventListener('click', () => this.sendBotMessage());
-        this.q('bot-input').addEventListener('keydown', e => {
-          if(e.key === 'Enter') this.sendBotMessage();
-        });
-
-        document.querySelectorAll('.bot-chip').forEach(chip => {
-          chip.addEventListener('click', () => this.sendBotMessage(chip.textContent));
-        });
-      },
-
-      init(){
-        this.applyTranslations();
-        this.renderPrices();
-        this.updateStudioEstimate();
-        this.updateCalculator();
-        this.bindEvents();
-        this.initFaq();
-        this.switchDash('overview', document.querySelector('.side-tab'));
-        this.startSpotsTicker();
-      }
-    };
-
-    window.addEventListener('load', () => App.init());
-  </script>
+</div>
+
+  </div>
+</section><footer class="mt-10 border-t border-white/5 bg-black/40 backdrop-blur px-[5%] py-10">
+  <div class="container-max flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+    <div><div class="text-[24px] font-black uppercase tracking-[0.18em] gold-text">CASA CLIP</div><p class="mt-3 text-[13px] leading-7 muted max-w-xl">Frontend HTML structuré pour simplifier un backend propre, sécurisé et maintenable.</p></div>
+    <div class="footer-links flex flex-wrap items-center gap-6 text-[11px] font-extrabold uppercase tracking-[0.18em] muted"><a href="#" class="hover:text-[#f4df97] transition">Conditions</a><a href="#" class="hover:text-[#f4df97] transition">Confidentialité</a><a href="#" class="hover:text-[#f4df97] transition">Infrastructure</a><a href="#" class="hover:text-[#f4df97] transition">Support</a></div>
+  </div>
+</footer><button id="bot-launcher" class="bot-launcher" aria-label="Open support bot">BOT</button>
+
+<div id="bot-panel" class="bot-panel">
+  <div class="bot-head"><div class="flex items-center justify-between gap-3"><div class="min-w-0"><div class="text-[15px] font-black uppercase tracking-[0.18em]">CASA CLIP BOT</div><div class="mt-1 text-[12px] muted">Assistance automatique, support et FAQ</div></div><button id="bot-close" class="btn-ghost px-4 py-2 text-[10px] font-black uppercase tracking-[0.18em]">Fermer</button></div></div>
+  <div id="bot-messages" class="bot-messages"></div>
+  <div class="bot-quick"><button class="bot-chip">Tarifs</button><button class="bot-chip">Quota</button><button class="bot-chip">Paiement</button><button class="bot-chip">Ticket</button><button class="bot-chip">Sécurité</button></div>
+  <div class="bot-foot"><input id="bot-input" class="input-dark" type="text" placeholder="Posez votre question..." /><button id="bot-send" class="btn-gold px-5 py-3 text-[11px] font-black uppercase tracking-[0.18em]">Envoyer</button></div>
+</div><script>
+  const App = {
+    state:{ lang:'fr', currency:'EUR', billing:'monthly', spots:42, gateway:'stripe' },
+    plans:{ starter:{monthly:19.99,yearly:14.99,videos:10,shorts:30}, creator:{monthly:39.99,yearly:29.99,videos:25,shorts:75}, studio:{monthly:79.99,yearly:59.99,videos:60,shorts:180}, agency:{monthly:149.99,yearly:119.99,videos:140,shorts:420} },
+    currencyConfig:{ EUR:{rate:1,locale:'fr-FR',symbol:'€',position:'after',space:true}, USD:{rate:1.08,locale:'en-US',symbol:'$',position:'before',space:false}, GBP:{rate:0.86,locale:'en-GB',symbol:'£',position:'before',space:false}, MAD:{rate:10.86,locale:'fr-MA',symbol:'د.م.',position:'after',space:true}, SAR:{rate:4.05,locale:'ar-SA',symbol:'ر.س',position:'after',space:true}, AED:{rate:3.97,locale:'ar-AE',symbol:'د.إ',position:'after',space:true} },
+    q(id){ return document.getElementById(id); },
+    safeText(id,value){ const el=this.q(id); if(el) el.textContent=String(value); },
+    showToast(msg){ const t=this.q('toast'); if(!t) return; t.hidden=false; t.textContent=msg; t.classList.add('show'); clearTimeout(this.toastTimer); this.toastTimer=setTimeout(()=>{t.classList.remove('show'); setTimeout(()=>t.hidden=true,250);},2200); },
+    readConfig(){ try{ return JSON.parse(this.q('app-config').textContent); } catch { return {}; } },
+    formatConverted99(baseEuro){ const cfg=this.currencyConfig[this.state.currency]; const raw=baseEuro*cfg.rate; const value=Math.floor(raw)+0.99; const number=new Intl.NumberFormat(cfg.locale,{minimumFractionDigits:2,maximumFractionDigits:2}).format(value); const space=cfg.space?' ':''; return cfg.position==='before'?`${cfg.symbol}${space}${number}`:`${number}${space}${cfg.symbol}`; },
+    setBilling(mode){ this.state.billing=mode; this.q('m-month')?.classList.toggle('active-tab',mode==='monthly'); this.q('m-year')?.classList.toggle('active-tab',mode==='yearly'); this.renderPrices(); },
+    renderPrices(){ ['starter','creator','studio','agency'].forEach((k,i)=>this.safeText(`pr-${i+1}`,this.formatConverted99(this.plans[k][this.state.billing]))); this.safeText('lg-1',`${this.plans.starter.videos} vidéos / mois`); this.safeText('lg-2',`${this.plans.creator.videos} vidéos / mois`); this.safeText('lg-3',`${this.plans.studio.videos} vidéos / mois`); this.safeText('lg-4',`${this.plans.agency.videos} vidéos / mois`); },
+    buildProjectPayload(){ return { name:this.q('project-name')?.value?.trim()||'', sourceUrl:this.q('url-studio')?.value?.trim()||null, template:this.q('template-mode')?.value||'Impact Gold', platform:this.q('platform-mode')?.value||'TikTok', subtitleStyle:this.q('style-mode')?.value||'bold', targetShorts:Number(this.q('target-shorts')?.value||3), resolution:'1080p' }; },
+    buildRenderPayload(){ return { projectId:'project_uuid_here', provider:'renderly', targetShorts:Number(this.q('target-shorts')?.value||3), subtitleStyle:this.q('style-mode')?.value||'bold', platform:this.q('platform-mode')?.value||'TikTok', template:this.q('template-mode')?.value||'Impact Gold', outputResolution:'1080p', watermarkPreview:true }; },
+    buildAuthPayload(){ const mode=this.q('auth-mode')?.value||'login'; return mode==='register'?{ name:this.q('auth-name')?.value?.trim()||'', email:this.q('auth-email')?.value?.trim()||'', password:'********' }:{ email:this.q('auth-email')?.value?.trim()||'', password:'********' }; },
+    buildCheckoutPayload(){ return { customerName:this.q('billing-name')?.value?.trim()||'', customerEmail:this.q('billing-email')?.value?.trim()||'', plan:this.q('checkout-plan')?.value||'creator', billingCycle:this.q('checkout-billing')?.value||'monthly', currency:this.state.currency, locale:this.state.lang, gateway:this.state.gateway, successUrl:'/billing/success', cancelUrl:'/billing/cancel', idempotencyKey:'generated_on_backend' }; },
+    refreshPayloadViews(){ this.safeText('project-payload', JSON.stringify(this.buildProjectPayload(),null,2)); this.safeText('render-payload', JSON.stringify(this.buildRenderPayload(),null,2)); this.safeText('auth-payload', JSON.stringify(this.buildAuthPayload(),null,2)); this.safeText('checkout-payload', JSON.stringify(this.buildCheckoutPayload(),null,2)); this.safeText('api-map', JSON.stringify(this.readConfig().routes||{},null,2)); this.safeText('frontend-state', JSON.stringify({ auth:{user:null,isAuthenticated:false}, billing:{gateway:this.state.gateway,currency:this.state.currency,billingCycle:this.state.billing}, projects:{draft:this.buildProjectPayload()}, renders:{draft:this.buildRenderPayload()}, ui:{lang:this.state.lang} },null,2)); },
+    switchDash(view,btn=null){ document.querySelectorAll('.dash-view').forEach(v=>v.classList.add('hidden')); this.q(`dash-${view}`)?.classList.remove('hidden'); document.querySelectorAll('.side-tab').forEach(b=>b.classList.remove('active')); if(btn) btn.classList.add('active'); },
+    openDrawer(){ this.q('drawer')?.classList.add('open'); document.body.style.overflow='hidden'; },
+    closeDrawer(){ this.q('drawer')?.classList.remove('open'); document.body.style.overflow=''; },
+    view(id){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); this.q(id)?.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); this.closeDrawer(); },
+    viewAndClose(id){ this.view(id); },
+    addQueueMock(){ const list=this.q('queue-list'); if(!list) return; const node=document.createElement('div'); node.className='queue-item p-5'; node.innerHTML=`<div class="flex items-center justify-between gap-4"><div class="font-black">render_${Date.now()}</div><div class="status-pill warn"><span class="dot warn"></span><span>Queued</span></div></div><p class="mt-3 text-[14px] muted">POST /renders • provider renderly • status pending</p><div class="mt-4 progress"><div style="width:18%"></div></div>`; list.prepend(node); },
+    bindActions(){ this.q('btn-pick-video')?.addEventListener('click',()=>this.q('video-file')?.click()); this.q('btn-build-project-payload')?.addEventListener('click',()=>{ this.refreshPayloadViews(); this.showToast('Payload projet généré'); }); this.q('btn-build-render-payload')?.addEventListener('click',()=>{ this.refreshPayloadViews(); this.addQueueMock(); this.showToast('Payload render généré'); }); this.q('btn-build-auth-payload')?.addEventListener('click',()=>{ this.refreshPayloadViews(); this.showToast('Payload auth généré'); }); this.q('btn-build-checkout-payload')?.addEventListener('click',()=>{ this.refreshPayloadViews(); this.showToast('Payload checkout généré'); }); document.querySelectorAll('[data-subscribe-plan]').forEach(btn=>btn.addEventListener('click',()=>{ const plan=btn.getAttribute('data-subscribe-plan'); if(this.q('checkout-plan')) this.q('checkout-plan').value=plan; this.view('dashboard'); this.switchDash('billing',document.querySelectorAll('.side-tab')[2]); this.refreshPayloadViews(); })); document.querySelectorAll('.pay-method').forEach(btn=>btn.addEventListener('click',()=>{ document.querySelectorAll('.pay-method').forEach(x=>x.classList.remove('active')); btn.classList.add('active'); this.state.gateway=btn.dataset.gateway; this.refreshPayloadViews(); })); this.q('auth-mode')?.addEventListener('change',()=>this.refreshPayloadViews()); ['auth-name','auth-email','auth-password','billing-name','billing-email','checkout-plan','checkout-billing','project-name','url-studio','template-mode','platform-mode','style-mode','target-shorts','lang','currency','lang-mobile','currency-mobile'].forEach(id=>this.q(id)?.addEventListener('input',()=>this.refreshPayloadViews())); this.q('lang')?.addEventListener('change',e=>{ this.state.lang=e.target.value; if(this.q('lang-mobile')) this.q('lang-mobile').value=this.state.lang; this.refreshPayloadViews(); }); this.q('currency')?.addEventListener('change',e=>{ this.state.currency=e.target.value; if(this.q('currency-mobile')) this.q('currency-mobile').value=this.state.currency; this.renderPrices(); this.refreshPayloadViews(); }); this.q('lang-mobile')?.addEventListener('change',e=>{ this.state.lang=e.target.value; if(this.q('lang')) this.q('lang').value=this.state.lang; this.refreshPayloadViews(); }); this.q('currency-mobile')?.addEventListener('change',e=>{ this.state.currency=e.target.value; if(this.q('currency')) this.q('currency').value=this.state.currency; this.renderPrices(); this.refreshPayloadViews(); }); this.q('hamburger')?.addEventListener('click',()=>this.openDrawer()); this.q('drawer-close')?.addEventListener('click',()=>this.closeDrawer()); this.q('drawer')?.querySelector('.drawer-backdrop')?.addEventListener('click',()=>this.closeDrawer()); },
+    bindFaq(){ document.querySelectorAll('.faq-item').forEach(item=>item.querySelector('.faq-btn')?.addEventListener('click',()=>item.classList.toggle('open'))); },
+    bindBot(){ const panel=this.q('bot-panel'); const msgs=this.q('bot-messages'); const input=this.q('bot-input'); const send=()=>{ const v=(input?.value||'').trim(); if(!v) return; const u=document.createElement('div'); u.className='msg user'; u.textContent=v; msgs?.appendChild(u); if(input) input.value=''; const b=document.createElement('div'); b.className='msg bot'; b.textContent='Le frontend est prêt pour auth, paiements, projets, uploads signés, renders et tickets. Le prochain travail réel est le backend.'; msgs?.appendChild(b); msgs.scrollTop=msgs.scrollHeight; }; this.q('bot-launcher')?.addEventListener('click',()=>panel?.classList.toggle('open')); this.q('bot-close')?.addEventListener('click',()=>panel?.classList.remove('open')); this.q('bot-send')?.addEventListener('click',send); input?.addEventListener('keydown',e=>{ if(e.key==='Enter') send(); }); },
+    init(){ this.renderPrices(); this.refreshPayloadViews(); this.bindActions(); this.bindFaq(); this.bindBot(); this.switchDash('overview',document.querySelector('.side-tab')); setInterval(()=>{ if(this.state.spots>5){ this.state.spots -= Math.random()<0.55?1:0; this.safeText('spots',this.state.spots); } },12000); }
+  };
+  window.addEventListener('load',()=>App.init());
+</script>
 </body>
-          </html>
+</html>
