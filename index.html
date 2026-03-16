@@ -127,10 +127,10 @@
         </div>
       </div>
       <div class="desktop-nav flex items-center gap-3">
-        <button class="nav-link" onclick="App.view('hero')">Home</button>
-        <button class="nav-link" onclick="App.view('pricing')">Pricing</button>
+        <button class="nav-link" onclick="App.view('hero')">Accueil</button>
+        <button class="nav-link" onclick="App.view('pricing')">Tarifs</button>
         <button class="nav-link" onclick="App.view('studio')">Studio</button>
-        <button class="nav-link" onclick="App.view('dashboard')">Dashboard</button>
+        <button class="nav-link" onclick="App.view('dashboard')">Espace client</button>
       </div>
       <div class="flex items-center gap-3">
         <div class="lang-row flex items-center gap-3">
@@ -146,7 +146,7 @@
     <div class="drawer-backdrop"></div>
     <div class="drawer-panel">
       <div class="flex items-center justify-between gap-3">
-        <div><div class="text-sm font-black uppercase tracking-[0.22em]">CASA CLIP</div><div class="text-[10px] uppercase tracking-[0.28em] muted-2">MOBILE MENU</div></div>
+        <div><div class="text-sm font-black uppercase tracking-[0.22em]">CASA CLIP</div><div class="text-[10px] uppercase tracking-[0.28em] muted-2">MENU MOBILE</div></div>
         <button id="drawer-close" class="btn-ghost px-4 py-3 text-[11px] font-black uppercase">Close</button>
       </div>
       <div class="grid grid-cols-1 gap-3">
@@ -156,9 +156,9 @@
         <button class="nav-link !justify-start" onclick="App.viewAndClose('dashboard')">Dashboard</button>
       </div>
       <div class="panel p-4">
-        <div class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2 mb-2">Language</div>
+        <div class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2 mb-2">Langue</div>
         <select id="lang-mobile" class="input-dark text-[12px] font-bold uppercase"><option value="fr">FR</option><option value="en">EN</option></select>
-        <div class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2 mt-4 mb-2">Currency</div>
+        <div class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2 mt-4 mb-2">Devise</div>
         <select id="currency-mobile" class="input-dark text-[12px] font-bold uppercase"><option value="EUR">EUR €</option><option value="USD">USD $</option><option value="GBP">GBP £</option><option value="MAD">MAD د.م.</option><option value="SAR">SAR ر.س</option><option value="AED">AED د.إ</option></select>
       </div>
       <button id="n-log-mobile" class="btn-ghost px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]" data-action="open-auth-login">Connexion</button>
@@ -170,14 +170,14 @@
         <div class="stat p-5"><p class="text-[10px] uppercase tracking-[0.24em] muted-2">RENDER SUCCESS</p><p class="mt-2 text-[24px] sm:text-[28px] md:text-[34px] font-black gold-text">99.2%</p></div>
         <div class="stat p-5"><p class="text-[10px] uppercase tracking-[0.24em] muted-2">1080P OUTPUT</p><p class="mt-2 text-[24px] sm:text-[28px] md:text-[34px] font-black gold-text">FULL HD</p></div>
         <div class="stat p-5"><p class="text-[10px] uppercase tracking-[0.24em] muted-2">AVERAGE SHORTS</p><p class="mt-2 text-[24px] sm:text-[28px] md:text-[34px] font-black gold-text">3 / VIDEO</p></div>
-        <div class="stat p-5"><p class="text-[10px] uppercase tracking-[0.24em] muted-2">BACKEND STATUS</p><p class="mt-2 text-[24px] sm:text-[28px] md:text-[34px] font-black gold-text">READY</p></div>
+        <div class="stat p-5"><p class="text-[10px] uppercase tracking-[0.24em] muted-2">STATUT SERVICE</p><p class="mt-2 text-[24px] sm:text-[28px] md:text-[34px] font-black gold-text">ACTIF</p></div>
       </div>
       <div class="max-w-6xl mx-auto">
-        <div class="mb-5 text-[11px] font-extrabold uppercase tracking-[0.4em] sm:tracking-[0.55em] muted-2">FRONTEND ORIENTÉ BACKEND</div>
+        <div class="mb-5 text-[11px] font-extrabold uppercase tracking-[0.4em] sm:tracking-[0.55em] muted-2">PLATEFORME PREMIUM</div>
         <h1 class="text-[40px] sm:text-[52px] md:text-[76px] lg:text-[110px] leading-[0.92] font-black uppercase tracking-[-0.05em]">CASA CLIP <span class="gold-text">Backend Ready</span></h1>
-        <p class="mx-auto mt-7 max-w-4xl text-[15px] sm:text-[16px] md:text-[19px] leading-relaxed muted">Le HTML inclut maintenant des contrats de données, endpoints, payloads, formulaires structurés, placeholders de sécurité, et des composants pensés pour être branchés directement sur le backend.</p>
+        <p class="mx-auto mt-7 max-w-4xl text-[15px] sm:text-[16px] md:text-[19px] leading-relaxed muted">Le site a été structuré pour rester propre côté client tout en gardant une base solide pour les connexions, paiements, projets, rendus et support.</p>
         <div class="hero-cta mt-10 flex flex-wrap items-center justify-center gap-4">
-          <button class="btn-gold px-8 py-4 text-[12px] font-black uppercase tracking-[0.20em]" onclick="App.view('dashboard')">Voir backend ready</button>
+          <button class="btn-gold px-8 py-4 text-[12px] font-black uppercase tracking-[0.20em]" onclick="App.view('dashboard')">Accéder à l’espace client</button>
           <button class="btn-ghost px-8 py-4 text-[12px] font-black uppercase tracking-[0.20em]" onclick="App.view('studio')">Tester studio</button>
         </div>
       </div>
@@ -235,11 +235,11 @@
           </form>
           <div class="mt-6 grid grid-cols-1 xl:grid-cols-2 gap-6">
             <div class="api-card p-5">
-              <div class="text-[15px] font-black uppercase tracking-[0.18em]">Payload projet</div>
-              <pre id="project-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre>
+              <div class="text-[15px] font-black uppercase tracking-[0.18em]">Données projet</div>
+              <pre style="display:none" id="project-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre>
             </div>
             <div class="api-card p-5">
-              <div class="text-[15px] font-black uppercase tracking-[0.18em]">Payload render</div>
+              <div class="text-[15px] font-black uppercase tracking-[0.18em]">Données rendu</div>
               <pre id="render-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre>
             </div>
           </div>
@@ -258,22 +258,22 @@
   </section>  <section id="dashboard" class="section">
     <div class="container-max">
       <div class="w-full text-center">
-        <div class="text-[11px] uppercase tracking-[0.55em] font-extrabold muted-2">BACKEND READY</div>
-        <h2 class="mt-4 text-[34px] sm:text-[42px] md:text-[62px] font-black uppercase tracking-[-0.04em]">Tableau de branchement backend</h2>
+        <div class="text-[11px] uppercase tracking-[0.55em] font-extrabold muted-2">ESPACE CLIENT</div>
+        <h2 class="mt-4 text-[34px] sm:text-[42px] md:text-[62px] font-black uppercase tracking-[-0.04em]">Tableau de gestion</h2>
         <p class="mt-4 mx-auto max-w-3xl text-[15px] md:text-[16px] leading-7 muted">Tout ce qui suit sert à faciliter le backend : endpoints, objets, schémas, formulaires, sécurité, paiements, auth et contrats d’API.</p>
       </div>
       <div class="mt-12 grid grid-cols-1 xl:grid-cols-[260px_1fr] gap-8 w-full">
         <aside class="panel p-4 h-fit">
           <div class="sidebar-tabs flex flex-col gap-3">
             <button class="side-tab active rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('overview',this)">Vue d’ensemble</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('auth',this)">Auth</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('auth',this)">Compte</button>
             <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('billing',this)">Paiements</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('projects',this)">Projects</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('renders',this)">Renders</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('support',this)">Tickets</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('projects',this)">Mes projets</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('renders',this)">Traitements</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('support',this)">Support</button>
             <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('security',this)">Sécurité</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('api',this)">API map</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('state',this)">Frontend state</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('api',this)">Configuration</button>
+            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('state',this)">Système</button>
           </div>
         </aside>
         <div class="min-w-0">
@@ -326,7 +326,7 @@ webhook_events</pre></div>
               <div class="flex flex-wrap gap-3"><button type="button" id="btn-build-auth-payload" class="btn-gold px-6 py-4 text-[12px] font-black uppercase">Voir payload auth</button><button type="button" class="btn-ghost px-6 py-4 text-[12px] font-black uppercase">Brancher backend</button></div>
             </form>
           </div>
-          <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Payload auth</div><pre id="auth-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre><div class="mt-5 status-pill warn"><span class="dot warn"></span><span>Prévu pour cookie httpOnly + CSRF header</span></div></div>
+          <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Données connexion</div><pre id="auth-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre><div class="mt-5 status-pill warn"><span class="dot warn"></span><span>Prévu pour cookie httpOnly + CSRF header</span></div></div>
         </div>
       </div>
 
@@ -347,7 +347,7 @@ webhook_events</pre></div>
             </div>
             <div class="mt-5 flex flex-wrap gap-3"><button type="button" id="btn-build-checkout-payload" class="btn-gold px-6 py-4 text-[12px] font-black uppercase">Voir payload checkout</button><button type="button" class="btn-ghost px-6 py-4 text-[12px] font-black uppercase">Créer checkout</button></div>
           </div>
-          <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Payload checkout</div><pre id="checkout-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre></div>
+          <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Données paiement</div><pre id="checkout-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre></div>
         </div>
       </div>
 
@@ -386,10 +386,10 @@ Contrôle MIME et taille serveur
 
 RBAC admin / client / support
 
-Audit logs pour billing et auth</pre></div> <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">En-têtes frontend préparés</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">X-CSRF-Token X-Request-Id X-Client-Version Authorization: Bearer ... (si nécessaire) Idempotency-Key X-Timezone X-Locale X-Currency</pre></div> </div> </div>
+Audit logs pour billing et auth</pre></div> <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">En-têtes frontend préparés</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">X-CSRF-Token X-Request-Id X-Client-Version Authorization: Bearer ... (si nécessaire) Idempotency-Key X-Timezone X-Locale X-Devise</pre></div> </div> </div>
 
 <div id="dash-api" class="dash-view hidden">
-      <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Map d’API générée depuis le HTML</div><pre id="api-map" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre></div>
+      <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Configuration interne</div><pre id="api-map" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre></div>
     </div>
 
     <div id="dash-state" class="dash-view hidden">
