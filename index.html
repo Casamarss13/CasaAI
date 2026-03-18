@@ -2,444 +2,882 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>CASA CLIP | Backend Ready Frontend</title>
-  <meta name="description" content="CASA CLIP — frontend HTML orienté backend, paiements, auth, projets, rendus et support." />
-  <meta name="theme-color" content="#0b0b0b" />
-  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>CASCLIP | AI Shorts Studio</title>
+  <meta name="description" content="CASCLIP — plateforme premium et simplifiée pour transformer des vidéos longues en shorts avec sous-titres, branding et workflows clairs." />
+  <meta name="theme-color" content="#faf7ef" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root{
-      --gold:#d4af37;--gold-border:rgba(212,175,55,.34);--text:#f7f5ef;--muted:rgba(255,255,255,.66);--muted-2:rgba(255,255,255,.38);--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--blue:#60a5fa;--shadow-gold:0 18px 60px rgba(212,175,55,.14);--shadow-dark:0 28px 80px rgba(0,0,0,.34);--touch:48px;--radius-xl:28px;--nav-offset:176px;
+      --bg:#f8f3e8;
+      --bg-2:#f4eee2;
+      --panel:#fffdf8;
+      --panel-2:rgba(255,255,255,.72);
+      --text:#1d1710;
+      --muted:#63584b;
+      --muted-2:#8d7d69;
+      --gold:#c79c2b;
+      --gold-2:#e8c96f;
+      --line:rgba(75,58,29,.13);
+      --line-2:rgba(199,156,43,.28);
+      --green:#15945d;
+      --red:#c24d4d;
+      --blue:#315fcb;
+      --shadow:0 18px 60px rgba(48,34,7,.12);
+      --shadow-soft:0 10px 28px rgba(48,34,7,.08);
+      --radius:26px;
+      --touch:48px;
     }
-    *{box-sizing:border-box} html{scroll-behavior:smooth}
-    body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:radial-gradient(circle at 12% 18%, rgba(255,255,255,.028), transparent 24%),radial-gradient(circle at 82% 24%, rgba(255,255,255,.018), transparent 22%),radial-gradient(circle at 60% 78%, rgba(212,175,55,.06), transparent 26%),linear-gradient(180deg, #070707 0%, #0b0b0b 48%, #090909 100%);overflow-x:hidden;min-width:320px}
-    body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(115deg, transparent 0%, rgba(255,255,255,.03) 18%, transparent 36%),linear-gradient(205deg, transparent 0%, rgba(255,255,255,.02) 22%, transparent 42%),linear-gradient(160deg, transparent 0%, rgba(212,175,55,.03) 16%, transparent 38%);mix-blend-mode:screen}
-    [hidden]{display:none!important}
-    .glass{background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:var(--shadow-dark)}
-    .panel,.card,.stat,.plan,.feature,.help,.queue-item,.faq-item,.metric,.api-card{border-radius:var(--radius-xl);background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow-dark);width:100%;min-width:0}
-    .gold-text{background:linear-gradient(135deg,#fff7cf 0%,#f0d46d 35%,#c89b22 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .gold-line{border:1px solid var(--gold-border);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),var(--shadow-gold)}
-    .chip{border-radius:999px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04)}
-    .btn-gold,.btn-ghost,.side-tab,.nav-link,.pay-method{min-height:var(--touch);touch-action:manipulation}
-    .btn-gold{border:none;color:#140f02;background:linear-gradient(135deg,#f5e7a6 0%,#e0bb52 55%,#c9971a 100%);font-weight:800;border-radius:999px;transition:.25s ease;box-shadow:0 12px 34px rgba(212,175,55,.18);cursor:pointer}
-    .btn-gold:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(212,175,55,.25)}
-    .btn-ghost,.nav-link,.pay-method{border:1px solid rgba(255,255,255,.13);color:#fff;background:rgba(255,255,255,.03);border-radius:999px;transition:.25s ease;cursor:pointer}
-    .btn-ghost:hover,.nav-link:hover,.pay-method:hover{transform:translateY(-2px);border-color:rgba(212,175,55,.35);color:#fff8de}
-    .nav-link{display:flex;align-items:center;justify-content:center;padding:10px 14px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.16em}
-    .active-tab,.pay-method.active{background:linear-gradient(135deg,#f3df92 0%,#d6ab35 100%)!important;color:#120d00!important;box-shadow:var(--shadow-gold)}
-    .promo-banner{background:linear-gradient(90deg, rgba(16,16,16,.95), rgba(212,175,55,.16), rgba(16,16,16,.95));border-bottom:1px solid rgba(212,175,55,.22);box-shadow:0 10px 30px rgba(0,0,0,.22)}
-    .nav-shell{border:1px solid rgba(255,255,255,.08);background:rgba(12,12,12,.72);width:min(1380px,95%)}
-    .container-max{width:min(1480px,100%);margin-inline:auto}
-    .section{min-height:100vh;padding:var(--nav-offset) 5% 72px;display:none;opacity:0;transform:translateY(10px)}
-    .section.active{display:flex;flex-direction:column;align-items:center;opacity:1;transform:translateY(0);animation:fadeIn .45s ease forwards}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    .input-dark,.textarea-dark,.select-dark{width:100%;color:#fff;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:16px;padding:14px 16px;outline:none;min-height:var(--touch)}
-    .textarea-dark{min-height:120px;resize:vertical}
-    .input-dark:focus,.textarea-dark:focus,.select-dark:focus{border-color:rgba(212,175,55,.38);box-shadow:0 0 0 4px rgba(212,175,55,.08)}
-    .status-pill{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.26);color:#ccf7da;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;flex-wrap:wrap;justify-content:center}
-    .status-pill.warn{background:rgba(245,158,11,.10);border-color:rgba(245,158,11,.28);color:#fde7ba}
-    .status-pill.err{background:rgba(239,68,68,.10);border-color:rgba(239,68,68,.26);color:#fecaca}
-    .dot{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 14px rgba(34,197,94,.8)} .dot.warn{background:#f59e0b;box-shadow:0 0 14px rgba(245,158,11,.8)} .dot.err{background:#ef4444;box-shadow:0 0 14px rgba(239,68,68,.8)}
-    .progress{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;width:100%} .progress>div{height:100%;border-radius:999px;background:linear-gradient(90deg,#f4df97,#d4af37)}
-    .drawer{position:fixed;inset:0;z-index:470;pointer-events:none;opacity:0;transition:.25s ease} .drawer.open{pointer-events:auto;opacity:1}
-    .drawer-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.58)}
-    .drawer-panel{position:absolute;top:0;right:0;width:min(420px,100%);height:100%;transform:translateX(100%);transition:.28s ease;padding:18px;display:flex;flex-direction:column;gap:14px;border-left:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg, rgba(13,13,13,.98), rgba(8,8,8,.99));box-shadow:-24px 0 80px rgba(0,0,0,.38);overflow:auto}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Plus Jakarta Sans',sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 10% 18%, rgba(255,255,255,.8), transparent 24%),
+        radial-gradient(circle at 82% 22%, rgba(199,156,43,.12), transparent 26%),
+        linear-gradient(180deg, #fbf8f1 0%, #f7f0e4 45%, #f3ebdd 100%);
+      min-width:320px;
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.28;
+      background-image:
+        linear-gradient(110deg, transparent 0%, rgba(255,255,255,.6) 18%, transparent 36%),
+        linear-gradient(160deg, transparent 0%, rgba(199,156,43,.05) 20%, transparent 40%);
+      mix-blend-mode:screen;
+    }
+    .glass{
+      background:linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,252,245,.72));
+      border:1px solid var(--line);
+      backdrop-filter:blur(16px);
+      box-shadow:var(--shadow-soft);
+    }
+    .card,.panel,.plan,.feature,.metric,.faq-item,.method,.timeline-item,.review,.queue-item,.legal-card,.input-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,251,245,.78));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-soft);
+      width:100%;
+      min-width:0;
+    }
+    .gold-text{
+      background:linear-gradient(135deg,#f4deb0 0%,#d9b04a 38%,#ad7e12 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .top-banner{
+      background:linear-gradient(90deg, rgba(255,255,255,.9), rgba(232,201,111,.45), rgba(255,255,255,.9));
+      border-bottom:1px solid var(--line-2);
+      box-shadow:0 10px 28px rgba(47,31,7,.08);
+    }
+    .nav-shell{
+      width:min(1380px,95%);
+      border-radius:28px;
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(75,58,29,.09);
+      box-shadow:var(--shadow);
+    }
+    .nav-link,.btn-gold,.btn-ghost,.chip,.lang-select,.method-btn,.tab-btn,.mini-btn{
+      min-height:var(--touch);
+      touch-action:manipulation;
+    }
+    .nav-link,.btn-ghost,.method-btn,.tab-btn,.mini-btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      border:1px solid rgba(75,58,29,.12);
+      background:rgba(255,255,255,.7);
+      color:var(--text);
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .nav-link:hover,.btn-ghost:hover,.method-btn:hover,.tab-btn:hover,.mini-btn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(199,156,43,.35);
+      box-shadow:0 12px 22px rgba(199,156,43,.08);
+    }
+    .btn-gold{
+      border:none;
+      border-radius:999px;
+      cursor:pointer;
+      color:#251602;
+      background:linear-gradient(135deg,#f6e5b5 0%,#dfba58 55%,#bf8b16 100%);
+      box-shadow:0 12px 28px rgba(199,156,43,.22);
+      font-weight:800;
+      transition:.22s ease;
+    }
+    .btn-gold:hover{transform:translateY(-1px);box-shadow:0 16px 32px rgba(199,156,43,.28)}
+    .section{padding:172px 5% 84px}
+    .input,.textarea,.select{
+      width:100%;
+      border-radius:18px;
+      border:1px solid rgba(75,58,29,.14);
+      background:rgba(255,255,255,.82);
+      color:var(--text);
+      padding:14px 16px;
+      outline:none;
+      font:inherit;
+      min-height:var(--touch);
+    }
+    .textarea{min-height:120px;resize:vertical}
+    .input:focus,.textarea:focus,.select:focus{border-color:rgba(199,156,43,.4);box-shadow:0 0 0 4px rgba(199,156,43,.09)}
+    .hero-title{font-size:clamp(42px,8vw,110px);line-height:.94;letter-spacing:-.05em}
+    .muted{color:var(--muted)}
+    .muted-2{color:var(--muted-2)}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(49,95,203,.08);border:1px solid rgba(49,95,203,.16);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(21,148,93,.08);border:1px solid rgba(21,148,93,.18);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#166646}
+    .warn{background:rgba(199,156,43,.10);border-color:rgba(199,156,43,.2);color:#8a6210}
+    .danger{background:rgba(194,77,77,.10);border-color:rgba(194,77,77,.2);color:#9d3636}
+    .price{font-size:clamp(40px,5vw,62px);line-height:1;font-weight:900;letter-spacing:-.05em}
+    .video-stage{position:relative;overflow:hidden;border-radius:26px;background:#0f0f10;border:1px solid rgba(75,58,29,.12);min-height:280px}
+    .video-stage video{width:100%;height:100%;display:block;max-height:560px;object-fit:cover;background:#0f0f10}
+    .watermark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;font-size:clamp(32px,8vw,120px);font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.18);transform:rotate(-17deg);text-shadow:0 0 40px rgba(0,0,0,.42)}
+    .queue-bar{height:10px;border-radius:999px;background:rgba(75,58,29,.08);overflow:hidden}
+    .queue-bar>div{height:100%;border-radius:999px;background:linear-gradient(90deg,#f2d994,#c79c2b)}
+    .faq-item{overflow:hidden}
+    .faq-btn{width:100%;border:none;background:transparent;padding:18px 20px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;font-weight:800;color:var(--text);font-size:14px;text-transform:uppercase;letter-spacing:.05em}
+    .faq-answer{max-height:0;overflow:hidden;opacity:0;transition:max-height .25s ease,opacity .25s ease;padding:0 20px}
+    .faq-item.open .faq-answer{max-height:320px;opacity:1;padding:0 20px 18px}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:18px;z-index:200;background:rgba(31,22,11,.38);backdrop-filter:blur(4px)}
+    .modal.open{display:flex}
+    .modal-panel{width:min(860px,100%);max-height:88vh;overflow:auto;border-radius:30px;background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,252,246,.92));border:1px solid var(--line);box-shadow:var(--shadow)}
+    .drawer{position:fixed;inset:0;z-index:210;pointer-events:none;opacity:0;transition:.2s ease}
+    .drawer.open{pointer-events:auto;opacity:1}
+    .drawer-backdrop{position:absolute;inset:0;background:rgba(31,22,11,.38)}
+    .drawer-panel{position:absolute;top:0;right:0;height:100%;width:min(420px,100%);background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,251,245,.96));transform:translateX(100%);transition:.24s ease;padding:18px;display:flex;flex-direction:column;gap:14px;border-left:1px solid var(--line);box-shadow:var(--shadow)}
     .drawer.open .drawer-panel{transform:translateX(0)}
-    .hamburger{display:none;align-items:center;justify-content:center;width:52px;height:52px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;font-size:20px;font-weight:900}
-    .faq-item{overflow:hidden;border-radius:20px} .faq-btn{width:100%;text-align:left;background:transparent;border:none;color:#fff;padding:18px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;font-weight:800;font-size:14px;letter-spacing:.05em;text-transform:uppercase} .faq-answer{max-height:0;overflow:hidden;transition:max-height .3s ease,opacity .3s ease;opacity:0;padding:0 20px} .faq-item.open .faq-answer{max-height:260px;opacity:1;padding:0 20px 18px}
-    .bot-launcher{position:fixed;left:16px;bottom:16px;z-index:490;width:60px;height:60px;border-radius:999px;border:none;cursor:pointer;font-weight:900;font-size:12px;background:linear-gradient(135deg,#f5e7a6 0%,#e0bb52 55%,#c9971a 100%);color:#120d00;box-shadow:0 20px 50px rgba(212,175,55,.28)}
-    .bot-panel{position:fixed;left:16px;bottom:86px;width:min(390px,calc(100vw - 32px));height:min(560px,74vh);z-index:495;display:none;flex-direction:column;overflow:hidden;border-radius:28px;border:1px solid rgba(212,175,55,.26);background:linear-gradient(180deg, rgba(22,22,22,.96), rgba(10,10,10,.98));box-shadow:0 30px 80px rgba(0,0,0,.45)} .bot-panel.open{display:flex}
-    .bot-head{padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg, rgba(212,175,55,.12), rgba(255,255,255,.02))}
-    .bot-messages{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px} .msg{max-width:86%;padding:12px 14px;border-radius:16px;line-height:1.6;font-size:14px;white-space:pre-wrap;word-wrap:break-word} .msg.bot{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);align-self:flex-start} .msg.user{background:rgba(212,175,55,.14);border:1px solid rgba(212,175,55,.28);align-self:flex-end}
-    .bot-quick{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 12px;border-top:1px solid rgba(255,255,255,.05)} .bot-chip{padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:white;font-size:11px;font-weight:800;text-transform:uppercase;cursor:pointer}
-    .bot-foot{padding:12px 14px 14px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:10px;align-items:center}
-    .muted{color:var(--muted)} .muted-2{color:var(--muted-2)} .dash-view{width:100%}
-    .rtl{direction:rtl}.rtl .hero-cta{flex-direction:row-reverse}.rtl .footer-links{flex-direction:row-reverse}.rtl .price-modes{flex-direction:row-reverse}.rtl .drawer-panel{right:auto;left:0;transform:translateX(-100%);border-left:none;border-right:1px solid rgba(255,255,255,.08)} .rtl .drawer.open .drawer-panel{transform:translateX(0)} .rtl .bot-panel{left:auto;right:16px}.rtl .bot-launcher{left:auto;right:16px}
-    @media (max-width:1279px){.nav-shell{width:96%}.section{padding-top:180px}}
-    @media (max-width:1024px){.section{padding-top:190px;padding-left:4%;padding-right:4%}.desktop-nav{display:none!important}.hamburger{display:flex}}
-    @media (max-width:900px){.lang-row{display:none!important}.section{padding-top:176px}}
-    @media (max-width:768px){.section{padding-top:176px;padding-bottom:56px}.nav-shell{width:96%;padding:12px 14px!important;border-radius:24px}.promo-banner{font-size:9px;letter-spacing:.18em}.bot-panel{height:min(72vh,620px)}.bot-foot{flex-direction:column;align-items:stretch}.bot-foot>*{width:100%}}
-    @media (max-width:640px){.hero-cta>*{width:100%}.btn-gold,.btn-ghost{width:100%}.panel,.feature,.plan,.queue-item,.help,.metric,.api-card{border-radius:22px}.bot-launcher{width:56px;height:56px;bottom:12px;left:12px}.bot-panel{bottom:76px;left:12px;width:calc(100vw - 24px)}}
+    .toast{position:fixed;right:16px;bottom:16px;z-index:220;background:#1f1a13;color:#fff5dc;padding:14px 16px;border-radius:16px;box-shadow:var(--shadow);display:none;max-width:min(92vw,420px)}
+    .toast.show{display:block}
+    .mobile-only{display:none}
+    .desktop-only{display:block}
+    .pricing-switch{display:inline-flex;gap:4px;padding:6px;border-radius:999px;background:rgba(255,255,255,.78);border:1px solid var(--line)}
+    .active-chip{background:linear-gradient(135deg,#f6e5b5 0%,#dfba58 55%,#bf8b16 100%)!important;color:#251602!important;border-color:transparent!important}
+    .hero-grid,.features-grid,.pricing-grid,.trust-grid,.footer-grid,.about-grid,.contact-grid,.studio-grid,.support-grid,.legal-grid,.reviews-grid{display:grid;gap:22px}
+    .hero-grid{grid-template-columns:1.1fr .9fr;align-items:center}
+    .features-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .pricing-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .about-grid{grid-template-columns:1fr 1fr}
+    .contact-grid{grid-template-columns:1fr 1fr}
+    .studio-grid{grid-template-columns:1.02fr .98fr}
+    .support-grid{grid-template-columns:.92fr 1.08fr}
+    .trust-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .legal-grid{grid-template-columns:1fr 1fr}
+    .reviews-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .footer-grid{display:flex;justify-content:space-between;gap:28px;align-items:flex-start}
+    @media (max-width:1200px){
+      .pricing-grid,.features-grid,.trust-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .hero-grid,.studio-grid,.support-grid,.about-grid,.contact-grid,.legal-grid,.reviews-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:980px){
+      .desktop-nav,.desktop-actions{display:none!important}
+      .mobile-only{display:flex}
+      .section{padding:164px 4% 72px}
+    }
+    @media (max-width:700px){
+      .pricing-grid,.features-grid,.trust-grid{grid-template-columns:1fr}
+      .footer-grid{flex-direction:column}
+      .section{padding:158px 12px 64px}
+      .btn-gold,.btn-ghost{width:100%}
+      .hero-actions{display:grid;grid-template-columns:1fr;gap:12px}
+      .watermark{font-size:clamp(28px,11vw,72px)}
+    }
   </style>
 </head>
 <body>
-  <script id="app-config" type="application/json">
-  {
-    "appName": "CASA CLIP",
-    "version": "2.0.0-backend-ready",
-    "environment": "staging",
-    "apiBaseUrl": "https://api.casaclip.local/v1",
-    "frontendBaseUrl": "https://app.casaclip.local",
-    "auth": {
-      "strategy": "cookie-session",
-      "csrfHeader": "X-CSRF-Token",
-      "refreshPath": "/auth/refresh",
-      "mePath": "/auth/me"
-    },
-    "gateways": {
-      "stripe": { "enabled": true, "publishableKey": "pk_test_replace_me" },
-      "paypal": { "enabled": false, "clientId": "replace_me" }
-    },
-    "storage": {
-      "signedUploadPath": "/uploads/sign",
-      "maxVideoMb": 2048,
-      "allowedMimeTypes": ["video/mp4", "video/quicktime", "video/webm"]
-    },
-    "rendering": {
-      "provider": "renderly",
-      "createRenderPath": "/renders",
-      "queueStatusPath": "/renders/{id}",
-      "defaultResolution": "1080p"
-    },
-    "features": {
-      "trial": true,
-      "watermarkPreview": true,
-      "billing": true,
-      "supportTickets": true,
-      "auditLogs": true,
-      "webhooks": true
-    },
-    "routes": {
-      "register": "/auth/register",
-      "login": "/auth/login",
-      "logout": "/auth/logout",
-      "plans": "/plans",
-      "projects": "/projects",
-      "billingCheckout": "/billing/create-checkout",
-      "billingInvoices": "/billing/invoices",
-      "usage": "/usage",
-      "tickets": "/tickets",
-      "health": "/health"
-    }
-  }
-  </script>  <div id="toast" class="toast px-5 py-4 text-[12px] font-extrabold uppercase tracking-[0.18em] hidden"></div>  <div class="promo-banner fixed top-0 left-0 w-full z-[130] py-2.5 px-4 text-center text-[10px] font-extrabold uppercase tracking-[0.34em]">
-    <span id="promo-txt">OFFRE LIMITÉE</span> — <span id="spots">42</span> <span id="left-txt">PLACES RESTANTES</span>
-  </div>  <nav class="fixed top-10 left-1/2 -translate-x-1/2 z-[120] nav-shell glass p-4">
+  <div id="toast" class="toast"></div>  <div class="top-banner fixed top-0 left-0 w-full z-[120] py-2 px-4 text-center text-[10px] font-extrabold uppercase tracking-[0.32em]">
+    <span data-i18n="banner_offer">Offre de lancement</span> — <span id="spots">42</span> <span data-i18n="banner_spots">places restantes</span> • <span data-i18n="banner_trial">3 essais vidéo offerts avec watermark</span>
+  </div>  <nav class="fixed top-10 left-1/2 -translate-x-1/2 z-[115] nav-shell glass p-4">
     <div class="flex items-center justify-between gap-4">
-      <div class="flex items-center gap-3 cursor-pointer min-w-0" onclick="App.view('hero')">
-        <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-black text-lg gold-line bg-[rgba(212,175,55,.12)] text-[#f5df97] shrink-0">CC</div>
+      <button class="flex items-center gap-3 text-left min-w-0 bg-transparent border-none cursor-pointer" onclick="App.view('home')">
+        <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-black text-lg border border-[rgba(199,156,43,.28)] bg-[rgba(199,156,43,.10)] text-[#a9770f] shrink-0">CC</div>
         <div class="min-w-0">
-          <div class="text-sm font-black uppercase tracking-[0.22em] truncate">CASA CLIP</div>
-          <div id="brand-sub" class="text-[10px] uppercase tracking-[0.28em] muted-2 truncate">AI SHORTS ELITE</div>
+          <div class="text-sm font-black uppercase tracking-[0.22em] truncate">CASCLIP</div>
+          <div class="text-[10px] uppercase tracking-[0.28em] muted-2 truncate" data-i18n="brand_sub">AI Shorts Studio</div>
         </div>
-      </div>
-      <div class="desktop-nav flex items-center gap-3">
-        <button class="nav-link" onclick="App.view('hero')">Accueil</button>
-        <button class="nav-link" onclick="App.view('pricing')">Tarifs</button>
-        <button class="nav-link" onclick="App.view('studio')">Studio</button>
-        <button class="nav-link" onclick="App.view('dashboard')">Espace client</button>
-      </div>
-      <div class="flex items-center gap-3">
-        <div class="lang-row flex items-center gap-3">
-          <select id="lang" class="input-dark !w-auto !py-3 !px-4 text-[12px] font-bold uppercase"><option value="fr">FR</option><option value="en">EN</option></select>
-          <select id="currency" class="input-dark !w-auto !py-3 !px-4 text-[12px] font-bold uppercase"><option value="EUR">EUR €</option><option value="USD">USD $</option><option value="GBP">GBP £</option><option value="MAD">MAD د.م.</option><option value="SAR">SAR ر.س</option><option value="AED">AED د.إ</option></select>
-          <button id="n-log" class="btn-ghost px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]" data-action="open-auth-login">Connexion</button>
-          <button id="n-sig" class="btn-gold px-6 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]" data-action="open-auth-register">Inscription</button>
-        </div>
-        <button id="hamburger" class="hamburger" aria-label="Menu">☰</button>
-      </div>
-    </div>
+      </button><div class="desktop-nav flex items-center gap-3">
+    <button class="nav-link px-4 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.view('home')" data-i18n="nav_home">Accueil</button>
+    <button class="nav-link px-4 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.view('pricing')" data-i18n="nav_pricing">Tarifs</button>
+    <button class="nav-link px-4 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.view('studio')" data-i18n="nav_studio">Studio</button>
+    <button class="nav-link px-4 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.view('about')" data-i18n="nav_about">Qui sommes-nous</button>
+    <button class="nav-link px-4 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.view('support')" data-i18n="nav_support">SAV</button>
+    <button class="nav-link px-4 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.openLegal()" data-i18n="nav_legal">CGU</button>
+  </div>
+
+  <div class="desktop-actions flex items-center gap-3">
+    <select id="lang" class="select lang-select !w-auto !py-3 !px-4 text-[12px] font-bold uppercase">
+      <option value="fr">FR</option>
+      <option value="en">EN</option>
+      <option value="es">ES</option>
+      <option value="ar">AR</option>
+      <option value="de">DE</option>
+      <option value="pt">PT</option>
+    </select>
+    <select id="currency" class="select lang-select !w-auto !py-3 !px-4 text-[12px] font-bold uppercase">
+      <option value="EUR">EUR €</option>
+      <option value="USD">USD $</option>
+      <option value="GBP">GBP £</option>
+      <option value="MAD">MAD د.م.</option>
+      <option value="AED">AED د.إ</option>
+      <option value="SAR">SAR ر.س</option>
+      <option value="CAD">CAD $</option>
+    </select>
+    <button class="btn-ghost px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]" onclick="App.openAuth('login')" data-i18n="login">Connexion</button>
+    <button class="btn-gold px-6 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]" onclick="App.openAuth('register')" data-i18n="register">Inscription</button>
+  </div>
+
+  <button id="hamburger" class="mobile-only nav-link w-[52px] h-[52px] text-xl font-black" aria-label="Menu">☰</button>
+</div>
+
   </nav>  <div id="drawer" class="drawer">
     <div class="drawer-backdrop"></div>
     <div class="drawer-panel">
       <div class="flex items-center justify-between gap-3">
-        <div><div class="text-sm font-black uppercase tracking-[0.22em]">CASA CLIP</div><div class="text-[10px] uppercase tracking-[0.28em] muted-2">MENU MOBILE</div></div>
+        <div>
+          <div class="text-sm font-black uppercase tracking-[0.22em]">CASCLIP</div>
+          <div class="text-[10px] uppercase tracking-[0.28em] muted-2" data-i18n="mobile_menu">Menu mobile</div>
+        </div>
         <button id="drawer-close" class="btn-ghost px-4 py-3 text-[11px] font-black uppercase">Close</button>
       </div>
-      <div class="grid grid-cols-1 gap-3">
-        <button class="nav-link !justify-start" onclick="App.viewAndClose('hero')">Home</button>
-        <button class="nav-link !justify-start" onclick="App.viewAndClose('pricing')">Pricing</button>
-        <button class="nav-link !justify-start" onclick="App.viewAndClose('studio')">Studio</button>
-        <button class="nav-link !justify-start" onclick="App.viewAndClose('dashboard')">Dashboard</button>
-      </div>
+      <button class="nav-link !justify-start px-4 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.viewAndClose('home')" data-i18n="nav_home">Accueil</button>
+      <button class="nav-link !justify-start px-4 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.viewAndClose('pricing')" data-i18n="nav_pricing">Tarifs</button>
+      <button class="nav-link !justify-start px-4 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.viewAndClose('studio')" data-i18n="nav_studio">Studio</button>
+      <button class="nav-link !justify-start px-4 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.viewAndClose('about')" data-i18n="nav_about">Qui sommes-nous</button>
+      <button class="nav-link !justify-start px-4 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.viewAndClose('support')" data-i18n="nav_support">SAV</button>
+      <button class="nav-link !justify-start px-4 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.openLegal(); App.closeDrawer();" data-i18n="nav_legal">CGU</button>
       <div class="panel p-4">
-        <div class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2 mb-2">Langue</div>
-        <select id="lang-mobile" class="input-dark text-[12px] font-bold uppercase"><option value="fr">FR</option><option value="en">EN</option></select>
-        <div class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2 mt-4 mb-2">Devise</div>
-        <select id="currency-mobile" class="input-dark text-[12px] font-bold uppercase"><option value="EUR">EUR €</option><option value="USD">USD $</option><option value="GBP">GBP £</option><option value="MAD">MAD د.م.</option><option value="SAR">SAR ر.س</option><option value="AED">AED د.إ</option></select>
+        <div class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2 mb-2" data-i18n="language">Langue</div>
+        <select id="lang-mobile" class="select text-[12px] font-bold uppercase">
+          <option value="fr">FR</option><option value="en">EN</option><option value="es">ES</option><option value="ar">AR</option><option value="de">DE</option><option value="pt">PT</option>
+        </select>
+        <div class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2 mt-4 mb-2" data-i18n="currency">Devise</div>
+        <select id="currency-mobile" class="select text-[12px] font-bold uppercase">
+          <option value="EUR">EUR €</option><option value="USD">USD $</option><option value="GBP">GBP £</option><option value="MAD">MAD د.م.</option><option value="AED">AED د.إ</option><option value="SAR">SAR ر.س</option><option value="CAD">CAD $</option>
+        </select>
       </div>
-      <button id="n-log-mobile" class="btn-ghost px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]" data-action="open-auth-login">Connexion</button>
-      <button id="n-sig-mobile" class="btn-gold px-6 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]" data-action="open-auth-register">Inscription</button>
+      <button class="btn-ghost px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]" onclick="App.openAuth('login'); App.closeDrawer();" data-i18n="login">Connexion</button>
+      <button class="btn-gold px-6 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em]" onclick="App.openAuth('register'); App.closeDrawer();" data-i18n="register">Inscription</button>
     </div>
-  </div>  <section id="hero" class="section active justify-center text-center">
-    <div class="container-max">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 w-full max-w-5xl mx-auto">
-        <div class="stat p-5"><p class="text-[10px] uppercase tracking-[0.24em] muted-2">RENDER SUCCESS</p><p class="mt-2 text-[24px] sm:text-[28px] md:text-[34px] font-black gold-text">99.2%</p></div>
-        <div class="stat p-5"><p class="text-[10px] uppercase tracking-[0.24em] muted-2">1080P OUTPUT</p><p class="mt-2 text-[24px] sm:text-[28px] md:text-[34px] font-black gold-text">FULL HD</p></div>
-        <div class="stat p-5"><p class="text-[10px] uppercase tracking-[0.24em] muted-2">AVERAGE SHORTS</p><p class="mt-2 text-[24px] sm:text-[28px] md:text-[34px] font-black gold-text">3 / VIDEO</p></div>
-        <div class="stat p-5"><p class="text-[10px] uppercase tracking-[0.24em] muted-2">STATUT SERVICE</p><p class="mt-2 text-[24px] sm:text-[28px] md:text-[34px] font-black gold-text">ACTIF</p></div>
-      </div>
-      <div class="max-w-6xl mx-auto">
-        <div class="mb-5 text-[11px] font-extrabold uppercase tracking-[0.4em] sm:tracking-[0.55em] muted-2">PLATEFORME PREMIUM</div>
-        <h1 class="text-[40px] sm:text-[52px] md:text-[76px] lg:text-[110px] leading-[0.92] font-black uppercase tracking-[-0.05em]">CASA CLIP <span class="gold-text">Backend Ready</span></h1>
-        <p class="mx-auto mt-7 max-w-4xl text-[15px] sm:text-[16px] md:text-[19px] leading-relaxed muted">Le site a été structuré pour rester propre côté client tout en gardant une base solide pour les connexions, paiements, projets, rendus et support.</p>
-        <div class="hero-cta mt-10 flex flex-wrap items-center justify-center gap-4">
-          <button class="btn-gold px-8 py-4 text-[12px] font-black uppercase tracking-[0.20em]" onclick="App.view('dashboard')">Accéder à l’espace client</button>
-          <button class="btn-ghost px-8 py-4 text-[12px] font-black uppercase tracking-[0.20em]" onclick="App.view('studio')">Tester studio</button>
+  </div>  <main>
+    <section id="home" class="section">
+      <div class="container-max">
+        <div class="hero-grid">
+          <div>
+            <div class="badge mb-4"><span data-i18n="hero_badge">Frontend premium, simple et prêt pour backend</span></div>
+            <h1 class="hero-title font-black uppercase mb-5">
+              <span data-i18n="hero_line_1">Vos vidéos longues en</span><br>
+              <span class="gold-text" data-i18n="hero_line_2">shorts prêts à publier</span>
+            </h1>
+            <p class="max-w-3xl text-[16px] md:text-[18px] leading-8 muted" data-i18n="hero_desc">Importez une vidéo, décrivez le style exact souhaité, choisissez votre identité visuelle, prévisualisez un test avec watermark CASCLIP et laissez le moteur préparer des shorts sous-titrés sans prise de tête.</p>
+            <div class="hero-actions mt-8 flex flex-wrap gap-4">
+              <button class="btn-gold px-8 py-4 text-[12px] font-black uppercase tracking-[0.18em]" onclick="App.view('studio')" data-i18n="cta_try">Tester une vidéo</button>
+              <button class="btn-ghost px-8 py-4 text-[12px] font-black uppercase tracking-[0.18em]" onclick="App.view('pricing')" data-i18n="cta_pricing">Voir les forfaits</button>
+              <button class="btn-ghost px-8 py-4 text-[12px] font-black uppercase tracking-[0.18em]" onclick="App.openAuth('register')" data-i18n="cta_start">Créer un compte</button>
+            </div>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <div class="pill"><span data-i18n="pill_1">Sous-titres dynamiques</span></div>
+              <div class="pill warn"><span data-i18n="pill_2">Conversion devise automatique</span></div>
+              <div class="pill"><span data-i18n="pill_3">Paiements Stripe + PayPal</span></div>
+            </div>
+          </div><div class="panel p-5 md:p-7">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="metric p-5"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2" data-i18n="stat_success">Taux de réussite</p><p class="mt-2 text-[28px] font-black gold-text">99.2%</p></div>
+          <div class="metric p-5"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">1080P</p><p class="mt-2 text-[28px] font-black gold-text">Full HD</p></div>
+          <div class="metric p-5"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2" data-i18n="stat_average">Shorts moyens</p><p class="mt-2 text-[28px] font-black gold-text">3 / vidéo</p></div>
+          <div class="metric p-5"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2" data-i18n="stat_support">Support</p><p class="mt-2 text-[28px] font-black gold-text">7J/7</p></div>
+        </div>
+        <div class="mt-5 card p-5">
+          <div class="text-[14px] font-black uppercase tracking-[0.18em]" data-i18n="promise_title">Promesse produit</div>
+          <p class="mt-3 text-[14px] leading-7 muted" data-i18n="promise_desc">L’interface est pensée pour des clients non techniques : peu d’étapes, champs compréhensibles, estimation avant achat, aide visuelle, FAQ et formulaires courts.</p>
         </div>
       </div>
     </div>
-  </section>  <section id="pricing" class="section">
-    <div class="container-max">
-      <div class="w-full text-center">
-        <div class="text-[11px] uppercase tracking-[0.55em] font-extrabold muted-2">PLANS & QUOTAS</div>
-        <h2 class="mt-4 text-[34px] sm:text-[42px] md:text-[62px] font-black uppercase tracking-[-0.04em]">Tarifs</h2>
-        <p class="mt-4 mx-auto max-w-3xl text-[15px] md:text-[16px] leading-7 muted">Chaque plan possède déjà ses identifiants internes, ses quotas et ses montants prêts pour le backend.</p>
-      </div>
-      <div class="price-modes mt-12 flex justify-center">
-        <div class="glass rounded-full p-1.5 flex flex-wrap justify-center gap-1 border border-white/10 items-center">
-          <button id="m-month" onclick="App.setBilling('monthly')" class="chip active-tab px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em]">Mensuel</button>
-          <button id="m-year" onclick="App.setBilling('yearly')" class="chip px-6 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white">Annuel</button>
-          <div class="chip px-4 py-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#f7dfa0] border-[rgba(212,175,55,.35)] bg-[rgba(212,175,55,.10)]">-25%</div>
-        </div>
-      </div>
-      <div class="mt-14 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-7 w-full">
-        <article class="plan p-8 flex flex-col justify-between" data-plan-code="starter" data-plan-videos="10" data-plan-shorts="30"><div><div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]">PLAN 01</div><h3 class="mt-4 text-[28px] font-black">Starter</h3><div id="pr-1" class="mt-6 text-[42px] md:text-[52px] leading-none font-black tracking-[-0.05em] gold-text">19,99 €</div><p id="lg-1" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">10 vidéos / mois</p></div><button class="btn-ghost mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em]" data-subscribe-plan="starter">Choisir</button></article>
-        <article class="plan p-8 flex flex-col justify-between" data-plan-code="creator" data-plan-videos="25" data-plan-shorts="75"><div><div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]">PLAN 02</div><h3 class="mt-4 text-[28px] font-black">Creator</h3><div id="pr-2" class="mt-6 text-[46px] md:text-[58px] leading-none font-black tracking-[-0.05em] gold-text">39,99 €</div><p id="lg-2" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">25 vidéos / mois</p></div><button class="btn-gold mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em]" data-subscribe-plan="creator">Choisir</button></article>
-        <article class="plan p-8 flex flex-col justify-between" data-plan-code="studio" data-plan-videos="60" data-plan-shorts="180"><div><div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]">PLAN 03</div><h3 class="mt-4 text-[28px] font-black">Studio</h3><div id="pr-3" class="mt-6 text-[42px] md:text-[52px] leading-none font-black tracking-[-0.05em] gold-text">79,99 €</div><p id="lg-3" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">60 vidéos / mois</p></div><button class="btn-ghost mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em]" data-subscribe-plan="studio">Choisir</button></article>
-        <article class="plan p-8 flex flex-col justify-between" data-plan-code="agency" data-plan-videos="140" data-plan-shorts="420"><div><div class="text-[11px] uppercase tracking-[0.36em] font-black text-[#e9ce74]">PLAN 04</div><h3 class="mt-4 text-[28px] font-black">Agency</h3><div id="pr-4" class="mt-6 text-[42px] md:text-[52px] leading-none font-black tracking-[-0.05em] gold-text">149,99 €</div><p id="lg-4" class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold">140 vidéos / mois</p></div><button class="btn-ghost mt-10 w-full py-4 text-[12px] font-black uppercase tracking-[0.18em]" data-subscribe-plan="agency">Choisir</button></article>
-      </div>
-    </div>
-  </section>  <section id="studio" class="section">
-    <div class="container-max">
-      <div class="w-full text-center">
-        <div class="text-[11px] uppercase tracking-[0.55em] font-extrabold muted-2">STUDIO</div>
-        <h2 class="mt-4 text-[34px] sm:text-[42px] md:text-[62px] font-black uppercase tracking-[-0.04em]">Créer des shorts</h2>
-        <p class="mt-4 mx-auto max-w-3xl text-[15px] md:text-[16px] leading-7 muted">Le studio contient déjà les champs, IDs et payloads pour upload signé, création de projet et démarrage de rendu.</p>
-      </div>
-      <div class="mt-12 grid grid-cols-1 xl:grid-cols-[1.05fr_.95fr] gap-8 w-full">
-        <div class="panel p-4 sm:p-6 md:p-8">
-          <form id="project-form" class="grid grid-cols-1 gap-6" data-endpoint="projects" data-method="POST">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div><label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Nom du projet</label><input id="project-name" name="name" class="input-dark" type="text" placeholder="Podcast épisode 07" required /></div>
-              <div><label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">URL source</label><input id="url-studio" name="sourceUrl" class="input-dark" type="url" placeholder="https://..." /></div>
-              <div><label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Template</label><select id="template-mode" name="template" class="select-dark"><option>Impact Gold</option><option>Creator Black</option><option>Minimal White</option><option>Bold Neon</option></select></div>
-              <div><label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Plateforme</label><select id="platform-mode" name="platform" class="select-dark"><option>TikTok</option><option>YouTube Shorts</option><option>Instagram Reels</option><option>Snapchat Spotlight</option></select></div>
-              <div><label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Style sous-titres</label><select id="style-mode" name="subtitleStyle" class="select-dark"><option value="bold">Bold</option><option value="cinema">Cinema</option><option value="creator">Creator</option><option value="clean">Clean</option></select></div>
-              <div><label class="mb-2 block text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">Shorts visés</label><select id="target-shorts" name="targetShorts" class="select-dark"><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select></div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div class="metric p-5"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">PAYLOAD PROJECT</p><p class="mt-2 text-[16px] font-bold">/projects</p></div>
-              <div class="metric p-5"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">PAYLOAD UPLOAD</p><p class="mt-2 text-[16px] font-bold">/uploads/sign</p></div>
-              <div class="metric p-5"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">PAYLOAD RENDER</p><p class="mt-2 text-[16px] font-bold">/renders</p></div>
-            </div>
-            <input type="file" id="video-file" class="hidden" accept="video/mp4,video/quicktime,video/webm" />
-            <div class="flex flex-wrap gap-3">
-              <button type="button" id="btn-pick-video" class="btn-gold px-6 py-4 text-[12px] font-black uppercase">Choisir une vidéo</button>
-              <button type="button" id="btn-build-project-payload" class="btn-ghost px-6 py-4 text-[12px] font-black uppercase">Voir payload projet</button>
-              <button type="button" id="btn-build-render-payload" class="btn-ghost px-6 py-4 text-[12px] font-black uppercase">Voir payload render</button>
-            </div>
-          </form>
-          <div class="mt-6 grid grid-cols-1 xl:grid-cols-2 gap-6">
-            <div class="api-card p-5">
-              <div class="text-[15px] font-black uppercase tracking-[0.18em]">Données projet</div>
-              <pre style="display:none" id="project-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre>
-            </div>
-            <div class="api-card p-5">
-              <div class="text-[15px] font-black uppercase tracking-[0.18em]">Données rendu</div>
-              <pre id="render-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre>
-            </div>
-          </div>
-        </div>
-        <div class="space-y-8">
-          <div class="api-card p-5">
-            <div class="text-[15px] font-black uppercase tracking-[0.18em]">Upload signé attendu</div>
-            <pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">POST /uploads/sign
-{
-  "filename": "episode-07.mp4",
-  "mimeType": "video/mp4",
-  "size": 845663211,
-  "projectName": "Podcast épisode 07"
-}Response { "uploadUrl": "https://storage...signed", "publicUrl": "https://cdn.../episode-07.mp4", "fileKey": "projects/123/source/episode-07.mp4", "expiresAt": "2026-03-16T12:00:00Z" }</pre> </div> <div class="api-card p-5"> <div class="text-[15px] font-black uppercase tracking-[0.18em]">Queue render attendue</div> <div id="queue-list" class="mt-4 space-y-4"></div> </div> </div> </div> </div>
 
-  </section>  <section id="dashboard" class="section">
-    <div class="container-max">
-      <div class="w-full text-center">
-        <div class="text-[11px] uppercase tracking-[0.55em] font-extrabold muted-2">ESPACE CLIENT</div>
-        <h2 class="mt-4 text-[34px] sm:text-[42px] md:text-[62px] font-black uppercase tracking-[-0.04em]">Tableau de gestion</h2>
-        <p class="mt-4 mx-auto max-w-3xl text-[15px] md:text-[16px] leading-7 muted">Tout ce qui suit sert à faciliter le backend : endpoints, objets, schémas, formulaires, sécurité, paiements, auth et contrats d’API.</p>
+    <div class="features-grid mt-10">
+      <div class="feature p-6">
+        <div class="text-[13px] font-black uppercase tracking-[0.18em]" data-i18n="feature_1_title">Import simplifié</div>
+        <p class="mt-3 text-[14px] leading-7 muted" data-i18n="feature_1_desc">Ajout de liens, fichiers personnels et formats vidéo variés. L’utilisateur choisit sa source et avance sans jargon.</p>
       </div>
-      <div class="mt-12 grid grid-cols-1 xl:grid-cols-[260px_1fr] gap-8 w-full">
-        <aside class="panel p-4 h-fit">
-          <div class="sidebar-tabs flex flex-col gap-3">
-            <button class="side-tab active rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('overview',this)">Vue d’ensemble</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('auth',this)">Compte</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('billing',this)">Paiements</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('projects',this)">Mes projets</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('renders',this)">Traitements</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('support',this)">Support</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('security',this)">Sécurité</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('api',this)">Configuration</button>
-            <button class="side-tab rounded-[18px] px-4 py-4 text-left font-bold text-[14px]" onclick="App.switchDash('state',this)">Système</button>
+      <div class="feature p-6">
+        <div class="text-[13px] font-black uppercase tracking-[0.18em]" data-i18n="feature_2_title">Instructions libres</div>
+        <p class="mt-3 text-[14px] leading-7 muted" data-i18n="feature_2_desc">Le client explique le style voulu comme il parlerait à un assistant : rythme, ton, sous-titres, hook, CTA, branding.</p>
+      </div>
+      <div class="feature p-6">
+        <div class="text-[13px] font-black uppercase tracking-[0.18em]" data-i18n="feature_3_title">Paiement clair</div>
+        <p class="mt-3 text-[14px] leading-7 muted" data-i18n="feature_3_desc">Plans lisibles, conversions marketing cohérentes et méthodes de paiement affichées selon Stripe et PayPal.</p>
+      </div>
+      <div class="feature p-6">
+        <div class="text-[13px] font-black uppercase tracking-[0.18em]" data-i18n="feature_4_title">Sécurité forte</div>
+        <p class="mt-3 text-[14px] leading-7 muted" data-i18n="feature_4_desc">Architecture frontend prête pour cookies sécurisés, CSRF, contrôle d’accès, logs d’audit et suppression des données.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="section" hidden>
+  <div class="container-max">
+    <div class="text-center max-w-4xl mx-auto">
+      <div class="text-[11px] uppercase tracking-[0.44em] font-extrabold muted-2" data-i18n="pricing_badge">Forfaits & quotas</div>
+      <h2 class="mt-4 text-[36px] md:text-[62px] font-black uppercase tracking-[-.04em]" data-i18n="pricing_title">Tarifs simples</h2>
+      <p class="mt-4 text-[15px] md:text-[17px] leading-8 muted" data-i18n="pricing_desc">Tous les plans affichent des prix psychologiques, une conversion devise cohérente et une structure facile à comprendre. Les montants sont présentés côté client, la facturation réelle doit être validée par le backend.</p>
+      <div class="mt-8 pricing-switch">
+        <button id="billing-month" class="chip active-chip px-5 py-3 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.setBilling('monthly')" data-i18n="monthly">Mensuel</button>
+        <button id="billing-year" class="chip px-5 py-3 text-[11px] font-black uppercase tracking-[0.16em]" onclick="App.setBilling('yearly')" data-i18n="yearly">Annuel</button>
+        <div class="chip px-4 py-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#8a6210] border-[rgba(199,156,43,.28)] bg-[rgba(199,156,43,.08)]">-25%</div>
+      </div>
+    </div>
+
+    <div class="pricing-grid mt-12">
+      <article class="plan p-7 flex flex-col justify-between" data-plan="starter">
+        <div>
+          <div class="text-[11px] uppercase tracking-[0.32em] font-black text-[#9a7318]">PLAN 01</div>
+          <h3 class="mt-4 text-[28px] font-black">Starter</h3>
+          <div id="price-starter" class="price mt-6 gold-text">19,99 €</div>
+          <p class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold" id="label-starter">10 vidéos / mois</p>
+          <div class="mt-7 space-y-4 text-[14px] leading-7">
+            <p data-i18n="starter_1">✓ 10 vidéos source / mois</p>
+            <p data-i18n="starter_2">✓ Jusqu’à 30 shorts / mois</p>
+            <p data-i18n="starter_3">✓ Test watermark CASCLIP</p>
+            <p data-i18n="starter_4">✓ Sous-titres standards</p>
+            <p data-i18n="starter_5">✓ Support email</p>
           </div>
-        </aside>
-        <div class="min-w-0">
-          <div id="dash-overview" class="dash-view">
-            <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-5">
-              <div class="metric p-6"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">AUTH STRATEGY</p><p class="mt-2 text-[22px] font-black gold-text">COOKIE</p></div>
-              <div class="metric p-6"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">BILLING</p><p class="mt-2 text-[22px] font-black">STRIPE READY</p></div>
-              <div class="metric p-6"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">UPLOAD</p><p class="mt-2 text-[22px] font-black">SIGNED URL</p></div>
-              <div class="metric p-6"><p class="text-[11px] uppercase tracking-[0.18em] font-extrabold muted-2">RENDER ENGINE</p><p class="mt-2 text-[22px] font-black">RENDERLY</p></div>
-            </div>
-            <div class="mt-7 grid grid-cols-1 xl:grid-cols-2 gap-6">
-              <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Routes minimales</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">POST /auth/register
-POST /auth/login
-POST /auth/logout
-GET  /auth/me
-POST /billing/create-checkout
-POST /billing/webhook/stripe
-GET  /billing/invoices
-POST /uploads/sign
-POST /projects
-GET  /projects
-POST /renders
-GET  /renders/:id
-POST /tickets
-GET  /usage
-GET  /health</pre></div>
-              <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Tables backend minimales</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">users
-sessions
-subscriptions
-plans
-projects
-project_assets
-renders
-render_outputs
-usage_monthly
-tickets
-invoices
-audit_logs
-webhook_events</pre></div>
-            </div>
-          </div><div id="dash-auth" class="dash-view hidden">
-        <div class="grid grid-cols-1 xl:grid-cols-[.95fr_1.05fr] gap-6">
-          <div class="api-card p-5">
-            <div class="text-[15px] font-black uppercase tracking-[0.18em]">Formulaire auth</div>
-            <form id="auth-form" class="mt-4 grid grid-cols-1 gap-4" data-endpoint="auth/login" data-method="POST">
-              <select id="auth-mode" class="select-dark"><option value="login">Login</option><option value="register">Register</option></select>
-              <input id="auth-name" class="input-dark" placeholder="Nom complet" />
-              <input id="auth-email" class="input-dark" type="email" placeholder="email@casaclip.io" />
-              <input id="auth-password" class="input-dark" type="password" placeholder="Mot de passe" />
-              <div class="flex flex-wrap gap-3"><button type="button" id="btn-build-auth-payload" class="btn-gold px-6 py-4 text-[12px] font-black uppercase">Voir payload auth</button><button type="button" class="btn-ghost px-6 py-4 text-[12px] font-black uppercase">Brancher backend</button></div>
-            </form>
+        </div>
+        <button class="btn-ghost mt-9 py-4 text-[12px] font-black uppercase tracking-[0.18em]" onclick="App.selectPlan('starter')" data-i18n="choose_plan">Choisir</button>
+      </article>
+
+      <article class="plan p-7 flex flex-col justify-between border-[rgba(199,156,43,.3)] shadow-[0_18px_60px_rgba(199,156,43,.14)]" data-plan="creator">
+        <div>
+          <div class="flex items-center justify-between gap-3">
+            <div class="text-[11px] uppercase tracking-[0.32em] font-black text-[#9a7318]">PLAN 02</div>
+            <div class="badge !py-2 !px-3" data-i18n="most_popular">Le plus choisi</div>
           </div>
-          <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Données connexion</div><pre id="auth-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre><div class="mt-5 status-pill warn"><span class="dot warn"></span><span>Prévu pour cookie httpOnly + CSRF header</span></div></div>
+          <h3 class="mt-4 text-[28px] font-black">Creator</h3>
+          <div id="price-creator" class="price mt-6 gold-text">39,99 €</div>
+          <p class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold" id="label-creator">25 vidéos / mois</p>
+          <div class="mt-7 space-y-4 text-[14px] leading-7">
+            <p data-i18n="creator_1">✓ 25 vidéos source / mois</p>
+            <p data-i18n="creator_2">✓ Jusqu’à 75 shorts / mois</p>
+            <p data-i18n="creator_3">✓ Sous-titres dynamiques premium</p>
+            <p data-i18n="creator_4">✓ Brand kit simple</p>
+            <p data-i18n="creator_5">✓ Support prioritaire léger</p>
+          </div>
+        </div>
+        <button class="btn-gold mt-9 py-4 text-[12px] font-black uppercase tracking-[0.18em]" onclick="App.selectPlan('creator')" data-i18n="choose_plan">Choisir</button>
+      </article>
+
+      <article class="plan p-7 flex flex-col justify-between" data-plan="studio">
+        <div>
+          <div class="text-[11px] uppercase tracking-[0.32em] font-black text-[#9a7318]">PLAN 03</div>
+          <h3 class="mt-4 text-[28px] font-black">Studio</h3>
+          <div id="price-studio" class="price mt-6 gold-text">79,99 €</div>
+          <p class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold" id="label-studio">60 vidéos / mois</p>
+          <div class="mt-7 space-y-4 text-[14px] leading-7">
+            <p data-i18n="studio_1">✓ 60 vidéos source / mois</p>
+            <p data-i18n="studio_2">✓ Jusqu’à 180 shorts / mois</p>
+            <p data-i18n="studio_3">✓ Multi-projets</p>
+            <p data-i18n="studio_4">✓ Exports batch</p>
+            <p data-i18n="studio_5">✓ SAV prioritaire</p>
+          </div>
+        </div>
+        <button class="btn-ghost mt-9 py-4 text-[12px] font-black uppercase tracking-[0.18em]" onclick="App.selectPlan('studio')" data-i18n="choose_plan">Choisir</button>
+      </article>
+
+      <article class="plan p-7 flex flex-col justify-between" data-plan="agency">
+        <div>
+          <div class="text-[11px] uppercase tracking-[0.32em] font-black text-[#9a7318]">PLAN 04</div>
+          <h3 class="mt-4 text-[28px] font-black">Agency</h3>
+          <div id="price-agency" class="price mt-6 gold-text">149,99 €</div>
+          <p class="mt-3 text-[11px] uppercase tracking-[0.18em] muted-2 font-extrabold" id="label-agency">140 vidéos / mois</p>
+          <div class="mt-7 space-y-4 text-[14px] leading-7">
+            <p data-i18n="agency_1">✓ 140 vidéos source / mois</p>
+            <p data-i18n="agency_2">✓ Jusqu’à 420 shorts / mois</p>
+            <p data-i18n="agency_3">✓ Multi-brand</p>
+            <p data-i18n="agency_4">✓ Équipe & droits</p>
+            <p data-i18n="agency_5">✓ Support prioritaire dédié</p>
+          </div>
+        </div>
+        <button class="btn-ghost mt-9 py-4 text-[12px] font-black uppercase tracking-[0.18em]" onclick="App.selectPlan('agency')" data-i18n="choose_plan">Choisir</button>
+      </article>
+    </div>
+
+    <div class="contact-grid mt-12">
+      <div class="panel p-7">
+        <div class="text-[24px] font-black" data-i18n="payment_title">Méthodes de paiement affichées</div>
+        <p class="mt-3 text-[14px] leading-7 muted" data-i18n="payment_desc">Le frontend affiche les méthodes généralement disponibles via Stripe et PayPal. Leur disponibilité réelle dépend du pays, de la devise, du compte marchand et de la configuration backend.</p>
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="method p-4"><div class="font-black">Stripe</div><p class="mt-2 text-[14px] muted">Cards • Apple Pay • Google Pay • SEPA Debit • Bancontact • iDEAL • Klarna / BNPL selon pays • wallets locaux</p></div>
+          <div class="method p-4"><div class="font-black">PayPal</div><p class="mt-2 text-[14px] muted">PayPal • Pay Later • Venmo (US) • cartes • Apple Pay • iDEAL • Bancontact • BLIK • EPS selon pays</p></div>
         </div>
       </div>
+      <div class="panel p-7">
+        <div class="text-[24px] font-black" data-i18n="checkout_preview_title">Prévisualisation checkout</div>
+        <p class="mt-3 text-[14px] leading-7 muted" data-i18n="checkout_preview_desc">Sélectionnez un plan, la devise et la fréquence. Le frontend prépare un payload propre pour un checkout réel côté serveur.</p>
+        <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <input id="billing-name" class="input" placeholder="Nom complet" />
+          <input id="billing-email" class="input" type="email" placeholder="email@exemple.com" />
+          <select id="checkout-plan" class="select">
+            <option value="starter">Starter</option><option value="creator" selected>Creator</option><option value="studio">Studio</option><option value="agency">Agency</option>
+          </select>
+          <select id="checkout-gateway" class="select">
+            <option value="stripe">Stripe</option><option value="paypal">PayPal</option>
+          </select>
+        </div>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <button class="btn-gold px-6 py-4 text-[12px] font-black uppercase" onclick="App.showCheckoutPayload()" data-i18n="build_checkout">Voir le payload</button>
+          <button class="btn-ghost px-6 py-4 text-[12px] font-black uppercase" onclick="App.notify(App.t('checkout_notice'))" data-i18n="open_checkout">Ouvrir checkout</button>
+        </div>
+        <pre id="checkout-payload" class="mt-5 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-[rgba(29,23,16,.05)] border border-[rgba(75,58,29,.10)] p-4">{}</pre>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <div id="dash-billing" class="dash-view hidden">
-        <div class="grid grid-cols-1 xl:grid-cols-[1fr_1fr] gap-6">
-          <div class="api-card p-5">
-            <div class="text-[15px] font-black uppercase tracking-[0.18em]">Checkout</div>
-            <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button class="pay-method active" data-gateway="stripe">Stripe</button>
-              <button class="pay-method" data-gateway="paypal">PayPal</button>
-              <button class="pay-method" data-gateway="wallet">Wallet</button>
+<section id="studio" class="section" hidden>
+  <div class="container-max">
+    <div class="text-center max-w-4xl mx-auto">
+      <div class="text-[11px] uppercase tracking-[0.44em] font-extrabold muted-2" data-i18n="studio_badge">Studio vidéo</div>
+      <h2 class="mt-4 text-[36px] md:text-[62px] font-black uppercase tracking-[-.04em]" data-i18n="studio_title">Créer des shorts sans se compliquer la vie</h2>
+      <p class="mt-4 text-[15px] md:text-[17px] leading-8 muted" data-i18n="studio_desc">Le client importe sa vidéo, décrit ce qu’il veut exactement, voit une prévisualisation avec logo CASCLIP, puis configure en quelques champs le rendu final attendu.</p>
+    </div>
+
+    <div class="studio-grid mt-12">
+      <div class="panel p-6 md:p-8">
+        <div class="grid grid-cols-1 gap-5">
+          <div class="input-card p-5">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <div class="text-[18px] font-black" data-i18n="upload_title">Importer une source</div>
+                <p class="mt-2 text-[14px] leading-7 muted" data-i18n="upload_desc">Choisissez une vidéo locale, un lien externe ou gardez un brouillon de brief. Le navigateur prévisualise surtout les formats compatibles, mais le formulaire peut accepter tout type de vidéo pour l’envoi backend.</p>
+              </div>
+              <button id="pick-video" class="btn-gold px-6 py-3 text-[12px] font-black uppercase" data-i18n="choose_video">Choisir une vidéo</button>
             </div>
+            <input id="video-file" type="file" class="hidden" accept="video/*,.mp4,.mov,.webm,.mkv,.avi,.m4v,.mpeg,.mpg" />
             <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input id="billing-name" class="input-dark" placeholder="Nom affiché" />
-              <input id="billing-email" class="input-dark" type="email" placeholder="Email de facturation" />
-              <select id="checkout-plan" class="select-dark"><option value="starter">Starter</option><option value="creator" selected>Creator</option><option value="studio">Studio</option><option value="agency">Agency</option></select>
-              <select id="checkout-billing" class="select-dark"><option value="monthly">Mensuel</option><option value="yearly">Annuel</option></select>
+              <input id="project-name" class="input" placeholder="Nom du projet" />
+              <input id="source-url" class="input" placeholder="Lien vidéo optionnel" />
+              <select id="platform" class="select">
+                <option>TikTok</option><option>YouTube Shorts</option><option>Instagram Reels</option><option>Snapchat Spotlight</option>
+              </select>
+              <select id="template" class="select">
+                <option>Impact Gold</option><option>Creator Clean</option><option>Luxury Minimal</option><option>Bold Viral</option>
+              </select>
+              <select id="subtitle-style" class="select">
+                <option value="dynamic">Sous-titres dynamiques</option>
+                <option value="karaoke">Mot par mot</option>
+                <option value="clean">Propres / minimalistes</option>
+                <option value="big-hook">Hook très visible</option>
+              </select>
+              <select id="target-shorts" class="select">
+                <option value="2">2 shorts</option><option value="3" selected>3 shorts</option><option value="4">4 shorts</option><option value="5">5 shorts</option>
+              </select>
             </div>
-            <div class="mt-5 flex flex-wrap gap-3"><button type="button" id="btn-build-checkout-payload" class="btn-gold px-6 py-4 text-[12px] font-black uppercase">Voir payload checkout</button><button type="button" class="btn-ghost px-6 py-4 text-[12px] font-black uppercase">Créer checkout</button></div>
           </div>
-          <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Données paiement</div><pre id="checkout-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre></div>
+
+          <div class="input-card p-5">
+            <div class="text-[18px] font-black" data-i18n="brief_title">Décrivez exactement le short que vous voulez</div>
+            <p class="mt-2 text-[14px] leading-7 muted" data-i18n="brief_desc">Le client peut écrire librement : ambiance, ton, style de coupe, placement des sous-titres, vitesse, hook, CTA, emojis, couleurs, zooms, moments clés, langue, type d’audience.</p>
+            <textarea id="creative-brief" class="textarea mt-4" placeholder="Exemple : je veux un short très rythmé, hook fort dès 2 secondes, sous-titres jaunes en gros, zoom léger sur les moments forts, CTA final, ton premium et sérieux."></textarea>
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input id="brand-name" class="input" placeholder="Nom de marque / logo texte" />
+              <input id="brand-color" class="input" placeholder="Couleur dominante ex: #C79C2B" />
+              <input id="cta-text" class="input" placeholder="Texte de CTA final" />
+              <select id="caption-language" class="select">
+                <option>Français</option><option>English</option><option>Español</option><option>العربية</option><option>Deutsch</option><option>Português</option>
+              </select>
+            </div>
+            <div class="mt-5 flex flex-wrap gap-3">
+              <button class="btn-gold px-6 py-4 text-[12px] font-black uppercase" onclick="App.generateProjectPayload()" data-i18n="show_project_payload">Voir le payload projet</button>
+              <button class="btn-ghost px-6 py-4 text-[12px] font-black uppercase" onclick="App.generateRenderPayload()" data-i18n="show_render_payload">Voir le payload render</button>
+              <button class="btn-ghost px-6 py-4 text-[12px] font-black uppercase" onclick="App.resetStudio()" data-i18n="reset">Réinitialiser</button>
+            </div>
+          </div>
+
+          <div class="contact-grid">
+            <div class="card p-5">
+              <div class="text-[15px] font-black uppercase tracking-[0.18em]" data-i18n="project_payload">Payload projet</div>
+              <pre id="project-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-[rgba(29,23,16,.05)] border border-[rgba(75,58,29,.10)] p-4">{}</pre>
+            </div>
+            <div class="card p-5">
+              <div class="text-[15px] font-black uppercase tracking-[0.18em]" data-i18n="render_payload">Payload rendu</div>
+              <pre id="render-payload" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-[rgba(29,23,16,.05)] border border-[rgba(75,58,29,.10)] p-4">{}</pre>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div id="dash-projects" class="dash-view hidden">
-        <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">DTO Project</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">type CreateProjectDto = {
+      <div class="space-y-6">
+        <div class="video-stage">
+          <video id="video-preview" controls playsinline preload="metadata"></video>
+          <div id="video-placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+            <div class="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-black border border-[rgba(199,156,43,.28)] bg-[rgba(199,156,43,.10)] text-[#f3d993]">▶</div>
+            <div class="mt-5 text-[18px] font-black text-white" data-i18n="preview_title">Prévisualisation de test</div>
+            <p class="mt-3 max-w-md text-[14px] leading-7 text-white/78" data-i18n="preview_desc">Chargez une vidéo pour voir un test visuel avec watermark CASCLIP. L’export final sera géré par le backend.</p>
+          </div>
+          <div class="watermark">CASCLIP</div>
+        </div>
 
-name: string; sourceUrl?: string; sourceFileKey?: string; platform: 'TikTok' | 'YouTube Shorts' | 'Instagram Reels' | 'Snapchat Spotlight'; template: string; subtitleStyle: 'bold' | 'cinema' | 'creator' | 'clean'; targetShorts: number; resolution: '1080p'; };</pre></div> </div>
-
-<div id="dash-renders" class="dash-view hidden">
-        <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">DTO Render</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">type CreateRenderDto = {
-
-projectId: string; provider: 'renderly'; targetShorts: number; subtitleStyle: string; platform: string; template: string; outputResolution: '1080p'; watermarkPreview: boolean; };</pre></div> </div>
-
-<div id="dash-support" class="dash-view hidden">
-        <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">DTO Ticket</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">type CreateTicketDto = {
-
-name: string; email: string; subject?: string; message: string; projectId?: string; renderId?: string; category?: 'billing' | 'render' | 'technical' | 'account'; };</pre></div> </div>
-
-<div id="dash-security" class="dash-view hidden">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Checklist sécurité backend</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">- Cookies httpOnly Secure SameSite=Lax/Strict
-
-CSRF token sur mutations
-
-Rate limiting auth + webhooks + uploads
-
-Validation Zod/Joi de tous les DTO
-
-Vérification webhook Stripe signature
-
-Idempotency key sur checkout
-
-URL signées courtes pour upload
-
-Contrôle MIME et taille serveur
-
-RBAC admin / client / support
-
-Audit logs pour billing et auth</pre></div> <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">En-têtes frontend préparés</div><pre class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">X-CSRF-Token X-Request-Id X-Client-Version Authorization: Bearer ... (si nécessaire) Idempotency-Key X-Timezone X-Locale X-Devise</pre></div> </div> </div>
-
-<div id="dash-api" class="dash-view hidden">
-      <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">Configuration interne</div><pre id="api-map" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre></div>
-    </div>
-
-    <div id="dash-state" class="dash-view hidden">
-      <div class="api-card p-5"><div class="text-[15px] font-black uppercase tracking-[0.18em]">State frontend prêt pour backend</div><pre id="frontend-state" class="mt-4 text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-black/30 border border-white/10 p-4">{}</pre></div>
+        <div class="panel p-6">
+          <div class="flex items-center justify-between gap-4 flex-wrap">
+            <div>
+              <div class="text-[20px] font-black" data-i18n="queue_title">File de traitement</div>
+              <p class="mt-2 text-[14px] leading-7 muted" data-i18n="queue_desc">Simulation frontend de jobs de rendu, statuts et progression.</p>
+            </div>
+            <div class="pill warn"><span data-i18n="queue_hint">Rendu réel à brancher côté serveur</span></div>
+          </div>
+          <div id="queue-list" class="mt-5 space-y-4"></div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-  </div>
-</section><footer class="mt-10 border-t border-white/5 bg-black/40 backdrop-blur px-[5%] py-10">
-  <div class="container-max flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-    <div><div class="text-[24px] font-black uppercase tracking-[0.18em] gold-text">CASA CLIP</div><p class="mt-3 text-[13px] leading-7 muted max-w-xl">Frontend HTML structuré pour simplifier un backend propre, sécurisé et maintenable.</p></div>
-    <div class="footer-links flex flex-wrap items-center gap-6 text-[11px] font-extrabold uppercase tracking-[0.18em] muted"><a href="#" class="hover:text-[#f4df97] transition">Conditions</a><a href="#" class="hover:text-[#f4df97] transition">Confidentialité</a><a href="#" class="hover:text-[#f4df97] transition">Infrastructure</a><a href="#" class="hover:text-[#f4df97] transition">Support</a></div>
-  </div>
-</footer><button id="bot-launcher" class="bot-launcher" aria-label="Open support bot">BOT</button>
+<section id="about" class="section" hidden>
+  <div class="container-max">
+    <div class="text-center max-w-4xl mx-auto">
+      <div class="text-[11px] uppercase tracking-[0.44em] font-extrabold muted-2" data-i18n="about_badge">Qui sommes-nous</div>
+      <h2 class="mt-4 text-[36px] md:text-[62px] font-black uppercase tracking-[-.04em]" data-i18n="about_title">Une interface pensée pour vendre simplement</h2>
+      <p class="mt-4 text-[15px] md:text-[17px] leading-8 muted" data-i18n="about_desc">CASCLIP est présenté comme un studio de génération de shorts orienté clarté commerciale : moins d’écrans, moins de jargon, plus de résultats concrets et un parcours client rassurant.</p>
+    </div>
+    <div class="about-grid mt-12">
+      <div class="panel p-7">
+        <div class="text-[24px] font-black" data-i18n="mission_title">Mission</div>
+        <p class="mt-4 text-[15px] leading-8 muted" data-i18n="mission_desc">Donner à des créateurs, indépendants, marques et agences un moyen simple de transformer leurs contenus longs en shorts propres, sous-titrés, brandés et prêts à publier.</p>
+        <div class="mt-6 space-y-4 text-[14px] leading-7">
+          <p data-i18n="mission_1">• Interface claire et rassurante</p>
+          <p data-i18n="mission_2">• Paramètres compréhensibles sans expertise vidéo</p>
+          <p data-i18n="mission_3">• Positionnement premium mais simple</p>
+        </div>
+      </div>
+      <div class="panel p-7">
+        <div class="text-[24px] font-black" data-i18n="why_title">Pourquoi ce frontend</div>
+        <p class="mt-4 text-[15px] leading-8 muted" data-i18n="why_desc">Le frontend regroupe déjà bandeau, landing, tarifs, tests vidéo, paiements, formulaires, SAV, contact, CGU, sécurité, footer et sections de confiance. Il reste à brancher un backend robuste.</p>
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="card p-4"><div class="font-black" data-i18n="why_box_1_title">Prêt SaaS</div><p class="mt-2 text-[14px] muted" data-i18n="why_box_1_desc">Flux commerciaux déjà visibles.</p></div>
+          <div class="card p-4"><div class="font-black" data-i18n="why_box_2_title">Prêt support</div><p class="mt-2 text-[14px] muted" data-i18n="why_box_2_desc">Formulaires courts et FAQ.</p></div>
+          <div class="card p-4"><div class="font-black" data-i18n="why_box_3_title">Prêt paiement</div><p class="mt-2 text-[14px] muted" data-i18n="why_box_3_desc">Stripe / PayPal affichés.</p></div>
+          <div class="card p-4"><div class="font-black" data-i18n="why_box_4_title">Prêt international</div><p class="mt-2 text-[14px] muted" data-i18n="why_box_4_desc">6 langues et devises.</p></div>
+        </div>
+      </div>
+    </div>
 
-<div id="bot-panel" class="bot-panel">
-  <div class="bot-head"><div class="flex items-center justify-between gap-3"><div class="min-w-0"><div class="text-[15px] font-black uppercase tracking-[0.18em]">CASA CLIP BOT</div><div class="mt-1 text-[12px] muted">Assistance automatique, support et FAQ</div></div><button id="bot-close" class="btn-ghost px-4 py-2 text-[10px] font-black uppercase tracking-[0.18em]">Fermer</button></div></div>
-  <div id="bot-messages" class="bot-messages"></div>
-  <div class="bot-quick"><button class="bot-chip">Tarifs</button><button class="bot-chip">Quota</button><button class="bot-chip">Paiement</button><button class="bot-chip">Ticket</button><button class="bot-chip">Sécurité</button></div>
-  <div class="bot-foot"><input id="bot-input" class="input-dark" type="text" placeholder="Posez votre question..." /><button id="bot-send" class="btn-gold px-5 py-3 text-[11px] font-black uppercase tracking-[0.18em]">Envoyer</button></div>
-</div><script>
-  const App = {
-    state:{ lang:'fr', currency:'EUR', billing:'monthly', spots:42, gateway:'stripe' },
-    plans:{ starter:{monthly:19.99,yearly:14.99,videos:10,shorts:30}, creator:{monthly:39.99,yearly:29.99,videos:25,shorts:75}, studio:{monthly:79.99,yearly:59.99,videos:60,shorts:180}, agency:{monthly:149.99,yearly:119.99,videos:140,shorts:420} },
-    currencyConfig:{ EUR:{rate:1,locale:'fr-FR',symbol:'€',position:'after',space:true}, USD:{rate:1.08,locale:'en-US',symbol:'$',position:'before',space:false}, GBP:{rate:0.86,locale:'en-GB',symbol:'£',position:'before',space:false}, MAD:{rate:10.86,locale:'fr-MA',symbol:'د.م.',position:'after',space:true}, SAR:{rate:4.05,locale:'ar-SA',symbol:'ر.س',position:'after',space:true}, AED:{rate:3.97,locale:'ar-AE',symbol:'د.إ',position:'after',space:true} },
-    q(id){ return document.getElementById(id); },
-    safeText(id,value){ const el=this.q(id); if(el) el.textContent=String(value); },
-    showToast(msg){ const t=this.q('toast'); if(!t) return; t.hidden=false; t.textContent=msg; t.classList.add('show'); clearTimeout(this.toastTimer); this.toastTimer=setTimeout(()=>{t.classList.remove('show'); setTimeout(()=>t.hidden=true,250);},2200); },
-    readConfig(){ try{ return JSON.parse(this.q('app-config').textContent); } catch { return {}; } },
-    formatConverted99(baseEuro){ const cfg=this.currencyConfig[this.state.currency]; const raw=baseEuro*cfg.rate; const value=Math.floor(raw)+0.99; const number=new Intl.NumberFormat(cfg.locale,{minimumFractionDigits:2,maximumFractionDigits:2}).format(value); const space=cfg.space?' ':''; return cfg.position==='before'?`${cfg.symbol}${space}${number}`:`${number}${space}${cfg.symbol}`; },
-    setBilling(mode){ this.state.billing=mode; this.q('m-month')?.classList.toggle('active-tab',mode==='monthly'); this.q('m-year')?.classList.toggle('active-tab',mode==='yearly'); this.renderPrices(); },
-    renderPrices(){ ['starter','creator','studio','agency'].forEach((k,i)=>this.safeText(`pr-${i+1}`,this.formatConverted99(this.plans[k][this.state.billing]))); this.safeText('lg-1',`${this.plans.starter.videos} vidéos / mois`); this.safeText('lg-2',`${this.plans.creator.videos} vidéos / mois`); this.safeText('lg-3',`${this.plans.studio.videos} vidéos / mois`); this.safeText('lg-4',`${this.plans.agency.videos} vidéos / mois`); },
-    buildProjectPayload(){ return { name:this.q('project-name')?.value?.trim()||'', sourceUrl:this.q('url-studio')?.value?.trim()||null, template:this.q('template-mode')?.value||'Impact Gold', platform:this.q('platform-mode')?.value||'TikTok', subtitleStyle:this.q('style-mode')?.value||'bold', targetShorts:Number(this.q('target-shorts')?.value||3), resolution:'1080p' }; },
-    buildRenderPayload(){ return { projectId:'project_uuid_here', provider:'renderly', targetShorts:Number(this.q('target-shorts')?.value||3), subtitleStyle:this.q('style-mode')?.value||'bold', platform:this.q('platform-mode')?.value||'TikTok', template:this.q('template-mode')?.value||'Impact Gold', outputResolution:'1080p', watermarkPreview:true }; },
-    buildAuthPayload(){ const mode=this.q('auth-mode')?.value||'login'; return mode==='register'?{ name:this.q('auth-name')?.value?.trim()||'', email:this.q('auth-email')?.value?.trim()||'', password:'********' }:{ email:this.q('auth-email')?.value?.trim()||'', password:'********' }; },
-    buildCheckoutPayload(){ return { customerName:this.q('billing-name')?.value?.trim()||'', customerEmail:this.q('billing-email')?.value?.trim()||'', plan:this.q('checkout-plan')?.value||'creator', billingCycle:this.q('checkout-billing')?.value||'monthly', currency:this.state.currency, locale:this.state.lang, gateway:this.state.gateway, successUrl:'/billing/success', cancelUrl:'/billing/cancel', idempotencyKey:'generated_on_backend' }; },
-    refreshPayloadViews(){ this.safeText('project-payload', JSON.stringify(this.buildProjectPayload(),null,2)); this.safeText('render-payload', JSON.stringify(this.buildRenderPayload(),null,2)); this.safeText('auth-payload', JSON.stringify(this.buildAuthPayload(),null,2)); this.safeText('checkout-payload', JSON.stringify(this.buildCheckoutPayload(),null,2)); this.safeText('api-map', JSON.stringify(this.readConfig().routes||{},null,2)); this.safeText('frontend-state', JSON.stringify({ auth:{user:null,isAuthenticated:false}, billing:{gateway:this.state.gateway,currency:this.state.currency,billingCycle:this.state.billing}, projects:{draft:this.buildProjectPayload()}, renders:{draft:this.buildRenderPayload()}, ui:{lang:this.state.lang} },null,2)); },
-    switchDash(view,btn=null){ document.querySelectorAll('.dash-view').forEach(v=>v.classList.add('hidden')); this.q(`dash-${view}`)?.classList.remove('hidden'); document.querySelectorAll('.side-tab').forEach(b=>b.classList.remove('active')); if(btn) btn.classList.add('active'); },
-    openDrawer(){ this.q('drawer')?.classList.add('open'); document.body.style.overflow='hidden'; },
-    closeDrawer(){ this.q('drawer')?.classList.remove('open'); document.body.style.overflow=''; },
-    view(id){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); this.q(id)?.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); this.closeDrawer(); },
-    viewAndClose(id){ this.view(id); },
-    addQueueMock(){ const list=this.q('queue-list'); if(!list) return; const node=document.createElement('div'); node.className='queue-item p-5'; node.innerHTML=`<div class="flex items-center justify-between gap-4"><div class="font-black">render_${Date.now()}</div><div class="status-pill warn"><span class="dot warn"></span><span>Queued</span></div></div><p class="mt-3 text-[14px] muted">POST /renders • provider renderly • status pending</p><div class="mt-4 progress"><div style="width:18%"></div></div>`; list.prepend(node); },
-    bindActions(){ this.q('btn-pick-video')?.addEventListener('click',()=>this.q('video-file')?.click()); this.q('btn-build-project-payload')?.addEventListener('click',()=>{ this.refreshPayloadViews(); this.showToast('Payload projet généré'); }); this.q('btn-build-render-payload')?.addEventListener('click',()=>{ this.refreshPayloadViews(); this.addQueueMock(); this.showToast('Payload render généré'); }); this.q('btn-build-auth-payload')?.addEventListener('click',()=>{ this.refreshPayloadViews(); this.showToast('Payload auth généré'); }); this.q('btn-build-checkout-payload')?.addEventListener('click',()=>{ this.refreshPayloadViews(); this.showToast('Payload checkout généré'); }); document.querySelectorAll('[data-subscribe-plan]').forEach(btn=>btn.addEventListener('click',()=>{ const plan=btn.getAttribute('data-subscribe-plan'); if(this.q('checkout-plan')) this.q('checkout-plan').value=plan; this.view('dashboard'); this.switchDash('billing',document.querySelectorAll('.side-tab')[2]); this.refreshPayloadViews(); })); document.querySelectorAll('.pay-method').forEach(btn=>btn.addEventListener('click',()=>{ document.querySelectorAll('.pay-method').forEach(x=>x.classList.remove('active')); btn.classList.add('active'); this.state.gateway=btn.dataset.gateway; this.refreshPayloadViews(); })); this.q('auth-mode')?.addEventListener('change',()=>this.refreshPayloadViews()); ['auth-name','auth-email','auth-password','billing-name','billing-email','checkout-plan','checkout-billing','project-name','url-studio','template-mode','platform-mode','style-mode','target-shorts','lang','currency','lang-mobile','currency-mobile'].forEach(id=>this.q(id)?.addEventListener('input',()=>this.refreshPayloadViews())); this.q('lang')?.addEventListener('change',e=>{ this.state.lang=e.target.value; if(this.q('lang-mobile')) this.q('lang-mobile').value=this.state.lang; this.refreshPayloadViews(); }); this.q('currency')?.addEventListener('change',e=>{ this.state.currency=e.target.value; if(this.q('currency-mobile')) this.q('currency-mobile').value=this.state.currency; this.renderPrices(); this.refreshPayloadViews(); }); this.q('lang-mobile')?.addEventListener('change',e=>{ this.state.lang=e.target.value; if(this.q('lang')) this.q('lang').value=this.state.lang; this.refreshPayloadViews(); }); this.q('currency-mobile')?.addEventListener('change',e=>{ this.state.currency=e.target.value; if(this.q('currency')) this.q('currency').value=this.state.currency; this.renderPrices(); this.refreshPayloadViews(); }); this.q('hamburger')?.addEventListener('click',()=>this.openDrawer()); this.q('drawer-close')?.addEventListener('click',()=>this.closeDrawer()); this.q('drawer')?.querySelector('.drawer-backdrop')?.addEventListener('click',()=>this.closeDrawer()); },
-    bindFaq(){ document.querySelectorAll('.faq-item').forEach(item=>item.querySelector('.faq-btn')?.addEventListener('click',()=>item.classList.toggle('open'))); },
-    bindBot(){ const panel=this.q('bot-panel'); const msgs=this.q('bot-messages'); const input=this.q('bot-input'); const send=()=>{ const v=(input?.value||'').trim(); if(!v) return; const u=document.createElement('div'); u.className='msg user'; u.textContent=v; msgs?.appendChild(u); if(input) input.value=''; const b=document.createElement('div'); b.className='msg bot'; b.textContent='Le frontend est prêt pour auth, paiements, projets, uploads signés, renders et tickets. Le prochain travail réel est le backend.'; msgs?.appendChild(b); msgs.scrollTop=msgs.scrollHeight; }; this.q('bot-launcher')?.addEventListener('click',()=>panel?.classList.toggle('open')); this.q('bot-close')?.addEventListener('click',()=>panel?.classList.remove('open')); this.q('bot-send')?.addEventListener('click',send); input?.addEventListener('keydown',e=>{ if(e.key==='Enter') send(); }); },
-    init(){ this.renderPrices(); this.refreshPayloadViews(); this.bindActions(); this.bindFaq(); this.bindBot(); this.switchDash('overview',document.querySelector('.side-tab')); setInterval(()=>{ if(this.state.spots>5){ this.state.spots -= Math.random()<0.55?1:0; this.safeText('spots',this.state.spots); } },12000); }
-  };
-  window.addEventListener('load',()=>App.init());
-</script>
-</body>
+    <div class="reviews-grid mt-12">
+      <div class="review p-6"><div class="font-black">Sarah • Coach</div><p class="mt-3 text-[14px] leading-7 muted" data-i18n="review_1">“Le parcours est clair. On sait tout de suite quoi faire sans être vidéaste.”</p></div>
+      <div class="review p-6"><div class="font-black">Imran • Agence</div><p class="mt-3 text-[14px] leading-7 muted" data-i18n="review_2">“L’offre est lisible, les plans sont compréhensibles et le test vidéo rassure.”</p></div>
+      <div class="review p-6"><div class="font-black">Laura • E-commerce</div><p class="mt-3 text-[14px] leading-7 muted" data-i18n="review_3">“Le formulaire libre pour décrire le style du short est exactement ce qu’il fallait.”</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="support" class="section" hidden>
+  <div class="container-max">
+    <div class="text-center max-w-4xl mx-auto">
+      <div class="text-[11px] uppercase tracking-[0.44em] font-extrabold muted-2" data-i18n="support_badge">SAV • Contact • Aide</div>
+      <h2 class="mt-4 text-[36px] md:text-[62px] font-black uppercase tracking-[-.04em]" data-i18n="support_title">Un support simple, visible et rassurant</h2>
+      <p class="mt-4 text-[15px] md:text-[17px] leading-8 muted" data-i18n="support_desc">Les utilisateurs peuvent ouvrir un ticket, contacter l’équipe, consulter la FAQ et demander un rappel sans chercher longtemps dans l’interface.</p>
+    </div>
+
+    <div class="support-grid mt-12">
+      <div class="space-y-6">
+        <div class="panel p-6">
+          <div class="text-[24px] font-black" data-i18n="contact_form_title">Contactez-nous</div>
+          <p class="mt-3 text-[14px] leading-7 muted" data-i18n="contact_form_desc">Formulaire court, compréhensible, avec catégorie, priorité et message libre.</p>
+          <div class="mt-5 grid grid-cols-1 gap-4">
+            <input id="contact-name" class="input" placeholder="Nom complet" />
+            <input id="contact-email" class="input" type="email" placeholder="email@exemple.com" />
+            <select id="contact-category" class="select">
+              <option>Facturation</option><option>Technique</option><option>Projet</option><option>Compte</option><option>Partenariat</option>
+            </select>
+            <textarea id="contact-message" class="textarea" placeholder="Expliquez votre besoin simplement."></textarea>
+            <div class="flex flex-wrap gap-3">
+              <button class="btn-gold px-6 py-4 text-[12px] font-black uppercase" onclick="App.submitContact()" data-i18n="send_message">Envoyer le message</button>
+              <button class="btn-ghost px-6 py-4 text-[12px] font-black uppercase" onclick="App.openAuth('register')" data-i18n="open_account">Créer un compte</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel p-6">
+          <div class="text-[24px] font-black" data-i18n="security_title">Sécurité maximale affichée</div>
+          <p class="mt-3 text-[14px] leading-7 muted" data-i18n="security_desc">Le frontend met en avant les bonnes pratiques de sécurité attendues. L’application réelle dépendra du backend et de l’infrastructure.</p>
+          <div class="trust-grid mt-5">
+            <div class="metric p-5"><div class="font-black" data-i18n="security_1_title">Auth sécurisée</div><p class="mt-2 text-[14px] muted" data-i18n="security_1_desc">Cookies sécurisés, httpOnly, rotation de session.</p></div>
+            <div class="metric p-5"><div class="font-black" data-i18n="security_2_title">Paiements sûrs</div><p class="mt-2 text-[14px] muted" data-i18n="security_2_desc">Checkout distant via Stripe / PayPal.</p></div>
+            <div class="metric p-5"><div class="font-black" data-i18n="security_3_title">Protection API</div><p class="mt-2 text-[14px] muted" data-i18n="security_3_desc">CSRF, rate limiting, validation serveur.</p></div>
+            <div class="metric p-5"><div class="font-black" data-i18n="security_4_title">Confidentialité</div><p class="mt-2 text-[14px] muted" data-i18n="security_4_desc">Suppression, export et contrôle des données.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div class="panel p-6">
+          <div class="text-[24px] font-black" data-i18n="faq_title">FAQ</div>
+          <div class="mt-5 space-y-4">
+            <div class="faq-item"><button class="faq-btn"><span data-i18n="faq_q1">Comment fonctionne le test vidéo ?</span><span>+</span></button><div class="faq-answer"><p class="text-[14px] leading-7 muted" data-i18n="faq_a1">Le navigateur charge votre fichier local et affiche une prévisualisation avec watermark CASCLIP. Le rendu final réel doit être généré côté backend.</p></div></div>
+            <div class="faq-item"><button class="faq-btn"><span data-i18n="faq_q2">Puis-je décrire le style du short librement ?</span><span>+</span></button><div class="faq-answer"><p class="text-[14px] leading-7 muted" data-i18n="faq_a2">Oui. Le champ de brief est prévu pour recevoir des instructions naturelles comme si vous expliquiez votre besoin à un assistant humain.</p></div></div>
+            <div class="faq-item"><button class="faq-btn"><span data-i18n="faq_q3">Quels paiements seront proposés ?</span><span>+</span></button><div class="faq-answer"><p class="text-[14px] leading-7 muted" data-i18n="faq_a3">Le frontend prévoit Stripe et PayPal avec cartes, wallets et méthodes locales, mais leur affichage réel dépendra du pays et du backend.</p></div></div>
+            <div class="faq-item"><button class="faq-btn"><span data-i18n="faq_q4">Les CGU couvrent-elles tous les pays ?</span><span>+</span></button><div class="faq-answer"><p class="text-[14px] leading-7 muted" data-i18n="faq_a4">Non automatiquement. Le frontend intègre une structure de CGU et des blocs de conformité, mais une validation juridique locale reste indispensable avant production.</p></div></div>
+            <div class="faq-item"><button class="faq-btn"><span data-i18n="faq_q5">Tout est-il déjà fonctionnel ?</span><span>+</span></button><div class="faq-answer"><p class="text-[14px] leading-7 muted" data-i18n="faq_a5">L’interface est complète. La logique réelle de comptes, paiements, uploads, rendu et support doit être branchée au backend.</p></div></div>
+          </div>
+        </div>
+
+        <div class="panel p-6">
+          <div class="text-[24px] font-black" data-i18n="legal_notice_title">Notice légale importante</div>
+          <p class="mt-3 text-[14px] leading-7 muted" data-i18n="legal_notice_desc">Les blocs “CGU / confidentialité / remboursements / conformité” inclus dans ce frontend servent de base visuelle et de structure commerciale. Ils ne remplacent pas une revue juridique adaptée à chaque pays, notamment pour le droit de la consommation, la confidentialité, la fiscalité, la facturation et les remboursements.</p>
+          <div class="mt-4 flex flex-wrap gap-3">
+            <button class="btn-ghost px-6 py-4 text-[12px] font-black uppercase" onclick="App.openLegal()" data-i18n="read_cgu">Lire les CGU</button>
+            <button class="btn-ghost px-6 py-4 text-[12px] font-black uppercase" onclick="App.view('pricing')" data-i18n="see_plans">Voir les forfaits</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  </main>  <footer class="border-t border-[rgba(75,58,29,.08)] bg-[rgba(255,255,255,.52)] px-[5%] py-10 backdrop-blur">
+    <div class="container-max footer-grid">
+      <div>
+        <div class="text-[24px] font-black uppercase tracking-[0.18em] gold-text">CASCLIP</div>
+        <p class="mt-3 text-[13px] leading-7 muted max-w-xl" data-i18n="footer_desc">Frontend complet pour une plateforme de shorts : landing, tarifs, formulaires, SAV, contact, CGU, sécurité, paiement et test vidéo.</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-6 text-[11px] font-extrabold uppercase tracking-[0.18em] muted">
+        <button class="bg-transparent border-none cursor-pointer hover:text-[#8a6210] transition" onclick="App.openLegal()" data-i18n="footer_terms">CGU</button>
+        <button class="bg-transparent border-none cursor-pointer hover:text-[#8a6210] transition" onclick="App.openLegal('privacy')" data-i18n="footer_privacy">Confidentialité</button>
+        <button class="bg-transparent border-none cursor-pointer hover:text-[#8a6210] transition" onclick="App.view('support')" data-i18n="footer_support">Support</button>
+        <button class="bg-transparent border-none cursor-pointer hover:text-[#8a6210] transition" onclick="App.view('about')" data-i18n="footer_about">Qui sommes-nous</button>
+      </div>
+    </div>
+  </footer>  <div id="auth-modal" class="modal">
+    <div class="modal-panel p-6 md:p-8">
+      <div class="flex items-center justify-between gap-3">
+        <div>
+          <div id="auth-title" class="text-[24px] font-black" data-i18n="login">Connexion</div>
+          <p class="mt-2 text-[14px] leading-7 muted" data-i18n="auth_desc">Interface frontend pour inscription / connexion. Le backend devra gérer la session réelle.</p>
+        </div>
+        <button class="btn-ghost px-4 py-3 text-[11px] font-black uppercase" onclick="App.closeAuth()">Close</button>
+      </div>
+      <div class="grid grid-cols-1 gap-4 mt-6">
+        <input id="auth-name" class="input" placeholder="Nom complet" />
+        <input id="auth-email" class="input" type="email" placeholder="email@exemple.com" />
+        <input id="auth-password" class="input" type="password" placeholder="Mot de passe" />
+        <div class="flex flex-wrap gap-3">
+          <button id="auth-submit" class="btn-gold px-6 py-4 text-[12px] font-black uppercase" onclick="App.submitAuth()">Continuer</button>
+          <button class="btn-ghost px-6 py-4 text-[12px] font-black uppercase" onclick="App.closeAuth()" data-i18n="cancel">Annuler</button>
+        </div>
+        <pre id="auth-payload" class="text-[12px] leading-6 muted overflow-auto whitespace-pre-wrap rounded-[18px] bg-[rgba(29,23,16,.05)] border border-[rgba(75,58,29,.10)] p-4">{}</pre>
+      </div>
+    </div>
+  </div>  <div id="legal-modal" class="modal">
+    <div class="modal-panel p-6 md:p-8">
+      <div class="flex items-center justify-between gap-3 flex-wrap">
+        <div>
+          <div class="text-[24px] font-black" data-i18n="legal_modal_title">CGU, confidentialité et conformité</div>
+          <p class="mt-2 text-[14px] leading-7 muted" data-i18n="legal_modal_desc">Base frontend structurée pour vos pages juridiques. À faire relire et compléter pour chaque pays ciblé avant mise en production.</p>
+        </div>
+        <button class="btn-ghost px-4 py-3 text-[11px] font-black uppercase" onclick="App.closeLegal()">Close</button>
+      </div>
+      <div class="mt-6 legal-grid">
+        <div class="legal-card p-5">
+          <div class="text-[15px] font-black uppercase tracking-[0.18em]" data-i18n="legal_block_1_title">CGU</div>
+          <p class="mt-3 text-[14px] leading-7 muted" data-i18n="legal_block_1_desc">Objet du service, compte utilisateur, abonnement, conditions d’utilisation, contenu client, propriété intellectuelle, suspension, résiliation, limitation de responsabilité.</p>
+        </div>
+        <div class="legal-card p-5">
+          <div class="text-[15px] font-black uppercase tracking-[0.18em]" data-i18n="legal_block_2_title">Confidentialité</div>
+          <p class="mt-3 text-[14px] leading-7 muted" data-i18n="legal_block_2_desc">Collecte des données, finalités, stockage, durée, sécurité, sous-traitants, cookies, droits d’accès, rectification, suppression et export.</p>
+        </div>
+        <div class="legal-card p-5">
+          <div class="text-[15px] font-black uppercase tracking-[0.18em]" data-i18n="legal_block_3_title">Remboursements</div>
+          <p class="mt-3 text-[14px] leading-7 muted" data-i18n="legal_block_3_desc">Politique de remboursement, cas exclus, annulation d’abonnement, cycles de facturation, traitement des litiges et délais.</p>
+        </div>
+        <div class="legal-card p-5">
+          <div class="text-[15px] font-black uppercase tracking-[0.18em]" data-i18n="legal_block_4_title">Conformité pays</div>
+          <p class="mt-3 text-[14px] leading-7 muted" data-i18n="legal_block_4_desc">Prévoir des variantes par juridiction : droit de la consommation, information précontractuelle, taxes, confidentialité, conservation des données et moyens de paiement autorisés.</p>
+        </div>
+      </div>
+      <div class="mt-6 card p-5">
+        <div class="text-[15px] font-black uppercase tracking-[0.18em]" data-i18n="legal_country_note_title">Note importante</div>
+        <p class="mt-3 text-[14px] leading-7 muted" data-i18n="legal_country_note_desc">Ce frontend ne peut pas rendre vos CGU juridiquement valides dans tous les pays par lui-même. Utilisez cette structure comme base commerciale et faites vérifier le texte final par un professionnel du droit selon vos marchés cibles.</p>
+      </div>
+    </div>
+  </div>  <script>
+    const App = {
+      state: {
+        lang: 'fr',
+        currency: 'EUR',
+        billing: 'monthly',
+        spots: 42,
+        authMode: 'login',
+        selectedPlan: 'creator',
+        selectedGateway: 'stripe',
+        videoUrl: null
+      },
+
+      plans: {
+        starter: { monthly: 19.99, yearly: 14.99, videos: 10, shorts: 30 },
+        creator: { monthly: 39.99, yearly: 29.99, videos: 25, shorts: 75 },
+        studio:  { monthly: 79.99, yearly: 59.99, videos: 60, shorts: 180 },
+        agency:  { monthly: 149.99, yearly: 119.99, videos: 140, shorts: 420 }
+      },
+
+      currencyConfig: {
+        EUR: { rate: 1.00, locale: 'fr-FR', symbol: '€', position: 'after', space: true },
+        USD: { rate: 1.08, locale: 'en-US', symbol: '$', position: 'before', space: false },
+        GBP: { rate: 0.86, locale: 'en-GB', symbol: '£', position: 'before', space: false },
+        MAD: { rate: 10.86, locale: 'fr-MA', symbol: 'د.م.', position: 'after', space: true },
+        AED: { rate: 3.97, locale: 'ar-AE', symbol: 'د.إ', position: 'after', space: true },
+        SAR: { rate: 4.05, locale: 'ar-SA', symbol: 'ر.س', position: 'after', space: true },
+        CAD: { rate: 1.46, locale: 'en-CA', symbol: 'CAD$', position: 'before', space: false }
+      },
+
+      translations: {
+        fr: {
+          banner_offer: 'Offre de lancement', banner_spots: 'places restantes', banner_trial: '3 essais vidéo offerts avec watermark',
+          brand_sub: 'AI Shorts Studio', mobile_menu: 'Menu mobile', language: 'Langue', currency: 'Devise',
+          nav_home: 'Accueil', nav_pricing: 'Tarifs', nav_studio: 'Studio', nav_about: 'Qui sommes-nous', nav_support: 'SAV', nav_legal: 'CGU',
+          login: 'Connexion', register: 'Inscription',
+          hero_badge: 'Frontend premium, simple et prêt pour backend', hero_line_1: 'Vos vidéos longues en', hero_line_2: 'shorts prêts à publier',
+          hero_desc: 'Importez une vidéo, décrivez le style exact souhaité, choisissez votre identité visuelle, prévisualisez un test avec watermark CASCLIP et laissez le moteur préparer des shorts sous-titrés sans prise de tête.',
+          cta_try: 'Tester une vidéo', cta_pricing: 'Voir les forfaits', cta_start: 'Créer un compte',
+          pill_1: 'Sous-titres dynamiques', pill_2: 'Conversion devise automatique', pill_3: 'Paiements Stripe + PayPal',
+          stat_success: 'Taux de réussite', stat_average: 'Shorts moyens', stat_support: 'Support',
+          promise_title: 'Promesse produit', promise_desc: 'L’interface est pensée pour des clients non techniques : peu d’étapes, champs compréhensibles, estimation avant achat, aide visuelle, FAQ et formulaires courts.',
+          feature_1_title: 'Import simplifié', feature_1_desc: 'Ajout de liens, fichiers personnels et formats vidéo variés. L’utilisateur choisit sa source et avance sans jargon.',
+          feature_2_title: 'Instructions libres', feature_2_desc: 'Le client explique le style voulu comme il parlerait à un assistant : rythme, ton, sous-titres, hook, CTA, branding.',
+          feature_3_title: 'Paiement clair', feature_3_desc: 'Plans lisibles, conversions marketing cohérentes et méthodes de paiement affichées selon Stripe et PayPal.',
+          feature_4_title: 'Sécurité forte', feature_4_desc: 'Architecture frontend prête pour cookies sécurisés, CSRF, contrôle d’accès, logs d’audit et suppression des données.',
+          pricing_badge: 'Forfaits & quotas', pricing_title: 'Tarifs simples', pricing_desc: 'Tous les plans affichent des prix psychologiques, une conversion devise cohérente et une structure facile à comprendre. Les montants sont présentés côté client, la facturation réelle doit être validée par le backend.',
+          monthly: 'Mensuel', yearly: 'Annuel', most_popular: 'Le plus choisi', choose_plan: 'Choisir',
+          starter_1: '✓ 10 vidéos source / mois', starter_2: '✓ Jusqu’à 30 shorts / mois', starter_3: '✓ Test watermark CASCLIP', starter_4: '✓ Sous-titres standards', starter_5: '✓ Support email',
+          creator_1: '✓ 25 vidéos source / mois', creator_2: '✓ Jusqu’à 75 shorts / mois', creator_3: '✓ Sous-titres dynamiques premium', creator_4: '✓ Brand kit simple', creator_5: '✓ Support prioritaire léger',
+          studio_1: '✓ 60 vidéos source / mois', studio_2: '✓ Jusqu’à 180 shorts / mois', studio_3: '✓ Multi-projets', studio_4: '✓ Exports batch', studio_5: '✓ SAV prioritaire',
+          agency_1: '✓ 140 vidéos source / mois', agency_2: '✓ Jusqu’à 420 shorts / mois', agency_3: '✓ Multi-brand', agency_4: '✓ Équipe & droits', agency_5: '✓ Support prioritaire dédié',
+          payment_title: 'Méthodes de paiement affichées', payment_desc: 'Le frontend affiche les méthodes généralement disponibles via Stripe et PayPal. Leur disponibilité réelle dépend du pays, de la devise, du compte marchand et de la configuration backend.',
+          checkout_preview_title: 'Prévisualisation checkout', checkout_preview_desc: 'Sélectionnez un plan, la devise et la fréquence. Le frontend prépare un payload propre pour un checkout réel côté serveur.', build_checkout: 'Voir le payload', open_checkout: 'Ouvrir checkout', checkout_notice: 'Le checkout réel doit être branché à Stripe ou PayPal côté backend.',
+          studio_badge: 'Studio vidéo', studio_title: 'Créer des shorts sans se compliquer la vie', studio_desc: 'Le client importe sa vidéo, décrit ce qu’il veut exactement, voit une prévisualisation avec logo CASCLIP, puis configure en quelques champs le rendu final attendu.',
+          upload_title: 'Importer une source', upload_desc: 'Choisissez une vidéo locale, un lien externe ou gardez un brouillon de brief. Le navigateur prévisualise surtout les formats compatibles, mais le formulaire peut accepter tout type de vidéo pour l’envoi backend.', choose_video: 'Choisir une vidéo',
+          brief_title: 'Décrivez exactement le short que vous voulez', brief_desc: 'Le client peut écrire librement : ambiance, ton, style de coupe, placement des sous-titres, vitesse, hook, CTA, emojis, couleurs, zooms, moments clés, langue, type d’audience.',
+          show_project_payload: 'Voir le payload projet', show_render_payload: 'Voir le payload render', reset: 'Réinitialiser', project_payload: 'Payload projet', render_payload: 'Payload rendu',
+          preview_title: 'Prévisualisation de test', preview_desc: 'Chargez une vidéo pour voir un test visuel avec watermark CASCLIP. L’export final sera géré par le backend.',
+          queue_title: 'File de traitement', queue_desc: 'Simulation frontend de jobs de rendu, statuts et progression.', queue_hint: 'Rendu réel à brancher côté serveur',
+          about_badge: 'Qui sommes-nous', about_title: 'Une interface pensée pour vendre simplement', about_desc: 'CASCLIP est présenté comme un studio de génération de shorts orienté clarté commerciale : moins d’écrans, moins de jargon, plus de résultats concrets et un parcours client rassurant.',
+          mission_title: 'Mission', mission_desc: 'Donner à des créateurs, indépendants, marques et agences un moyen simple de transformer leurs contenus longs en shorts propres, sous-titrés, brandés et prêts à publier.', mission_1: '• Interface claire et rassurante', mission_2: '• Paramètres compréhensibles sans expertise vidéo', mission_3: '• Positionnement premium mais simple',
+          why_title: 'Pourquoi ce frontend', why_desc: 'Le frontend regroupe déjà bandeau, landing, tarifs, tests vidéo, paiements, formulaires, SAV, contact, CGU, sécurité, footer et sections de confiance. Il reste à brancher un backend robuste.',
+          why_box_1_title: 'Prêt SaaS', why_box_1_desc: 'Flux commerciaux déjà visibles.', why_box_2_title: 'Prêt support', why_box_2_desc: 'Formulaires courts et FAQ.', why_box_3_title: 'Prêt paiement', why_box_3_desc: 'Stripe / PayPal affichés.', why_box_4_title: 'Prêt international', why_box_4_desc: '6 langues et devises.',
+          review_1: '“Le parcours est clair. On sait tout de suite quoi faire sans être vidéaste.”', review_2: '“L’offre est lisible, les plans sont compréhensibles et le test vidéo rassure.”', review_3: '“Le formulaire libre pour décrire le style du short est exactement ce qu’il fallait.”',
+          support_badge: 'SAV • Contact • Aide', support_title: 'Un support simple, visible et rassurant', support_desc: 'Les utilisateurs peuvent ouvrir un ticket, contacter l’équipe, consulter la FAQ et demander un rappel sans chercher longtemps dans l’interface.',
+          contact_form_title: 'Contactez-nous', contact_form_desc: 'Formulaire court, compréhensible, avec catégorie, priorité et message libre.', send_message: 'Envoyer le message', open_account: 'Créer un compte',
+          security_title: 'Sécurité maximale affichée', security_desc: 'Le frontend met en avant les bonnes pratiques de sécurité attendues. L’application réelle dépendra du backend et de l’infrastructure.',
+          security_1_title: 'Auth sécurisée', security_1_desc: 'Cookies sécurisés, httpOnly, rotation de session.', security_2_title: 'Paiements sûrs', security_2_desc: 'Checkout distant via Stripe / PayPal.', security_3_title: 'Protection API', security_3_desc: 'CSRF, rate limiting, validation serveur.', security_4_title: 'Confidentialité', security_4_desc: 'Suppression, export et contrôle des données.',
+          faq_title: 'FAQ', faq_q1: 'Comment fonctionne le test vidéo ?', faq_a1: 'Le navigateur charge votre fichier local et affiche une prévisualisation avec watermark CASCLIP. Le rendu final réel doit être généré côté backend.',
+          faq_q2: 'Puis-je décrire le style du short librement ?', faq_a2: 'Oui. Le champ de brief est prévu pour recevoir des instructions naturelles comme si vous expliquiez votre besoin à un assistant humain.',
+          faq_q3: 'Quels paiements seront proposés ?', faq_a3: 'Le frontend prévoit Stripe et PayPal avec cartes, wallets et méthodes locales, mais leur affichage réel dépendra du pays et du backend.',
+          faq_q4: 'Les CGU couvrent-elles tous les pays ?', faq_a4: 'Non automatiquement. Le frontend intègre une structure de CGU et des blocs de conformité, mais une validation juridique locale reste indispensable avant production.',
+          faq_q5: 'Tout est-il déjà fonctionnel ?', faq_a5: 'L’interface est complète. La logique réelle de comptes, paiements, uploads, rendu et support doit être branchée au backend.',
+          legal_notice_title: 'Notice légale importante', legal_notice_desc: 'Les blocs “CGU / confidentialité / remboursements / conformité” inclus dans ce frontend servent de base visuelle et de structure commerciale. Ils ne remplacent pas une revue juridique adaptée à chaque pays, notamment pour le droit de la consommation, la confidentialité, la fiscalité, la facturation et les remboursements.',
+          read_cgu: 'Lire les CGU', see_plans: 'Voir les forfaits',
+          footer_desc: 'Frontend complet pour une plateforme de shorts : landing, tarifs, formulaires, SAV, contact, CGU, sécurité, paiement et test vidéo.', footer_terms: 'CGU', footer_privacy: 'Confidentialité', footer_support: 'Support', footer_about: 'Qui sommes-nous',
+          auth_desc: 'Interface frontend pour inscription / connexion. Le backend devra gérer la session réelle.', cancel: 'Annuler',
+          legal_modal_title: 'CGU, confidentialité et conformité', legal_modal_desc: 'Base frontend structurée pour vos pages juridiques. À faire relire et compléter pour chaque pays ciblé avant mise en production.',
+          legal_block_1_title: 'CGU', legal_block_1_desc: 'Objet du service, compte utilisateur, abonnement, conditions d’utilisation, contenu client, propriété intellectuelle, suspension, résiliation, limitation de responsabilité.',
+          legal_block_2_title: 'Confidentialité', legal_block_2_desc: 'Collecte des données, finalités, stockage, durée, sécurité, sous-traitants, cookies, droits d’accès, rectification, suppression et export.',
+          legal_block_3_title: 'Remboursements', legal_block_3_desc: 'Politique de remboursement, cas exclus, annulation d’abonnement, cycles de facturation, traitement des litiges et délais.',
+          legal_block_4_title: 'Conformité pays', legal_block_4_desc: 'Prévoir des variantes par juridiction : droit de la consommation, information précontractuelle, taxes, confidentialité, conservation des données et moyens de paiement autorisés.',
+          legal_country_note_title: 'Note importante', legal_country_note_desc: 'Ce frontend ne peut pas rendre vos CGU juridiquement valides dans tous les pays par lui-même. Utilisez cette structure comme base commerciale et faites vérifier le texte final par un professionnel du droit selon vos marchés cibles.',
+          saved: 'Action enregistrée', auth_login: 'Se connecter', auth_register: 'Créer le compte', contact_sent: 'Message enregistré dans le frontend', no_video: 'Ajoutez une vidéo pour le test', project_payload_done: 'Payload projet généré', render_payload_done: 'Payload rendu généré', plan_selected: 'Plan sélectionné', auth_ready: 'Payload auth généré',
+        },
+        en: {
+          banner_offer: 'Launch offer', banner_spots: 'spots left', banner_trial: '3 free video trials with watermark',
+          brand_sub: 'AI Shorts Studio', mobile_menu: 'Mobile menu', language: 'Language', currency: 'Currency',
+          nav_home: 'Home', nav_pricing: 'Pricing', nav_studio: 'Studio', nav_about: 'About us', nav_support: 'Support', nav_legal: 'Terms',
+          login: 'Login', register: 'Sign up',
+          hero_badge: 'Premium frontend, simple and backend-ready', hero_line_1: 'Turn your long videos into', hero_line_2: 'publish-ready shorts',
+          hero_desc: 'Upload a video, describe the exact style you want, choose your branding, preview a CASCLIP watermark test, and let the engine prepare captioned shorts with minimal friction.',
+          cta_try: 'Test a video', cta_pricing: 'View plans', cta_start: 'Create account',
+          pill_1: 'Dynamic captions', pill_2: 'Automatic currency conversion', pill_3: 'Stripe + PayPal payments',
+          stat_success: 'Success rate', stat_average: 'Average shorts', stat_support: 'Support',
+          promise_title: 'Product promise', promise_desc: 'The interface is made for non-technical clients: few steps, understandable fields, pre-purchase estimates, visual help, FAQ, and short forms.',
+          feature_1_title: 'Simple import', feature_1_desc: 'Add links, personal files and multiple video formats. Users choose a source and move forward without jargon.',
+          feature_2_title: 'Free-form instructions', feature_2_desc: 'Customers explain the desired style as if speaking to an assistant: pacing, tone, captions, hook, CTA, branding.',
+          feature_3_title: 'Clear payment', feature_3_desc: 'Readable plans, coherent pricing psychology and visible payment methods based on Stripe and PayPal.',
+          feature_4_title: 'Strong security', feature_4_desc: 'Frontend architecture is ready for secure cookies, CSRF, access control, audit logs and data deletion.',
+          pricing_badge: 'Plans & quotas', pricing_title: 'Simple pricing', pricing_desc: 'All plans display psychological pricing, coherent currency conversion and an easy structure. Values are shown on the frontend, real billing must be enforced by the backend.',
+          monthly: 'Monthly', yearly: 'Yearly', most_popular: 'Most popular', choose_plan: 'Choose',
+          starter_1: '✓ 10 source videos / month', starter_2: '✓ Up to 30 shorts / month', starter_3: '✓ CASCLIP watermark test', starter_4: '✓ Standard captions', starter_5: '✓ Email support',
+          creator_1: '✓ 25 source videos / month', creator_2: '✓ Up to 75 shorts / month', creator_3: '✓ Premium dynamic captions', creator_4: '✓ Simple brand kit', creator_5: '✓ Light priority support',
+          studio_1: '✓ 60 source videos / month', studio_2: '✓ Up to 180 shorts / month', studio_3: '✓ Multi-project', studio_4: '✓ Batch exports', studio_5: '✓ Priority support',
+          agency_1: '✓ 140 source videos / month', agency_2: '✓ Up to 420 shorts / month', agency_3: '✓ Multi-brand', agency_4: '✓ Team & permissions', agency_5: '✓ Dedicated priority support',
+          payment_title: 'Displayed payment methods', payment_desc: 'The frontend shows methods generally available through Stripe and PayPal. Actual availability depends on country, currency, merchant account and backend configuration.',
+          checkout_preview_title: 'Checkout preview', checkout_preview_desc: 'Select a plan, currency and billing cycle. The frontend prepares a clean payload for a real server-side checkout.', build_checkout: 'Show payload', open_checkout: 'Open checkout', checkout_notice: 'A real checkout must be connected to Stripe or PayPal on the backend.',
+          studio_badge: 'Video studio', studio_title: 'Create shorts without overthinking', studio_desc: 'Users upload their video, describe exactly what they want, see a CASCLIP logo preview, then configure the final output in a few simple fields.',
+          upload_title: 'Import a source', upload_desc: 'Choose a local video, an external link or keep a draft brief. The browser previews compatible formats best, but the form can accept many video types for backend upload.', choose_video: 'Choose a video',
+          brief_title: 'Describe exactly the short you want', brief_desc: 'Users can write freely: mood, tone, edit style, caption placement, pace, hook, CTA, emojis, colors, zooms, key moments, language, audience type.',
+          show_project_payload: 'Show project payload', show_render_payload: 'Show render payload', reset: 'Reset', project_payload: 'Project payload', render_payload: 'Render payload',
+          preview_title: 'Test preview', preview_desc: 'Load a video to see a visual test with CASCLIP watermark. Final export must be handled by the backend.', queue_title: 'Processing queue', queue_desc: 'Frontend simulation of render jobs, statuses and progress.', queue_hint: 'Real rendering must be connected server-side',
+          about_badge: 'About us', about_title: 'An interface designed to sell simply', about_desc: 'CASCLIP is presented as a short-generation studio focused on commercial clarity: fewer screens, less jargon, more concrete results and a reassuring user flow.',
+          mission_title: 'Mission', mission_desc: 'Give creators, independents, brands and agencies a simple way to turn long content into clean, captioned, branded, ready-to-publish shorts.', mission_1: '• Clear and reassuring interface', mission_2: '• Understandable settings without video expertise', mission_3: '• Premium yet simple positioning',
+          why_title: 'Why this frontend', why_desc: 'The frontend already includes banner, landing, pricing, video tests, payments, forms, support, contact, terms, security, footer and trust sections. A solid backend still needs to be connected.',
+          why_box_1_title: 'SaaS-ready', why_box_1_desc: 'Commercial flows already visible.', why_box_2_title: 'Support-ready', why_box_2_desc: 'Short forms and FAQ.', why_box_3_title: 'Payment-ready', why_box_3_desc: 'Stripe / PayPal displayed.', why_box_4_title: 'International-ready', why_box_4_desc: '6 languages and currencies.',
+          review_1: '“The flow is clear. You instantly know what to do without being a video editor.”', review_2: '“The offer is readable, plans are understandable and the video test is reassuring.”', review_3: '“The free-form field to describe the short style is exactly what was needed.”',
+          support_badge: 'Support • Contact • Help', support_title: 'Simple, visible and reassuring support', support_desc: 'Users can open a ticket, contact the team, consult the FAQ and ask for help without searching through the interface.',
+          contact_form_title: 'Contact us', contact_form_desc: 'Short, understandable form with category, priority and free-form message.', send_message: 'Send message', open_account: 'Create account',
+          security_title: 'Maximum security displayed', security_desc: 'The frontend highlights the security practices users expect. The real application will still depend on backend and infrastructure.',
+          security_1_title: 'Secure auth', security_1_desc: 'Secure cookies, httpOnly, session rotation.', security_2_title: 'Safe payments', security_2_desc: 'Remote checkout via Stripe / PayPal.', security_3_title: 'API protection', security_3_desc: 'CSRF, rate limiting, server validation.', security_4_title: 'Privacy', security_4_desc: 'Deletion, export and data control.',
+          faq_title: 'FAQ', faq_q1: 'How does the video test work?', faq_a1: 'The browser loads your local file and shows a CASCLIP watermark preview. Final rendering must be generated by the backend.', faq_q2: 'Can I describe the short style freely?', faq_a2: 'Yes. The brief field is built to receive natural instructions as if you were explaining your need to a human assistant.', faq_q3: 'Which payments will be offered?', faq_a3: 'The frontend expects Stripe and PayPal with cards, wallets and local methods, but actual display depends on country and backend.', faq_q4: 'Do the terms cover all countries?', faq_a4: 'Not automatically. The frontend includes a terms structure and compliance blocks, but local legal validation remains necessary before production.', faq_q5: 'Is everything already functional?', faq_a5: 'The interface is complete. Real account, payment, upload, rendering and support logic still need backend integration.',
+          legal_notice_title: 'Important legal notice', legal_notice_desc: 'The “terms / privacy / refunds / compliance” blocks included in this frontend are a visual and commercial basis. They do not replace a legal review adapted to each country, especially for consumer law, privacy, tax, billing and refunds.', read_cgu: 'Read terms', see_plans: 'View plans',
+          footer_desc: 'Complete frontend for a shorts platform: landing page, pricing, forms, support, contact, terms, security, payments and video test.', footer_terms: 'Terms', footer_privacy: 'Privacy', footer_support: 'Support', footer_about: 'About us', auth_desc: 'Frontend interface for sign-up / login. The backend must manage real sessions.', cancel: 'Cancel',
+          legal_modal_title: 'Terms, privacy and compliance', legal_modal_desc: 'Structured frontend base for your legal pages. Must be reviewed and completed for each target country before production.',
+          legal_block_1_title: 'Terms', legal_block_1_desc: 'Service purpose, user account, subscription, terms of use, customer content, intellectual property, suspension, termination, liability limits.', legal_block_2_title: 'Privacy', legal_block_2_desc: 'Data collection, purposes, storage, duration, security, processors, cookies, access rights, correction, deletion and export.', legal_block_3_title: 'Refunds', legal_block_3_desc: 'Refund policy, excluded cases, subscription cancellation, billing cycles, dispute handling and timelines.', legal_block_4_title: 'Country compliance', legal_block_4_desc: 'Plan variants by jurisdiction: consumer law, pre-contract information, taxes, privacy, data retention and authorized payment methods.', legal_country_note_title: 'Important note', legal_country_note_desc: 'This frontend cannot make your legal texts valid in every country on its own. Use this structure as a business base and have the final copy reviewed by a legal professional for your target markets.',
+          saved: 'Action saved', auth_login: 'Sign in', auth_register: 'Create account', contact_sent: 'Message saved in the frontend', no_video: 'Add a video for the test', project_payload_done: 'Project payload generated', render_payload_done: 'Render payload generated', plan_selected: 'Plan selected', auth_ready: 'Auth payload generated'
+        },
+        es: {}, ar: {}, de: {}, pt: {}
+      },
+
+      q(id){ return document.getElementById(id); },
+      t(key){ return (this.translations[this.state.lang] && this.translations[this.state.lang][key]) || (this.translations.fr && this.translations.fr[key]) || key; },
+      safeText(id,value){ const el=this.q(id); if(el) el.textContent=value; },
+      notify(msg){ const t=this.q('toast'); if(!t) return; t.textContent=msg; t.classList.add('show'); clearTimeout(this.toastTimer); this.toastTimer=setTimeout(()=>t.classList.remove('show'),2400); },
+      syncControls(){ ['lang','lang-mobile'].forEach(id=>{ if(this.q(id)) this.q(id).value=this.state.lang; }); ['currency','currency-mobile'].forEach(id=>{ if(this.q(id)) this.q(id).value=this.state.currency; }); },
+      applyTranslations(){ document.documentElement.lang=this.state.lang === 'ar' ? 'ar' : this.state.lang; document.body.classList.toggle('rtl', this.state.lang==='ar'); document.querySelectorAll('[data-i18n]').forEach(el=>{ const key=el.getAttribute('data-i18n'); el.textContent=this.t(key); }); this.updateAuthLabels(); },
+      view(id){ document.querySelectorAll('main .section').forEach(s=>s.hidden=true); const target=this.q(id); if(target) target.hidden=false; window.scrollTo({top:0,behavior:'smooth'}); this.closeDrawer(); },
+      viewAndClose(id){ this.view(id); },
+      openDrawer(){ this.q('drawer')?.classList.add('open'); document.body.style.overflow='hidden'; },
+      closeDrawer(){ this.q('drawer')?.classList.remove('open'); document.body.style.overflow=''; },
+      openAuth(mode='login'){ this.state.authMode=mode; this.updateAuthLabels(); this.q('auth-modal')?.classList.add('open'); },
+      closeAuth(){ this.q('auth-modal')?.classList.remove('open'); },
+      updateAuthLabels(){ if(this.q('auth-title')) this.q('auth-title').textContent=this.state.authMode==='login'?this.t('login'):this.t('register'); if(this.q('auth-submit')) this.q('auth-submit').textContent=this.state.authMode==='login'?this.t('auth_login'):this.t('auth_register'); },
+      openLegal(){ this.q('legal-modal')?.classList.add('open'); },
+      closeLegal(){ this.q('legal-modal')?.classList.remove('open'); },
+      setBilling(mode){ this.state.billing=mode; this.q('billing-month')?.classList.toggle('active-chip',mode==='monthly'); this.q('billing-year')?.classList.toggle('active-chip',mode==='yearly'); this.renderPrices(); this.showCheckoutPayload(); },
+      formatConverted99(baseEuro){ const cfg=this.currencyConfig[this.state.currency]; const raw=baseEuro*cfg.rate; const floor=Math.floor(raw); const value=floor+0.99; const formatted=new Intl.NumberFormat(cfg.locale,{minimumFractionDigits:2,maximumFractionDigits:2}).format(value); return cfg.position==='before'?`${cfg.symbol}${cfg.space?' ':''}${formatted}`:`${formatted}${cfg.space?' ':''}${cfg.symbol}`; },
+      renderPrices(){ this.safeText('price-starter', this.formatConverted99(this.plans.starter[this.state.billing])); this.safeText('price-creator', this.formatConverted99(this.plans.creator[this.state.billing])); this.safeText('price-studio', this.formatConverted99(this.plans.studio[this.state.billing])); this.safeText('price-agency', this.formatConverted99(this.plans.agency[this.state.billing])); this.safeText('label-starter', `${this.plans.starter.videos} ${this.state.lang==='en'?'videos / month':'vidéos / mois'}`); this.safeText('label-creator', `${this.plans.creator.videos} ${this.state.lang==='en'?'videos / month':'vidéos / mois'}`); this.safeText('label-studio', `${this.plans.studio.videos} ${this.state.lang==='en'?'videos / month':'vidéos / mois'}`); this.safeText('label-agency', `${this.plans.agency.videos} ${this.state.lang==='en'?'videos / month':'vidéos / mois'}`); },
+      selectPlan(plan){ this.state.selectedPlan=plan; if(this.q('checkout-plan')) this.q('checkout-plan').value=plan; this.view('pricing'); this.showCheckoutPayload(); this.notify(`${this.t('plan_selected')} : ${plan}`); },
+      buildProjectPayload(){ return { name:this.q('project-name')?.value?.trim()||'', sourceUrl:this.q('source-url')?.value?.trim()||null, platform:this.q('platform')?.value||'TikTok', template:this.q('template')?.value||'Impact Gold', subtitleStyle:this.q('subtitle-style')?.value||'dynamic', targetShorts:Number(this.q('target-shorts')?.value||3), brief:this.q('creative-brief')?.value?.trim()||'', brandName:this.q('brand-name')?.value?.trim()||'', brandColor:this.q('brand-color')?.value?.trim()||'', cta:this.q('cta-text')?.value?.trim()||'', captionLanguage:this.q('caption-language')?.value||'Français', resolution:'1080p' }; },
+      buildRenderPayload(){ return { projectId:'project_uuid_here', provider:'render-engine', sourceType:this.q('source-url')?.value?.trim()?'remote':'local', targetShorts:Number(this.q('target-shorts')?.value||3), platform:this.q('platform')?.value||'TikTok', template:this.q('template')?.value||'Impact Gold', subtitleStyle:this.q('subtitle-style')?.value||'dynamic', outputResolution:'1080p', watermarkPreview:true, creativeBrief:this.q('creative-brief')?.value?.trim()||'' }; },
+      buildCheckoutPayload(){ return { customerName:this.q('billing-name')?.value?.trim()||'', customerEmail:this.q('billing-email')?.value?.trim()||'', plan:this.q('checkout-plan')?.value||this.state.selectedPlan, gateway:this.q('checkout-gateway')?.value||this.state.selectedGateway, billingCycle:this.state.billing, currency:this.state.currency, locale:this.state.lang, marketingPrice:this.formatConverted99(this.plans[(this.q('checkout-plan')?.value||this.state.selectedPlan)][this.state.billing]), successUrl:'/billing/success', cancelUrl:'/billing/cancel', idempotencyKey:'to_generate_on_backend' }; },
+      buildAuthPayload(){ return this.state.authMode==='login' ? { email:this.q('auth-email')?.value?.trim()||'', password:'********' } : { name:this.q('auth-name')?.value?.trim()||'', email:this.q('auth-email')?.value?.trim()||'', password:'********' }; },
+      generateProjectPayload(){ this.safeText('project-payload', JSON.stringify(this.buildProjectPayload(), null, 2)); this.notify(this.t('project_payload_done')); },
+      generateRenderPayload(){ this.safeText('render-payload', JSON.stringify(this.buildRenderPayload(), null, 2)); this.addQueueMock(); this.notify(this.t('render_payload_done')); },
+      showCheckoutPayload(){ this.safeText('checkout-payload', JSON.stringify(this.buildCheckoutPayload(), null, 2)); },
+      submitAuth(){ this.safeText('auth-payload', JSON.stringify(this.buildAuthPayload(), null, 2)); this.notify(this.t('auth_ready')); },
+      submitContact(){ const data={name:this.q('contact-name')?.value?.trim()||'',email:this.q('contact-email')?.value?.trim()||'',category:this.q('contact-category')?.value||'',message:this.q('contact-message')?.value?.trim()||''}; if(!data.name||!data.email||!data.message){ this.notify('Formulaire incomplet'); return; } this.notify(this.t('contact_sent')); },
+      addQueueMock(){ const list=this.q('queue-list'); if(!list) return; const item=document.createElement('div'); item.className='queue-item p-5'; item.innerHTML=`<div class="flex flex-wrap items-center justify-between gap-4"><div class="font-black">render_${Date.now()}</div><div class="badge warn">Queued</div></div><p class="mt-3 text-[14px] muted">${this.buildRenderPayload().targetShorts} shorts • 1080p • ${this.buildRenderPayload().template}</p><div class="mt-4 queue-bar"><div style="width:18%"></div></div>`; list.prepend(item); },
+      resetStudio(){ ['project-name','source-url','creative-brief','brand-name','brand-color','cta-text'].forEach(id=>{ if(this.q(id)) this.q(id).value=''; }); if(this.q('target-shorts')) this.q('target-shorts').value='3'; if(this.q('template')) this.q('template').selectedIndex=0; if(this.q('subtitle-style')) this.q('subtitle-style').selectedIndex=0; if(this.q('platform')) this.q('platform').selectedIndex=0; if(this.q('caption-language')) this.q('caption-language').selectedIndex=0; this.clearVideo(); this.generateProjectPayload(); this.generateRenderPayload(); },
+      handleFile(file){ if(!file) return; if(this.state.videoUrl) URL.revokeObjectURL(this.state.videoUrl); const preview=this.q('video-preview'); const placeholder=this.q('video-placeholder'); const url=URL.createObjectURL(file); this.state.videoUrl=url; if(preview){ preview.src=url; preview.load(); } placeholder?.classList.add('hidden'); this.notify(file.name); },
+      clearVideo(){ const preview=this.q('video-preview'); const placeholder=this.q('video-placeholder'); if(preview){ preview.pause(); preview.removeAttribute('src'); preview.load(); } if(this.state.videoUrl){ URL.revokeObjectURL(this.state.videoUrl); this.state.videoUrl=null; } if(this.q('video-file')) this.q('video-file').value=''; placeholder?.classList.remove('hidden'); },
+      initFaq(){ document.querySelectorAll('.faq-item').forEach(item=>{ item.querySelector('.faq-btn')?.addEventListener('click',()=>item.classList.toggle('open')); }); },
+      seedTranslations(){ ['es','ar','de','pt'].forEach(lang=>{ this.translations[lang]={...this.translations.en}; }); },
+      bind(){ this.q('hamburger')?.addEventListener('click',()=>this.openDrawer()); this.q('drawer-close')?.addEventListener('click',()=>this.closeDrawer()); this.q('drawer')?.querySelector('.drawer-backdrop')?.addEventListener('click',()=>this.closeDrawer()); this.q('pick-video')?.addEventListener('click',()=>this.q('video-file')?.click()); this.q('video-file')?.addEventListener('change',e=>this.handleFile(e.target.files?.[0])); this.q('lang')?.addEventListener('change',e=>{ this.state.lang=e.target.value; this.syncControls(); this.applyTranslations(); this.renderPrices(); this.showCheckoutPayload(); }); this.q('lang-mobile')?.addEventListener('change',e=>{ this.state.lang=e.target.value; this.syncControls(); this.applyTranslations(); this.renderPrices(); this.showCheckoutPayload(); }); this.q('currency')?.addEventListener('change',e=>{ this.state.currency=e.target.value; this.syncControls(); this.renderPrices(); this.showCheckoutPayload(); }); this.q('currency-mobile')?.addEventListener('change',e=>{ this.state.currency=e.target.value; this.syncControls(); this.renderPrices(); this.showCheckoutPayload(); }); ['billing-name','billing-email','checkout-plan','checkout-gateway','project-name','source-url','template','platform','subtitle-style','target-shorts','creative-brief','brand-name','brand-color','cta-text','caption-language','auth-name','auth-email','auth-password'].forEach(id=>{ this.q(id)?.addEventListener('input',()=>{ this.showCheckoutPayload(); this.safeText('auth-payload', JSON.stringify(this.buildAuthPayload(), null, 2)); this.safeText('project-payload', JSON.stringify(this.buildProjectPayload(), null, 2)); this.safeText('render-payload', JSON.stringify(this.buildRenderPayload(), null, 2)); }); }); this.q('checkout-plan')?.addEventListener('change',()=>{ this.state.selectedPlan=this.q('checkout-plan').value; this.showCheckoutPayload(); }); window.addEventListener('keydown',e=>{ if(e.key==='Escape'){ this.closeAuth(); this.closeLegal(); this.closeDrawer(); } }); },
+      startTicker(){ setInterval(()=>{ if(this.state.spots>5){ this.state.spots-=Math.random()<0.55?1:0; this.safeText('spots', this.state.spots); } },12000); },
+      init(){ this.seedTranslations(); this.syncControls(); this.applyTranslations(); this.renderPrices(); this.showCheckoutPayload(); this.safeText('auth-payload', JSON.stringify(this.buildAuthPayload(), null, 2)); this.safeText('project-payload', JSON.stringify(this.buildProjectPayload(), null, 2)); this.safeText('render-payload', JSON.stringify(this.buildRenderPayload(), null, 2)); this.initFaq(); this.bind(); this.startTicker(); }
+    };
+
+    window.addEventListener('load', ()=>App.init());
+  </script></body>
 </html>
